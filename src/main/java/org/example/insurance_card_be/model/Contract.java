@@ -16,4 +16,6 @@ public class Contract {
     private String status;
     private Date StartDate;
     private Date EndDate;
+    private String detail;
+    private double value;
 }
