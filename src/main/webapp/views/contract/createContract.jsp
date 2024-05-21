@@ -10,7 +10,6 @@
 <head>
     <title>Create New Contract</title>
     <link href="${pageContext.request.contextPath}/css/createContract.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <!-- Include header -->
@@ -45,7 +44,7 @@
             </div>
             <div class="form-group">
                 <label for="value">Value:</label>
-                <input type="number" id="value" name="value" step="100" required>
+                <input type="number" id="value" name="value" step="0.01" required>
             </div>
             <div class="membership-info">
                 <p><strong>Introductory Member</strong> – This option requires two steps. After completing the contact

@@ -9,14 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 update contract in model">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/createContract.css" afterDir="false" />
+    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 add new contract(1)">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/ContractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/ContractController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/DBContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/DBContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/ContractDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/ContractDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Contract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Contract.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/ContractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/ContractService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" afterDir="false" />
     </list>
@@ -310,7 +308,8 @@
       <workItem from="1716176864915" duration="5228000" />
       <workItem from="1716194796511" duration="5849000" />
       <workItem from="1716200854391" duration="2000" />
-      <workItem from="1716211495754" duration="14879000" />
+      <workItem from="1716211495754" duration="15109000" />
+      <workItem from="1716254505606" duration="3839000" />
     </task>
     <task id="LOCAL-00001" summary="annthe176161 update contract in model">
       <option name="closed" value="true" />
@@ -320,7 +319,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716121079081</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="annthe176161 add new contract(1)">
+      <option name="closed" value="true" />
+      <created>1716227064731</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1716227064731</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,7 +346,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="annthe176161 update contract in model" />
-    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 update contract in model" />
+    <MESSAGE value="annthe176161 add new contract(1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 add new contract(1)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

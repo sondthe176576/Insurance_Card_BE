@@ -12,21 +12,28 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet(name = "ContractController", urlPatterns = "/createContract")
 public class ContractController extends HttpServlet {
+    // Controller dung de xu ly request cua contract
     private ContractService contractService;
 
+    // Khoi tao contractService
     @Override
     public void init() throws ServletException {
         this.contractService = new ContractService();
     }
 
+    // Ham get de hien thi trang tao contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
     }
 
+    // Ham post de tao contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Lay thong tin tu request
         String customerID = req.getParameter("customerID");
         String contractInfo = req.getParameter("contractInfo");
         String status = req.getParameter("status");
@@ -35,22 +42,24 @@ public class ContractController extends HttpServlet {
         String detail = req.getParameter("detail");
         String valueStr = req.getParameter("value");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format date
         Contract contract = new Contract();
-        contract.setCustomerID(Integer.parseInt(customerID));
-        contract.setContractInfo(contractInfo);
-        contract.setStatus(status);
+        contract.setCustomerID(Integer.parseInt(customerID)); // Set id customer
+        contract.setContractInfo(contractInfo); // Set thong tin contract
+        contract.setStatus(status);  // Set trang thai contract
         try {
-            contract.setStartDate(sdf.parse(startDateStr));
-            contract.setEndDate(sdf.parse(endDateStr));
-            contract.setDetail(detail);
-            contract.setValue(Double.parseDouble(valueStr));
-            contractService.createContract(contract);
+            contract.setStartDate(sdf.parse(startDateStr)); // Set ngay bat dau
+            contract.setEndDate(sdf.parse(endDateStr)); // Set ngay ket thuc
+            contract.setDetail(detail); // Set chi tiet
+            contract.setValue(Double.parseDouble(valueStr)); // Set gia tri
+            contractService.createContract(contract); // Tao contract
             req.setAttribute("message", "Create contract successfully!");
             req.setAttribute("status", "success");
         } catch (ParseException | SQLException e) {
-            req.setAttribute("message", "Create contract failure!" + e.getMessage());
-            req.setAttribute("status", "danger");
+            Logger logger = Logger.getLogger(ContractController.class.getName()); // Log loi
+            logger.log(Level.SEVERE, "Create contract failure!", e);
+            req.setAttribute("message", "Create contract failure!" + e.getMessage()); // Thong bao loi
+            req.setAttribute("status", "danger"); // Thong bao danger
             e.printStackTrace();
         }
         req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);

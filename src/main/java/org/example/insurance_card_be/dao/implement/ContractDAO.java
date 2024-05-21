@@ -9,15 +9,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ContractDAO {
+    // DAO dung de thao tac voi database
     private Connection connection;
 
+    // Khoi tao connection
     public ContractDAO() {
         this.connection = DBContext.getConnection();
     }
 
+    // Ham tao contract
     public void createContract(Contract contract) throws SQLException {
         String sql = "INSERT INTO Contracts(CustomerID, ContractInfo, Status, StartDate, EndDate) VALUES(?, ?, ?, ?, ?)";
+        // Lay ra id cua contract vua duoc tao
         ResultSet generatedKeys = null;
+        // Tao cac chi tiet cua contract
         try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, contract.getCustomerID());
             ps.setString(2, contract.getContractInfo());
@@ -27,37 +32,29 @@ public class ContractDAO {
             ps.executeUpdate();
 
             // Lay ra id cua contract vua duoc tao
-            ResultSet generatedkeys = ps.getGeneratedKeys();
-            if (ps.getGeneratedKeys().next()) {
-                int contractID = ps.getGeneratedKeys().getInt(1);
-                contract.setContractID(contractID);
-            }
+            try (ResultSet generatedkeys = ps.getGeneratedKeys()) {
+                // Neu co id duoc tao
+                if (ps.getGeneratedKeys().next()) {
+                    int contractID = ps.getGeneratedKeys().getInt(1);
+                    // Set id cho contract
+                    contract.setContractID(contractID);
 
-            // Tao cac chi tiet cua contract
-            String sqlDetail = "INSERT INTO ContractDetails(ContractID, Detail, Value) VALUES(?, ?, ?)";
-            try (PreparedStatement detailPS = connection.prepareStatement(sqlDetail)) {
-                detailPS.setInt(1, contract.getContractID());
-                detailPS.setString(2, contract.getDetail());
-                detailPS.setDouble(3, contract.getValue());
-                detailPS.executeUpdate();
-            }
-        } finally {
-            if (generatedKeys != null) {
-                try {
-                    generatedKeys.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                if (connection != null) {
-                    try {
-                        connection.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                    // Tao cac chi tiet cua contract
+                    String sqlDetail = "INSERT INTO ContractDetails(ContractID, Detail, Value) VALUES(?, ?, ?)";
+                    try (PreparedStatement detailPS = connection.prepareStatement(sqlDetail)) {
+                        detailPS.setInt(1, contract.getContractID());
+                        detailPS.setString(2, contract.getDetail());
+                        detailPS.setDouble(3, contract.getValue());
+                        detailPS.executeUpdate();
                     }
                 }
             }
-
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 }
+
 
