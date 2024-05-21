@@ -10,10 +10,13 @@
 <head>
     <title>Create New Contract</title>
     <link href="${pageContext.request.contextPath}/css/createContract.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <!-- Include header -->
 <jsp:include page="/views/includes/header.jsp"/>
+<!-- Include navbar -->
+<jsp:include page="/views/includes/navbar.jsp"/>
 <div class="container">
     <div class="form-container">
         <h2>Create New Contract</h2>
@@ -47,27 +50,46 @@
                 <input type="number" id="value" name="value" step="0.01" required>
             </div>
             <div class="membership-info">
-                <p><strong>Introductory Member</strong> – This option requires two steps. After completing the contact
-                    information and circling your choice, please submit the form to the Membership Chairperson at the
-                    address below. Do not include a cheque. You will receive an invitation to attend an information
-                    session. We want to provide as much information as possible to you about KAGS. At the end of the
-                    session you may complete the application for membership form and pay the $50 membership fee.</p>
-                <p><strong>Patron</strong> – A supporter of the Arts. Receives the newsletters, but does not exhibit or
-                    gallery sit, participate in open studios or classes and is not expected to participate on a
-                    committee. Membership fee is $25/year.</p>
+                <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
+                    motorcycle. After completing your contact information and selecting your insurance package, please
+                    submit the form to the Insurance Advisor at the address below. You will receive an invitation to
+                    attend an information session. We aim to provide you with as much information as possible about our
+                    insurance policies. At the end of the session, you may complete the application for insurance and
+                    pay the $100 insurance fee.</p>
+
+                <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for
+                    your motorcycle, including accident and theft insurance. Additionally, you will receive monthly
+                    newsletters with updates on your insurance coverage. The insurance fee is $150 per year.
+                    Comprehensive insurance not only covers basic liabilities but also includes coverage for damage
+                    caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any
+                    situation.</p>
+
+                <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of
+                    coverage. This includes all the benefits of comprehensive insurance, plus additional features such
+                    as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The
+                    premium insurance fee is $250 per year. With this package, you are guaranteed the best support and
+                    quickest response in case of any incident. Our premium plan also includes a personal advisor who
+                    will assist you with all your insurance needs.</p>
+
+                <div class="membership-info">
+                    <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you
+                        receive the support you need in case of any accidents or incidents. Our team is dedicated to
+                        helping you understand the different options and choose the one that best suits your needs.</p>
+                </div>
+
+                <h3>Application can be dropped off or mailed to:</h3>
+                <p>
+                    Motorcycle Insurance Company,<br>
+                    123 Nguyen Hue Street,<br>
+                    District 1, Ho Chi Minh City,<br>
+                    Vietnam
+                </p>
+                <p>
+                    Phone: 0123-456-789<br>
+                    www.motorcycleinsurance.vn
+                </p>
+                <button type="submit" class="btn-submit">Create Contract</button>
             </div>
-            <h3>Application can be dropped off or mailed to:</h3>
-            <p>
-                KAWARTHA ARTISTS' GALLERY & STUDIO,<br>
-                420 O'CONNELL RD.,<br>
-                PETERBOROUGH, ONT.<br>
-                K9J 4C9
-            </p>
-            <p>
-                705-741-2817<br>
-                www.kawarthaartists.org
-            </p>
-            <button type="submit" class="btn-submit">Create Contract</button>
         </form>
     </div>
 </div>
