@@ -9,13 +9,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="Son's Branch">
+    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="Son them database">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/fontawesome-all.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/iofrm-style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/Forgot.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/Register.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/cleave.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/jquery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/popper.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/DAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/DAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/includes/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/includes/header.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Jsp File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -63,18 +82,29 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.DBContext.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.Forgot.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.Login.jsp (1).executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.Login.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.Register.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.header.jsp.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Smart Tomcat.Insurance.executor&quot;: &quot;Run&quot;,
     &quot;Smart Tomcat.Tomcat: Insurance_Card_BE.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Forgot.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Login.jsp (1).executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Login.jsp (2).executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Login.jsp (3).executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Login.jsp.executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.Tomcat 10.1.171.executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.header.jsp (1).executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.header.jsp (2).executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.header.jsp (3).executor&quot;: &quot;Debug&quot;,
     &quot;Tomcat Server.header.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Sondthe176576&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/12/Desktop/Summer 2024(Semester)/SWP391/Insurance_Card_BE&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/12/Desktop/Summer 2024(Semester)/SWP391/Insurance_Card_BE/src/main/webapp/js&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -89,14 +119,59 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\12\Desktop\Summer 2024(Semester)\SWP391\Insurance_Card_BE\src\main\webapp\js" />
+      <recent name="C:\Users\12\Desktop\Summer 2024(Semester)\SWP391\Insurance_Card_BE\src\main\webapp\css" />
       <recent name="D:\Insurance_Card_BE\src\main\webapp\js" />
       <recent name="D:\Insurance_Card_BE\src\main\webapp\img" />
       <recent name="D:\Insurance_Card_BE\src\main\webapp\css" />
-      <recent name="D:\Insurance_Card_BE\src\main\java\org\example\insurance_card_be" />
-      <recent name="D:\Insurance_Card_BE\src\main\webapp" />
     </key>
   </component>
-  <component name="RunManager" selected="Smart Tomcat.Insurance">
+  <component name="RunManager" selected="JavaScript Debug.Login.jsp">
+    <configuration name="Login.jsp" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:9900/Insurance_Card_BE_war/js/Login.jsp">
+      <method v="2" />
+    </configuration>
+    <configuration name="Register.jsp" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:9900/Insurance_Card_BE_war/js/Register.jsp">
+      <method v="2" />
+    </configuration>
+    <configuration name="Login.jsp" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" temporary="true" APPLICATION_SERVER_NAME="Tomcat 10.1.17" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9900/js/Login.jsp" />
+      <deployment>
+        <artifact name="Insurance_Card_BE:war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/Insurance_Card_BE_war" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="916a1e8b-729d-4f47-8848-4fdbc0bd6fe9" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Insurance_Card_BE:war" />
+        </option>
+      </method>
+    </configuration>
     <configuration name="Tomcat 10.1.171" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.17" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATING_POLICY" value="redeploy-artifacts" />
       <deployment>
@@ -184,245 +259,17 @@
         </option>
       </method>
     </configuration>
-    <configuration name="header.jsp (1)" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" temporary="true" APPLICATION_SERVER_NAME="Tomcat 10.1.17" ALTERNATIVE_JRE_ENABLED="false">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9900/views/includes/header.jsp" />
-      <deployment>
-        <artifact name="Insurance_Card_BE:war">
-          <settings>
-            <option name="CONTEXT_PATH" value="/Insurance_Card_BE_war" />
-          </settings>
-        </artifact>
-      </deployment>
-      <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="ffec24bb-00a5-4022-9027-192026a98ee7" />
-      </server-settings>
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="56904" />
-      </RunnerSettings>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="Insurance_Card_BE:war" />
-        </option>
-      </method>
-    </configuration>
-    <configuration name="header.jsp (2)" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" temporary="true" APPLICATION_SERVER_NAME="Tomcat 10.1.17" ALTERNATIVE_JRE_ENABLED="false">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9900/views/includes/header.jsp" />
-      <deployment>
-        <artifact name="Insurance_Card_BE:war">
-          <settings>
-            <option name="CONTEXT_PATH" value="/Insurance_Card_BE_war" />
-          </settings>
-        </artifact>
-      </deployment>
-      <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="e24e293b-2ac2-4928-8d4a-1b10127784cd" />
-      </server-settings>
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="Insurance_Card_BE:war" />
-        </option>
-      </method>
-    </configuration>
-    <configuration name="header.jsp (3)" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" temporary="true" APPLICATION_SERVER_NAME="Tomcat 10.1.17" ALTERNATIVE_JRE_ENABLED="false">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9900/views/includes/header.jsp" />
-      <deployment>
-        <artifact name="Insurance_Card_BE:war">
-          <settings>
-            <option name="CONTEXT_PATH" value="/Insurance_Card_BE_war" />
-          </settings>
-        </artifact>
-      </deployment>
-      <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="8826d63e-e927-490f-a5bb-a0341fd4bb6d" />
-      </server-settings>
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="56920" />
-      </RunnerSettings>
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="Insurance_Card_BE:war" />
-        </option>
-      </method>
-    </configuration>
-    <configuration name="header.jsp" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" temporary="true" APPLICATION_SERVER_NAME="Tomcat 10.1.17" ALTERNATIVE_JRE_ENABLED="false">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9900/views/includes/header.jsp" />
-      <deployment>
-        <artifact name="Insurance_Card_BE:war">
-          <settings>
-            <option name="CONTEXT_PATH" value="/Insurance_Card_BE_war" />
-          </settings>
-        </artifact>
-      </deployment>
-      <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="3a7a4e1b-1bd6-422d-b7cb-ac88ba4b2498" />
-      </server-settings>
-      <predefined_log_file enabled="true" id="Tomcat" />
-      <predefined_log_file enabled="true" id="Tomcat Catalina" />
-      <predefined_log_file id="Tomcat Manager" />
-      <predefined_log_file id="Tomcat Host Manager" />
-      <predefined_log_file id="Tomcat Localhost Access" />
-      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
-        <option name="USE_ENV_VARIABLES" value="true" />
-        <STARTUP>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </STARTUP>
-        <SHUTDOWN>
-          <option name="USE_DEFAULT" value="true" />
-          <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
-          <option name="PROGRAM_PARAMETERS" value="" />
-        </SHUTDOWN>
-      </ConfigurationWrapper>
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="Insurance_Card_BE:war" />
-        </option>
-      </method>
-    </configuration>
-    <configuration name="Insurance" type="com.poratu.idea.plugins.tomcat">
-      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
-      <predefined_log_file enabled="true" id="Tomcat Access Log" />
-      <predefined_log_file id="Tomcat Catalina Log" />
-      <predefined_log_file id="Tomcat Manager Log" />
-      <predefined_log_file id="Tomcat Host Manager Log" />
-      <option name="catalinaBase" value="C:\Users\12\.SmartTomcat\Insurance_Card_BE\Insurance_Card_BE" />
-      <option name="contextPath" value="/Insurance_Card_BE" />
-      <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
-      <option name="extraClassPath" value="" />
-      <option name="tomcatInfo">
-        <TomcatInfo>
-          <option name="name" value="Apache Tomcat/10.1.17" />
-          <option name="path" value="$PROJECT_DIR$/../../../PRJ301/apache-tomcat-10.1.17-windows-x64/apache-tomcat-10.1.17" />
-          <option name="version" value="10.1.17.0" />
-        </TomcatInfo>
-      </option>
-      <option name="vmOptions" value="" />
-      <module name="Insurance_Card_BE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Tomcat: Insurance_Card_BE" type="com.poratu.idea.plugins.tomcat" temporary="true">
-      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
-      <predefined_log_file enabled="true" id="Tomcat Access Log" />
-      <predefined_log_file id="Tomcat Catalina Log" />
-      <predefined_log_file id="Tomcat Manager Log" />
-      <predefined_log_file id="Tomcat Host Manager Log" />
-      <option name="catalinaBase" value="" />
-      <option name="contextPath" value="/Insurance_Card_BE" />
-      <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
-      <option name="extraClassPath" value="" />
-      <option name="tomcatInfo">
-        <TomcatInfo>
-          <option name="name" value="Apache Tomcat/10.1.17" />
-          <option name="path" value="$PROJECT_DIR$/../../../PRJ301/apache-tomcat-10.1.17-windows-x64/apache-tomcat-10.1.17" />
-          <option name="version" value="10.1.17.0" />
-        </TomcatInfo>
-      </option>
-      <option name="vmOptions" value="" />
-      <module name="Insurance_Card_BE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Smart Tomcat.Insurance" />
-      <item itemvalue="Smart Tomcat.Tomcat: Insurance_Card_BE" />
+      <item itemvalue="JavaScript Debug.Login.jsp" />
+      <item itemvalue="JavaScript Debug.Register.jsp" />
       <item itemvalue="Tomcat Server.Tomcat 10.1.171" />
-      <item itemvalue="Tomcat Server.header.jsp" />
-      <item itemvalue="Tomcat Server.header.jsp (1)" />
-      <item itemvalue="Tomcat Server.header.jsp (2)" />
-      <item itemvalue="Tomcat Server.header.jsp (3)" />
+      <item itemvalue="Tomcat Server.Login.jsp" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Smart Tomcat.Tomcat: Insurance_Card_BE" />
-        <item itemvalue="Tomcat Server.header.jsp (2)" />
-        <item itemvalue="Tomcat Server.header.jsp (1)" />
-        <item itemvalue="Tomcat Server.header.jsp (3)" />
-        <item itemvalue="Tomcat Server.header.jsp" />
+        <item itemvalue="JavaScript Debug.Login.jsp" />
+        <item itemvalue="JavaScript Debug.Register.jsp" />
+        <item itemvalue="Tomcat Server.Login.jsp" />
       </list>
     </recent_temporary>
   </component>
@@ -448,7 +295,14 @@
       <workItem from="1716115738457" duration="841000" />
       <workItem from="1716116621913" duration="1794000" />
       <workItem from="1716128786311" duration="2254000" />
-      <workItem from="1716163775917" duration="879000" />
+      <workItem from="1716163775917" duration="3078000" />
+      <workItem from="1716183990580" duration="1105000" />
+      <workItem from="1716191307888" duration="313000" />
+      <workItem from="1716244334881" duration="1501000" />
+      <workItem from="1716245900051" duration="747000" />
+      <workItem from="1716246674164" duration="1563000" />
+      <workItem from="1716248264691" duration="4404000" />
+      <workItem from="1716252725102" duration="301000" />
     </task>
     <task id="LOCAL-00001" summary="Sơn up file lan 1">
       <option name="closed" value="true" />
@@ -466,7 +320,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716129664103</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Son add file DAO">
+      <option name="closed" value="true" />
+      <created>1716164997411</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1716164997411</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -486,6 +348,18 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Sơn up file lan 1" />
     <MESSAGE value="Son's Branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Son's Branch" />
+    <MESSAGE value="Son add file DAO" />
+    <option name="LAST_COMMIT_MESSAGE" value="Son add file DAO" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/webapp/js/Login.jsp</url>
+          <line>4</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
