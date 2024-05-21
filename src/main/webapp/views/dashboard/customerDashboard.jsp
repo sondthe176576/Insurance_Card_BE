@@ -32,6 +32,7 @@
             background-color: #ff8000;
         }
     </style>
+
 </head>
 <body>
 
@@ -131,32 +132,168 @@
     </div>
 </nav>
 <!-- Content -->
-<div class="container mt-4">
-    <div class="header mb-4">
-        <h1>Customer Dashboard</h1>
+<style>
+    .content-section {
+        text-align: center;
+        padding: 50px 0;
+    }
+    .content-section h2 {
+        font-size: 24px;
+        color: #004080;
+        margin-bottom: 20px;
+    }
+    .content-section p {
+        color: #666;
+    }
+    .info-box {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+    .info-box .box {
+        flex: 1;
+        max-width: 500px;
+        padding: 20px;
+        margin: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    .info-box .box h3 {
+        font-size: 20px;
+        color: #004080;
+    }
+    .info-box .box p {
+        color: #666;
+        margin-bottom: 20px;
+    }
+    .info-box .box .btn {
+        background-color: #ff8000;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-transform: uppercase;
+    }
+    .coverage-section .coverage-box {
+        margin: 20px 0;
+        text-align: center;
+    }
+    .coverage-section .coverage-box .icon {
+        font-size: 30px;
+        color: #004080;
+        margin-bottom: 10px;
+    }
+    .coverage-section .coverage-box h3 {
+        font-size: 18px;
+        color: #004080;
+    }
+    .coverage-section .coverage-box p {
+        color: #666;
+    }
+    .news-section .news-box {
+        margin: 20px 0;
+    }
+    .news-section .news-box img {
+        width: 100%;
+        height: auto;
+    }
+    .news-section .news-box h3 {
+        font-size: 18px;
+        color: #004080;
+        margin-top: 10px;
+    }
+    .news-section .news-box p {
+        color: #666;
+        margin-bottom: 10px;
+    }
+    .news-section .news-box small {
+        color: #999;
+    }
+    .pagination {
+        text-align: center;
+        margin-top: 30px;
+    }
+    .pagination .page-link {
+        color: #004080;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        margin: 0 5px;
+        text-decoration: none;
+    }
+    .pagination .page-link:hover {
+        background-color: #004080;
+        color: white;
+    }
+</style>
+<div class="container content-section">
+    <h2>Peace Insurance has over 25 years of experience in the insurance industry.</h2>
+
+    <div class="info-box">
+        <div class="box">
+            <h3>Insurance Products</h3>
+            <p>We offer various solutions tailored to your needs, covering a wide range of insurance products.</p>
+            <button class="btn">View Our Products</button>
+        </div>
+        <div class="box">
+            <h3>Find An Agent</h3>
+            <p>Our experienced agents are ready to assist you in finding the best insurance solutions for your situation.</p>
+            <button class="btn">Find An Agent</button>
+        </div>
     </div>
-    <div class="content">
-        <div class="card mb-3">
-            <div class="card-body">
-                <h2>Welcome, [Customer Name]!</h2>
-                <p>Here you can view your profile information, manage orders, and update settings.</p>
-            </div>
+
+    <h2>Insurance Coverage That Fits Your Life</h2>
+    <p>Insurance coverage tailored to your needs is easier than you think. Sometimes on purpose injected humor and the like, simple dummy.</p>
+
+    <div class="row coverage-section">
+        <div class="col-md-3 coverage-box">
+            <div class="icon"><i class="fa fa-home"></i></div>
+            <h3>Home Insurance</h3>
+            <p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <h2>Recent Orders</h2>
-                <p>No recent orders found.</p>
-            </div>
+        <div class="col-md-3 coverage-box">
+            <div class="icon"><i class="fa fa-briefcase"></i></div>
+            <h3>Business Insurance</h3>
+            <p>Aliquam at lacus ac sapien molestie consequat nec in nibh. Mauris sagittis magna ut nunc.</p>
         </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <h2>Account Settings</h2>
-                <p>Update your account settings and preferences.</p>
-            </div>
+        <div class="col-md-3 coverage-box">
+            <div class="icon"><i class="fa fa-plane"></i></div>
+            <h3>Travel Insurance</h3>
+            <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque pharetra elit ut nisl.</p>
         </div>
+        <div class="col-md-3 coverage-box">
+            <div class="icon"><i class="fa fa-heart"></i></div>
+            <h3>Heart – Life Insurance</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+        </div>
+    </div>
+
+    <h2>Latest News From Media</h2>
+
+    <div class="row news-section">
+        <div class="col-md-4 news-box">
+            <img src="${pageContext.request.contextPath}/img/blog-pic.jpg" alt="News Image 1">
+            <h3>Lorem Ipsum Dolor Sit Amet Michel Jackson</h3>
+            <p>Morbi lectus arcu, suscipit quis congue quis, vulp ut nulla. Curabitur sit amet interdum lectus.</p>
+            <small>Posted on Jan 21, 2024</small>
+        </div>
+        <div class="col-md-4 news-box">
+            <img src="${pageContext.request.contextPath}/img/blog-pic-1.jpg" alt="News Image 2">
+            <h3>Pellentesque faucibus mauris id lobortis hendrerit</h3>
+            <p>Morbi lectus arcu, suscipit quis congue quis, vulp ut nulla. Curabitur sit amet interdum lectus.</p>
+            <small>Posted on Jan 21, 2024</small>
+        </div>
+        <div class="col-md-4 news-box">
+            <img src="${pageContext.request.contextPath}/img/blog-pic-2.jpg" alt="News Image 3">
+            <h3>Pellentesque faucibus mauris id lobortis hendrerit</h3>
+            <p>Morbi lectus arcu, suscipit quis congue quis, vulp ut nulla. Curabitur sit amet interdum lectus.</p>
+            <small>Posted on Jan 21, 2024</small>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <a href="#" class="page-link">1</a>
+        <a href="#" class="page-link">2</a>
     </div>
 </div>
-
 <%@ include file="footer.jsp" %>
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>

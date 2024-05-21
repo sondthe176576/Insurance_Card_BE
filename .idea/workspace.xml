@@ -2,22 +2,15 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="SWP391_Team6" />
+      <artifact name="Insurance_Card_BE:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/customer/footer.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/customer/header.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/dashboard/footer.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/dashboard/header.jsp" afterDir="false" />
+    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="hungthhe176193 manageCustomer(1)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/DBContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/DBContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/customer/manageCustomer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/customer/manageCustomer.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/dashboard/customerDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/dashboard/customerDashboard.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,6 +73,7 @@
     "Smart Tomcat.tomcat.executor": "Run",
     "Tomcat Server.Tomcat 10.1.17.executor": "Run",
     "Tomcat Server.Tomcat 10.1.171.executor": "Run",
+    "Tomcat Server.manageCustomer.jsp.executor": "Run",
     "git-widget-placeholder": "hungthhe176193",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/IntelliJ/Project/IC/Insurance_Card_BE/src/main/webapp/views/customer",
@@ -292,6 +286,45 @@
         </option>
       </method>
     </configuration>
+    <configuration name="manageCustomer.jsp" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" temporary="true" APPLICATION_SERVER_NAME="Tomcat 10.1.17" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9999/views/customer/manageCustomer.jsp" />
+      <deployment>
+        <artifact name="Insurance_Card_BE:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/Insurance_Card_BE_war_exploded" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="a00345ff-423a-45b6-8758-baaf3b4ba16c" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Insurance_Card_BE:war exploded" />
+        </option>
+      </method>
+    </configuration>
     <configuration name="Tomcat: Insurance_Card_BE" type="com.poratu.idea.plugins.tomcat" temporary="true">
       <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
       <predefined_log_file enabled="true" id="Tomcat Access Log" />
@@ -344,9 +377,11 @@
       <item itemvalue="Smart Tomcat.Tomcat: Insurance_Card_BE" />
       <item itemvalue="Tomcat Server.Tomcat 10.1.171" />
       <item itemvalue="Tomcat Server.Tomcat 10.1.17" />
+      <item itemvalue="Tomcat Server.manageCustomer.jsp" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Tomcat Server.manageCustomer.jsp" />
         <item itemvalue="Application.DBContext" />
       </list>
     </recent_temporary>
@@ -373,8 +408,19 @@
       <workItem from="1716115738457" duration="359000" />
       <workItem from="1716128344605" duration="3326000" />
       <workItem from="1716146278778" duration="1948000" />
-      <workItem from="1716194543019" duration="13537000" />
+      <workItem from="1716194543019" duration="17957000" />
+      <workItem from="1716267530868" duration="1047000" />
+      <workItem from="1716279651166" duration="2751000" />
     </task>
+    <task id="LOCAL-00001" summary="hungthhe176193 manageCustomer(1)">
+      <option name="closed" value="true" />
+      <created>1716227348584</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716227348585</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -390,6 +436,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="hungthhe176193 manageCustomer(1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="hungthhe176193 manageCustomer(1)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
