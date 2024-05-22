@@ -9,12 +9,66 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 add new contract(2)">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/navbar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/img/back-icon-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/img/back.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/includes/navbar.jsp" afterDir="false" />
+    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 fix UI add contract page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/createContract.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/createContract.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/font-awesome.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/owl.carousel.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/owl.theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/prettify.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/about-bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/agent-detail.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/agent-pic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/agent.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/agent1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/agent2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/agent3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/author-pic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/auto-insurance.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/back-icon-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/blog-pic-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/blog-pic-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/blog-pic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/business-insurance.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/claim-auto.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/claim-home.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/claim-life.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/client.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/comments-user-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/comments-user.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/down-arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/error-pic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/home-insurance.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/life-insurance.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/lp-auto-insurance.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/lp-travel-bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/other-insurance.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/page-head-faq.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/page-head-pic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/small-post-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/small-post.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/story-five.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/story-four.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/story-one.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/story-six.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/story-three.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/img/travel-insurance.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/client-carousel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/font-size.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/jquery-1.11.3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/jquery.bootstrap.wizard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/jquery.easing.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/nav-menu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/offset.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/owl.carousel.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/prettify.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/product-carousel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/slider.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/testimonial.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/wizard.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,31 +127,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ContractDAO.executor": "Run",
-    "Application.DBContext.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Smart Tomcat.ProjectSWP391.executor": "Run",
-    "Smart Tomcat.Tomcat: Insurance_Card_BE.executor": "Run",
-    "Tomcat Server.Tomcat 10.1.171.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/ProjectSWP391/Insurance_Card_BE/src/main/webapp/img",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ContractDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DBContext.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Smart Tomcat.ProjectSWP391.executor&quot;: &quot;Run&quot;,
+    &quot;Smart Tomcat.Tomcat: Insurance_Card_BE.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Tomcat 10.1.171.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ProjectSWP391/Insurance_Card_BE/src/main/webapp/img&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\ProjectSWP391\Insurance_Card_BE\src\main\webapp\img" />
@@ -311,7 +365,14 @@
       <workItem from="1716211495754" duration="15109000" />
       <workItem from="1716254505606" duration="4250000" />
       <workItem from="1716262862073" duration="215000" />
-      <workItem from="1716264026026" duration="3741000" />
+      <workItem from="1716264026026" duration="4347000" />
+      <workItem from="1716270324404" duration="15000" />
+      <workItem from="1716270536403" duration="345000" />
+      <workItem from="1716279377776" duration="4912000" />
+      <workItem from="1716366162410" duration="1889000" />
+      <workItem from="1716368069761" duration="4604000" />
+      <workItem from="1716389651252" duration="1380000" />
+      <workItem from="1716401358483" duration="5535000" />
     </task>
     <task id="LOCAL-00001" summary="annthe176161 update contract in model">
       <option name="closed" value="true" />
@@ -337,7 +398,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716258688948</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="annthe176161 fix UI add contract page">
+      <option name="closed" value="true" />
+      <created>1716268146936</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716268146936</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -358,7 +427,8 @@
     <MESSAGE value="annthe176161 update contract in model" />
     <MESSAGE value="annthe176161 add new contract(1)" />
     <MESSAGE value="annthe176161 add new contract(2)" />
-    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 add new contract(2)" />
+    <MESSAGE value="annthe176161 fix UI add contract page" />
+    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 fix UI add contract page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
