@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Create New Contract</title>
@@ -14,12 +15,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-left: 20px;
+            padding: 0 50px;
         }
 
         .form-container h2 {
+            text-align: center;
+            color: #007bff;
+            font-size: 24px;
             margin-bottom: 20px;
-            color: #333;
+            position: relative;
         }
 
         .form-container h3 {
@@ -99,66 +103,19 @@
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
-
-        <!-- Thông tin Khách Hàng -->
-        <h3>Customer Information</h3>
-        <div class="form-group">
-            <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" required>
-        </div>
-        <div class="form-group">
-            <label for="idNumber">ID Number (CMND/CCCD or Passport):</label>
-            <input type="text" id="idNumber" name="idNumber" required>
-        </div>
-        <div class="form-group">
-            <label for="dob">Date of Birth:</label>
-            <input type="date" id="dob" name="dob" required>
-        </div>
-        <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone Number:</label>
-            <input type="text" id="phone" name="phone" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-
-        <!-- Thông tin Xe Máy -->
-        <h3>Motorcycle Information</h3>
-        <div class="form-group">
-            <label for="licensePlate">License Plate:</label>
-            <input type="text" id="licensePlate" name="licensePlate" required>
-        </div>
-        <div class="form-group">
-            <label for="brandModel">Brand and Model:</label>
-            <input type="text" id="brandModel" name="brandModel" required>
-        </div>
-        <div class="form-group">
-            <label for="frameNumber">Frame Number:</label>
-            <input type="text" id="frameNumber" name="frameNumber" required>
-        </div>
-        <div class="form-group">
-            <label for="engineNumber">Engine Number:</label>
-            <input type="text" id="engineNumber" name="engineNumber" required>
-        </div>
-        <div class="form-group">
-            <label for="yearOfManufacture">Year of Manufacture:</label>
-            <input type="number" id="yearOfManufacture" name="yearOfManufacture" required>
-        </div>
-        <div class="form-group">
-            <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
-        </div>
-
         <!-- Thông tin Bảo Hiểm -->
+        <div class="form-group">
+            <label for="customerID">Customer ID:</label>
+            <input type="number" id="customerID" name="customerID" min="1" required>
+        </div>
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractInfo">Contract Info:</label>
             <input type="text" id="contractInfo" name="contractInfo" required>
+        </div>
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <input type="text" id="status" name="status" required>
         </div>
         <div class="form-group">
             <label for="startDate">Start Date:</label>
@@ -169,67 +126,9 @@
             <input type="date" id="endDate" name="endDate" required>
         </div>
         <div class="form-group">
-            <label for="insuranceType">Insurance Type:</label>
-            <select id="insuranceType" name="insuranceType" required>
-                <option value="mandatory">Mandatory</option>
-                <option value="voluntary">Voluntary</option>
-                <option value="comprehensive">Comprehensive</option>
-                <option value="premium">Premium</option>
-            </select>
+            <label for="value">Value:</label>
+            <input type="number" id="value" name="value" step="0.01" required>
         </div>
-        <div class="form-group">
-            <label for="premium">Premium:</label>
-            <input type="number" id="premium" name="premium" step="0.01" required>
-        </div>
-        <div class="form-group">
-            <label for="termsConditions">Terms and Conditions:</label>
-            <textarea id="termsConditions" name="termsConditions" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="coverage">Coverage:</label>
-            <textarea id="coverage" name="coverage" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="thirdPartyInsurance">Third Party Insurance (if any):</label>
-            <textarea id="thirdPartyInsurance" name="thirdPartyInsurance"></textarea>
-        </div>
-
-        <!-- Thông tin Thanh Toán -->
-        <h3>Payment Information</h3>
-        <div class="form-group">
-            <label for="paymentMethod">Payment Method:</label>
-            <select id="paymentMethod" name="paymentMethod" required>
-                <option value="creditCard">Credit Card</option>
-                <option value="bankTransfer">Bank Transfer</option>
-                <option value="eWallet">E-Wallet</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="transactionDetails">Transaction Details:</label>
-            <textarea id="transactionDetails" name="transactionDetails" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="paymentFrequency">Payment Frequency:</label>
-            <select id="paymentFrequency" name="paymentFrequency" required>
-                <option value="monthly">Monthly</option>
-                <option value="quarterly">Quarterly</option>
-                <option value="annually">Annually</option>
-            </select>
-        </div>
-        <!-- Thông tin Yêu Cầu Bồi Thường -->
-        <%--            <h3>Claim Information</h3>--%>
-        <%--            <div class="form-group">--%>
-        <%--                <label for="claimProcess">Claim Process:</label>--%>
-        <%--                <textarea id="claimProcess" name="claimProcess" required></textarea>--%>
-        <%--            </div>--%>
-        <%--            <div class="form-group">--%>
-        <%--                <label for="claimForm">Claim Form:</label>--%>
-        <%--                <textarea id="claimForm" name="claimForm" required></textarea>--%>
-        <%--            </div>--%>
-        <%--            <div class="form-group">--%>
-        <%--                <label for="requiredDocuments">Required Documents:</label>--%>
-        <%--                <textarea id="requiredDocuments" name="requiredDocuments" required></textarea>--%>
-        <%--            </div>--%>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
                 motorcycle. After completing your contact information and selecting your insurance package, please

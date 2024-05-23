@@ -44,14 +44,16 @@ public class ContractController extends HttpServlet {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format date
         Contract contract = new Contract();
-        contract.setCustomerID(Integer.parseInt(customerID)); // Set id customer
-        contract.setContractInfo(contractInfo); // Set thong tin contract
-        contract.setStatus(status);  // Set trang thai contract
         try {
-            contract.setStartDate(sdf.parse(startDateStr)); // Set ngay bat dau
-            contract.setEndDate(sdf.parse(endDateStr)); // Set ngay ket thuc
-            contract.setDetail(detail); // Set chi tiet
-            contract.setValue(Double.parseDouble(valueStr)); // Set gia tri
+            contract.setCustomerID(Integer.parseInt(customerID));
+            contract.setContractInfo(contractInfo);
+            contract.setStatus(status);
+            contract.setStartDate(sdf.parse(startDateStr));
+            contract.setEndDate(sdf.parse(endDateStr));
+            contract.setDetail(detail);
+            contract.setValue(Double.parseDouble(valueStr));
+
+
             contractService.createContract(contract); // Tao contract
             req.setAttribute("message", "Create contract successfully!");
             req.setAttribute("status", "success");

@@ -18,4 +18,5 @@ public class Contract {
     private Date EndDate;
     private String detail;
     private double value;
+    private String Coverage;
 }

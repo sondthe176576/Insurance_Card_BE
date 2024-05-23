@@ -19,8 +19,8 @@ public class ContractDAO {
 
     // Ham tao contract
     public void createContract(Contract contract) throws SQLException {
+        // Tao contract
         String sql = "INSERT INTO Contracts(CustomerID, ContractInfo, Status, StartDate, EndDate) VALUES(?, ?, ?, ?, ?)";
-        // Lay ra id cua contract vua duoc tao
         ResultSet generatedKeys = null;
         // Tao cac chi tiet cua contract
         try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
