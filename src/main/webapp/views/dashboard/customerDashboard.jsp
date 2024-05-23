@@ -70,40 +70,41 @@
     <div class="main-content">
         <div class="customer-info">
             <h2>Customer Information</h2>
-            <form>
+            <form id="customerInfoForm">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" value="nguyenthihong@gmail.com" disabled>
+                    <input type="email" class="form-control" id="email" value="nguyenthihong@gmail.com">
                 </div>
                 <div class="form-group">
                     <label for="fullName">Full Name:</label>
-                    <input type="text" class="form-control" id="fullName" value="Nguyễn Thị Hồng" disabled>
+                    <input type="text" class="form-control" id="fullName" value="Nguyễn Thị Hồng">
                 </div>
                 <div class="form-group">
                     <label for="dob">Date of Birth:</label>
-                    <input type="date" class="form-control" id="dob" value="1977-12-13" disabled>
+                    <input type="date" class="form-control" id="dob" value="1977-12-13">
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender:</label>
                     <div>
-                        <input type="radio" id="genderMale" name="gender" value="Male" disabled>
+                        <input type="radio" id="genderMale" name="gender" value="Male">
                         <label for="genderMale">Male</label>
-                        <input type="radio" id="genderFemale" name="gender" value="Female" checked disabled>
+                        <input type="radio" id="genderFemale" name="gender" value="Female" checked>
                         <label for="genderFemale">Female</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
-                    <input type="text" class="form-control" id="address" value="123 Main St, Hanoi" disabled>
+                    <input type="text" class="form-control" id="address" value="123 Main St, Hanoi">
                 </div>
                 <div class="form-group">
                     <label for="job">Job:</label>
-                    <input type="text" class="form-control" id="job" value="Software Developer" disabled>
+                    <input type="text" class="form-control" id="job" value="Software Developer">
                 </div>
                 <div class="form-group">
                     <label for="company">Company:</label>
-                    <input type="text" class="form-control" id="company" value="Tech Solutions" disabled>
+                    <input type="text" class="form-control" id="company" value="Tech Solutions">
                 </div>
+                <button type="button" class="btn btn-primary" onclick="saveCustomerInfo()">Save</button>
             </form>
         </div>
     </div>
@@ -113,5 +114,32 @@
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script>
+    function saveCustomerInfo() {
+        const customerInfo = {
+            email: document.getElementById('email').value,
+            fullName: document.getElementById('fullName').value,
+            dob: document.getElementById('dob').value,
+            gender: document.querySelector('input[name="gender"]:checked').value,
+            address: document.getElementById('address').value,
+            job: document.getElementById('job').value,
+            company: document.getElementById('company').value
+        };
+
+        // Here you can handle the form submission
+        // For example, you can use an AJAX request to submit the form data to your backend server
+        $.ajax({
+            type: 'POST',
+            url: 'saveCustomerInfo', // Replace with your server endpoint
+            data: customerInfo,
+            success: function(response) {
+                alert('Customer information saved successfully!');
+            },
+            error: function(error) {
+                alert('An error occurred while saving customer information.');
+            }
+        });
+    }
+</script>
 </body>
 </html>
