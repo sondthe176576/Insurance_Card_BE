@@ -7,6 +7,8 @@
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
+
+
         /* Custom Navbar */
         .navbar-custom {
             background-color: #004080;

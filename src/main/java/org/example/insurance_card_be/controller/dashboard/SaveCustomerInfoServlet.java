@@ -19,9 +19,6 @@ public class SaveCustomerInfoServlet extends HttpServlet {
         String job = request.getParameter("job");
         String company = request.getParameter("company");
 
-        // Here you would typically update the database with the new information
-        // For example:
-        // CustomerDAO.updateCustomerInfo(email, fullName, dob, gender, address, job, company);
 
         response.setContentType("application/json");
         response.getWriter().write("{\"status\":\"success\"}");

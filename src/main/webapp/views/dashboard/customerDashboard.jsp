@@ -73,15 +73,15 @@
             <form id="customerInfoForm">
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" value="nguyenthihong@gmail.com">
+                    <input type="email" class="form-control" id="email" value="">
                 </div>
                 <div class="form-group">
                     <label for="fullName">Full Name:</label>
-                    <input type="text" class="form-control" id="fullName" value="Nguyễn Thị Hồng">
+                    <input type="text" class="form-control" id="fullName" value="">
                 </div>
                 <div class="form-group">
                     <label for="dob">Date of Birth:</label>
-                    <input type="date" class="form-control" id="dob" value="1977-12-13">
+                    <input type="date" class="form-control" id="dob" value="">
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender:</label>
@@ -94,15 +94,15 @@
                 </div>
                 <div class="form-group">
                     <label for="address">Address:</label>
-                    <input type="text" class="form-control" id="address" value="123 Main St, Hanoi">
+                    <input type="text" class="form-control" id="address" value="">
                 </div>
                 <div class="form-group">
                     <label for="job">Job:</label>
-                    <input type="text" class="form-control" id="job" value="Software Developer">
+                    <input type="text" class="form-control" id="job" value="">
                 </div>
                 <div class="form-group">
                     <label for="company">Company:</label>
-                    <input type="text" class="form-control" id="company" value="Tech Solutions">
+                    <input type="text" class="form-control" id="company" value="">
                 </div>
                 <button type="button" class="btn btn-primary" onclick="saveCustomerInfo()">Save</button>
             </form>
@@ -139,6 +139,7 @@
                 alert('An error occurred while saving customer information.');
             }
         });
+
     }
 </script>
 </body>
