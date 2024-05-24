@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Customers {
     private int CustomerID;
+    private Users user;
+    private String PersonalInfo;
 }

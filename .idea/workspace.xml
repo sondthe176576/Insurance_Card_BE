@@ -9,22 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 update UI add contract page">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/SelectCustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/CustomerInfoDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/MotorbikeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Customers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Motorcycle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Users.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/CustomerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/MotorbikeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/selectCustomer.jsp" afterDir="false" />
+    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 update UI and add contract in db">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/ContractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/ContractController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/ContractDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/ContractDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Contract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Contract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/SelectCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/SelectCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/CustomerInfoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/CustomerInfoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Customers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Customers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/CustomerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/selectCustomer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/selectCustomer.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/includes/navbar.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/includes/navbar.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,32 +77,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ContractDAO.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CustomerInfoDAO.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DBContext.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Smart Tomcat.ProjectSWP391.executor&quot;: &quot;Run&quot;,
-    &quot;Smart Tomcat.Tomcat: Insurance_Card_BE.executor&quot;: &quot;Run&quot;,
-    &quot;Tomcat Server.Tomcat 10.1.171.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/ProjectSWP391/Insurance_Card_BE/src/main/webapp/img&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ContractDAO.executor": "Run",
+    "Application.CustomerInfoDAO.executor": "Run",
+    "Application.CustomerService.executor": "Run",
+    "Application.DBContext.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Smart Tomcat.ProjectSWP391.executor": "Run",
+    "Smart Tomcat.Tomcat: Insurance_Card_BE.executor": "Run",
+    "Tomcat Server.Tomcat 10.1.171.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/ProjectSWP391/Insurance_Card_BE/src/main/webapp/img",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\ProjectSWP391\Insurance_Card_BE\src\main\webapp\img" />
@@ -118,7 +113,7 @@
       <recent name="D:\Insurance_Card_BE\src\main\java\org\example\insurance_card_be" />
     </key>
   </component>
-  <component name="RunManager" selected="Smart Tomcat.ProjectSWP391">
+  <component name="RunManager" selected="Application.CustomerService">
     <configuration name="ContractDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.insurance_card_be.dao.implement.ContractDAO" />
       <module name="Insurance_Card_BE" />
@@ -138,6 +133,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.insurance_card_be.dao.implement.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.insurance_card_be.service.CustomerService" />
+      <module name="Insurance_Card_BE" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.insurance_card_be.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -291,6 +299,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.CustomerService" />
       <item itemvalue="Application.CustomerInfoDAO" />
       <item itemvalue="Application.ContractDAO" />
       <item itemvalue="Application.DBContext" />
@@ -300,6 +309,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.CustomerService" />
         <item itemvalue="Application.CustomerInfoDAO" />
         <item itemvalue="Application.DBContext" />
         <item itemvalue="Application.ContractDAO" />
@@ -350,6 +360,9 @@
       <workItem from="1716460913143" duration="417000" />
       <workItem from="1716470034024" duration="3470000" />
       <workItem from="1716473528564" duration="3640000" />
+      <workItem from="1716477919315" duration="422000" />
+      <workItem from="1716482904855" duration="4679000" />
+      <workItem from="1716520344859" duration="8085000" />
     </task>
     <task id="LOCAL-00001" summary="annthe176161 update contract in model">
       <option name="closed" value="true" />
@@ -391,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716407049433</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="annthe176161 update UI and add contract in db">
+      <option name="closed" value="true" />
+      <created>1716478010317</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716478010317</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -414,7 +435,8 @@
     <MESSAGE value="annthe176161 add new contract(2)" />
     <MESSAGE value="annthe176161 fix UI add contract page" />
     <MESSAGE value="annthe176161 update UI add contract page" />
-    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 update UI add contract page" />
+    <MESSAGE value="annthe176161 update UI and add contract in db" />
+    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 update UI and add contract in db" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -428,11 +450,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/DBContext.java</url>
           <line>33</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/SelectCustomerController.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -28,7 +28,7 @@
         </ul>
         <div class="nav-actions">
             <button class="search-btn"><i class="fa fa-search"></i></button>
-            <button class="contact-btn">Contact Us</button>
+            <button class="contact-btn">New Contact</button>
         </div>
     </div>
 </nav>

@@ -103,11 +103,30 @@
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
-        <!-- Thông tin Bảo Hiểm -->
+        <!-- Thông tin Khách Hàng -->
+        <h3>Customer Information</h3>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
-            <input type="number" id="customerID" name="customerID" min="1" required>
+            <input type="number" id="customerID" name="customerID" value="${param.customerID}" min="1" required
+                   readonly>
         </div>
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" value="${customer.user.fullName}" required readonly>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="${customer.user.email}" required readonly>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" value="${customer.user.mobile}" required readonly>
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="${customer.user.address}" required readonly>
+        </div>
+        <!-- Thông tin Bảo Hiểm -->
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractInfo">Contract Info:</label>
