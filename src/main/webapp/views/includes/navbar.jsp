@@ -28,7 +28,7 @@
         </ul>
         <div class="nav-actions">
             <button class="search-btn"><i class="fa fa-search"></i></button>
-            <button class="contact-btn">New Contact</button>
+            <a href="${pageContext.request.contextPath}/selectCustomer" class="btn btn-primary">Create Contract</a>
         </div>
     </div>
 </nav>

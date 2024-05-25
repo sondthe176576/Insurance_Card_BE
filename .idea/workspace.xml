@@ -10,14 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 update UI and add contract in db">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/ContractDetail.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/SelectCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/controller/contract/SelectCustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/CustomerInfoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/CustomerInfoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Customers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/model/Customers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/ContractDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/ContractDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/dao/implement/MotorbikeDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/insurance_card_be/service/MotorbikeService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/createContract.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/selectCustomer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/selectCustomer.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/includes/navbar.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/includes/navbar.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,8 +28,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -41,6 +40,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -85,6 +85,7 @@
     "Application.DBContext.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Smart Tomcat.Insurance_Card.executor": "Run",
     "Smart Tomcat.ProjectSWP391.executor": "Run",
     "Smart Tomcat.Tomcat: Insurance_Card_BE.executor": "Run",
     "Tomcat Server.Tomcat 10.1.171.executor": "Run",
@@ -113,7 +114,7 @@
       <recent name="D:\Insurance_Card_BE\src\main\java\org\example\insurance_card_be" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CustomerService">
+  <component name="RunManager" selected="Smart Tomcat.ProjectSWP391">
     <configuration name="ContractDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.insurance_card_be.dao.implement.ContractDAO" />
       <module name="Insurance_Card_BE" />
@@ -252,6 +253,32 @@
         </option>
       </method>
     </configuration>
+    <configuration name="Insurance_Card" type="com.poratu.idea.plugins.tomcat">
+      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
+      <predefined_log_file enabled="true" id="Tomcat Access Log" />
+      <predefined_log_file id="Tomcat Catalina Log" />
+      <predefined_log_file id="Tomcat Manager Log" />
+      <predefined_log_file id="Tomcat Host Manager Log" />
+      <option name="catalinaBase" value="C:\Users\admin\.SmartTomcat\Insurance_Card_BE\Insurance_Card_BE" />
+      <option name="contextPath" value="/Insurance_Card_BE" />
+      <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions">
+        <map />
+      </option>
+      <option name="extraClassPath" value="" />
+      <option name="tomcatInfo">
+        <TomcatInfo>
+          <option name="name" value="Apache Tomcat/10.1.17" />
+          <option name="path" value="C:/Program Files/Apache Software Foundation/Tomcat 10.1" />
+          <option name="version" value="10.1.17.0" />
+        </TomcatInfo>
+      </option>
+      <option name="vmOptions" value="" />
+      <module name="Insurance_Card_BE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ProjectSWP391" type="com.poratu.idea.plugins.tomcat">
       <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
       <predefined_log_file enabled="true" id="Tomcat Access Log" />
@@ -261,6 +288,9 @@
       <option name="catalinaBase" value="C:\Users\admin\.SmartTomcat\Insurance_Card_BE\Insurance_Card_BE" />
       <option name="contextPath" value="/Insurance_Card_BE" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions">
+        <map />
+      </option>
       <option name="extraClassPath" value="" />
       <option name="tomcatInfo">
         <TomcatInfo>
@@ -284,6 +314,9 @@
       <option name="catalinaBase" value="C:\Users\admin\.SmartTomcat\Insurance_Card_BE\Insurance_Card_BE" />
       <option name="contextPath" value="/Insurance_Card_BE" />
       <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions">
+        <map />
+      </option>
       <option name="extraClassPath" value="" />
       <option name="tomcatInfo">
         <TomcatInfo>
@@ -304,16 +337,17 @@
       <item itemvalue="Application.ContractDAO" />
       <item itemvalue="Application.DBContext" />
       <item itemvalue="Smart Tomcat.ProjectSWP391" />
+      <item itemvalue="Smart Tomcat.Insurance_Card" />
       <item itemvalue="Smart Tomcat.Tomcat: Insurance_Card_BE" />
       <item itemvalue="Tomcat Server.Tomcat 10.1.171" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Smart Tomcat.Tomcat: Insurance_Card_BE" />
         <item itemvalue="Application.CustomerService" />
         <item itemvalue="Application.CustomerInfoDAO" />
         <item itemvalue="Application.DBContext" />
         <item itemvalue="Application.ContractDAO" />
-        <item itemvalue="Smart Tomcat.Tomcat: Insurance_Card_BE" />
       </list>
     </recent_temporary>
   </component>
@@ -363,6 +397,7 @@
       <workItem from="1716477919315" duration="422000" />
       <workItem from="1716482904855" duration="4679000" />
       <workItem from="1716520344859" duration="8085000" />
+      <workItem from="1716628640806" duration="6491000" />
     </task>
     <task id="LOCAL-00001" summary="annthe176161 update contract in model">
       <option name="closed" value="true" />
