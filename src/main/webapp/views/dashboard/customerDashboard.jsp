@@ -58,54 +58,55 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="nav flex-column">
-            <a class="nav-link" href="#">Payment History</a>
-            <a class="nav-link" href="#">Accident History</a>
-            <a class="nav-link" href="#">Punishment History</a>
-            <a class="nav-link" href="#">Compensation History</a>
-            <a class="nav-link" href="#">Contract Information</a>
+            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/paymentHistory.jsp')">Payment History</a>
+            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/accidentHistory.jsp')">Accident History</a>
+            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/punishmentHistory.jsp')">Punishment History</a>
+            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/compensationHistory.jsp')">Compensation History</a>
+            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/contractInformation.jsp')">Contract Information</a>
         </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="customer-info">
-            <h2>Customer Information</h2>
-            <form id="customerInfoForm">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" value="">
-                </div>
-                <div class="form-group">
-                    <label for="fullName">Full Name:</label>
-                    <input type="text" class="form-control" id="fullName" value="">
-                </div>
-                <div class="form-group">
-                    <label for="dob">Date of Birth:</label>
-                    <input type="date" class="form-control" id="dob" value="">
-                </div>
-                <div class="form-group">
-                    <label for="gender">Gender:</label>
-                    <div>
-                        <input type="radio" id="genderMale" name="gender" value="Male">
-                        <label for="genderMale">Male</label>
-                        <input type="radio" id="genderFemale" name="gender" value="Female" checked>
-                        <label for="genderFemale">Female</label>
+        <div id="content">
+            <div class="customer-info">
+                <h2>Customer Information</h2>
+                <form id="customerInfoForm">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" value="">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address:</label>
-                    <input type="text" class="form-control" id="address" value="">
-                </div>
-                <div class="form-group">
-                    <label for="job">Job:</label>
-                    <input type="text" class="form-control" id="job" value="">
-                </div>
-                <div class="form-group">
-                    <label for="company">Company:</label>
-                    <input type="text" class="form-control" id="company" value="">
-                </div>
-                <button type="button" class="btn btn-primary" onclick="saveCustomerInfo()">Save</button>
-            </form>
+                    <div class="form-group">
+                        <label for="fullName">Full Name:</label>
+                        <input type="text" class="form-control" id="fullName" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth:</label>
+                        <input type="date" class="form-control" id="dob" value="">
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <input type="radio" id="genderMale" name="gender" value="Male">
+                            <label for="genderMale">Male</label>
+                            <input type="radio" id="genderFemale" name="gender" value="Female" checked>
+                            <label for="genderFemale">Female</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" id="address" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="job">Job:</label>
+                        <input type="text" class="form-control" id="job" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company:</label>
+                        <input type="text" class="form-control" id="company" value="">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="saveCustomerInfo()">Save</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -115,6 +116,21 @@
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 <script>
+    function loadPage(page) {
+        console.log('Loading page:', page);
+        $.ajax({
+            url: page,
+            type: 'GET',
+            success: function(data) {
+                $('#content').html(data);
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to load page:', page, 'Status:', status, 'Error:', error);
+                alert('Failed to load page: ' + page + '\nStatus: ' + status + '\nError: ' + error);
+            }
+        });
+    }
+
     function saveCustomerInfo() {
         const customerInfo = {
             email: document.getElementById('email').value,
@@ -126,11 +142,9 @@
             company: document.getElementById('company').value
         };
 
-        // Here you can handle the form submission
-        // For example, you can use an AJAX request to submit the form data to your backend server
         $.ajax({
             type: 'POST',
-            url: 'saveCustomerInfo', // Replace with your server endpoint
+            url: '${pageContext.request.contextPath}/saveCustomerInfo', // Replace with your server endpoint
             data: customerInfo,
             success: function(response) {
                 alert('Customer information saved successfully!');
@@ -139,7 +153,6 @@
                 alert('An error occurred while saving customer information.');
             }
         });
-
     }
 </script>
 </body>
