@@ -20,33 +20,27 @@ public class SelectCustomerController extends HttpServlet {
         this.customerService = new CustomerService();
     }
 
-    // This method is called when the user navigates to the selectCustomer page
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // From ID of Customer chosen by user, get the Customer to display in the form of contract
-        int customerID = Integer.parseInt(req.getParameter("customerID"));
-        Customers customer = null;
+        // Chon id cua customer va chuyen sang trang tao contract
         try {
-            customer = customerService.getCustomerByID(customerID);
+            List<Integer> customerIDs = customerService.getAllCustomers();
+            req.setAttribute("customerIDs", customerIDs);
+            req.getRequestDispatcher("/views/contract/selectCustomer.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        req.setAttribute("customer", customer);
-        req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
     }
 
-
-    // This method is called when the user selects a customer and submits the form
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Get all ID of Customers from database to display in the dropdown list
-        List<Integer> customerIDs = null;
+        // Lay id tu service va hien thi len page
         try {
-            customerIDs = customerService.getAllCustomers();
+            List<Integer> customerIDs = customerService.getAllCustomers();
+            req.setAttribute("customerIDs", customerIDs);
+            req.getRequestDispatcher("/views/contract/selectCustomer.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        req.setAttribute("customerIDs", customerIDs);
-        req.getRequestDispatcher("/views/contract/selectCustomer.jsp").forward(req, resp);
     }
 }

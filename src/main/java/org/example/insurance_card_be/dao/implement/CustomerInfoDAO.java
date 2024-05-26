@@ -76,10 +76,16 @@ public class CustomerInfoDAO {
         return customerIDs;
     }
 
-    // Function main check selectCustomerByID have been implemented correctly
+    // Function main test get all customer IDs
     public static void main(String[] args) {
         CustomerInfoDAO customerInfoDAO = new CustomerInfoDAO();
-        Customers customer = customerInfoDAO.selectCustomerByID(1);
-        System.out.println(customer);
+        try {
+            List<Integer> customerIDs = customerInfoDAO.getAllCustomerIDs();
+            for (Integer customerID : customerIDs) {
+                System.out.println(customerID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

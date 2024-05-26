@@ -28,4 +28,17 @@ public class CustomerService {
     public List<Integer> getAllCustomers() throws SQLException {
         return customerInfoDAO.getAllCustomerIDs();
     }
+
+    // Funtion main to test get all customers
+    public static void main(String[] args) {
+        CustomerService customerService = new CustomerService();
+        try {
+            List<Integer> customerIDs = customerService.getAllCustomers();
+            for (int customerID : customerIDs) {
+                System.out.println(customerID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

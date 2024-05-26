@@ -19,4 +19,6 @@ public class Contract {
     private String detail;
     private double value;
     private String Coverage;
+    private String InsuranceType;
+    private double Premium;
 }

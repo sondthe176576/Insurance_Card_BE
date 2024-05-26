@@ -41,6 +41,9 @@ public class ContractController extends HttpServlet {
         String endDateStr = req.getParameter("endDate");
         String detail = req.getParameter("detail");
         String valueStr = req.getParameter("value");
+        String coverage = req.getParameter("coverage");
+        String insuranceType = req.getParameter("insuranceType");
+        String premiumStr = req.getParameter("premium");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format date
         Contract contract = new Contract();
@@ -52,16 +55,18 @@ public class ContractController extends HttpServlet {
             contract.setEndDate(sdf.parse(endDateStr));
             contract.setDetail(detail);
             contract.setValue(Double.parseDouble(valueStr));
-
+            contract.setCoverage(coverage);
+            contract.setInsuranceType(insuranceType);
+            contract.setPremium(Double.parseDouble(premiumStr));
 
             contractService.createContract(contract); // Tao contract
             req.setAttribute("message", "Create contract successfully!");
-            req.setAttribute("status", "success");
+            req.setAttribute("status", true);
         } catch (ParseException | SQLException e) {
             Logger logger = Logger.getLogger(ContractController.class.getName()); // Log loi
             logger.log(Level.SEVERE, "Create contract failure!", e);
             req.setAttribute("message", "Create contract failure!" + e.getMessage()); // Thong bao loi
-            req.setAttribute("status", "danger"); // Thong bao danger
+            req.setAttribute("status", true); // Thong bao danger
             e.printStackTrace();
         }
         req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);

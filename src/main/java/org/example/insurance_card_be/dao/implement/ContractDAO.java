@@ -19,36 +19,36 @@ public class ContractDAO {
 
     // Ham tao contract
     public void createContract(Contract contract) throws SQLException {
-        // Tao contract
-        String sql = "INSERT INTO Contracts(CustomerID, ContractInfo, Status, StartDate, EndDate) VALUES(?, ?, ?, ?, ?)";
-        ResultSet generatedKeys = null;
-        // Tao cac chi tiet cua contract
+        String sql = "INSERT INTO Contracts(CustomerID, ContractInfo, Status, StartDate, EndDate, Coverage, InsuranceType, Premium) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, contract.getCustomerID());
             ps.setString(2, contract.getContractInfo());
             ps.setString(3, contract.getStatus());
             ps.setDate(4, new java.sql.Date(contract.getStartDate().getTime()));
             ps.setDate(5, new java.sql.Date(contract.getEndDate().getTime()));
+            ps.setString(6, contract.getCoverage());
+            ps.setString(7, contract.getInsuranceType());
+            ps.setDouble(8, contract.getPremium());
             ps.executeUpdate();
 
-            // Lay ra id cua contract vua duoc tao
-            try (ResultSet generatedkeys = ps.getGeneratedKeys()) {
-                // Neu co id duoc tao
-                if (ps.getGeneratedKeys().next()) {
-                    int contractID = ps.getGeneratedKeys().getInt(1);
-                    // Set id cho contract
+            // Lấy ID của contract vừa tạo
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int contractID = generatedKeys.getInt(1);
                     contract.setContractID(contractID);
 
-                    // Tao cac chi tiet cua contract
+                    // Thêm chi tiết của contract
                     String sqlDetail = "INSERT INTO ContractDetails(ContractID, Detail, Value) VALUES(?, ?, ?)";
                     try (PreparedStatement detailPS = connection.prepareStatement(sqlDetail)) {
-                        detailPS.setInt(1, contract.getContractID());
+                        detailPS.setInt(1, contractID);
                         detailPS.setString(2, contract.getDetail());
                         detailPS.setDouble(3, contract.getValue());
                         detailPS.executeUpdate();
                     }
                 }
             }
+        } catch (SQLException e) {
+            throw new SQLException("Error while creating contract", e);
         } finally {
             if (connection != null) {
                 connection.close();

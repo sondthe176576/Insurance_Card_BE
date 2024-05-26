@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -103,11 +104,21 @@
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
+        <!-- Thông báo thành công -->
+        <!-- Thông báo thành công -->
+        <c:if test="${success}">
+            <div class="alert alert-success">${message}</div>
+        </c:if>
+        <!-- Thông báo lỗi -->
+        <c:if test="${error}">
+            <div class="alert alert-danger">${message}</div>
+        </c:if>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
+        <!-- Hien thi id cua khach hang chuyen tu trang selectCustomer.jsp -->
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
-            <input type="number" id="customerID" name="customerID" required>
+            <input type="number" id="customerID" name="customerID" value="${param.customerID}" readonly>
         </div>
         <!-- Thông tin Bảo Hiểm -->
         <h3>Insurance Information</h3>
@@ -128,8 +139,32 @@
             <input type="date" id="endDate" name="endDate" required>
         </div>
         <div class="form-group">
-            <label for="value">Value:</label>
+            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
+                amount or the insurance value)</label>
             <input type="number" id="value" name="value" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
+                conditions)</label>
+            <textarea id="detail" name="detail" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="insuranceType">Insurance Type:</label>
+            <select id="insuranceType" name="insuranceType">
+                <option value="Basic">Basic</option>
+                <option value="Comprehensive">Comprehensive</option>
+                <option value="Premium">Premium</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
+                contract)</label>
+            <input type="text" id="coverage" name="coverage" required>
+        </div>
+        <div class="form-group">
+            <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
+                contract)</label>
+            <input type="number" id="premium" name="premium" step="0.01" required>
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
