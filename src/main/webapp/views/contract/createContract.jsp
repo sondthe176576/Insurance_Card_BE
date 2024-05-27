@@ -104,14 +104,17 @@
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
-        <!-- Thông báo thành công -->
-        <!-- Thông báo thành công -->
-        <c:if test="${success}">
-            <div class="alert alert-success">${message}</div>
+        <!-- Thông báo tạo hợp đồng thành công -->
+        <c:if test="${param.success != null}">
+            <div style="color: green; font-weight: bold; text-align: center;">
+                Contract created successfully!
+            </div>
         </c:if>
-        <!-- Thông báo lỗi -->
-        <c:if test="${error}">
-            <div class="alert alert-danger">${message}</div>
+        <!-- Thông báo lỗi khi tạo hợp đồng -->
+        <c:if test="${param.error != null}">
+            <div style="color: red; font-weight: bold; text-align: center;">
+                Error creating contract!
+            </div>
         </c:if>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
