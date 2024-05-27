@@ -102,7 +102,7 @@
 <!-- Form -->
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="get">
-        <h2>Create New Contract</h2>
+        <h2>Select CustomerID To Create A Contract</h2>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
             <select id="customerID" name="customerID">
