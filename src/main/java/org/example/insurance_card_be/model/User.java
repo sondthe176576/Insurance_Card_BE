@@ -11,6 +11,21 @@ public class User {
     private String fullname;
     private String gender;
 
+    public User(int anInt, String string, String rsString, int rsInt, String s, String string1, String rsString1, String s1, String string2) {
+    }
+
+    public User(int userID, String username, String password, int role, String email, String mobile, String address, String fullname)
+    {
+        this.userID = userID;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+        this.mobile = mobile;
+        this.address = address;
+        this.fullname = fullname;
+    }
+
     // getters and setters
     public int getUserID() {
         return userID;

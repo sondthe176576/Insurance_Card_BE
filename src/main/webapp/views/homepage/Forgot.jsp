@@ -22,6 +22,7 @@
                                 <img class="logo-size" src="../../img/logo.png" alt="">
                             </div>
                         </a>
+                        <--them vo file home-->
                     </div>
                     <h3>Password Reset</h3>
                     <p>To reset your password, enter the email address you use to sign in to iofrm</p>

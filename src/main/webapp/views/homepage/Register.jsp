@@ -22,6 +22,7 @@
                                 <img class="logo-size" src="../../img/logo.png" alt="">
                             </div>
                         </a>
+                        <--them vo file home-->
                     </div>
                     <h3>Get more things done with Loggin platform.</h3>
                     <p>Access to the most powerfull tool in the entire design and web industry.</p>

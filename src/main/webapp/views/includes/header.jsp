@@ -29,7 +29,7 @@
                         <li><a href="home-land.html"> <i class="fa fa-home"></i>Home Insurance</a></li>
                     </ul>
                 </div>
-                <a href="/Insurance_Card_BE_war/js/Login.jsp" class="btn tp-btn tp-btn-blue">Login</a>
+                <a href="views/hompage/Login.jsp" class="btn tp-btn tp-btn-blue">Login</a>
                 <form class="form-inline my-2 my-lg-0 ml-3" onsubmit="return handleSearch(event)">
                     <div class="input-group">
                         <input class="form-control" type="search" placeholder="Search..." aria-label="Search"
