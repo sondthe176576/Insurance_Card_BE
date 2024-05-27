@@ -9,12 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="hungthhe176193 commmit(6)">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
+    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="hungthhe176193 commmit(7)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/dashboard/customerDashboard.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/dashboard/customerDashboard.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/history/paymentHistory.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/history/paymentHistory.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +23,7 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -78,33 +76,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.DBContext.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Smart Tomcat.Tomcat: Insurance_Card_BE.executor": "Run",
-    "Smart Tomcat.tomcat.executor": "Run",
-    "Tomcat Server.Tomcat 10.1.17.executor": "Run",
-    "Tomcat Server.Tomcat 10.1.171.executor": "Run",
-    "Tomcat Server.manageCustomer.jsp.executor": "Run",
-    "git-widget-placeholder": "hungthhe176193",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/IntelliJ/Project/IC/Insurance_Card_BE/src/main/webapp/views/dashboard",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.DBContext.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Smart Tomcat.Tomcat: Insurance_Card_BE.executor&quot;: &quot;Run&quot;,
+    &quot;Smart Tomcat.tomcat.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Tomcat 10.1.17.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Tomcat 10.1.171.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.manageCustomer.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;hungthhe176193&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/IntelliJ/Project/IC/Insurance_Card_BE/src/main/webapp/views/dashboard&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\IntelliJ\Project\IC\Insurance_Card_BE\src\main\webapp\views\dashboard" />
@@ -439,7 +437,8 @@
       <workItem from="1716476008812" duration="860000" />
       <workItem from="1716476895796" duration="1462000" />
       <workItem from="1716530690700" duration="3934000" />
-      <workItem from="1716640621912" duration="7035000" />
+      <workItem from="1716640621912" duration="7290000" />
+      <workItem from="1716800497236" duration="2140000" />
     </task>
     <task id="LOCAL-00001" summary="hungthhe176193 manageCustomer(1)">
       <option name="closed" value="true" />
@@ -489,7 +488,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716535943286</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="hungthhe176193 commmit(7)">
+      <option name="closed" value="true" />
+      <created>1716652958308</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716652958308</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -512,7 +519,8 @@
     <MESSAGE value="hungthhe176193 commmit(4)" />
     <MESSAGE value="hungthhe176193 commmit(5)" />
     <MESSAGE value="hungthhe176193 commmit(6)" />
-    <option name="LAST_COMMIT_MESSAGE" value="hungthhe176193 commmit(6)" />
+    <MESSAGE value="hungthhe176193 commmit(7)" />
+    <option name="LAST_COMMIT_MESSAGE" value="hungthhe176193 commmit(7)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -521,6 +529,11 @@
           <url>file://$PROJECT_DIR$/src/main/webapp/views/includes/header.jsp</url>
           <line>39</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/webapp/views/dashboard/customerDashboard.jsp</url>
+          <line>27</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
