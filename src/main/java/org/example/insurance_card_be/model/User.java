@@ -1,6 +1,40 @@
 package org.example.insurance_card_be.model;
 
 public class User {
+
+    private int userID;
+    private String username;
+    private String password;
+    private int role;
+    private String email;
+    private String mobile;
+    private String address;
+    private String fullname;
+    private String gender;
+
+    public User(int anInt, String string, String rsString, int rsInt, String s, String string1, String rsString1, String s1, String string2) {
+    }
+
+    public User(int userID, String username, String password, int role, String email, String mobile, String address, String fullname)
+    {
+        this.userID = userID;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+        this.mobile = mobile;
+        this.address = address;
+        this.fullname = fullname;
+    }
+
+    // getters and setters
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+
     private int id;
     private String username;
     private String password;
@@ -32,6 +66,7 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+
     }
 
     public String getUsername() {
@@ -50,14 +85,33 @@ public class User {
         this.password = password;
     }
 
+
+    public int getRole() {
+        return role;
+    }
+
+public void setRole(int role) {
+        this.role = role;
+    }
+
+
     public String getEmail() {
         return email;
     }
 
 
+
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
 
     public String getPhone() {
         return phone;
@@ -65,6 +119,7 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+
     }
 
     public String getAddress() {
@@ -75,6 +130,7 @@ public class User {
         this.address = address;
     }
 
+
     public String getRole() {
         return role;
     }
@@ -82,6 +138,7 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
 
     public String getFullname() {
         return fullname;
@@ -95,7 +152,11 @@ public class User {
         return gender;
     }
 
+
+    public void setGender(String gender){
+
     public  void setGender (String gender){
+
         this.gender = gender;
     }
 
