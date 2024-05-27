@@ -59,10 +59,10 @@
     <div class="sidebar">
         <div class="nav flex-column">
             <a class="nav-link" href="javascript:void(0);" onclick="loadPage('${pageContext.request.contextPath}/views/history/paymentHistory.jsp')">Payment History</a>
-            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/accidentHistory.jsp')">Accident History</a>
-            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/punishmentHistory.jsp')">Punishment History</a>
-            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/compensationHistory.jsp')">Compensation History</a>
-            <a class="nav-link" href="#" onclick="loadPage('${pageContext.request.contextPath}/views/history/contractInformation.jsp')">Contract Information</a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('${pageContext.request.contextPath}/views/history/accidentHistory.jsp')">Accident History</a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('${pageContext.request.contextPath}/views/history/punishmentHistory.jsp')">Punishment History</a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('${pageContext.request.contextPath}/views/history/compensationHistory.jsp')">Compensation History</a>
+            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('${pageContext.request.contextPath}/views/history/contractInformation.jsp')">Contract Information</a>
         </div>
     </div>
 
@@ -130,7 +130,6 @@
             }
         });
     }
-
 
     function saveCustomerInfo() {
         const customerInfo = {
