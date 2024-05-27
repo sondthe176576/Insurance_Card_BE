@@ -9,10 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 UI view contract">
+    <list default="true" id="a3692bb0-0f93-4bdd-a31e-b196e9739baa" name="Changes" comment="annthe176161 UI update contract">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/updateContract.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/updateContract.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/viewContract.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/viewContract.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/contract/renewContract.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/contract/renewContract.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -382,7 +381,7 @@
       <workItem from="1716738835970" duration="1849000" />
       <workItem from="1716781917008" duration="9822000" />
       <workItem from="1716792603833" duration="4248000" />
-      <workItem from="1716798566201" duration="676000" />
+      <workItem from="1716798566201" duration="3553000" />
     </task>
     <task id="LOCAL-00001" summary="annthe176161 update contract in model">
       <option name="closed" value="true" />
@@ -456,7 +455,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716796498453</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="annthe176161 UI update contract">
+      <option name="closed" value="true" />
+      <created>1716799586365</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1716799586365</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -483,7 +490,8 @@
     <MESSAGE value="annthe176161 fix add contract" />
     <MESSAGE value="annthe176161 update add contract" />
     <MESSAGE value="annthe176161 UI view contract" />
-    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 UI view contract" />
+    <MESSAGE value="annthe176161 UI update contract" />
+    <option name="LAST_COMMIT_MESSAGE" value="annthe176161 UI update contract" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
