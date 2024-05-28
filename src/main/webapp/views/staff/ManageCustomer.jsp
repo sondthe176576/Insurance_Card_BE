@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/views/includes/header.jsp" />
+
 <html>
 <head>
     <title>Manage Customer</title>
@@ -46,11 +47,38 @@
         tr:hover {
             background-color: #f1f1f1;
         }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .button-create {
+            background-color: #28a745;
+        }
+        .button-create:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
 
 <h1>Manage Customer</h1>
+
+<div style="text-align: center;">
+    <a href="views/staff/CreateCustomer.jsp" class="button button-create">Create Customer</a>
+</div>
+
 <table>
     <tr>
         <th>ID</th>
@@ -58,6 +86,7 @@
         <th>Address</th>
         <th>Phone</th>
         <th>Email</th>
+        <th>Actions</th>
     </tr>
     <c:forEach items="${requestScope.data}" var="customer">
         <tr>
@@ -66,13 +95,13 @@
             <td>${customer.address}</td>
             <td>${customer.mobile}</td>
             <td>${customer.email}</td>
+            <td>
+                <a href="/viewCustomer?id=${customer.userID}" class="button">View</a>
+                <a href="/deleteCustomer?id=${customer.userID}" class="button">Delete</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
 </body>
 </html>
-
-
-
-
-
+<jsp:include page="/views/includes/footer.jsp" />
