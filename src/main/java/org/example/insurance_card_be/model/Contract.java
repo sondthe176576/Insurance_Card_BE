@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,16 +21,5 @@ public class Contract {
     private String Coverage;
     private String InsuranceType;
     private double Premium;
-
-    public void setCustomer(Customers customer) {
-    }
-
-    public void setUser(Users user) {
-    }
-
-    public void setMotorbikes(List<Motorcycle> motorbikes) {
-    }
-
-    public void setContractDetails(List<Contract> contractDetails) {
-    }
+    private Customers customer;
 }
