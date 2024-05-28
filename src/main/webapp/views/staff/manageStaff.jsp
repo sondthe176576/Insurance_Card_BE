@@ -21,7 +21,7 @@
                                             <li><a href="${pageContext.request.contextPath}/index-2.html">Home</a></li>
                                             <li><a href="${pageContext.request.contextPath}/index-v2.html">Home v2</a></li>
                                         </ul>
-                                    </li>   <li class="dropdown"> <a href="${pageContext.request.contextPath}/listCustomers" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ManagerCustomer <i class="fa fa-angle-down"></i></a>
+                                    </li>   <li class="dropdown"> <a href="${pageContext.request.contextPath}/list-customer" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ManagerCustomer <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown-menu" role="menu">
 
                                     </ul>
