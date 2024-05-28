@@ -5,18 +5,17 @@ public class User {
     private int userID;
     private String username;
     private String password;
-    private int role;
+    private String role;
     private String email;
     private String mobile;
     private String address;
     private String fullname;
     private String gender;
 
-    public User(int anInt, String string, String rsString, int rsInt, String s, String string1, String rsString1, String s1, String string2) {
+    public User(int anInt, String string, String rsString, String rsInt, String s, String string1, String rsString1, String s1, String string2) {
     }
 
-    public User(int userID, String username, String password, int role, String email, String mobile, String address, String fullname)
-    {
+    public User(int userID, String username, String password, String role, String email, String mobile, String address, String fullname){
         this.userID = userID;
         this.username = username;
         this.password = password;
@@ -27,46 +26,12 @@ public class User {
         this.fullname = fullname;
     }
 
-    // getters and setters
     public int getUserID() {
         return userID;
     }
 
     public void setUserID(int userID) {
         this.userID = userID;
-
-    private int id;
-    private String username;
-    private String password;
-    private String email;
-    private String phone;
-    private String address;
-    private String role;
-    private String fullname;
-    private String gender;
-
-    public User() {
-    }
-
-    public User(int id, String username, String password, String email, String phone, String address, String role, String fullname, String gender){
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.role = role;
-        this.fullname = fullname;
-        this.gender = gender;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-
     }
 
     public String getUsername() {
@@ -85,26 +50,21 @@ public class User {
         this.password = password;
     }
 
-
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
-public void setRole(int role) {
+    public void setRole(String role) {
         this.role = role;
     }
-
 
     public String getEmail() {
         return email;
     }
 
-
-
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public String getMobile() {
         return mobile;
@@ -112,14 +72,6 @@ public void setRole(int role) {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-
     }
 
     public String getAddress() {
@@ -129,16 +81,6 @@ public void setRole(int role) {
     public void setAddress(String address) {
         this.address = address;
     }
-
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
 
     public String getFullname() {
         return fullname;
@@ -152,12 +94,7 @@ public void setRole(int role) {
         return gender;
     }
 
-
-    public void setGender(String gender){
-
-    public  void setGender (String gender){
-
+    public void setGender(){
         this.gender = gender;
     }
-
 }
