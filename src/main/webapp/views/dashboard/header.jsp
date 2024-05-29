@@ -16,7 +16,7 @@
 <div class="tp-header" id="tp-header">
     <div class="container">
         <div class="row">
-            <div class="col-md-4"><a class="navbar-brand" href="index.html"><img
+            <div class="col-md-4"><a class="navbar-brand" href="HomePageForCustomer.jsp"><img
                     src="${pageContext.request.contextPath}/img/logo.png" alt="logo"></a></div>
             <div class="col-md-8 cta-box text-right"><span class="call">Phone: 0123 456 789</span>
                 <!-- Single button -->
