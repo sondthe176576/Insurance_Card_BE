@@ -11,7 +11,7 @@ public class Users {
     private int userID;
     private String username;
     private String password;
-    private String role;
+    private int role;
     private String email;
     private String mobile;
     private String address;
