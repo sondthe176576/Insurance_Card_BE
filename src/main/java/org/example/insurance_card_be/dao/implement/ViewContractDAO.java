@@ -70,6 +70,7 @@ public class ViewContractDAO {
                     contract.setDetail(rs.getString("Detail"));
                     contract.setValue(rs.getDouble("Value"));
                     contract.setCustomer(customer);
+                    contract.setMotorcycle(motorcycle);
                 }
             }
         }

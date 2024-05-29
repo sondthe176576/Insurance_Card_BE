@@ -22,4 +22,5 @@ public class Contract {
     private String InsuranceType;
     private double Premium;
     private Customers customer;
+    private Motorcycle motorcycle;
 }
