@@ -21,7 +21,7 @@ public class ViewContractController extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int contractID = 5;
+        int contractID = 1;
         Contract contract = viewContractService.getContractDetailByID(contractID);
         req.setAttribute("contract", contract);
         req.getRequestDispatcher("/views/contract/viewContract.jsp").forward(req, resp);

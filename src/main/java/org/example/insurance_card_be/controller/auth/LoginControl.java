@@ -1,4 +1,4 @@
-package org.example.insurance_card_be.controller;
+package org.example.insurance_card_be.controller.auth;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpSession;

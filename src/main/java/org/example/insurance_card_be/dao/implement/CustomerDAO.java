@@ -17,7 +17,7 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users(rs.getInt("UserID"), rs.getString("Username"), rs.getString("Password"),
-                        rs.getString("Role"), rs.getString("Email"), rs.getString("Mobile"), rs.getString("Address"),
+                        rs.getInt("Role"), rs.getString("Email"), rs.getString("Mobile"), rs.getString("Address"),
                         rs.getString("FullName"), rs.getString("Gender"));
                 list.add(user);
             }
