@@ -38,14 +38,11 @@ public class CustomerInfoController extends HttpServlet {
         Customer customer = new Customer(email, fullName, dob, gender, address, job, company, cardNumber, issueDate, expiryDate);
 
         try {
-            // Save the customer information to the database
             customerService.saveCustomer(customer);
 
-            // Set the response content type and encoding
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 
-            // Write a success response with the saved customer information
             response.getWriter().write("{\"status\": \"success\", \"data\": " + new Gson().toJson(customer) + "}");
         } catch (SQLException e) {
             // Set the response content type and encoding
