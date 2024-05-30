@@ -11,19 +11,29 @@
 <head>
     <title>Update Contract</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
         .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 50px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
         }
 
         .form-container h2 {
             text-align: center;
             color: #007bff;
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 20px;
-            position: relative;
         }
 
         .form-container h3 {
@@ -31,6 +41,7 @@
             color: #007bff;
             border-bottom: 2px solid #007bff;
             padding-bottom: 5px;
+            font-size: 22px;
         }
 
         .form-group {
@@ -41,6 +52,7 @@
             display: block;
             margin-bottom: 5px;
             color: #333;
+            font-weight: bold;
         }
 
         .form-group input,
@@ -51,6 +63,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 16px;
         }
 
         .form-group textarea {
@@ -60,11 +73,17 @@
         .btn-submit {
             background-color: #007bff;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
 
         .btn-submit:hover {
@@ -87,6 +106,36 @@
         .membership-info strong {
             color: #007bff;
         }
+
+        .address-info {
+            background-color: #e9f7fe;
+            border: 1px solid #bce0fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .address-info h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .address-info p {
+            margin: 5px 0;
+        }
+
+        .address-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .address-info a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -101,114 +150,121 @@
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
-    <form action="${pageContext.request.contextPath}/createContract" method="post">
+    <form action="${pageContext.request.contextPath}/updateContract" method="post">
         <h2>Update Contract</h2>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
         <!-- Hien thi id cua khach hang chuyen tu trang selectCustomer.jsp -->
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
-            <input type="number" id="customerID" name="customerID" value="${param.customerID}" readonly>
+            <input type="number" id="customerID" name="customerID" value="${contract.customer.customerID}" readonly>
         </div>
         <div class="form-group">
             <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" required>
+            <input type="text" id="fullName" name="fullName" value="${contract.customer.user.fullName}" required>
         </div>
         <div class="form-group">
             <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
+            <input type="text" id="address" name="address" value="${contract.customer.user.address}" required>
         </div>
         <div class="form-group">
             <label for="mobile">Mobile:</label>
-            <input type="text" id="mobile" name="mobile" required>
+            <input type="text" id="mobile" name="mobile" value="${contract.customer.user.mobile}" required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" value="${contract.customer.user.email}" required>
         </div>
         <div class="form-group">
             <label for="gender">Gender: </label>
-            <input type="text" id="gender" name="gender" required>
+            <input type="text" id="gender" name="gender" value="${contract.customer.user.gender}" required>
         </div>
         <!-- Thông tin Xe -->
         <h3>Vehicle Information</h3>
         <div class="form-group">
-            <label for="plateNumber">Plate Number:</label>
-            <input type="text" id="plateNumber" name="plateNumber" required>
+            <label for="licensePlate">License Plate:</label>
+            <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}"
+                   required>
         </div>
         <div class="form-group">
             <label for="brand">Brand:</label>
-            <input type="text" id="brand" name="brand" required>
+            <input type="text" id="brand" name="brand" value="${contract.motorcycle.brand}" required>
         </div>
         <div class="form-group">
             <label for="model">Model:</label>
-            <input type="text" id="model" name="model" required>
+            <input type="text" id="model" name="model" value="${contract.motorcycle.model}" required>
         </div>
         <div class="form-group">
             <label for="yearOfManufacture">Year of Manufacture:</label>
-            <input type="number" id="yearOfManufacture" name="yearOfManufacture" required>
+            <input type="number" id="yearOfManufacture" name="yearOfManufacture"
+                   value="${contract.motorcycle.yearOfManufacture}" required>
         </div>
         <div class="form-group">
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
+            <input type="text" id="color" name="color" value="${contract.motorcycle.color}" required>
         </div>
         <div class="form-group">
             <label for="engineNumber">Engine Number:</label>
-            <input type="text" id="engineNumber" name="engineNumber" required>
+            <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}"
+                   required>
         </div>
         <div class="form-group">
             <label for="frameNumber">Frame Number:</label>
-            <input type="text" id="frameNumber" name="frameNumber" required>
+            <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}"
+                   required>
         </div>
         <!-- Thông tin Bảo Hiểm -->
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractID">Contract ID:</label>
-            <input type="number" id="contractID" name="contractID" required>
+            <input type="number" id="contractID" name="contractID" value="${contract.contractID}" readonly>
         </div>
         <div class="form-group">
             <label for="contractInfo">Contract Info:</label>
-            <input type="text" id="contractInfo" name="contractInfo" required>
+            <input type="text" id="contractInfo" name="contractInfo" value="${contract.contractInfo}" required>
         </div>
         <div class="form-group">
             <label for="status">Status:</label>
-            <input type="text" id="status" name="status" required>
+            <input type="text" id="status" name="status" value="${contract.status}" required>
         </div>
         <div class="form-group">
             <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate" required>
+            <input type="date" id="startDate" name="startDate" value="${contract.startDate}" required>
         </div>
         <div class="form-group">
             <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" required>
+            <input type="date" id="endDate" name="endDate" value="${contract.endDate}" required>
         </div>
         <div class="form-group">
-            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
+            <label for="value">Value: (The corresponding value for the contract detail, which can be the
+                compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="0.01" required>
+            <input type="number" id="value" name="value" step="50" value="${contract.value}" required>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
                 conditions)</label>
-            <textarea id="detail" name="detail" required></textarea>
+            <textarea id="detail" name="detail" required>${contract.detail}</textarea>
         </div>
         <div class="form-group">
             <label for="insuranceType">Insurance Type:</label>
             <select id="insuranceType" name="insuranceType">
-                <option value="Basic">Basic</option>
-                <option value="Comprehensive">Comprehensive</option>
-                <option value="Premium">Premium</option>
+                <option value="Basic" ${contract.insuranceType == 'Basic' ? 'selected' : ''}>Basic</option>
+                <option value="Comprehensive" ${contract.insuranceType == 'Comprehensive' ? 'selected' : ''}>
+                    Comprehensive
+                </option>
+                <option value="Premium" ${contract.insuranceType == 'Premium' ? 'selected' : ''}>Premium</option>
             </select>
         </div>
         <div class="form-group">
             <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
                 contract)</label>
-            <input type="text" id="coverage" name="coverage" required>
+            <input type="text" id="coverage" name="coverage" value="${contract.coverage}" required>
         </div>
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="0.01" required>
+            <input type="number" id="premium" name="premium" step="50" value="${contract.premium}" required>
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
@@ -237,18 +293,15 @@
                     receive the support you need in case of any accidents or incidents. Our team is dedicated to
                     helping you understand the different options and choose the one that best suits your needs.</p>
             </div>
-
-            <h3>Application can be dropped off or mailed to:</h3>
-            <p>
-                Motorcycle Insurance Company,<br>
-                123 Hola Street,<br>
-                District Thach That, Ha Noi,<br>
-                Vietnam
-            </p>
-            <p>
-                Phone: 0123-456-789<br>
-                www.motorcycleinsurance.vn
-            </p>
+            <div class="address-info">
+                <h3>Application can be dropped off or mailed to:</h3>
+                <p>Motorcycle Insurance Company,<br>
+                    123 Hola Street,<br>
+                    District Thach That, Ha Noi,<br>
+                    Vietnam</p>
+                <p>Phone: 0123-456-789<br>
+                    <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
+            </div>
         </div>
         <button type="submit" class="btn-submit">Update Contract</button>
     </form>

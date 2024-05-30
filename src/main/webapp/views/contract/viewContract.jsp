@@ -76,12 +76,15 @@
             color: white;
             padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
             margin-top: 20px;
             display: block;
             width: 100%;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
 
         .btn-submit:hover {
@@ -106,8 +109,33 @@
         }
 
         .address-info {
-            font-style: italic;
+            background-color: #e9f7fe;
+            border: 1px solid #bce0fd;
+            padding: 15px;
+            border-radius: 8px;
             margin-top: 20px;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .address-info h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .address-info p {
+            margin: 5px 0;
+        }
+
+        .address-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .address-info a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -119,7 +147,8 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" style="width: 100%; margin-bottom: 20px;">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
+     style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
@@ -128,15 +157,18 @@
     <h3>Customer Information</h3>
     <div class="form-group">
         <label for="customerID">Customer ID:</label>
-        <input type="number" id="customerID" name="customerID" value="<c:out value='${contract.customer.customerID}'/>" readonly>
+        <input type="number" id="customerID" name="customerID" value="<c:out value='${contract.customer.customerID}'/>"
+               readonly>
     </div>
     <div class="form-group">
         <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" value="<c:out value='${contract.customer.user.fullName}'/>" readonly>
+        <input type="text" id="fullName" name="fullName" value="<c:out value='${contract.customer.user.fullName}'/>"
+               readonly>
     </div>
     <div class="form-group">
         <label for="address">Address:</label>
-        <input type="text" id="address" name="address" value="<c:out value='${contract.customer.user.address}'/>" readonly>
+        <input type="text" id="address" name="address" value="<c:out value='${contract.customer.user.address}'/>"
+               readonly>
     </div>
     <div class="form-group">
         <label for="mobile">Mobile:</label>
@@ -154,11 +186,13 @@
     <h3>Vehicle Information</h3>
     <div class="form-group">
         <label for="motorcycleID">Motorcycle ID:</label>
-        <input type="number" id="motorcycleID" name="motorcycleID" value="<c:out value='${contract.motorcycle.motorcycleID}'/>" readonly>
+        <input type="number" id="motorcycleID" name="motorcycleID"
+               value="<c:out value='${contract.motorcycle.motorcycleID}'/>" readonly>
     </div>
     <div class="form-group">
         <label for="licensePlate">License Plate:</label>
-        <input type="text" id="licensePlate" name="licensePlate" value="<c:out value='${contract.motorcycle.licensePlate}'/>" readonly>
+        <input type="text" id="licensePlate" name="licensePlate"
+               value="<c:out value='${contract.motorcycle.licensePlate}'/>" readonly>
     </div>
     <div class="form-group">
         <label for="brand">Brand:</label>
@@ -170,7 +204,8 @@
     </div>
     <div class="form-group">
         <label for="yearOfManufacture">Year of Manufacture:</label>
-        <input type="number" id="yearOfManufacture" name="yearOfManufacture" value="<c:out value='${contract.motorcycle.yearOfManufacture}'/>" readonly>
+        <input type="number" id="yearOfManufacture" name="yearOfManufacture"
+               value="<c:out value='${contract.motorcycle.yearOfManufacture}'/>" readonly>
     </div>
     <div class="form-group">
         <label for="color">Color:</label>
@@ -178,11 +213,13 @@
     </div>
     <div class="form-group">
         <label for="engineNumber">Engine Number:</label>
-        <input type="text" id="engineNumber" name="engineNumber" value="<c:out value='${contract.motorcycle.engineNumber}'/>" readonly>
+        <input type="text" id="engineNumber" name="engineNumber"
+               value="<c:out value='${contract.motorcycle.engineNumber}'/>" readonly>
     </div>
     <div class="form-group">
         <label for="frameNumber">Frame Number:</label>
-        <input type="text" id="frameNumber" name="frameNumber" value="<c:out value='${contract.motorcycle.frameNumber}'/>" readonly>
+        <input type="text" id="frameNumber" name="frameNumber"
+               value="<c:out value='${contract.motorcycle.frameNumber}'/>" readonly>
     </div>
     <!-- Thông tin Bảo Hiểm -->
     <h3>Insurance Information</h3>
@@ -192,7 +229,8 @@
     </div>
     <div class="form-group">
         <label for="contractInfo">Contract Info:</label>
-        <input type="text" id="contractInfo" name="contractInfo" value="<c:out value='${contract.contractInfo}'/>" readonly>
+        <input type="text" id="contractInfo" name="contractInfo" value="<c:out value='${contract.contractInfo}'/>"
+               readonly>
     </div>
     <div class="form-group">
         <label for="status">Status:</label>
@@ -207,47 +245,64 @@
         <input type="date" id="endDate" name="endDate" value="<c:out value='${contract.endDate}'/>" readonly>
     </div>
     <div class="form-group">
-        <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount or the insurance value)</label>
-        <input type="number" id="value" name="value" step="0.01" value="<c:out value='${contract.value}'/>" readonly>
+        <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount
+            or the insurance value)</label>
+        <input type="number" id="value" name="value" step="50" value="<c:out value='${contract.value}'/>" readonly>
     </div>
     <div class="form-group">
-        <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and conditions)</label>
+        <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
+            conditions)</label>
         <textarea id="detail" name="detail" readonly><c:out value='${contract.detail}'/></textarea>
     </div>
     <div class="form-group">
         <label for="insuranceType">Insurance Type:</label>
-        <select id="insuranceType" name="insuranceType" readonly>
-            <option value="Basic" <c:if test="${contract.insuranceType == 'Basic'}">selected</c:if>>Basic</option>
-            <option value="Comprehensive" <c:if test="${contract.insuranceType == 'Comprehensive'}">selected</c:if>>Comprehensive</option>
-            <option value="Premium" <c:if test="${contract.insuranceType == 'Premium'}">selected</c:if>>Premium</option>
-        </select>
+        <input type="text" id="insuranceType" name="insuranceType" value="<c:out value='${contract.insuranceType}'/>"
+               readonly>
     </div>
     <div class="form-group">
-        <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the contract)</label>
+        <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
+            contract)</label>
         <input type="text" id="coverage" name="coverage" value="<c:out value='${contract.coverage}'/>" readonly>
     </div>
     <div class="form-group">
-        <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance contract)</label>
-        <input type="number" id="premium" name="premium" step="0.01" value="<c:out value='${contract.premium}'/>" readonly>
+        <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
+            contract)</label>
+        <input type="number" id="premium" name="premium" step="50" value="<c:out value='${contract.premium}'/>"
+               readonly>
     </div>
     <div class="membership-info">
-        <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>
-        <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any situation.</p>
-        <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of coverage. This includes all the benefits of comprehensive insurance, plus additional features such as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest response in case of any incident. Our premium plan also includes a personal advisor who will assist you with all your insurance needs.</p>
-        <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive the support you need in case of any accidents or incidents. Our team is dedicated to helping you understand the different options and choose the one that best suits your needs.</p>
+        <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
+            motorcycle. After completing your contact information and selecting your insurance package, please submit
+            the form to the Insurance Advisor at the address below. You will receive an invitation to attend an
+            information session. We aim to provide you with as much information as possible about our insurance
+            policies. At the end of the session, you may complete the application for insurance and pay the $100
+            insurance fee.</p>
+        <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your
+            motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters with
+            updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not only
+            covers basic liabilities but also includes coverage for damage caused by natural disasters, fire, and
+            vandalism. This ensures that you have peace of mind in any situation.</p>
+        <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of coverage.
+            This includes all the benefits of comprehensive insurance, plus additional features such as roadside
+            assistance, rental reimbursement, and coverage for custom parts and equipment. The premium insurance fee is
+            $250 per year. With this package, you are guaranteed the best support and quickest response in case of any
+            incident. Our premium plan also includes a personal advisor who will assist you with all your insurance
+            needs.</p>
+        <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive the
+            support you need in case of any accidents or incidents. Our team is dedicated to helping you understand the
+            different options and choose the one that best suits your needs.</p>
     </div>
-    <h3>Application can be dropped off or mailed to:</h3>
-    <p class="address-info">
-        Motorcycle Insurance Company,<br>
-        123 Hola Street,<br>
-        District Thach That, Ha Noi,<br>
-        Vietnam
-    </p>
-    <p class="address-info">
-        Phone: 0123-456-789<br>
-        www.motorcycleinsurance.vn
-    </p>
-    <button type="submit" class="btn-submit">I want update contract</button>
+    <div class="address-info">
+        <h3>Application can be dropped off or mailed to:</h3>
+        <p>Motorcycle Insurance Company,<br>
+            123 Hola Street,<br>
+            District Thach That, Ha Noi,<br>
+            Vietnam</p>
+        <p>Phone: 0123-456-789<br>
+            <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
+    </div>
+    <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}" class="btn-submit">Update
+        Contract</a>
 </div>
 <!-- End of form -->
 <!-- Include footer -->

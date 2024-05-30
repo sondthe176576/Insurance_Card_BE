@@ -5,22 +5,30 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.insurance_card_be.dao.InsuranceCardDAO;
+import org.example.insurance_card_be.model.InsuranceCard;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
-@WebServlet("/saveCustomerInfo")
-public class SaveCustomerInfoServlet extends HttpServlet {
+@WebServlet("/saveInsuranceCardInfo")
+public class SaveInsuranceCardInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String fullName = request.getParameter("fullName");
-        String dob = request.getParameter("dob");
-        String gender = request.getParameter("gender");
-        String address = request.getParameter("address");
-        String job = request.getParameter("job");
-        String company = request.getParameter("company");
+        String cardNumber = request.getParameter("cardNumber");
+        String issueDate = request.getParameter("issueDate");
+        String expiryDate = request.getParameter("expiryDate");
 
+        InsuranceCard insuranceCard = new InsuranceCard(cardNumber, issueDate, expiryDate);
+        InsuranceCardDAO insuranceCardDAO = new InsuranceCardDAO();
 
-        response.setContentType("application/json");
-        response.getWriter().write("{\"status\":\"success\"}");
+        try {
+            insuranceCardDAO.insertInsuranceCard(insuranceCard);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"status\":\"success\", \"data\":" + insuranceCard.toJson() + "}");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"status\":\"error\"}");
+        }
     }
 }

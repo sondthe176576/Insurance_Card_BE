@@ -11,19 +11,29 @@
 <head>
     <title>Renew Contract</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
         .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 50px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
         }
 
         .form-container h2 {
             text-align: center;
             color: #007bff;
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 20px;
-            position: relative;
         }
 
         .form-container h3 {
@@ -31,6 +41,7 @@
             color: #007bff;
             border-bottom: 2px solid #007bff;
             padding-bottom: 5px;
+            font-size: 22px;
         }
 
         .form-group {
@@ -41,6 +52,7 @@
             display: block;
             margin-bottom: 5px;
             color: #333;
+            font-weight: bold;
         }
 
         .form-group input,
@@ -51,6 +63,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 16px;
         }
 
         .form-group textarea {
@@ -60,11 +73,17 @@
         .btn-submit {
             background-color: #007bff;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
 
         .btn-submit:hover {
@@ -86,6 +105,36 @@
 
         .membership-info strong {
             color: #007bff;
+        }
+
+        .address-info {
+            background-color: #e9f7fe;
+            border: 1px solid #bce0fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .address-info h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .address-info p {
+            margin: 5px 0;
+        }
+
+        .address-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .address-info a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -185,7 +234,7 @@
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="0.01" required>
+            <input type="number" id="value" name="value" step="50" required>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
@@ -208,7 +257,7 @@
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="0.01" required>
+            <input type="number" id="premium" name="premium" step="50" required>
         </div>
         <!-- Gia han hop dong -->
         <h3>Renew Contract</h3>
@@ -259,18 +308,15 @@
                     receive the support you need in case of any accidents or incidents. Our team is dedicated to
                     helping you understand the different options and choose the one that best suits your needs.</p>
             </div>
-
-            <h3>Application can be dropped off or mailed to:</h3>
-            <p>
-                Motorcycle Insurance Company,<br>
-                123 Hola Street,<br>
-                District Thach That, Ha Noi,<br>
-                Vietnam
-            </p>
-            <p>
-                Phone: 0123-456-789<br>
-                www.motorcycleinsurance.vn
-            </p>
+            <div class="address-info">
+                <h3>Application can be dropped off or mailed to:</h3>
+                <p>Motorcycle Insurance Company,<br>
+                    123 Hola Street,<br>
+                    District Thach That, Ha Noi,<br>
+                    Vietnam</p>
+                <p>Phone: 0123-456-789<br>
+                    <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
+            </div>
         </div>
         <button type="submit" class="btn-submit">Renew Contract</button>
     </form>

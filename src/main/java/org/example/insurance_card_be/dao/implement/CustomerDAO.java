@@ -11,7 +11,7 @@ import java.util.List;
 public class CustomerDAO extends DBContext {
     public List<Users> findAll() {
         List<Users> list = new ArrayList<>();
-        String sql = "Select * from [Users] where Role ='Customer'";
+        String sql = "Select * from [Users] where Role = 'Customer'";
         try {
             PreparedStatement st = getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();

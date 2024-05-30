@@ -1,5 +1,6 @@
 package org.example.insurance_card_be.controller.auth;
 
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +11,10 @@ import org.apache.http.client.fluent.Request;
 import org.example.insurance_card_be.constant.Iconstant;
 import org.example.insurance_card_be.dao.implement.UserDAO;
 import org.example.insurance_card_be.entity.GoogleAccount;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpSession;
+import org.example.insurance_card_be.dao.implement.UserDAO;
+
 import org.example.insurance_card_be.model.Users;
 
 import jakarta.servlet.ServletException;
@@ -17,7 +22,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import java.util.logging.Logger;
+
 
 @WebServlet("/login")
 public class LoginControl extends HttpServlet {
@@ -84,12 +91,18 @@ public class LoginControl extends HttpServlet {
             session.invalidate();
         }
         // Forward to the login page
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
 //        String code = request.getParameter("code");
 //        String accessToken = getToken(code);
 //        GoogleAccount acc = getUserInfo(accessToken);
@@ -99,6 +112,10 @@ public class LoginControl extends HttpServlet {
 
 
 
+
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
         System.out.println("Username: " + username); // Debug print statement
         System.out.println("Password: " + password); // Debug print statement
@@ -115,7 +132,11 @@ public class LoginControl extends HttpServlet {
         } else {
             // Login successful, redirect to another page
             HttpSession session = request.getSession();
+
             session.setMaxInactiveInterval(7200); // Set session timeout interval
+
+            session.setMaxInactiveInterval(7200);
+
             session.setAttribute("user", user); // Set user in session
             System.out.println("Login successful");
             response.sendRedirect("home.jsp");

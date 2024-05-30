@@ -18,7 +18,7 @@ public class ViewContractDAO {
     }
 
     public Contract getContractDetailById(int contractID) throws Exception {
-        String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, " +
+        String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status, con.StartDate, con.EndDate, " +
                 "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
                 "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
@@ -42,6 +42,7 @@ public class ViewContractDAO {
                     user.setMobile(rs.getString("Mobile"));
                     user.setAddress(rs.getString("Address"));
                     user.setFullName(rs.getString("FullName"));
+                    user.setGender(rs.getString("Gender"));
 
                     Motorcycle motorcycle = new Motorcycle();
                     motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));

@@ -1,137 +1,107 @@
 <%--
   Created by IntelliJ IDEA.
   User: admin
-  Date: 5/28/2024
-  Time: 3:58 PM
+  Date: 5/19/2024
+  Time: 10:18 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>List Compensation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f5f5f5;
+            color: #333;
             margin: 0;
             padding: 0;
         }
 
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background: #fff;
+        .form-container {
+            background-color: white;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            height: 90vh;
+            margin: 20px auto;
+            overflow: auto;
         }
 
-        h1 {
+        .form-container h2 {
             text-align: center;
-            color: #333;
+            color: #007bff;
+            font-size: 28px;
             margin-bottom: 20px;
         }
 
-        .back-button {
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            background-color: #6c757d;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: inline-block;
+        .form-container h3 {
+            margin-bottom: 10px;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            font-size: 22px;
         }
 
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .toolbar input, .toolbar select {
-            padding: 10px;
-            font-size: 16px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            flex: 1;
-            margin-right: 10px;
-        }
-
-        .toolbar input {
-            flex: 2;
-        }
-
-        table {
+        .compensation-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
-        table, th, td {
+        .compensation-table th, .compensation-table td {
+            padding: 10px;
             border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 12px;
             text-align: left;
         }
 
-        th {
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        tr:nth-child(even) {
+        .compensation-table th {
             background-color: #f9f9f9;
+            color: #007bff;
         }
 
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .details-button {
-            padding: 8px 12px;
+        .btn-submit {
             background-color: #007bff;
-            color: #fff;
+            color: white;
+            padding: 12px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
         }
 
-        .details-button:hover {
+        .btn-submit:hover {
             background-color: #0056b3;
         }
 
         .pagination {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            margin: 20px 0;
         }
 
         .pagination a {
-            padding: 10px 15px;
-            margin: 0 5px;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            text-decoration: none;
             color: #007bff;
-            border-radius: 5px;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
         }
 
         .pagination a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .pagination .active {
-            font-weight: bold;
-            background-color: #007bff;
-            color: #fff;
+            background-color: #ddd;
         }
     </style>
 </head>
@@ -142,74 +112,38 @@
 <!-- Include navbar -->
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
-<!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image">
-<!-- End of image slider -->
 <!-- Form -->
-<div class="container">
-    <button class="back-button" onclick="window.history.back();">Quay lại</button>
-    <h1>Danh Sách Yêu Cầu Bồi Thường</h1>
-    <div class="toolbar">
-        <input type="text" placeholder="Tìm kiếm..." id="search">
-        <select id="filter">
-            <option value="">Lọc</option>
-            <option value="pending">Đang chờ xử lý</option>
-            <option value="approved">Đã duyệt</option>
-            <option value="rejected">Đã từ chối</option>
-        </select>
-        <select id="sort">
-            <option value="">Sắp xếp</option>
-            <option value="date">Ngày yêu cầu</option>
-            <option value="customer">Tên khách hàng</option>
-            <option value="amount">Số tiền yêu cầu</option>
-            <option value="status">Trạng thái</option>
-        </select>
-    </div>
-    <table>
+<div class="form-container">
+    <h2>Compensation List</h2>
+    <h3>Contract ID: <c:out value="${contract.contractID}"/></h3>
+    <table class="compensation-table">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Tên Khách Hàng</th>
-            <th>ID Hợp Đồng</th>
-            <th>Ngày Yêu Cầu</th>
-            <th>Số Tiền Yêu Cầu</th>
-            <th>Trạng Thái</th>
-            <th>Chi Tiết</th>
+            <th>Compensation ID</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Các dòng dữ liệu sẽ được sinh bởi mã phía server -->
-        <tr>
-            <td>1</td>
-            <td>John Doe</td>
-            <td>1001</td>
-            <td>2023-05-01</td>
-            <td>5,000,000 VND</td>
-            <td>Đang chờ xử lý</td>
-            <td>
-                <button class="details-button">Xem</button>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Jane Smith</td>
-            <td>1002</td>
-            <td>2023-04-15</td>
-            <td>2,000,000 VND</td>
-            <td>Đã duyệt</td>
-            <td>
-                <button class="details-button">Xem</button>
-            </td>
-        </tr>
+        <c:forEach var="compensation" items="${compensations}">
+            <tr>
+                <td><c:out value="${compensation.compensationID}"/></td>
+                <td><c:out value="${compensation.description}"/></td>
+                <td><c:out value="${compensation.amount}"/></td>
+                <td><c:out value="${compensation.status}"/></td>
+                <td><c:out value="${compensation.date}"/></td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
     <div class="pagination">
-        <!-- Các nút phân trang sẽ được sinh bởi mã phía server -->
-        <a href="?page=1" class="active">1</a>
-        <a href="?page=2">2</a>
-        <a href="?page=3">3</a>
-        <!-- ... -->
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            <a href="?page=${i}" class="${currentPage == i ? 'active' : ''}">${i}</a>
+        </c:forEach>
     </div>
+    <button type="submit" class="btn-submit">Update Compensation</button>
 </div>
 <!-- End of form -->
 <!-- Include footer -->
