@@ -2,6 +2,7 @@ package org.example.insurance_card_be.controller.contract;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.insurance_card_be.model.Contract;
@@ -14,25 +15,25 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @WebServlet(name = "UpdateContractController", urlPatterns = "/updateContract")
-public class UpdateContractController {
+public class UpdateContractController extends HttpServlet {
     // Khai bao updateContractService
     private UpdateContractService updateContractService;
 
     // Khoi tao updateContractService
-    public UpdateContractController(UpdateContractService updateContractService) {
-        this.updateContractService = updateContractService;
+    public UpdateContractController() {
+        this.updateContractService = new UpdateContractService();
     }
 
     // Ham get de hien thi trang update contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         Contract contract = updateContractService.geContractDetailByID(contractID);
-        req.setAttribute("contract", contractID);
+        req.setAttribute("contract", contract);
         req.getRequestDispatcher("/views/contract/updateContract.jsp").forward(req, resp);
     }
 
     // Ham post de update contract
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ParseException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Lay thong tin tu request
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         String contractInfo = req.getParameter("contractInfo");

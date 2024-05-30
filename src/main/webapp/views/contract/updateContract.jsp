@@ -150,7 +150,7 @@
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
-    <form action="${pageContext.request.contextPath}/createContract" method="post">
+    <form action="${pageContext.request.contextPath}/updateContract" method="post">
         <h2>Update Contract</h2>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
@@ -239,7 +239,7 @@
             <label for="value">Value: (The corresponding value for the contract detail, which can be the
                 compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="0.01" value="${contract.value}" required>
+            <input type="number" id="value" name="value" step="50" value="${contract.value}" required>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
@@ -264,7 +264,7 @@
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="0.01" value="${contract.premium}" required>
+            <input type="number" id="premium" name="premium" step="50" value="${contract.premium}" required>
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
