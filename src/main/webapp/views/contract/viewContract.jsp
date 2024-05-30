@@ -256,13 +256,8 @@
     </div>
     <div class="form-group">
         <label for="insuranceType">Insurance Type:</label>
-        <select id="insuranceType" name="insuranceType" readonly>
-            <option value="Basic" <c:if test="${contract.insuranceType == 'Basic'}">selected</c:if>>Basic</option>
-            <option value="Comprehensive" <c:if test="${contract.insuranceType == 'Comprehensive'}">selected</c:if>>
-                Comprehensive
-            </option>
-            <option value="Premium" <c:if test="${contract.insuranceType == 'Premium'}">selected</c:if>>Premium</option>
-        </select>
+        <input type="text" id="insuranceType" name="insuranceType" value="<c:out value='${contract.insuranceType}'/>"
+               readonly>
     </div>
     <div class="form-group">
         <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
