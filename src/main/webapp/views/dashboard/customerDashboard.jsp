@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Content --->
     <div class="main-content">
         <!-- Info Container -->
         <div class="info-container">
