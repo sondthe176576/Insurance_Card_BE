@@ -1,14 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="header.jsp" %>
-<html>
+<!DOCTYPE html>
+<%@include file="header.jsp" %>
+
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Dashboard</title>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         /* Custom styles */
-
         .dashboard-container {
             display: flex;
             height: 100vh;
@@ -80,7 +82,6 @@
         .save-button button {
             width: 200px;
         }
-
     </style>
 </head>
 <body>
@@ -101,7 +102,7 @@
     <div class="main-content">
         <!-- Info Container -->
         <div class="info-container">
-            <form id="customerInfoForm" method="post" action="${pageContext.request.contextPath}/saveCustomerInfo">
+            <form id="customerInfoForm" method="post">
                 <div class="info-section">
                     <!-- Personal Information -->
                     <div class="customer-info">
@@ -162,6 +163,8 @@
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
+            <!-- Display saved information -->
+            <div id="savedInfo" style="margin-top: 20px;"></div>
         </div>
 
         <div id="content">
@@ -190,6 +193,42 @@
             }
         });
     }
+
+    // Handle form submission via AJAX
+    $('#customerInfoForm').on('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        $.ajax({
+            url: '${pageContext.request.contextPath}/saveCustomerInfo',
+            type: 'POST',
+            data: $(this).serialize(), // Serialize form data
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Display the saved information
+                    $('#savedInfo').html(`
+                        <h2>Saved Information</h2>
+                        <p>Email: ${response.data.email}</p>
+                        <p>Full Name: ${response.data.fullName}</p>
+                        <p>Date of Birth: ${response.data.dob}</p>
+                        <p>Gender: ${response.data.gender}</p>
+                        <p>Address: ${response.data.address}</p>
+                        <p>Job: ${response.data.job}</p>
+                        <p>Company: ${response.data.company}</p>
+                        <p>Card Number: ${response.data.cardNumber}</p>
+                        <p>Issue Date: ${response.data.issueDate}</p>
+                        <p>Expiry Date: ${response.data.expiryDate}</p>
+                    `);
+                } else {
+                    alert('Failed to save customer information.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error saving customer information:', status, error);
+                alert('Error saving customer information: ' + error);
+            }
+        });
+    });
 </script>
 </body>
 </html>
