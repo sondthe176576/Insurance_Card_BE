@@ -30,7 +30,7 @@ public class CustomerInfoDAO {
 
             if (rs.next()) {
                 Users user = new Users(rs.getInt("UserID"), rs.getString("Username"), rs.getString("Password"),
-                        rs.getInt("Role"), rs.getString("Email"), rs.getString("Mobile"), rs.getString("Address"),
+                        rs.getString("Role"), rs.getString("Email"), rs.getString("Mobile"), rs.getString("Address"),
                         rs.getString("FullName"), rs.getString("Gender"));
                 customer = new Customers(rs.getInt("CustomerID"), user, rs.getString("PersonalInfo"));
             }

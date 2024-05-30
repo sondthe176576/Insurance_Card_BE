@@ -25,7 +25,7 @@ public class UserDAO {
                 return new Users(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4),
+                        rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
@@ -47,7 +47,7 @@ public class UserDAO {
     }
 
     public void register(String username, String password, String email, String mobile,  String address, String fullname, String gender) {
-        String query = "INSERT INTO Users VALUES(?, ?, 1, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Users VALUES(?, ?, 'Customer', ?, ?, ?, ?, ?)";
         try {
             conn = DBContext.getConnection(); // Mở kết nối với SQL
             ps = conn.prepareStatement(query);
@@ -85,7 +85,7 @@ public class UserDAO {
                 return new Users(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4),
+                        rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
@@ -106,78 +106,41 @@ public class UserDAO {
         return null;
     }
 
-//    public Users checkPhoneExist(String Mobile) {
-//        String query = "select * from Users where Mobile = ?";
-//        try {
-//            conn = DBContext.getConnection(); // Mở kết nối với SQL
-//            ps = conn.prepareStatement(query);
-//            ps.setString(1, Mobile); // Thiết lập tham số cho cột user
-//            rs = ps.executeQuery();
-//            if (rs.next()) {
-//                return new Users(rs.getInt(1),
-//                        rs.getString(2),
-//                        rs.getString(3),
-//                        rs.getInt(4),
-//                        rs.getString(5),
-//                        rs.getString(6),
-//                        rs.getString(7),
-//                        rs.getString(8),
-//                        rs.getString(9));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace(); // In ra lỗi để debug
-//        } finally {
-//            try {
-//                if (rs != null) rs.close();
-//                if (ps != null) ps.close();
-//                if (conn != null) conn.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return null;
-//    }
-    //vvvvvvv
-}
-=======
-
-
-
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-
-        public Users login(String user, String pass) {
-            String query = "select * from account where username = ? and pass = ?";
-            try {
-                conn = new DBContext().getConnection(); // Mở kết nối với SQL
-                ps = conn.prepareStatement(query);
-                ps.setString(1, user); // Thiết lập tham số cho cột user
-                ps.setString(2, pass); // Thiết lập tham số cho cột pass
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    return new Users(rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getInt(4),
-                            rs.getString(5),
-                            rs.getString(6),
-                            rs.getString(7),
-                            rs.getString(8),
-                            rs.getString(9));
-                }
-            } catch (Exception e) {
-                // Xử lý ngoại lệ (nếu cần)
-            } finally {
-                // Đóng các tài nguyên (Connection, PreparedStatement, ResultSet) ở đây (nếu cần)
+    public Users checkPhoneExist(String Mobile) {
+        String query = "select * from Users where Mobile = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setString(1, Mobile); // Thiết lập tham số cho cột user
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9));
             }
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-
-
+        return null;
     }
+
+}
+
+
 
 
 

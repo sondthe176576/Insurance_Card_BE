@@ -18,6 +18,12 @@ public class LoginControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Invalidate the current session if it exists
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        // Forward to the login page
         request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
     }
 
@@ -42,7 +48,7 @@ public class LoginControl extends HttpServlet {
         } else {
             // Login successful, redirect to another page
             HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(7200);
+            session.setMaxInactiveInterval(7200); // Set session timeout interval
             session.setAttribute("user", user); // Set user in session
             System.out.println("Login successful");
             response.sendRedirect("home.jsp");
