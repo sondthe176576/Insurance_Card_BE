@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="../dashboard/header.jsp" %>
+<%@include file="header.jsp" %>
 <html>
 <head>
     <title>Customer Dashboard</title>
@@ -296,7 +296,7 @@
         <a href="#" class="page-link">2</a>
     </div>
 </div>
-<%@ include file="../dashboard/footer.jsp" %>
+<%@ include file="footer.jsp" %>
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
