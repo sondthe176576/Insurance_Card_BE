@@ -35,7 +35,6 @@ public class CustomerInfoController extends HttpServlet {
         String issueDate = request.getParameter("issueDate");
         String expiryDate = request.getParameter("expiryDate");
 
-        // Create a new Customer object with the retrieved information
         Customer customer = new Customer(email, fullName, dob, gender, address, job, company, cardNumber, issueDate, expiryDate);
 
         try {
