@@ -25,13 +25,14 @@ public class UserDAO {
                 return new Users(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4),
+                        rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9));
             }
+            // Test commit
         } catch (Exception e) {
             e.printStackTrace(); // In ra lỗi để debug
         } finally {
@@ -47,7 +48,7 @@ public class UserDAO {
     }
 
     public void register(String username, String password, String email, String mobile,  String address, String fullname, String gender) {
-        String query = "INSERT INTO Users VALUES(?, ?, 1, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Users VALUES(?, ?, 'Customer', ?, ?, ?, ?, ?)";
         try {
             conn = DBContext.getConnection(); // Mở kết nối với SQL
             ps = conn.prepareStatement(query);
@@ -85,7 +86,7 @@ public class UserDAO {
                 return new Users(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getInt(4),
+                        rs.getString(4),
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
