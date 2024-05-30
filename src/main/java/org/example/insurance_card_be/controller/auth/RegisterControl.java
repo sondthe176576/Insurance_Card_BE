@@ -35,6 +35,19 @@ public class RegisterControl extends HttpServlet {
         String gender = request.getParameter("gender");
 
         Users a = dao.checkUserExist(username);
+
+        Users p = dao.checkPhoneExist(phone);
+
+
+        if(a != null){
+            request.setAttribute("message", "Username already exists!");
+            // Debug print statement
+            System.out.println("Mess attribute: " + request.getAttribute("message"));
+            request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
+        }
+        else if(p != null) {
+            request.setAttribute("message", "Phone number already exists!");
+
         //Users p = dao.checkPhoneExist(phone);
 
 
@@ -51,9 +64,16 @@ public class RegisterControl extends HttpServlet {
 
         else{
             request.setAttribute("message", "Username already exists!");
+
             // Debug print statement
             System.out.println("Mess attribute: " + request.getAttribute("message"));
             request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
+        }
+
+
+        else {
+            dao.register(username, password, email, phone, address, full_name, gender);
+            response.sendRedirect("login");
         }
 
     }

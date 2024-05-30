@@ -107,6 +107,43 @@ public class UserDAO {
         return null;
     }
 
+
+    public Users checkPhoneExist(String Mobile) {
+        String query = "select * from Users where Mobile = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setString(1, Mobile); // Thiết lập tham số cho cột user
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9));
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+}
+
+
+=======
 //    public Users checkPhoneExist(String Mobile) {
 //        String query = "select * from Users where Mobile = ?";
 //        try {
@@ -140,6 +177,7 @@ public class UserDAO {
 //    }
     //vvvvvvv
 }
+
 
 
 
