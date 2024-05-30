@@ -43,4 +43,16 @@ public class CustomerDAO extends DBContext {
         }
 
     }
+
+    public void delete(int id) {
+        String sql = "Delete from [Users] where UserID = ?";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

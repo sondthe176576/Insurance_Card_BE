@@ -8,7 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/views/includes/header.jsp" />
-
+<script>
+    function doDelete(userId) {
+        if(confirm("Are you sure you want to delete this customer?")) {
+            window.location = "/customer-staff?action=deleteCustomer&id=" + userId;
+        }
+    }
+</script>
 <html>
 <head>
     <title>Manage Customer</title>
@@ -97,7 +103,7 @@
             <td>${customer.email}</td>
             <td>
                 <a href="/viewCustomer?id=${customer.userID}" class="button">View</a>
-                <a href="/deleteCustomer?id=${customer.userID}" class="button">Delete</a>
+                <a href="#" onclick="doDelete('${customer.userID}')" class="button">Delete</a>
             </td>
         </tr>
     </c:forEach>
