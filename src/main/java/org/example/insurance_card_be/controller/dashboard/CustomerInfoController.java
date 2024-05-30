@@ -23,7 +23,7 @@ public class CustomerInfoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve customer information from the request parameters
+
         String email = request.getParameter("email");
         String fullName = request.getParameter("fullName");
         String dob = request.getParameter("dob");
