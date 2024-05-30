@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @WebServlet(name = "ViewContractController", urlPatterns = "/viewContract")
-public class ViewContractController extends HttpServlet{
+public class ViewContractController extends HttpServlet {
     private ViewContractService viewContractService;
 
     public ViewContractController() {

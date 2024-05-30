@@ -83,11 +83,12 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" style="width: 100%; margin-bottom: 20px;">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
+     style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
-    <form action="${pageContext.request.contextPath}/createContract" method="get">
+    <form action="${pageContext.request.contextPath}/selectCustomer" method="post">
         <h2>Select CustomerID To Create A Contract</h2>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>

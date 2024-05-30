@@ -234,7 +234,7 @@
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="0.01" required>
+            <input type="number" id="value" name="value" step="50" required>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
@@ -257,7 +257,7 @@
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="0.01" required>
+            <input type="number" id="premium" name="premium" step="50" required>
         </div>
         <!-- Gia han hop dong -->
         <h3>Renew Contract</h3>
