@@ -8,8 +8,12 @@ public class Customer {
     private String address;
     private String job;
     private String company;
+    private String cardNumber;
+    private String issueDate;
+    private String expiryDate;
 
-    public Customer(String email, String fullName, String dob, String gender, String address, String job, String company) {
+    // Constructor
+    public Customer(String email, String fullName, String dob, String gender, String address, String job, String company, String cardNumber, String issueDate, String expiryDate) {
         this.email = email;
         this.fullName = fullName;
         this.dob = dob;
@@ -17,9 +21,10 @@ public class Customer {
         this.address = address;
         this.job = job;
         this.company = company;
+        this.cardNumber = cardNumber;
+        this.issueDate = issueDate;
+        this.expiryDate = expiryDate;
     }
-
-    // Getters and setters
 
     public String getEmail() {
         return email;
@@ -33,47 +38,36 @@ public class Customer {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getDob() {
         return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getAddress() {
         return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getJob() {
         return job;
     }
 
-    public void setJob(String job) {
-        this.job = job;
-    }
-
     public String getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public String getCardNumber() {
+        return cardNumber;
     }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+
 }
