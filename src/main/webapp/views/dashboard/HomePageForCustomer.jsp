@@ -272,19 +272,19 @@
 
     <div class="row news-section">
         <div class="col-md-4 news-box">
-            <img src="${pageContext.request.contextPath}/img/blog-pic.jpg" alt="News Image 1">
+            <img src="${pageContext.request.contextPath}/img/z5492679158839_534a533f48030b12a6e7f92ab158c5c7.jpg" alt="News Image 1">
             <h3>Lorem Ipsum Dolor Sit Amet Michel Jackson</h3>
             <p>Morbi lectus arcu, suscipit quis congue quis, vulp ut nulla. Curabitur sit amet interdum lectus.</p>
             <small>Posted on Jan 21, 2024</small>
         </div>
         <div class="col-md-4 news-box">
-            <img src="${pageContext.request.contextPath}/img/blog-pic-1.jpg" alt="News Image 2">
+            <img src="${pageContext.request.contextPath}/img/z5492679158847_6af0583704368bef81f3b34a4603722c.jpg" alt="News Image 2">
             <h3>Pellentesque faucibus mauris id lobortis hendrerit</h3>
             <p>Morbi lectus arcu, suscipit quis congue quis, vulp ut nulla. Curabitur sit amet interdum lectus.</p>
             <small>Posted on Jan 21, 2024</small>
         </div>
         <div class="col-md-4 news-box">
-            <img src="${pageContext.request.contextPath}/img/blog-pic-2.jpg" alt="News Image 3">
+            <img src="${pageContext.request.contextPath}/img/z5492679165470_52b14d798485dcfe812daa4ef80f4b1f.jpg" alt="News Image 3">
             <h3>Pellentesque faucibus mauris id lobortis hendrerit</h3>
             <p>Morbi lectus arcu, suscipit quis congue quis, vulp ut nulla. Curabitur sit amet interdum lectus.</p>
             <small>Posted on Jan 21, 2024</small>
