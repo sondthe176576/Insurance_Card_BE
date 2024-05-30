@@ -11,81 +11,67 @@
 <head>
     <title>Select Customer</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f7ff; /* Light blue background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
         .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 50px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin: 60px auto;
         }
 
         .form-container h2 {
             text-align: center;
             color: #007bff;
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 20px;
-            position: relative;
-        }
-
-        .form-container h3 {
-            margin-bottom: 10px;
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 5px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #333;
+            margin-bottom: 8px;
+            color: #007bff;
+            font-weight: bold;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group select {
             width: 100%;
-            padding: 20px 100px;
+            padding: 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-        }
-
-        .form-group textarea {
-            height: 100px;
+            font-size: 16px;
         }
 
         .btn-submit {
             background-color: #007bff;
             color: white;
-            padding: 10px 20px;
+            padding: 14px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
         }
 
         .btn-submit:hover {
             background-color: #0056b3;
-        }
-
-        .membership-info {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 4px;
-            margin-top: 20px;
-        }
-
-        .membership-info p {
-            margin: 10px 0;
-            color: #333;
-        }
-
-        .membership-info strong {
-            color: #007bff;
         }
     </style>
 </head>
@@ -97,7 +83,7 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
