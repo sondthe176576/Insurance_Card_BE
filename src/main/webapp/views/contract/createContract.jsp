@@ -155,11 +155,72 @@
         <h2>Create New Contract</h2>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
-        <!-- Hien thi id cua khach hang chuyen tu trang selectCustomer.jsp -->
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
-            <input type="number" id="customerID" name="customerID" value="${param.customerID}" readonly>
+            <input type="number" id="customerID" name="customerID" value="${customer.customerID}" readonly>
         </div>
+        <div class="form-group">
+            <label for="customerUsername">Customer Username:</label>
+            <input type="text" id="customerUsername" name="customerUsername" value="${customer.user.username}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="customerName">Customer Name:</label>
+            <input type="text" id="customerName" name="customerName" value="${customer.user.fullName}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="customerAddress">Customer Address:</label>
+            <input type="text" id="customerAddress" name="customerAddress" value="${customer.user.address}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="customerPhone">Customer Phone:</label>
+            <input type="text" id="customerPhone" name="customerPhone" value="${customer.user.mobile}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="customerEmail">Customer Email:</label>
+            <input type="email" id="customerEmail" name="customerEmail" value="${customer.user.email}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="customerGender">Gender:</label>
+            <input type="text" id="customerGender" name="customerGender" value="${customer.user.gender}" readonly>
+        </div>
+        <!-- Thông tin Xe Máy -->
+        <h3>Motorcycle Information</h3>
+        <c:forEach var="motorcycle" items="${motorcycles}">
+            <div class="form-group">
+                <label for="motorcycleID">Motorcycle ID:</label>
+                <input type="number" id="motorcycleID" name="motorcycleID" value="${motorcycle.motorcycleID}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="licensePlate">License Plate:</label>
+                <input type="text" id="licensePlate" name="licensePlate" value="${motorcycle.licensePlate}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" name="brand" value="${motorcycle.brand}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model" value="${motorcycle.model}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="yearOfManufacture">Year Of Manufacture:</label>
+                <input type="number" id="yearOfManufacture" name="yearOfManufacture"
+                       value="${motorcycle.yearOfManufacture}"
+                       readonly>
+            </div>
+            <div class="form-group">
+                <label for="color">Color:</label>
+                <input type="text" id="color" name="color" value="${motorcycle.color}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="engineNumber">Engine Number:</label>
+                <input type="text" id="engineNumber" name="engineNumber" value="${motorcycle.engineNumber}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="frameNumber">Frame Number:</label>
+                <input type="text" id="frameNumber" name="frameNumber" value="${motorcycle.frameNumber}" readonly>
+            </div>
+        </c:forEach>
         <!-- Thông tin Bảo Hiểm -->
         <h3>Insurance Information</h3>
         <div class="form-group">
@@ -181,7 +242,7 @@
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="0.01" required>
+            <input type="number" id="value" name="value" step="50" required>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
@@ -204,7 +265,7 @@
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="0.01" required>
+            <input type="number" id="premium" name="premium" step="50" required>
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your

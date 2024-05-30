@@ -6,29 +6,50 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.insurance_card_be.model.Contract;
+import org.example.insurance_card_be.model.Customers;
+import org.example.insurance_card_be.model.Motorcycle;
 import org.example.insurance_card_be.service.ContractService;
+import org.example.insurance_card_be.service.CustomerService;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet(name = "ContractController", urlPatterns = "/createContract")
 public class ContractController extends HttpServlet {
-    // Controller dung de xu ly request cua contract
+    // Khai bao mot doi tuong contractService va customerService de truy cap vao CSDL
     private ContractService contractService;
+    private CustomerService customerService;
 
-    // Khoi tao contractService
+    // Ham khoi tao khong doi so
     @Override
     public void init() throws ServletException {
         this.contractService = new ContractService();
+        this.customerService = new CustomerService();
     }
 
     // Ham get de hien thi trang tao contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
+        String customerIDstr = req.getParameter("customerID");
+        int customerID = Integer.parseInt(customerIDstr);
+
+        try {
+            Customers customer = customerService.getCustomerByID(customerID);
+            List<Motorcycle> motorcycles = customerService.getMotorcyclesByCustomerID(customerID);
+            req.setAttribute("customer", customer);
+            req.setAttribute("motorcycles", motorcycles);
+            req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
+        } catch (SQLException e) {
+            Logger logger = Logger.getLogger(ContractController.class.getName());
+            logger.log(Level.SEVERE, "Failed to load customer or motorcycles!", e);
+            req.setAttribute("message", "Failed to load customer or motorcycles: " + e.getMessage());
+            req.setAttribute("status", false);
+            req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
+        }
     }
 
     // Ham post de tao contract

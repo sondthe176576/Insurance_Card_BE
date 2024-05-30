@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerInfoDAO {
+    // Cau lenh SQL de lay thong tin cua mot khach hang tuong ung voi ID
     String sql = "SELECT c.CustomerID, c.PersonalInfo, " +
             "u.UserID, u.Username, u.Password, u.Role, u.Email, u.Mobile, u.Address, u.FullName, u.Gender " +
             "FROM dbo.Customers c " +
@@ -20,7 +21,7 @@ public class CustomerInfoDAO {
             "WHERE c.CustomerID = ?";
     private static final String SELECT_MOTORCYCLES_BY_CUSTOMER_ID = "SELECT * FROM Motorcycles WHERE CustomerID = ?";
 
-    // Load a customer from the database by ID
+    // Lay thong tin cua mot khach hang tuong ung voi ID
     public Customers selectCustomerByID(int customerID) {
         Customers customer = null;
         try (Connection conn = DBContext.getConnection();
@@ -40,7 +41,7 @@ public class CustomerInfoDAO {
         return customer;
     }
 
-    // Load motorcycles of a customer from the database by ID
+    // Lay danh sach cac xe may cua mot khach hang tuong ung voi ID
     public List<Motorcycle> selectMotorcyclesByCustomerID(int customerID) {
         List<Motorcycle> motorcycles = new ArrayList<>();
         try (Connection conn = DBContext.getConnection();
@@ -61,7 +62,7 @@ public class CustomerInfoDAO {
         return motorcycles;
     }
 
-    // Load all ID of customers from the database
+    // Lay danh sach tat ca ID cua khach hang
     public List<Integer> getAllCustomerIDs() throws SQLException {
         List<Integer> customerIDs = new ArrayList<>();
         String sql = "SELECT CustomerID FROM Customers";
@@ -74,18 +75,5 @@ public class CustomerInfoDAO {
 
         }
         return customerIDs;
-    }
-
-    // Function main test get all customer IDs
-    public static void main(String[] args) {
-        CustomerInfoDAO customerInfoDAO = new CustomerInfoDAO();
-        try {
-            List<Integer> customerIDs = customerInfoDAO.getAllCustomerIDs();
-            for (Integer customerID : customerIDs) {
-                System.out.println(customerID);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
