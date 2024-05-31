@@ -8,13 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/views/includes/header.jsp" />
-<script>
-    function doDelete(userId) {
-        if(confirm("Are you sure you want to delete this customer?")) {
-            window.location = "/customer-staff?action=deleteCustomer&id=" + userId;
-        }
-    }
-</script>
+
 <html>
 <head>
     <title>Manage Customer</title>
@@ -94,20 +88,31 @@
         <th>Email</th>
         <th>Actions</th>
     </tr>
-    <c:forEach items="${requestScope.data}" var="customer">
+    <c:forEach items="${requestScope.listCustomer}" var="c">
+
         <tr>
-            <td>${customer.userID}</td>
-            <td>${customer.username}</td>
-            <td>${customer.address}</td>
-            <td>${customer.mobile}</td>
-            <td>${customer.email}</td>
+            <td>${c.userID}</td>
+            <td>${c.username}</td>
+            <td>${c.address}</td>
+            <td>${c.mobile}</td>
+            <td>${c.email}</td>
             <td>
-                <a href="/viewCustomer?id=${customer.userID}" class="button">View</a>
-                <a href="#" onclick="doDelete('${customer.userID}')" class="button">Delete</a>
+                <a href="/viewCustomer?id=${c.userID}" class="button">View</a>
+                <form action="customer-staff?action=delete" method="post">
+                    <input type="hidden" name="id" value="${c.userID}" />
+                <a href="#" onclick="deleteCustomer(this)" class="button">Delete</a>
+                </form>
             </td>
         </tr>
     </c:forEach>
 </table>
-</body>
-</html>
 <jsp:include page="/views/includes/footer.jsp" />
+</body>
+<script>
+function deleteCustomer(e){
+    let form = e.closest('form');
+    form.submit();
+}
+
+</script>
+</html>

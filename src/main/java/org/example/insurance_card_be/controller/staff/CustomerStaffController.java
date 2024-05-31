@@ -1,6 +1,7 @@
 package org.example.insurance_card_be.controller.staff;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.ServletException;
@@ -17,63 +18,35 @@ import org.example.insurance_card_be.model.Users;
 
 @WebServlet("/customer-staff")
 public class CustomerStaffController extends HttpServlet{
-    private CustomerDAO customerDAO = new CustomerDAO();
-
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        CustomerDAO customerDAO = new CustomerDAO();
+        List<Users> listCustomer = customerDAO.findAll();
+        req.setAttribute("listCustomer", listCustomer);
+        req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
         String action = req.getParameter("action") == null
-                ? ""
-                :req.getParameter("action");
+                ? "" : req.getParameter("action");
+        List<Users> listCustomer = new ArrayList<>();
         switch (action){
-            case "addCustomer":
-                addCustomer(req, resp, session);
-                break;
-
-            case"deleteCustomer":
-                deleteCustomer(req, resp);
+            case "delete":
+                listCustomer = delete(req, resp);
                 break;
         }
-
+        req.getSession().setAttribute("listCustomer",listCustomer);
+        resp.sendRedirect("customer-staff");
     }
 
-
-//add
-    private void addCustomer(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException {
-
-            try {
-                // get personal info from request
-                String username = req.getParameter("username");
-                String address = req.getParameter("address");
-                String mobile = req.getParameter("mobile");
-                String email = req.getParameter("email");
-
-                // store in session
-                session.setAttribute("customerUsername", username);
-                session.setAttribute("customerAddress", address);
-                session.setAttribute("customerMobile", mobile);
-                session.setAttribute("customerEmail", email);
-
-                // redirect to account creation page
-                resp.sendRedirect("views/staff/CreateAccount.jsp");
-            } catch (Exception e) {
-                throw new ServletException("Unable to add customer", e);
-            }
-    }
-    // delete
-    private void deleteCustomer(HttpServletRequest req, HttpServletResponse resp) {
-        int id  = Integer.parseInt(req.getParameter("userID"));
-        try {
-            customerDAO.delete(id);
-            resp.sendRedirect("list-customer");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private List<Users> delete(HttpServletRequest req, HttpServletResponse resp) {
+        CustomerDAO customerDAO = new CustomerDAO();
+        int id = Integer.parseInt(req.getParameter("id"));
+        Users users = new Users();
+        users.setUserID(id);
+        customerDAO.deleteByID(users);
+        return customerDAO.findAll();
     }
 
 }
