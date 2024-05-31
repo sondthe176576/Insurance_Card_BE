@@ -92,10 +92,6 @@ public class LoginControl extends HttpServlet {
         }
         // Forward to the login page
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
         request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
     }
 
@@ -107,8 +103,6 @@ public class LoginControl extends HttpServlet {
 //        String accessToken = getToken(code);
 //        GoogleAccount acc = getUserInfo(accessToken);
 //        System.out.println(acc);
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
 
 
 
@@ -116,11 +110,13 @@ public class LoginControl extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+
 
         System.out.println("Username: " + username); // Debug print statement
         System.out.println("Password: " + password); // Debug print statement
 
         Users user = dao.login(username, password);
+
 
         if (user == null) {
             // Login failed, forward back to login page
@@ -132,14 +128,11 @@ public class LoginControl extends HttpServlet {
         } else {
             // Login successful, redirect to another page
             HttpSession session = request.getSession();
-
-            session.setMaxInactiveInterval(7200); // Set session timeout interval
-
+                                      // Set session timeout interval
             session.setMaxInactiveInterval(7200);
-
             session.setAttribute("user", user); // Set user in session
             System.out.println("Login successful");
-            response.sendRedirect("home.jsp");
+            request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
         }
     }
 }

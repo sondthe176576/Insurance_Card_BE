@@ -142,8 +142,6 @@ public class UserDAO {
 
 }
 
-
-=======
 //    public Users checkPhoneExist(String Mobile) {
 //        String query = "select * from Users where Mobile = ?";
 //        try {
@@ -175,8 +173,8 @@ public class UserDAO {
 //        }
 //        return null;
 //    }
-    //vvvvvvv
-}
+
+
 
 
 
