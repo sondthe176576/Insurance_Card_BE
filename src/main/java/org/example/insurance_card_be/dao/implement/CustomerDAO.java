@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
 
 public class CustomerDAO extends DBContext {
     public List<Users> findAll() {
@@ -25,6 +26,20 @@ public class CustomerDAO extends DBContext {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+
+
+
+    public void deleteByID(Users users) {
+       Connection connection = getConnection();
+        String sql = "delete from [Users] where UserID = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setObject(1, users.getUserID());
+            st.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
