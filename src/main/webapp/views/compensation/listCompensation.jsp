@@ -13,8 +13,8 @@
     <title>List Compensation</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             color: #333;
             margin: 0;
             padding: 0;
@@ -22,62 +22,66 @@
 
         .form-container {
             background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            height: 90vh;
-            margin: 20px auto;
-            overflow: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1200px;
+            margin: 40px auto;
         }
 
         .form-container h2 {
             text-align: center;
-            color: #007bff;
-            font-size: 28px;
-            margin-bottom: 20px;
+            color: #34495e;
+            font-size: 32px;
+            margin-bottom: 30px;
         }
 
         .form-container h3 {
-            margin-bottom: 10px;
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 5px;
-            font-size: 22px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 10px;
+            font-size: 24px;
         }
 
         .compensation-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .compensation-table th, .compensation-table td {
-            padding: 10px;
+            padding: 15px;
             border: 1px solid #ddd;
             text-align: left;
         }
 
         .compensation-table th {
-            background-color: #f9f9f9;
-            color: #007bff;
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+
+        .compensation-table tr:nth-child(even) {
+            background-color: #f4f7f6;
         }
 
         .btn-submit {
-            background-color: #007bff;
+            background-color: #3498db;
             color: white;
-            padding: 12px 20px;
+            padding: 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 18px;
-            margin-top: 20px;
-            display: block;
+            font-size: 20px;
             width: 100%;
+            text-align: center;
+            text-decoration: none;
         }
 
         .btn-submit:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
         }
 
         .pagination {
@@ -87,21 +91,22 @@
         }
 
         .pagination a {
-            color: #007bff;
-            padding: 8px 16px;
+            color: #3498db;
+            padding: 10px 20px;
             text-decoration: none;
             border: 1px solid #ddd;
-            margin: 0 4px;
+            margin: 0 5px;
+            border-radius: 5px;
         }
 
         .pagination a.active {
-            background-color: #007bff;
+            background-color: #3498db;
             color: white;
-            border: 1px solid #007bff;
+            border: 1px solid #3498db;
         }
 
         .pagination a:hover {
-            background-color: #ddd;
+            background-color: #ecf0f1;
         }
     </style>
 </head>
@@ -114,36 +119,53 @@
 <!-- End of navbar -->
 <!-- Form -->
 <div class="form-container">
-    <h2>Compensation List</h2>
-    <h3>Contract ID: <c:out value="${contract.contractID}"/></h3>
+    <h2>Compensation Management</h2>
+    <h3>List Request From Customer</h3>
     <table class="compensation-table">
         <thead>
         <tr>
             <th>Compensation ID</th>
+            <th>Customer ID</th>
+            <th>Contract ID</th>
+            <th>Customer Name</th>
             <th>Description</th>
             <th>Amount</th>
             <th>Status</th>
             <th>Date</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="compensation" items="${compensations}">
+        <c:forEach var="compensation" items="${requests}">
             <tr>
-                <td><c:out value="${compensation.compensationID}"/></td>
+                <td><c:out value="${compensation.requestID}"/></td>
+                <td><c:out value="${compensation.customerID}"/></td>
+                <td><c:out value="${compensation.contractID}"/></td>
+                <td><c:out value="${compensation.customerName}"/></td>
                 <td><c:out value="${compensation.description}"/></td>
                 <td><c:out value="${compensation.amount}"/></td>
                 <td><c:out value="${compensation.status}"/></td>
-                <td><c:out value="${compensation.date}"/></td>
+                <td><c:out value="${compensation.requestDate}"/></td>
+                <td>
+                    <a href="/compensation/update?compensationID=${compensation.requestID}"
+                       class="btn-submit">Update</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     <div class="pagination">
         <c:forEach var="i" begin="1" end="${totalPages}">
-            <a href="?page=${i}" class="${currentPage == i ? 'active' : ''}">${i}</a>
+            <c:choose>
+                <c:when test="${i == currentPage}">
+                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}" class="active">${i}</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}">${i}</a>
+                </c:otherwise>
+            </c:choose>
         </c:forEach>
     </div>
-    <button type="submit" class="btn-submit">Update Compensation</button>
 </div>
 <!-- End of form -->
 <!-- Include footer -->
