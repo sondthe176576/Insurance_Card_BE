@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -150,114 +151,114 @@
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
-    <form action="${pageContext.request.contextPath}/createContract" method="post">
+    <form action="${pageContext.request.contextPath}/renewContract" method="post">
         <h2> Information of the Contract</h2>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
         <!-- Hien thi id cua khach hang chuyen tu trang selectCustomer.jsp -->
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
-            <input type="number" id="customerID" name="customerID" value="${param.customerID}" readonly>
+            <input type="number" id="customerID" name="customerID" value="${contract.customer.customerID}" readonly>
         </div>
         <div class="form-group">
             <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" required>
+            <input type="text" id="fullName" name="fullName" value="${contract.customer.user.fullName}" readonly>
         </div>
         <div class="form-group">
             <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
+            <input type="text" id="address" name="address" value="${contract.customer.user.address}" readonly>
         </div>
         <div class="form-group">
             <label for="mobile">Mobile:</label>
-            <input type="text" id="mobile" name="mobile" required>
+            <input type="text" id="mobile" name="mobile" value="${contract.customer.user.mobile}" readonly>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" value="${contract.customer.user.email}" readonly>
         </div>
         <div class="form-group">
             <label for="gender">Gender: </label>
-            <input type="text" id="gender" name="gender" required>
+            <input type="text" id="gender" name="gender" value="${contract.customer.user.gender}" readonly>
         </div>
         <!-- Thông tin Xe -->
         <h3>Vehicle Information</h3>
         <div class="form-group">
-            <label for="plateNumber">Plate Number:</label>
-            <input type="text" id="plateNumber" name="plateNumber" required>
+            <label for="licensePlate">License Plate:</label>
+            <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}"
+                   readonly>
         </div>
         <div class="form-group">
             <label for="brand">Brand:</label>
-            <input type="text" id="brand" name="brand" required>
+            <input type="text" id="brand" name="brand" value="${contract.motorcycle.brand}" readonly>
         </div>
         <div class="form-group">
             <label for="model">Model:</label>
-            <input type="text" id="model" name="model" required>
+            <input type="text" id="model" name="model" value="${contract.motorcycle.model}" readonly>
         </div>
         <div class="form-group">
             <label for="yearOfManufacture">Year of Manufacture:</label>
-            <input type="number" id="yearOfManufacture" name="yearOfManufacture" required>
+            <input type="number" id="yearOfManufacture" name="yearOfManufacture"
+                   value="${contract.motorcycle.yearOfManufacture}" readonly>
         </div>
         <div class="form-group">
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
+            <input type="text" id="color" name="color" value="${contract.motorcycle.color}" readonly>
         </div>
         <div class="form-group">
             <label for="engineNumber">Engine Number:</label>
-            <input type="text" id="engineNumber" name="engineNumber" required>
+            <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}"
+                   readonly>
         </div>
         <div class="form-group">
             <label for="frameNumber">Frame Number:</label>
-            <input type="text" id="frameNumber" name="frameNumber" required>
+            <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}" readonly>
         </div>
         <!-- Thông tin Bảo Hiểm -->
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractID">Contract ID:</label>
-            <input type="number" id="contractID" name="contractID" required>
+            <input type="number" id="contractID" name="contractID" value="${contract.contractID}" readonly>
         </div>
         <div class="form-group">
             <label for="contractInfo">Contract Info:</label>
-            <input type="text" id="contractInfo" name="contractInfo" required>
+            <input type="text" id="contractInfo" name="contractInfo" value="${contract.contractInfo}" readonly>
         </div>
         <div class="form-group">
             <label for="status">Status:</label>
-            <input type="text" id="status" name="status" required>
+            <input type="text" id="status" name="status" value="${contract.status}" readonly>
         </div>
         <div class="form-group">
             <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate" required>
+            <input type="date" id="startDate" name="startDate" value="${contract.startDate}" readonly>
         </div>
         <div class="form-group">
             <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" required>
+            <input type="date" id="endDate" name="endDate" value="${contract.endDate}" readonly>
         </div>
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="50" required>
+            <input type="number" id="value" name="value" step="50" value="${contract.value}" readonly>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
                 conditions)</label>
-            <textarea id="detail" name="detail" required></textarea>
+            <textarea id="detail" name="detail" readonly>${contract.detail}</textarea>
         </div>
         <div class="form-group">
             <label for="insuranceType">Insurance Type:</label>
-            <select id="insuranceType" name="insuranceType">
-                <option value="Basic">Basic</option>
-                <option value="Comprehensive">Comprehensive</option>
-                <option value="Premium">Premium</option>
-            </select>
+            <input type="text" id="insuranceType" name="insuranceType"
+                   value="<c:out value='${contract.insuranceType}'/>" readonly>
         </div>
         <div class="form-group">
             <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
                 contract)</label>
-            <input type="text" id="coverage" name="coverage" required>
+            <input type="text" id="coverage" name="coverage" value="${contract.coverage}" readonly>
         </div>
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="50" required>
+            <input type="number" id="premium" name="premium" step="50" value="${contract.premium}" readonly>
         </div>
         <!-- Gia han hop dong -->
         <h3>Renew Contract</h3>
@@ -276,10 +277,6 @@
         <div class="form-group">
             <label for="newContractInfo">New Contract Info:</label>
             <input type="text" id="newContractInfo" name="newContractInfo" required>
-        </div>
-        <div class="form-group">
-            <label for="paymentMethod">Payment Method:</label>
-            <input type="text" id="paymentMethod" name="paymentMethod" required>
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
@@ -318,6 +315,7 @@
                     <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
             </div>
         </div>
+        <input type="hidden" name="contractID" value="<c:out value='${contract.contractID}'/>">
         <button type="submit" class="btn-submit">Renew Contract</button>
     </form>
 </div>
