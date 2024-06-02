@@ -245,6 +245,12 @@
         <input type="date" id="endDate" name="endDate" value="<c:out value='${contract.endDate}'/>" readonly>
     </div>
     <div class="form-group">
+        <label>Time remaining:</label>
+        <p style="color: red;">
+            <c:out value='${diffDays}'/> days
+        </p>
+    </div>
+    <div class="form-group">
         <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount
             or the insurance value)</label>
         <input type="number" id="value" name="value" step="50" value="<c:out value='${contract.value}'/>" readonly>
@@ -302,6 +308,8 @@
             <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
     </div>
     <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}" class="btn-submit">Update
+        Contract</a>
+    <a href="${pageContext.request.contextPath}/renewContract?contractID=${contract.contractID}" class="btn-submit">Renew
         Contract</a>
 </div>
 <!-- End of form -->
