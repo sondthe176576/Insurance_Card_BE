@@ -17,6 +17,7 @@ public class ViewContractDAO {
         this.connection = DBContext.getConnection();
     }
 
+    // Lấy thông tin hợp đồng theo contractID
     public Contract getContractDetailById(int contractID) throws Exception {
         String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status, con.StartDate, con.EndDate, " +
