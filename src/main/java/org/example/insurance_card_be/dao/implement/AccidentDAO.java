@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccidentDAO {
+    // Khai bao connection
     private Connection connection;
 
+    // Khởi tạo connection
     public AccidentDAO(Connection connection) {
         this.connection = DBContext.getConnection();
     }
 
-    // Them thuoc tinh Status
+    // Ham lay thong tin tat ca cac tai nan
     public List<Accident> getAllAccidents(int page, int pageSize) throws SQLException {
         List<Accident> accidents = new ArrayList<>();
         String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, u.FullName AS CustomerName, a.Status " +
@@ -48,6 +50,7 @@ public class AccidentDAO {
         return accidents;
     }
 
+    // Ham lay tong so tai nan
     public int getTotalAccidents() throws SQLException {
         String query = "SELECT COUNT(a.AccidentID) AS Total " +
                 "FROM Accidents a " +
@@ -64,8 +67,8 @@ public class AccidentDAO {
         return 0;
     }
 
+    // Ham lay thong tin tai nan theo ID
     public Accident getAccidentById(int accidentID) throws SQLException {
-        // Them thuoc tinh Status
         String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, a.Status, u.FullName " +
                 "FROM Accidents a " +
                 "JOIN Contracts c ON a.ContractID = c.ContractID " +
@@ -90,18 +93,5 @@ public class AccidentDAO {
             }
         }
         return null;
-    }
-
-    // Ham main de test lay list accident
-    public static void main(String[] args) {
-        try {
-            AccidentDAO accidentDAO = new AccidentDAO(DBContext.getConnection());
-            List<Accident> accidents = accidentDAO.getAllAccidents(1, 10);
-            for (Accident accident : accidents) {
-                System.out.println(accident);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 }

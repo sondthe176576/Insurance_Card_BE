@@ -9,38 +9,26 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AccidentService {
+    // Khai bao accidentDAO
     private AccidentDAO accidentDAO;
 
+    // Khoi tao connection
     public AccidentService(Connection connection) {
         this.accidentDAO = new AccidentDAO(connection);
     }
 
-    // List all accidents
+    // Ham lay thong tin tat ca cac tai nan
     public List<Accident> getAllAccidents(int page, int limit) throws SQLException {
         return accidentDAO.getAllAccidents(page, limit);
     }
 
-    // Get total accidents
+    // Ham lay tong so tai nan
     public int getTotalAccidents() throws SQLException {
         return accidentDAO.getTotalAccidents();
     }
 
-    // Get accident by ID
+    // Ham lay thong tin tai nan theo ID
     public Accident getAccidentByID(int accidentID) throws SQLException {
         return accidentDAO.getAccidentById(accidentID);
-    }
-
-    // Ham main de test
-    public static void main(String[] args) {
-        Connection connection = DBContext.getConnection();
-        AccidentService accidentService = new AccidentService(connection);
-        try {
-            List<Accident> accidents = accidentService.getAllAccidents(1, 10);
-            for (Accident accident : accidents) {
-                System.out.println(accident);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

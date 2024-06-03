@@ -14,8 +14,10 @@ import java.text.SimpleDateFormat;
 
 @WebServlet(name = "RenewContractController", urlPatterns = "/renewContract")
 public class RenewContractController extends HttpServlet {
+    // Khai bao renewContractService
     private RenewContractService renewContractService;
 
+    // Khoi tao renewContractService
     public RenewContractController() {
         this.renewContractService = new RenewContractService();
     }
@@ -34,7 +36,7 @@ public class RenewContractController extends HttpServlet {
 
     // Ham doPost de renew contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lay thong tin tu request
+        // Lay thong tin contract tu request
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         String newContractInfo = req.getParameter("newContractInfo");
         String renewalDateStr = req.getParameter("renewalDate");
@@ -47,7 +49,7 @@ public class RenewContractController extends HttpServlet {
         contract.setPremium(newPremium);
         contract.setCoverage(newCoverage);
 
-        // Xử lý ngày gia hạn mới
+        // Xu ly ngay
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.sql.Date newEndDate = new java.sql.Date(formatter.parse(renewalDateStr).getTime());

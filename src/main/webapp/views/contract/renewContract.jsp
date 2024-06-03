@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -7,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,7 +155,6 @@
         <h2> Information of the Contract</h2>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
-        <!-- Hien thi id cua khach hang chuyen tu trang selectCustomer.jsp -->
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
             <input type="number" id="customerID" name="customerID" value="${contract.customer.customerID}" readonly>

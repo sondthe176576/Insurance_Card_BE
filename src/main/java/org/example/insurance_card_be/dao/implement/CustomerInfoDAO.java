@@ -62,7 +62,7 @@ public class CustomerInfoDAO {
         return motorcycles;
     }
 
-    // Lay danh sach tat ca ID cua khach hang
+    // Lay danh sach cac customerID
     public List<Integer> getAllCustomerIDs() throws SQLException {
         List<Integer> customerIDs = new ArrayList<>();
         String sql = "SELECT CustomerID FROM Customers";
