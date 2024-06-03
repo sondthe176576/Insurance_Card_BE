@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerService {
-    // Khai bao mot doi tuong CustomerInfoDAO de truy cap vao CSDL
+    // Khai bao customerInfoDAO
     private CustomerInfoDAO customerInfoDAO;
 
-    // Ham khoi tao khong doi so
+    // Khoi tao customerInfoDAO
     public CustomerService() {
         this.customerInfoDAO = new CustomerInfoDAO();
     }
 
-    // Ham lay thong tin cua customer theo ID
+    // Ham lay thong tin cua mot customer theo ID
     public Customers getCustomerByID(int customerID) throws SQLException {
         return customerInfoDAO.selectCustomerByID(customerID);
     }
@@ -26,7 +26,7 @@ public class CustomerService {
         return customerInfoDAO.selectMotorcyclesByCustomerID(customerID);
     }
 
-    // Ham lay danh sach tat ca cac customerID
+    // Ham lay danh sach cac customerID
     public List<Integer> getAllCustomers() throws SQLException {
         return customerInfoDAO.getAllCustomerIDs();
     }

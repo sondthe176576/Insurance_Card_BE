@@ -11,12 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompensationRequestDAO {
+    // Khai báo connection
     private Connection connection;
 
+    // Khởi tạo connection
     public CompensationRequestDAO(Connection connection) {
         this.connection = DBContext.getConnection();
     }
 
+    // Hàm lấy thông tin tất cả các yêu cầu bồi thường
     public List<CompensationRequests> getAllCompensationRequests(int page, int pageSize, String status) throws SQLException {
         List<CompensationRequests> requests = new ArrayList<>();
         String query = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
@@ -54,6 +57,7 @@ public class CompensationRequestDAO {
         return requests;
     }
 
+    // Hàm lấy tổng số yêu cầu bồi thường
     public int getTotalCompensationRequests(String status) throws SQLException {
         String query = "SELECT COUNT(RequestID) AS Total FROM CompensationRequests";
         if (status != null && !status.isEmpty()) {
@@ -72,6 +76,7 @@ public class CompensationRequestDAO {
         return 0;
     }
 
+    // Hàm lấy thông tin yêu cầu bồi thường theo ID
     public void updateCompensationRequestStatus(int requestID, String status) throws SQLException{
         String query = "UPDATE CompensationRequests SET Status = ? WHERE RequestID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

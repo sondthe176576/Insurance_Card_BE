@@ -16,21 +16,24 @@ import java.util.List;
 
 @WebServlet(name = "CompensationController", urlPatterns = "/listCompensation")
 public class CompensationController extends HttpServlet {
+    // Khai bao compensationService
     private CompensationService compensationService;
 
+    // Khoi tao compensationService
     public CompensationController() {
         Connection connection = DBContext.getConnection();
         this.compensationService = new CompensationService(connection);
     }
 
-    // Ham doGet de hien thi danh sach yeu cau boi thuong
+    // Ham doGet de hien thi trang list compensation
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = req.getServletPath();
-        if ("/listCompensation".equals(path)) {
-            listCompensation(req, resp);
+        String path = req.getServletPath(); // Lay path
+        if ("/listCompensation".equals(path)) { // Neu path la /listCompensation
+            listCompensation(req, resp); // Goi ham listCompensation
         }
     }
 
+    // Ham listCompensation de hien thi danh sach cac yeu cau boi thuong
     private void listCompensation(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int page = 1;
         int limit = 10;
@@ -51,7 +54,7 @@ public class CompensationController extends HttpServlet {
             e.printStackTrace();
         }
     }
-    // Ham doPost de xu ly yeu cap nhat trang thai boi thuong
+    // Ham doPost de cap nhat trang thai cua yeu cau boi thuong
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int requestID = Integer.parseInt(req.getParameter("requestID"));
         String status = req.getParameter("status");

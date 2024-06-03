@@ -11,13 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class ViewContractDAO {
+    // Ket noi den database
     private Connection connection;
 
+    // Khoi tao connection
     public ViewContractDAO() {
         this.connection = DBContext.getConnection();
     }
 
-    // Lấy thông tin hợp đồng theo contractID
+    // Ham lay thong tin cua mot contract theo ID
     public Contract getContractDetailById(int contractID) throws Exception {
         String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status, con.StartDate, con.EndDate, " +
@@ -77,16 +79,5 @@ public class ViewContractDAO {
             }
         }
         return contract;
-    }
-
-    // Ham main de chay thu
-    public static void main(String[] args) {
-        ViewContractDAO viewContractDAO = new ViewContractDAO();
-        try {
-            Contract contract = viewContractDAO.getContractDetailById(1);
-            System.out.println(contract);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

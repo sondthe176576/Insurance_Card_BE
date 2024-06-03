@@ -13,18 +13,21 @@ import java.util.Date;
 
 @WebServlet(name = "ViewContractController", urlPatterns = "/viewContract")
 public class ViewContractController extends HttpServlet {
+    // Khai bao viewContractService
     private ViewContractService viewContractService;
 
+    // Khoi tao viewContractService
     public ViewContractController() {
         this.viewContractService = new ViewContractService();
     }
 
+    // Ham doGet de hien thi trang xem contract
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int contractID = 1;
         Contract contract = viewContractService.getContractDetailByID(contractID);
 
-        // Tinh toan thoi gian con lai cua hop dong
+        // Tinh so ngay con lai cua hop dong
         Date currentDate = new Date();
         long diff = contract.getEndDate().getTime() - currentDate.getTime();
         long diffDays = diff / (24 * 60 * 60 * 1000);

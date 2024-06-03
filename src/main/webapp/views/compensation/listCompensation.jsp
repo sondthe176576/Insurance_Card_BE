@@ -156,7 +156,7 @@
                 <td><c:out value="${compensation.status}"/></td>
                 <td><c:out value="${compensation.requestDate}"/></td>
                 <td>
-                    <a href="/compensation/update?compensationID=${compensation.requestID}" class="btn-submit">Update</a>
+                    <a href="/compensation/update?compensationID=${compensation.requestID}" class="btn-submit">View</a>
                 </td>
             </tr>
         </c:forEach>

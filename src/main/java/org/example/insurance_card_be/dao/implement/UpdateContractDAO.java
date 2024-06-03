@@ -10,20 +10,20 @@ import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.*;
 
 public class UpdateContractDAO {
-    // Khai báo đối tượng Connection
+    // Khai báo connection
     private Connection connection;
 
-    // Hàm khởi tạo
+    // Khởi tạo connection
     public UpdateContractDAO() {
         this.connection = DBContext.getConnection();
     }
 
-    // Cập nhật hợp đồng theo contractID
+    // Cập nhật thông tin hợp đồng
     public void updateContract(Contract contract) {
-        // Kiểm tra xem contractID đã tồn tại trong cơ sở dữ liệu hay chưa
+        // Kiểm tra xem contractID đã tồn tại chưa
         Contract existingContract = getContractByID(contract.getContractID());
         if (existingContract != null) {
-            // Nếu contractID đã tồn tại, thực hiện cập nhật hợp đồng
+            // Nếu contractID đã tồn tại, cập nhật thông tin hợp đồng
             String sql = "UPDATE Contracts SET ContractInfo = ?, Status = ?, StartDate = ?, EndDate = ?, InsuranceType = ?, Coverage = ?, Premium = ? WHERE ContractID = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, contract.getContractInfo());
@@ -39,7 +39,7 @@ public class UpdateContractDAO {
                 e.printStackTrace();
             }
         } else {
-            // Nếu contractID không tồn tại, tạo một hợp đồng mới
+            // Nếu contractID chưa tồn tại, tạo mới hợp đồng
             String sql = "INSERT INTO Contracts (ContractID, ContractInfo, Status, StartDate, EndDate, InsuranceType, Coverage, Premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, contract.getContractID());
@@ -57,6 +57,7 @@ public class UpdateContractDAO {
         }
     }
 
+    // Lấy thông tin hợp đồng theo contractID
     private Contract getContractByID(int contractID) {
         String sql = "SELECT * FROM Contracts WHERE ContractID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -81,7 +82,7 @@ public class UpdateContractDAO {
         return null;
     }
 
-    // Cập nhật thông tin chi tiết hợp đồng theo contractID
+    // Cập nhật thông tin chi tiết hợp đồng
     public void updateContractDetail(ContractDetail contractDetail) {
         String sql = "UPDATE ContractDetails SET detail = ?, value = ? WHERE contractID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

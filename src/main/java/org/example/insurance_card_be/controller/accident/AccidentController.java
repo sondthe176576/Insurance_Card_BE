@@ -16,14 +16,16 @@ import java.util.List;
 
 @WebServlet(name = "AccidentController", urlPatterns = "/listAccident")
 public class AccidentController extends HttpServlet {
+    // Khai bao accidentService
     private AccidentService accidentService;
 
+    // Khoi tao accidentService
     public AccidentController() {
         Connection connection = DBContext.getConnection();
         this.accidentService = new AccidentService(connection);
     }
 
-    // Ham doGet de hien thi danh sach tai nan
+    // Ham doGet de hien thi trang list accident
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
         if ("/listAccident".equals(path)) {
@@ -33,6 +35,7 @@ public class AccidentController extends HttpServlet {
         }
     }
 
+    // Ham listAccident de hien thi danh sach cac tai nan
     private void listAccident(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int page = 1;
@@ -55,6 +58,7 @@ public class AccidentController extends HttpServlet {
         }
     }
 
+    // Ham viewAccident de hien thi thong tin cua mot tai nan
     private void viewAccident(HttpServletRequest req, HttpServletResponse resp) {
         try {
             int accidentID = Integer.parseInt(req.getParameter("accidentID"));

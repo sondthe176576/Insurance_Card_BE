@@ -12,13 +12,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RenewContractDAO {
+    // Khai báo connection
     private Connection connection;
 
+    // Khởi tạo connection
     public RenewContractDAO() {
         this.connection = DBContext.getConnection();
     }
 
-    // Lấy thông tin hợp đồng theo contractID
+    // Lay thong tin cua mot contract theo ID
     public Contract getContractDetailById(int contractID) throws Exception {
         String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status, con.StartDate, con.EndDate, " +
@@ -80,9 +82,9 @@ public class RenewContractDAO {
         return contract;
     }
 
-    // Gia han hop dong theo contractID
+    // Gia han hop dong
     public void renewContract(Contract contract) {
-        // Kiem tra xem contractID da ton tai trong co so du lieu hay chua
+        // Kiem tra contractID da ton tai hay chua
         Contract existingContract = getContractByID(contract.getContractID());
         if (existingContract != null) {
             // Neu contractID da ton tai, thuc hien gia han hop dong
@@ -98,12 +100,12 @@ public class RenewContractDAO {
                 e.printStackTrace();
             }
         } else {
-            // Neu contractID chua ton tai, khong thuc hien gia han hop dong
+            // Neu contractID khong ton tai, in ra thong bao
             System.out.println("ContractID not found");
         }
     }
 
-    // Lay thong tin hop dong theo ID
+    // Lay thong tin cua mot contract theo ID
     private Contract getContractByID(int contractID) {
         String sql = "SELECT * FROM Contracts WHERE ContractID = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
