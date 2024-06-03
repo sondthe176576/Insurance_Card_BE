@@ -70,12 +70,11 @@
         .btn-submit {
             background-color: #3498db;
             color: white;
-            padding: 15px;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 20px;
-            width: 100%;
+            font-size: 16px;
             text-align: center;
             text-decoration: none;
         }
@@ -86,13 +85,13 @@
 
         .pagination {
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             margin: 20px 0;
         }
 
         .pagination a {
             color: #3498db;
-            padding: 10px 20px;
+            padding: 10px 15px;
             text-decoration: none;
             border: 1px solid #ddd;
             margin: 0 5px;
