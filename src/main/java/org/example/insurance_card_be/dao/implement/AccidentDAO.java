@@ -20,18 +20,35 @@ public class AccidentDAO {
     }
 
     // Ham lay thong tin tat ca cac tai nan
-    public List<Accident> getAllAccidents(int page, int pageSize) throws SQLException {
+    public List<Accident> getAllAccidents(int page, int pageSize, String status, String customerName) throws SQLException {
         List<Accident> accidents = new ArrayList<>();
         String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, u.FullName AS CustomerName, a.Status " +
                 "FROM Accidents a " +
                 "JOIN Contracts c ON a.ContractID = c.ContractID " +
                 "JOIN Customers cu ON c.CustomerID = cu.CustomerID " +
-                "JOIN Users u ON cu.UserID = u.UserID " +
-                "ORDER BY a.AccidentID " +
+                "JOIN Users u ON cu.UserID = u.UserID ";
+        List<String> conditions = new ArrayList<>();
+        if (status != null && !status.isEmpty()) {
+            conditions.add("a.Status = ?");
+        }
+        if (customerName != null && !customerName.isEmpty()) {
+            conditions.add("u.FullName LIKE ?");
+        }
+        if (!conditions.isEmpty()) {
+            query += "WHERE " + String.join(" AND ", conditions) + " ";
+        }
+        query += "ORDER BY a.AccidentID " +
                 "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, (page - 1) * pageSize);
-            stmt.setInt(2, pageSize);
+            int paramIndex = 1;
+            if (status != null && !status.isEmpty()) {
+                stmt.setString(paramIndex++, status);
+            }
+            if (customerName != null && !customerName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + customerName + "%");
+            }
+            stmt.setInt(paramIndex++, (page - 1) * pageSize);
+            stmt.setInt(paramIndex, pageSize);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     Accident accident = new Accident();
@@ -51,13 +68,30 @@ public class AccidentDAO {
     }
 
     // Ham lay tong so tai nan
-    public int getTotalAccidents() throws SQLException {
+    public int getTotalAccidents(String status, String customerName) throws SQLException {
         String query = "SELECT COUNT(a.AccidentID) AS Total " +
                 "FROM Accidents a " +
                 "JOIN Contracts c ON a.ContractID = c.ContractID " +
                 "JOIN Customers cu ON c.CustomerID = cu.CustomerID " +
-                "JOIN Users u ON cu.UserID = u.UserID";
+                "JOIN Users u ON cu.UserID = u.UserID ";
+        List<String> conditions = new ArrayList<>();
+        if (status != null && !status.isEmpty()) {
+            conditions.add("a.Status = ?");
+        }
+        if (customerName != null && !customerName.isEmpty()) {
+            conditions.add("u.FullName LIKE ?");
+        }
+        if (!conditions.isEmpty()) {
+            query += "WHERE " + String.join(" AND ", conditions);
+        }
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            int paramIndex = 1;
+            if (status != null && !status.isEmpty()) {
+                stmt.setString(paramIndex++, status);
+            }
+            if (customerName != null && !customerName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + customerName + "%");
+            }
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("Total");

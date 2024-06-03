@@ -119,6 +119,18 @@
 <div class="form-container">
     <h2>Accident Management</h2>
     <h3>List of Accidents</h3>
+    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listAccident">
+        <label for="statusFilter">Filter by Status:</label>
+        <select id="statusFilter" name="status" class="status-select">
+            <option value="">All</option>
+            <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+            <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
+            <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+        </select>
+        <label for="customerNameSearch">Search by Customer Name:</label>
+        <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
+        <button type="submit" class="btn-submit">Filter</button>
+    </form>
     <table class="accident-table">
         <thead>
         <tr>
@@ -145,8 +157,7 @@
                 <td><c:out value="${accident.description}"/></td>
                 <td><c:out value="${accident.status}"/></td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/accident/view?accidentID=${accident.accidentID}"
-                       class="btn-view">View</a>
+                    <a href="${pageContext.request.contextPath}/accident/view?accidentID=${accident.accidentID}" class="btn-view">View</a>
                 </td>
             </tr>
         </c:forEach>
@@ -156,10 +167,10 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>

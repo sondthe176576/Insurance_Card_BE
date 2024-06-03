@@ -46,12 +46,16 @@ public class AccidentController extends HttpServlet {
             if (req.getParameter("limit") != null) {
                 limit = Integer.parseInt(req.getParameter("limit"));
             }
-            List<Accident> accidents = accidentService.getAllAccidents(page, limit);
-            int totalAccidents = accidentService.getTotalAccidents();
+            String status = req.getParameter("status");
+            String customerName = req.getParameter("customerName");
+            List<Accident> accidents = accidentService.getAllAccidents(page, limit, status, customerName);
+            int totalAccidents = accidentService.getTotalAccidents(status, customerName);
             int totalPages = (int) Math.ceil((double) totalAccidents / limit);
             req.setAttribute("accidents", accidents);
             req.setAttribute("totalPages", totalPages);
             req.setAttribute("currentPage", page);
+            req.setAttribute("status", status);
+            req.setAttribute("customerName", customerName); // Add this line to pass customerName to the JSP
             req.getRequestDispatcher("/views/accident/listAccident.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
