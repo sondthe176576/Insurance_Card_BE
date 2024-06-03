@@ -105,7 +105,7 @@
             <form id="customerInfoForm" method="post">
                 <div class="info-section">
                     <!-- Personal Information -->
-                    <div class="customer-info">
+                    <div class="AccidentHistory-info">
                         <h2>Personal Information</h2>
                         <div class="form-group">
                             <label for="email">Email:</label>
@@ -212,12 +212,12 @@
                         <p>Expiry Date: ${response.data.expiryDate}</p>
                     `);
                 } else {
-                    alert('Failed to save customer information.');
+                    alert('Failed to save AccidentHistory information.');
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Error saving customer information:', status, error);
-                alert('Error saving customer information: ' + error);
+                console.error('Error saving AccidentHistory information:', status, error);
+                alert('Error saving AccidentHistory information: ' + error);
             }
         });
     });

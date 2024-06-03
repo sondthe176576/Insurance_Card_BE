@@ -1,7 +1,6 @@
 package org.example.insurance_card_be.controller.history;
 
-import org.example.insurance_card_be.dao.CustomerDAO;
-import org.example.insurance_card_be.model.customer;
+import org.example.insurance_card_be.dao.implement.DashboardDAO;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,8 +35,8 @@ public class AccidentHistory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CustomerDAO rdao = new CustomerDAO();
-        List<customer> listAh = rdao.getAccidentHistory();
+        DashboardDAO rdao = new DashboardDAO();
+        List<org.example.insurance_card_be.model.AccidentHistory> listAh = rdao.getAccidentHistory();
         request.setAttribute("listAh", listAh);
         request.getRequestDispatcher("/views/history/accidentHistory.jsp").forward(request, response);
     }
