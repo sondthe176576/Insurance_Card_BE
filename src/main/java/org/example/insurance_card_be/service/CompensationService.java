@@ -18,13 +18,13 @@ public class CompensationService {
     }
 
     // Hàm lấy thông tin tất cả các yêu cầu bồi thường
-    public List<CompensationRequests> getAllCompensationRequests(int page, int limit, String status) throws SQLException {
-        return compensationRequestDAO.getAllCompensationRequests(page, limit, status);
+    public List<CompensationRequests> getAllCompensationRequests(int page, int limit, String status, String customerName) throws SQLException {
+        return compensationRequestDAO.getAllCompensationRequests(page, limit, status, customerName);
     }
 
     // Hàm lấy tổng số yêu cầu bồi thường
-    public int getTotalCompensationRequests(String status) throws SQLException {
-        return compensationRequestDAO.getTotalCompensationRequests(status);
+    public int getTotalCompensationRequests(String status, String customerName) throws SQLException {
+        return compensationRequestDAO.getTotalCompensationRequests(status, customerName);
     }
 
     // Hàm lấy thông tin yêu cầu bồi thường theo ID

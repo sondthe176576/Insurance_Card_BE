@@ -128,6 +128,8 @@
             <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
             <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
         </select>
+        <label for="customerNameSearch">Search by Customer Name:</label>
+        <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
         <button type="submit" class="btn-submit">Filter</button>
     </form>
     <table class="compensation-table">
@@ -166,10 +168,10 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
