@@ -4,38 +4,27 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class DBContext {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=Demo";
-    private static final String USER = "sa";
-    private static final String PASSWORD = "123";
-
-    public static Connection getConnection() {
-        Connection conn = null;
+    protected Connection connection;
+    public DBContext()
+    {
         try {
+            // Edit URL , username, password to authenticate with your MS SQL Server
+            String url = "jdbc:sqlserver://localhost:1433;databaseName= Demo";
+            String username = "sa";
+            String password = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return conn;
-    }
-
-    public static void closeConnection(Connection conn) {
-        try {
-            if (conn != null) {
-                conn.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex);
         }
     }
 
     public static void main(String[] args) {
-        Connection conn = DBContext.getConnection();
-        if (conn != null) {
-            System.out.println("Connect successfully!");
-        } else {
-            System.out.println("Connect failure!");
+        try {
+            System.out.println(new DBContext().connection);
+        } catch (Exception e) {
         }
     }
 }

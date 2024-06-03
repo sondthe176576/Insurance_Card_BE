@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@include file="header.jsp" %>
+<jsp:include page="/views/includes/header.jsp"/>
 
 <html lang="en">
 <head>
@@ -131,14 +131,7 @@
                             <label for="address">Address:</label>
                             <input type="text" class="form-control" id="address" name="address" value="">
                         </div>
-                        <div class="form-group">
-                            <label for="job">Job:</label>
-                            <input type="text" class="form-control" id="job" name="job" value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company:</label>
-                            <input type="text" class="form-control" id="company" name="company" value="">
-                        </div>
+
                     </div>
 
                     <!-- Insurance Card Information -->
@@ -169,12 +162,11 @@
 
         <div id="content">
             <!-- Dynamic content will be loaded here -->
-
         </div>
     </div>
 </div>
 
-<%@ include file="footer.jsp" %>
+<jsp:include page="/views/includes/footer.jsp"/>
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

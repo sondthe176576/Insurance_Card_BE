@@ -1,56 +1,55 @@
 package org.example.insurance_card_be.dao;
-import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.Customer;
 
-import java.sql.Connection;
+import org.example.insurance_card_be.model.customer;
+
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CustomerDAO {
-
-    // SQL query to insert a new customer
-    private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customers (email, full_name, dob, gender, address, job, company, card_number, issue_date, expiry_date) VALUES (?,?,?,?,?,?,?,?,?,?)";
-
-    // Method to print SQL exceptions
-    private void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t!= null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
+public class CustomerDAO extends DBContext{
+    public List<customer> getAccidentHistory() {
+        List<customer> list = new ArrayList<>();
+        try {
+            String sql = "  select c.*, a.*,u.FullName  from Customers c\n" +
+                    "  join Users u on u.UserID = c.UserID\n" +
+                    "  join AccidentHistory a on a.CustomerID = c.CustomerID";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                customer cs = new customer(
+                        rs.getInt("CustomerID"),
+                        rs.getInt("UserID"),
+                        rs.getString("PersonalInfo"),
+                        rs.getString("FullName"),
+                        rs.getInt("AccidentId"),
+                        rs.getString("Description"),
+                        rs.getDate("Date")
+                );
+                list.add(cs);
             }
+        } catch (Exception e) {
         }
+        return list;
+
     }
+    public static void main(String[] args) {
+        // Create an instance of CustomerDAO
+        CustomerDAO customerDAO = new CustomerDAO();
 
-    public void insertCustomer(Customer customer) throws SQLException {
-        try (Connection connection = DBContext.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CUSTOMER_SQL)) {
+        // Call the method to get the accident history
+        List<customer> accidentList = customerDAO.getAccidentHistory();
 
-                // Set the parameters for the SQL query from the customer object
-                preparedStatement.setString(1, customer.getEmail());
-                preparedStatement.setString(2, customer.getFullName());
-                preparedStatement.setString(3, customer.getDob());
-                preparedStatement.setString(4, customer.getGender());
-                preparedStatement.setString(5, customer.getAddress());
-                preparedStatement.setString(6, customer.getJob());
-                preparedStatement.setString(7, customer.getCompany());
-                preparedStatement.setString(8, customer.getCardNumber());
-                preparedStatement.setString(9, customer.getIssueDate());
-                preparedStatement.setString(10, customer.getExpiryDate());
-
-                // Execute the SQL query
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            // Handle SQL exceptions
-            this.printSQLException(e); // Call the printSQLException method from the same class
-            throw e;
+        // Print the information of each accident
+        for (customer c : accidentList) {
+            System.out.println("Customer ID: " + c.getCustomerId());
+            System.out.println("User ID: " + c.getUserId());
+            System.out.println("Personal Info: " + c.getPersonalInfo());
+            System.out.println("Full Name: " + c.getFullName());
+            System.out.println("Accident ID: " + c.getAccidentId());
+            System.out.println("Description: " + c.getDescription());
+            System.out.println("Date: " + c.getDate());
+            System.out.println("----------------------");
         }
     }
 }
