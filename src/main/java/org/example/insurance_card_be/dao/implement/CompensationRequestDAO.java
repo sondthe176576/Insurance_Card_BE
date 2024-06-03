@@ -17,19 +17,25 @@ public class CompensationRequestDAO {
         this.connection = DBContext.getConnection();
     }
 
-    // Lấy danh sách yêu cầu bồi thường theo trang
-    public List<CompensationRequests> getAllCompensationRequests(int page, int pageSize) throws SQLException {
+    public List<CompensationRequests> getAllCompensationRequests(int page, int pageSize, String status) throws SQLException {
         List<CompensationRequests> requests = new ArrayList<>();
         String query = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
                 "u.FullName AS CustomerName " +
                 "FROM CompensationRequests cr " +
                 "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
-                "JOIN Users u ON cu.UserID = u.UserID " +
-                "ORDER BY cr.RequestID " +
+                "JOIN Users u ON cu.UserID = u.UserID ";
+        if (status != null && !status.isEmpty()) {
+            query += "WHERE cr.Status = ? ";
+        }
+        query += "ORDER BY cr.RequestID " +
                 "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, (page - 1) * pageSize);
-            stmt.setInt(2, pageSize);
+            int paramIndex = 1;
+            if (status != null && !status.isEmpty()) {
+                stmt.setString(paramIndex++, status);
+            }
+            stmt.setInt(paramIndex++, (page - 1) * pageSize);
+            stmt.setInt(paramIndex, pageSize);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     CompensationRequests request = new CompensationRequests();
@@ -48,9 +54,15 @@ public class CompensationRequestDAO {
         return requests;
     }
 
-    public int getTotalCompensationRequests() throws SQLException {
+    public int getTotalCompensationRequests(String status) throws SQLException {
         String query = "SELECT COUNT(RequestID) AS Total FROM CompensationRequests";
+        if (status != null && !status.isEmpty()) {
+            query += " WHERE Status = ?";
+        }
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            if (status != null && !status.isEmpty()) {
+                stmt.setString(1, status);
+            }
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("Total");
@@ -60,26 +72,12 @@ public class CompensationRequestDAO {
         return 0;
     }
 
-    // Thêm phương thức main để kiểm tra
-    public static void main(String[] args) {
-        try {
-            Connection connection = DBContext.getConnection();
-            CompensationRequestDAO dao = new CompensationRequestDAO(connection);
-            List<CompensationRequests> requests = dao.getAllCompensationRequests(1, 5);
-
-            for (CompensationRequests request : requests) {
-                System.out.println("Request ID: " + request.getRequestID());
-                System.out.println("Customer ID: " + request.getCustomerID());
-                System.out.println("Contract ID: " + request.getContractID());
-                System.out.println("Customer Name: " + request.getCustomerName());
-                System.out.println("Description: " + request.getDescription());
-                System.out.println("Amount: " + request.getAmount());
-                System.out.println("Status: " + request.getStatus());
-                System.out.println("Request Date: " + request.getRequestDate());
-                System.out.println("-------------------------------------------");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void updateCompensationRequestStatus(int requestID, String status) throws SQLException{
+        String query = "UPDATE CompensationRequests SET Status = ? WHERE RequestID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status);
+            stmt.setInt(2, requestID);
+            stmt.executeUpdate();
         }
     }
 }

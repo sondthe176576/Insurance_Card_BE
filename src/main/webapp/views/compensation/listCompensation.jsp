@@ -120,6 +120,16 @@
 <div class="form-container">
     <h2>Compensation Management</h2>
     <h3>List Request From Customer</h3>
+    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listCompensation">
+        <label for="statusFilter">Filter by Status:</label>
+        <select id="statusFilter" name="status" class="status-select">
+            <option value="">All</option>
+            <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+            <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
+            <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+        </select>
+        <button type="submit" class="btn-submit">Filter</button>
+    </form>
     <table class="compensation-table">
         <thead>
         <tr>
@@ -146,8 +156,7 @@
                 <td><c:out value="${compensation.status}"/></td>
                 <td><c:out value="${compensation.requestDate}"/></td>
                 <td>
-                    <a href="/compensation/update?compensationID=${compensation.requestID}"
-                       class="btn-submit">Update</a>
+                    <a href="/compensation/update?compensationID=${compensation.requestID}" class="btn-submit">Update</a>
                 </td>
             </tr>
         </c:forEach>
@@ -157,10 +166,10 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}" class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
