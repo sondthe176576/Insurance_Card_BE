@@ -18,13 +18,13 @@ public class AccidentService {
     }
 
     // Ham lay thong tin tat ca cac tai nan
-    public List<Accident> getAllAccidents(int page, int limit) throws SQLException {
-        return accidentDAO.getAllAccidents(page, limit);
+    public List<Accident> getAllAccidents(int page, int limit, String status, String customerName) throws SQLException {
+        return accidentDAO.getAllAccidents(page, limit, status, customerName);
     }
 
     // Ham lay tong so tai nan
-    public int getTotalAccidents() throws SQLException {
-        return accidentDAO.getTotalAccidents();
+    public int getTotalAccidents(String status, String customerName) throws SQLException {
+        return accidentDAO.getTotalAccidents(status, customerName);
     }
 
     // Ham lay thong tin tai nan theo ID
