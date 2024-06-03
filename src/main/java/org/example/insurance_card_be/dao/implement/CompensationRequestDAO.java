@@ -20,15 +20,22 @@ public class CompensationRequestDAO {
     }
 
     // Hàm lấy thông tin tất cả các yêu cầu bồi thường
-    public List<CompensationRequests> getAllCompensationRequests(int page, int pageSize, String status) throws SQLException {
+    public List<CompensationRequests> getAllCompensationRequests(int page, int pageSize, String status, String customerName) throws SQLException {
         List<CompensationRequests> requests = new ArrayList<>();
         String query = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
                 "u.FullName AS CustomerName " +
                 "FROM CompensationRequests cr " +
                 "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
                 "JOIN Users u ON cu.UserID = u.UserID ";
+        List<String> conditions = new ArrayList<>();
         if (status != null && !status.isEmpty()) {
-            query += "WHERE cr.Status = ? ";
+            conditions.add("cr.Status = ?");
+        }
+        if (customerName != null && !customerName.isEmpty()) {
+            conditions.add("u.FullName LIKE ?");
+        }
+        if (!conditions.isEmpty()) {
+            query += "WHERE " + String.join(" AND ", conditions) + " ";
         }
         query += "ORDER BY cr.RequestID " +
                 "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
@@ -36,6 +43,9 @@ public class CompensationRequestDAO {
             int paramIndex = 1;
             if (status != null && !status.isEmpty()) {
                 stmt.setString(paramIndex++, status);
+            }
+            if (customerName != null && !customerName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + customerName + "%");
             }
             stmt.setInt(paramIndex++, (page - 1) * pageSize);
             stmt.setInt(paramIndex, pageSize);
@@ -58,14 +68,28 @@ public class CompensationRequestDAO {
     }
 
     // Hàm lấy tổng số yêu cầu bồi thường
-    public int getTotalCompensationRequests(String status) throws SQLException {
-        String query = "SELECT COUNT(RequestID) AS Total FROM CompensationRequests";
+    public int getTotalCompensationRequests(String status, String customerName) throws SQLException {
+        String query = "SELECT COUNT(cr.RequestID) AS Total " +
+                "FROM CompensationRequests cr " +
+                "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
+                "JOIN Users u ON cu.UserID = u.UserID ";
+        List<String> conditions = new ArrayList<>();
         if (status != null && !status.isEmpty()) {
-            query += " WHERE Status = ?";
+            conditions.add("cr.Status = ?");
+        }
+        if (customerName != null && !customerName.isEmpty()) {
+            conditions.add("u.FullName LIKE ?");
+        }
+        if (!conditions.isEmpty()) {
+            query += "WHERE " + String.join(" AND ", conditions);
         }
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            int paramIndex = 1;
             if (status != null && !status.isEmpty()) {
-                stmt.setString(1, status);
+                stmt.setString(paramIndex++, status);
+            }
+            if (customerName != null && !customerName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + customerName + "%");
             }
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -77,7 +101,7 @@ public class CompensationRequestDAO {
     }
 
     // Hàm lấy thông tin yêu cầu bồi thường theo ID
-    public void updateCompensationRequestStatus(int requestID, String status) throws SQLException{
+    public void updateCompensationRequestStatus(int requestID, String status) throws SQLException {
         String query = "UPDATE CompensationRequests SET Status = ? WHERE RequestID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, status);
