@@ -59,7 +59,7 @@ public class CustomerStaffController extends HttpServlet{
     }
 
 
-
+//
     private List<Users> searchCustomer(HttpServletRequest req, HttpServletResponse resp) {
         String keyword = req.getParameter("keyword");
         CustomerDAO dao = new CustomerDAO();
