@@ -50,7 +50,7 @@ public class CustomerStaffController extends HttpServlet{
                     throw new AssertionError("Unknown action: " + action);
             }
             req.getSession().setAttribute("listCustomer", listCustomer);
-            resp.sendRedirect(req.getContextPath() + "/customer-staff");
+            req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
             req.setAttribute("error", e.getMessage());
