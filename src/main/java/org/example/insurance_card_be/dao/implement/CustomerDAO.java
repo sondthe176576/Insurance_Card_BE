@@ -36,7 +36,7 @@ public class CustomerDAO extends DBContext {
             System.out.println(e.getMessage());
         }
     }
-
+// insert customer
     public void insert(Users customer) {
         String sql = "INSERT INTO [Users] (Username, Password, Role, Email, Mobile, Address, FullName, Gender) VALUES (?, ?, 'customer', ?, ?, ?, ?, ?)";
         try (Connection connection = getConnection();
