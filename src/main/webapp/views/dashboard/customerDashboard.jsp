@@ -91,7 +91,7 @@
     <div class="sidebar">
         <div class="nav flex-column">
             <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/paymentHistory.jsp')">Payment History</a>
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/accidentHistory.jsp')">Accident History</a>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/Ach">Accident History</a></li>
             <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/punishmentHistory.jsp')">Punishment History</a>
             <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/compensationHistory.jsp')">Compensation History</a>
             <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/contractInformation.jsp')">Contract Information</a>

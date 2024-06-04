@@ -13,7 +13,7 @@ public class DashboardDAO extends DBContext {
     //tao Dao cua Dashboard
 
 
-    public List<AccidentHistory> getAccidentHistory() {
+    public List<AccidentHistory > getAccidentHistory() {
         List<AccidentHistory> list = new ArrayList<>();
         try {
             String sql = "SELECT c.*, a.*, u.FullName FROM Customers c " +

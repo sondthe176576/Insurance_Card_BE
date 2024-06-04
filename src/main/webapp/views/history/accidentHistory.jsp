@@ -18,29 +18,29 @@
         <form action="${pageContext.request.contextPath}/accidentHistory" method="post">
         </form>
         <table class="table table-striped">
-                <thead>
+            <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Personal Info</th>
+                <th>Full Name</th>
+                <th>Accident ID</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${listAh}" var="accident">
                 <tr>
-                    <th>User ID</th>
-                    <th>Personal Info</th>
-                    <th>Full Name</th>
-                    <th>Accident ID</th>
-                    <th>Description</th>
-                    <th>Date</th>
+                    <td>${accident.userId}</td>
+                    <td>${accident.personalInfo}</td>
+                    <td>${accident.fullName}</td>
+                    <td>${accident.accidentId}</td>
+                    <td>${accident.description}</td>
+                    <td>${accident.date}</td>
                 </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${listAh}" var="accident">
-                    <tr>
-                        <td>${accident.userId}</td>
-                        <td>${accident.personalInfo}</td>
-                        <td>${accident.fullName}</td>
-                        <td>${accident.accidentId}</td>
-                        <td>${accident.description}</td>
-                        <td>${accident.date}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            </c:forEach>
+            </tbody>
+        </table>
         </form>
     </div>
 </div>
