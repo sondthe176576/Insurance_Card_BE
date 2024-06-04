@@ -1,12 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 09114
-  Date: 5/24/2024
-  Time: 1:59 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/views/includes/header.jsp" />
 
 <html>
@@ -49,8 +42,8 @@
         }
         .button {
             display: inline-block;
+            width: 120px; /* Đặt chiều rộng cố định cho các nút */
             padding: 10px 20px;
-            margin: 10px;
             font-size: 16px;
             color: #fff;
             background-color: #007bff;
@@ -69,6 +62,13 @@
         .button-create:hover {
             background-color: #218838;
         }
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+        form {
+            margin: 0; /* Đảm bảo form không có margin */
+        }
     </style>
 </head>
 <body>
@@ -76,9 +76,12 @@
 <h1>Manage Customer</h1>
 
 <div style="text-align: center;">
-    <a href="views/staff/CreateCustomer.jsp" class="button button-create">Create Customer</a>
+    <button onclick="addCustomer()">Add Cusomer</button>
 </div>
-
+<form action="/customer-staff?action=search" method="POST">
+    <input type="text" name="keyword" placeholder="Nhap vao name cua san pham"/>
+    <input type="submit" value="Search"/>
+</form>
 <table>
     <tr>
         <th>ID</th>
@@ -88,8 +91,7 @@
         <th>Email</th>
         <th>Actions</th>
     </tr>
-    <c:forEach items="${requestScope.listCustomer}" var="c">
-
+    <c:forEach items="${sessionScope.listCustomer}" var="c">
         <tr>
             <td>${c.userID}</td>
             <td>${c.username}</td>
@@ -97,22 +99,75 @@
             <td>${c.mobile}</td>
             <td>${c.email}</td>
             <td>
-                <a href="/viewCustomer?id=${c.userID}" class="button">View</a>
-                <form action="customer-staff?action=delete" method="post">
-                    <input type="hidden" name="id" value="${c.userID}" />
-                <a href="#" onclick="deleteCustomer(this)" class="button">Delete</a>
-                </form>
+                <div class="button-container">
+                    <a href="/viewCustomer?id=${c.userID}" class="button">Update</a>
+                    <a href="/viewCustomerInfo?id=${c.userID}" class="button">View Info</a>
+                    <form action="customer-staff?action=delete" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="${c.userID}" />
+                        <button type="button" onclick="deleteCustomer(this)" class="button">Delete</button>
+                    </form>
+                </div>
             </td>
         </tr>
     </c:forEach>
 </table>
+<form action="customer-staff?action=insert" id="formAddEdit" method="post" style="display: none">
+    <h1>Form Add Cusomer</h1>
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="mobile">Mobile:</label>
+        <input type="text" id="mobile" name="mobile" required>
+    </div>
+    <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+    </div>
+    <div class="form-group">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+    </div>
+    <div class="form-group">
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" name="gender" required>
+    </div>
+    <div class="form-group">
+        <button onclick="addCustomer()" type="submit">Next</button>
+    </div>
+</form>
+
+
 <jsp:include page="/views/includes/footer.jsp" />
 </body>
 <script>
-function deleteCustomer(e){
-    let form = e.closest('form');
-    form.submit();
-}
+    function deleteCustomer(e){
+        if (confirm('Are you sure you want to delete this customer?')) {
+            e.closest('form').submit();
+        }
+    }
+</script>
+<script>
+    function addCustomer(){
+        displayForm();
+    }
+    function displayForm(){
 
+        let form = document.querySelector('#formAddEdit');
+        if(form.style.display === 'none') {
+            form.style.display = 'block';
+        }else {
+            form.style.display = 'none';
+        }
+    }
 </script>
 </html>
