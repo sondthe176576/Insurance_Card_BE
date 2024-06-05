@@ -30,7 +30,8 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getString(9));
+                        rs.getString(9)
+                        );
             }
             // Test commit
         } catch (Exception e) {
@@ -91,7 +92,8 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getString(9));
+                        rs.getString(9)
+                        );
             }
         } catch (Exception e) {
             e.printStackTrace(); // In ra lỗi để debug
@@ -124,7 +126,8 @@ public class UserDAO {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getString(9));
+                        rs.getString(9)
+                        );
             }
         } catch (Exception e) {
             e.printStackTrace(); // In ra lỗi để debug
