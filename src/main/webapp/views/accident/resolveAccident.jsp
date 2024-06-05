@@ -6,75 +6,105 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>View Accident</title>
+    <title>Resolve Accident</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
         .form-container {
-            background-color: white;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 800px;
-            margin: 40px auto;
         }
 
         .form-container h2 {
             text-align: center;
-            color: #34495e;
-            font-size: 32px;
-            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
         }
 
         .form-container h3 {
             margin-bottom: 15px;
             color: #2c3e50;
-            border-bottom: 3px solid #2c3e50;
-            padding-bottom: 10px;
-            font-size: 24px;
+            font-size: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
         }
 
-        .accident-details {
+        .details {
+            display: flex;
+            flex-wrap: wrap;
             margin-bottom: 20px;
         }
 
-        .accident-details label {
+        .details label {
             font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
+            width: 30%;
+            margin-bottom: 10px;
+            color: #2980b9;
         }
 
-        .accident-details p {
-            margin: 0 0 20px 0;
+        .details p {
+            width: 70%;
+            margin: 0 0 10px 0;
             padding: 10px;
             background-color: #ecf0f1;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
-        .btn-back {
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
             background-color: #3498db;
             color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            margin: 0 10px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
+            transition: background-color 0.3s ease;
         }
 
-        .btn-back:hover {
+        .btn:hover {
             background-color: #2980b9;
+        }
+
+        .btn-approve {
+            background-color: #2ecc71;
+        }
+
+        .btn-approve:hover {
+            background-color: #27ae60;
+        }
+
+        .btn-reject {
+            background-color: #e74c3c;
+        }
+
+        .btn-reject:hover {
+            background-color: #c0392b;
         }
     </style>
 </head>
@@ -87,30 +117,34 @@
 <!-- End of navbar -->
 <!-- Form -->
 <div class="form-container">
-    <h2>Accident Details</h2>
-    <div class="accident-details">
+    <h2>Accident Detail</h2>
+    <h3>Accident Information</h3>
+    <div class="details">
         <label>Accident ID:</label>
         <p><c:out value="${accident.accidentID}"/></p>
-
-        <label>Customer ID:</label>
-        <p><c:out value="${accident.customerID}"/></p>
-
-        <label>Full Name:</label>
-        <p><c:out value="${accident.fullName}"/></p>
-
         <label>Contract ID:</label>
         <p><c:out value="${accident.contractID}"/></p>
-
+        <label>Customer ID:</label>
+        <p><c:out value="${accident.customerID}"/></p>
+        <label>Customer Name:</label>
+        <p><c:out value="${accident.customerName}"/></p>
         <label>Accident Type:</label>
         <p><c:out value="${accident.accidentType}"/></p>
-
         <label>Accident Date:</label>
         <p><c:out value="${accident.accidentDate}"/></p>
-
         <label>Description:</label>
         <p><c:out value="${accident.description}"/></p>
+        <label>Status:</label>
+        <p><c:out value="${accident.status}"/></p>
     </div>
-    <a href="${pageContext.request.contextPath}/listAccident" class="btn-back">Back to List</a>
+    <form method="post" action="${pageContext.request.contextPath}/resolveAccident">
+        <input type="hidden" name="accidentID" value="${accident.accidentID}"/>
+        <div class="btn-container">
+            <button type="submit" name="status" value="Approved" class="btn btn-approve">Approve</button>
+            <button type="submit" name="status" value="Rejected" class="btn btn-reject">Reject</button>
+            <a href="${pageContext.request.contextPath}/listAccident" class="btn">Back to List</a>
+        </div>
+    </form>
 </div>
 <!-- End of form -->
 <!-- Include footer -->

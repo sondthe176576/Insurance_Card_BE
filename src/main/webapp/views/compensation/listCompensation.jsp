@@ -14,25 +14,24 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
         .form-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
             max-width: 1200px;
             margin: 40px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
         }
 
         .form-container h2 {
             text-align: center;
-            color: #34495e;
+            color: #2c3e50;
             font-size: 32px;
             margin-bottom: 30px;
         }
@@ -40,9 +39,51 @@
         .form-container h3 {
             margin-bottom: 15px;
             color: #2c3e50;
-            border-bottom: 3px solid #2c3e50;
+            border-bottom: 3px solid #3498db;
             padding-bottom: 10px;
             font-size: 24px;
+        }
+
+        .filter-form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-form .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filter-form label {
+            margin-right: 10px;
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .filter-form input, .filter-form select {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .filter-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .filter-form button:hover {
+            background-color: #2980b9;
         }
 
         .compensation-table {
@@ -67,7 +108,7 @@
             background-color: #f4f7f6;
         }
 
-        .btn-submit {
+        .btn-submit, .btn-view {
             background-color: #3498db;
             color: white;
             padding: 10px 15px;
@@ -75,11 +116,10 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            text-align: center;
             text-decoration: none;
         }
 
-        .btn-submit:hover {
+        .btn-submit:hover, .btn-view:hover {
             background-color: #2980b9;
         }
 
@@ -121,16 +161,20 @@
     <h2>Compensation Management</h2>
     <h3>List Request From Customer</h3>
     <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listCompensation">
-        <label for="statusFilter">Filter by Status:</label>
-        <select id="statusFilter" name="status" class="status-select">
-            <option value="">All</option>
-            <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
-            <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
-            <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
-        </select>
-        <label for="customerNameSearch">Search by Customer Name:</label>
-        <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
-               placeholder="Enter customer name"/>
+        <div class="form-group">
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter" name="status" class="status-select">
+                <option value="">All</option>
+                <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
+                <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="customerNameSearch">Search by Customer Name:</label>
+            <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
+                   placeholder="Enter customer name"/>
+        </div>
         <button type="submit" class="btn-submit">Filter</button>
     </form>
     <table class="compensation-table">
@@ -160,7 +204,7 @@
                 <td><c:out value="${compensation.requestDate}"/></td>
                 <td>
                     <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}"
-                       class="btn-submit">View</a>
+                       class="btn-view">View</a>
                 </td>
             </tr>
         </c:forEach>
