@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ContractDAO {
-    // DAO dung de thao tac voi database
+    // Khai bao connection
     private Connection connection;
 
     // Khoi tao connection
@@ -31,13 +31,13 @@ public class ContractDAO {
             ps.setDouble(8, contract.getPremium());
             ps.executeUpdate();
 
-            // Lấy ID của contract vừa tạo
+            // Lay contractID vua tao
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int contractID = generatedKeys.getInt(1);
                     contract.setContractID(contractID);
 
-                    // Thêm chi tiết của contract
+                    // Them cac chi tiet cua contract
                     String sqlDetail = "INSERT INTO ContractDetails(ContractID, Detail, Value) VALUES(?, ?, ?)";
                     try (PreparedStatement detailPS = connection.prepareStatement(sqlDetail)) {
                         detailPS.setInt(1, contractID);

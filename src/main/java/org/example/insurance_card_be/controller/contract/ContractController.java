@@ -21,25 +21,25 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "ContractController", urlPatterns = "/createContract")
 public class ContractController extends HttpServlet {
-    // Khai bao mot doi tuong contractService va customerService de truy cap vao CSDL
+    // Khai bao contractService va customerService
     private ContractService contractService;
     private CustomerService customerService;
 
-    // Ham khoi tao khong doi so
+    // Khoi tao contractService va customerService
     @Override
     public void init() throws ServletException {
         this.contractService = new ContractService();
         this.customerService = new CustomerService();
     }
 
-    // Ham get de hien thi trang tao contract
+    // Ham doGet de hien thi trang tao contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerIDstr = req.getParameter("customerID");
+        String customerIDstr = req.getParameter("customerID"); // Lay customerID tu request
         int customerID = Integer.parseInt(customerIDstr);
 
         try {
-            Customers customer = customerService.getCustomerByID(customerID);
-            List<Motorcycle> motorcycles = customerService.getMotorcyclesByCustomerID(customerID);
+            Customers customer = customerService.getCustomerByID(customerID); // Lay thong tin customer
+            List<Motorcycle> motorcycles = customerService.getMotorcyclesByCustomerID(customerID); // Lay danh sach xe may
             req.setAttribute("customer", customer);
             req.setAttribute("motorcycles", motorcycles);
             req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
@@ -52,9 +52,9 @@ public class ContractController extends HttpServlet {
         }
     }
 
-    // Ham post de tao contract
+    // Ham doPost de tao contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lay thong tin tu request
+        // Lay thong tin contract tu request
         String customerID = req.getParameter("customerID");
         String contractInfo = req.getParameter("contractInfo");
         String status = req.getParameter("status");
@@ -66,7 +66,7 @@ public class ContractController extends HttpServlet {
         String insuranceType = req.getParameter("insuranceType");
         String premiumStr = req.getParameter("premium");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Format date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Dinh dang ngay thang
         Contract contract = new Contract();
         try {
             contract.setCustomerID(Integer.parseInt(customerID));

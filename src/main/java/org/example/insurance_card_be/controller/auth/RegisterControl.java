@@ -44,7 +44,9 @@ public class RegisterControl extends HttpServlet {
             System.out.println("Mess attribute: " + request.getAttribute("message"));
             request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
         }
+
         //Users p = dao.checkPhoneExist(phone);
+
 
         else if(p != null) {
             request.setAttribute("message", "Phone number already exists!");
@@ -52,6 +54,17 @@ public class RegisterControl extends HttpServlet {
             System.out.println("Mess attribute: " + request.getAttribute("message"));
             request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
         }
+
+
+//        else if(p == null) {
+//            request.setAttribute("message", "Phone number already exists!");
+//            // Debug print statement
+//            System.out.println("Mess attribute: " + request.getAttribute("message"));
+//            request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
+//        }
+
+
+
         else {
             SendEmailControl sm = new SendEmailControl();
             String code = sm.getRandom();

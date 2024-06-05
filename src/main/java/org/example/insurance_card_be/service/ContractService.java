@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 
 public class ContractService {
-    // Service dung de xu ly logic cua contract
+    // Khai bao contractDAO
     private ContractDAO contractDAO;
 
     // Khoi tao contractDAO

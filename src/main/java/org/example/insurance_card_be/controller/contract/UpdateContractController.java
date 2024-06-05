@@ -24,7 +24,7 @@ public class UpdateContractController extends HttpServlet {
         this.updateContractService = new UpdateContractService();
     }
 
-    // Ham get de hien thi trang update contract
+    // Ham doGet de hien thi trang update contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         Contract contract = updateContractService.geContractDetailByID(contractID);
@@ -32,9 +32,9 @@ public class UpdateContractController extends HttpServlet {
         req.getRequestDispatcher("/views/contract/updateContract.jsp").forward(req, resp);
     }
 
-    // Ham post de update contract
+    // Ham doPost de update contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lay thong tin tu request
+        // Lay thong tin contract tu request
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         String contractInfo = req.getParameter("contractInfo");
         String status = req.getParameter("status");
