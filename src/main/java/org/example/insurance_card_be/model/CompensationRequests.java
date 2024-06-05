@@ -18,5 +18,5 @@ public class CompensationRequests {
     private String description;
     private BigDecimal amount;
     private String customerName;
-
+    private Contract contract;
 }
