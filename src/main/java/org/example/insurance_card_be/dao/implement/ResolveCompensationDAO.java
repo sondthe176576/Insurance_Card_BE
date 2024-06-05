@@ -9,12 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ResolveCompensationDAO {
+    // Khai báo connection
     private Connection connection;
 
+    // Khởi tạo connection
     public ResolveCompensationDAO() {
         connection = DBContext.getConnection();
     }
 
+    // Hàm lấy thông tin yêu cầu bồi thường theo ID
     public CompensationRequests getCompensationRequestByID(int requestID) throws SQLException {
         String sql = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
                 "u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
@@ -90,23 +93,13 @@ public class ResolveCompensationDAO {
         return null;
     }
 
+    // Hàm cập nhật yêu cầu bồi thường
     public void updateCompensationRequest(CompensationRequests request) throws SQLException {
         String sql = "UPDATE CompensationRequests SET Status = ? WHERE RequestID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, request.getStatus());
             ps.setInt(2, request.getRequestID());
             ps.executeUpdate();
-        }
-    }
-
-    // Hàm main để test lấy thông tin cua khach hang, hop dong va xe may, yeu cau boi thuong.
-    public static void main(String[] args) {
-        ResolveCompensationDAO resolveCompensationDAO = new ResolveCompensationDAO();
-        try {
-            CompensationRequests request = resolveCompensationDAO.getCompensationRequestByID(1);
-            System.out.println(request);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

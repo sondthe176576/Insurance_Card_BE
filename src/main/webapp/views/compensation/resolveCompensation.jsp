@@ -13,72 +13,94 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
-        .detail-container {
-            background-color: white;
+        .form-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 800px;
-            margin: 40px auto;
         }
 
-        .detail-container h2 {
+        .form-container h2 {
             text-align: center;
-            color: #34495e;
-            font-size: 32px;
-            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
         }
 
-        .detail-container h3 {
+        .form-container h3 {
             margin-bottom: 15px;
             color: #2c3e50;
-            padding-bottom: 10px;
-            font-size: 24px;
+            font-size: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
         }
 
-        .detail-container label {
-            display: block;
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .details label {
             font-weight: bold;
-            margin-bottom: 5px;
+            width: 30%;
+            margin-bottom: 10px;
+            color: #2980b9;
         }
 
-        .detail-container p {
-            margin-bottom: 15px;
+        .details p {
+            width: 70%;
+            margin: 0 0 10px 0;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
         }
 
-        .btn-back, .btn-approve, .btn-reject {
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
             background-color: #3498db;
             color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            margin: 0 10px;
             text-align: center;
             text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
         }
 
         .btn-approve {
             background-color: #2ecc71;
         }
 
-        .btn-reject {
-            background-color: #e74c3c;
-        }
-
-        .btn-back:hover {
-            background-color: #2980b9;
-        }
-
         .btn-approve:hover {
             background-color: #27ae60;
+        }
+
+        .btn-reject {
+            background-color: #e74c3c;
         }
 
         .btn-reject:hover {
@@ -93,66 +115,76 @@
 <!-- Include navbar -->
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
-<div class="detail-container">
+<!-- Form -->
+<div class="form-container">
     <h2>Compensation Detail</h2>
     <h3>Request Information</h3>
-    <label>Compensation ID:</label>
-    <p><c:out value="${compensation.requestID}"/></p>
-    <label>Customer ID:</label>
-    <p><c:out value="${compensation.customerID}"/></p>
-    <label>Contract ID:</label>
-    <p><c:out value="${compensation.contractID}"/></p>
-    <label>Customer Name:</label>
-    <p><c:out value="${compensation.customerName}"/></p>
-    <label>Description:</label>
-    <p><c:out value="${compensation.description}"/></p>
-    <label>Amount:</label>
-    <p><c:out value="${compensation.amount}"/></p>
-    <label>Status:</label>
-    <p><c:out value="${compensation.status}"/></p>
-    <label>Date:</label>
-    <p><c:out value="${compensation.requestDate}"/></p>
+    <div class="details">
+        <label>Compensation ID:</label>
+        <p><c:out value="${compensation.requestID}"/></p>
+        <label>Customer ID:</label>
+        <p><c:out value="${compensation.customerID}"/></p>
+        <label>Contract ID:</label>
+        <p><c:out value="${compensation.contractID}"/></p>
+        <label>Customer Name:</label>
+        <p><c:out value="${compensation.customerName}"/></p>
+        <label>Description:</label>
+        <p><c:out value="${compensation.description}"/></p>
+        <label>Amount:</label>
+        <p><c:out value="${compensation.amount}"/></p>
+        <label>Status:</label>
+        <p><c:out value="${compensation.status}"/></p>
+        <label>Date:</label>
+        <p><c:out value="${compensation.requestDate}"/></p>
+    </div>
     <h3>Contract Information</h3>
-    <label>Contract Info:</label>
-    <p><c:out value="${compensation.contract.contractInfo}"/></p>
-    <label>Contract Status:</label>
-    <p><c:out value="${compensation.contract.status}"/></p>
-    <label>Start Date:</label>
-    <p><c:out value="${compensation.contract.startDate}"/></p>
-    <label>End Date:</label>
-    <p><c:out value="${compensation.contract.endDate}"/></p>
-    <label>Insurance Type:</label>
-    <p><c:out value="${compensation.contract.insuranceType}"/></p>
-    <label>Coverage:</label>
-    <p><c:out value="${compensation.contract.coverage}"/></p>
-    <label>Premium:</label>
-    <p><c:out value="${compensation.contract.premium}"/></p>
-    <label>Detail:</label>
-    <p><c:out value="${compensation.contract.detail}"/></p>
-    <label>Value:</label>
-    <p><c:out value="${compensation.contract.value}"/></p>
+    <div class="details">
+        <label>Contract Info:</label>
+        <p><c:out value="${compensation.contract.contractInfo}"/></p>
+        <label>Contract Status:</label>
+        <p><c:out value="${compensation.contract.status}"/></p>
+        <label>Start Date:</label>
+        <p><c:out value="${compensation.contract.startDate}"/></p>
+        <label>End Date:</label>
+        <p><c:out value="${compensation.contract.endDate}"/></p>
+        <label>Insurance Type:</label>
+        <p><c:out value="${compensation.contract.insuranceType}"/></p>
+        <label>Coverage:</label>
+        <p><c:out value="${compensation.contract.coverage}"/></p>
+        <label>Premium:</label>
+        <p><c:out value="${compensation.contract.premium}"/></p>
+        <label>Detail:</label>
+        <p><c:out value="${compensation.contract.detail}"/></p>
+        <label>Value:</label>
+        <p><c:out value="${compensation.contract.value}"/></p>
+    </div>
     <h3>Motorcycle Information</h3>
-    <label>License Plate:</label>
-    <p><c:out value="${compensation.contract.motorcycle.licensePlate}"/></p>
-    <label>Brand:</label>
-    <p><c:out value="${compensation.contract.motorcycle.brand}"/></p>
-    <label>Model:</label>
-    <p><c:out value="${compensation.contract.motorcycle.model}"/></p>
-    <label>Frame Number:</label>
-    <p><c:out value="${compensation.contract.motorcycle.frameNumber}"/></p>
-    <label>Engine Number:</label>
-    <p><c:out value="${compensation.contract.motorcycle.engineNumber}"/></p>
-    <label>Year Of Manufacture:</label>
-    <p><c:out value="${compensation.contract.motorcycle.yearOfManufacture}"/></p>
-    <label>Color:</label>
-    <p><c:out value="${compensation.contract.motorcycle.color}"/></p>
+    <div class="details">
+        <label>License Plate:</label>
+        <p><c:out value="${compensation.contract.motorcycle.licensePlate}"/></p>
+        <label>Brand:</label>
+        <p><c:out value="${compensation.contract.motorcycle.brand}"/></p>
+        <label>Model:</label>
+        <p><c:out value="${compensation.contract.motorcycle.model}"/></p>
+        <label>Frame Number:</label>
+        <p><c:out value="${compensation.contract.motorcycle.frameNumber}"/></p>
+        <label>Engine Number:</label>
+        <p><c:out value="${compensation.contract.motorcycle.engineNumber}"/></p>
+        <label>Year Of Manufacture:</label>
+        <p><c:out value="${compensation.contract.motorcycle.yearOfManufacture}"/></p>
+        <label>Color:</label>
+        <p><c:out value="${compensation.contract.motorcycle.color}"/></p>
+    </div>
     <form method="post" action="${pageContext.request.contextPath}/resolveCompensation">
         <input type="hidden" name="requestID" value="${compensation.requestID}"/>
-        <button type="submit" name="status" value="Approved" class="btn-approve">Approve</button>
-        <button type="submit" name="status" value="Rejected" class="btn-reject">Reject</button>
-        <a href="${pageContext.request.contextPath}/listCompensation" class="btn-back">Back to List</a>
+        <div class="btn-container">
+            <button type="submit" name="status" value="Approved" class="btn btn-approve">Approve</button>
+            <button type="submit" name="status" value="Rejected" class="btn btn-reject">Reject</button>
+            <a href="${pageContext.request.contextPath}/listCompensation" class="btn">Back to List</a>
+        </div>
     </form>
 </div>
+<!-- End of form -->
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->

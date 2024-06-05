@@ -6,42 +6,45 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Update Contract</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
         .form-container {
-            background-color: white;
-            padding: 20px;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 800px;
-            margin: 40px auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
         }
 
         .form-container h2 {
             text-align: center;
-            color: #007bff;
+            color: #2c3e50;
             font-size: 28px;
             margin-bottom: 20px;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
         }
 
         .form-container h3 {
-            margin-bottom: 10px;
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 20px;
+            border-bottom: 2px solid #3498db;
             padding-bottom: 5px;
-            font-size: 22px;
         }
 
         .form-group {
@@ -51,7 +54,7 @@
         .form-group label {
             display: block;
             margin-bottom: 5px;
-            color: #333;
+            color: #2980b9;
             font-weight: bold;
         }
 
@@ -71,7 +74,7 @@
         }
 
         .btn-submit {
-            background-color: #007bff;
+            background-color: #3498db;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -87,7 +90,7 @@
         }
 
         .btn-submit:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
         }
 
         .membership-info {
@@ -154,7 +157,6 @@
         <h2>Update Contract</h2>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
-        <!-- Hien thi id cua khach hang chuyen tu trang selectCustomer.jsp -->
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
             <input type="number" id="customerID" name="customerID" value="${contract.customer.customerID}" readonly>
@@ -210,8 +212,7 @@
         </div>
         <div class="form-group">
             <label for="frameNumber">Frame Number:</label>
-            <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}"
-                   required>
+            <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}" required>
         </div>
         <!-- Thông tin Bảo Hiểm -->
         <h3>Insurance Information</h3>
@@ -236,8 +237,7 @@
             <input type="date" id="endDate" name="endDate" value="${contract.endDate}" required>
         </div>
         <div class="form-group">
-            <label for="value">Value: (The corresponding value for the contract detail, which can be the
-                compensation
+            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
             <input type="number" id="value" name="value" step="50" value="${contract.value}" required>
         </div>
@@ -248,7 +248,7 @@
         </div>
         <div class="form-group">
             <label for="insuranceType">Insurance Type:</label>
-            <select id="insuranceType" name="insuranceType">
+            <select id="insuranceType" name="insuranceType" required>
                 <option value="Basic" ${contract.insuranceType == 'Basic' ? 'selected' : ''}>Basic</option>
                 <option value="Comprehensive" ${contract.insuranceType == 'Comprehensive' ? 'selected' : ''}>
                     Comprehensive
@@ -269,39 +269,36 @@
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
                 motorcycle. After completing your contact information and selecting your insurance package, please
-                submit the form to the Insurance Advisor at the address below. You will receive an invitation to
-                attend an information session. We aim to provide you with as much information as possible about our
-                insurance policies. At the end of the session, you may complete the application for insurance and
-                pay the $100 insurance fee.</p>
+                submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend
+                an information session. We aim to provide you with as much information as possible about our insurance
+                policies. At the end of the session, you may complete the application for insurance and pay the $100
+                insurance fee.</p>
 
-            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for
-                your motorcycle, including accident and theft insurance. Additionally, you will receive monthly
-                newsletters with updates on your insurance coverage. The insurance fee is $150 per year.
-                Comprehensive insurance not only covers basic liabilities but also includes coverage for damage
-                caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any
-                situation.</p>
+            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your
+                motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters
+                with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not
+                only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire,
+                and vandalism. This ensures that you have peace of mind in any situation.</p>
 
             <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of
-                coverage. This includes all the benefits of comprehensive insurance, plus additional features such
-                as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The
-                premium insurance fee is $250 per year. With this package, you are guaranteed the best support and
-                quickest response in case of any incident. Our premium plan also includes a personal advisor who
-                will assist you with all your insurance needs.</p>
+                coverage. This includes all the benefits of comprehensive insurance, plus additional features such as
+                roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium
+                insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest
+                response in case of any incident. Our premium plan also includes a personal advisor who will assist you
+                with all your insurance needs.</p>
 
-            <div class="membership-info">
-                <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you
-                    receive the support you need in case of any accidents or incidents. Our team is dedicated to
-                    helping you understand the different options and choose the one that best suits your needs.</p>
-            </div>
-            <div class="address-info">
-                <h3>Application can be dropped off or mailed to:</h3>
-                <p>Motorcycle Insurance Company,<br>
-                    123 Hola Street,<br>
-                    District Thach That, Ha Noi,<br>
-                    Vietnam</p>
-                <p>Phone: 0123-456-789<br>
-                    <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
-            </div>
+            <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive
+                the support you need in case of any accidents or incidents. Our team is dedicated to helping you
+                understand the different options and choose the one that best suits your needs.</p>
+        </div>
+        <div class="address-info">
+            <h3>Application can be dropped off or mailed to:</h3>
+            <p>Motorcycle Insurance Company,<br>
+                123 Hola Street,<br>
+                District Thach That, Ha Noi,<br>
+                Vietnam</p>
+            <p>Phone: 0123-456-789<br>
+                <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
         </div>
         <button type="submit" class="btn-submit">Update Contract</button>
     </form>

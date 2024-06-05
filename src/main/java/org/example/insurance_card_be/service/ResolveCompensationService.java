@@ -36,11 +36,4 @@ public class ResolveCompensationService {
             e.printStackTrace();
         }
     }
-
-    // Ham main test lay thong tin yeu cau boi thuong
-    public static void main(String[] args) {
-        ResolveCompensationService resolveCompensationService = new ResolveCompensationService();
-        CompensationRequests request = resolveCompensationService.resolveCompensation(1);
-        System.out.println(request);
-    }
 }
