@@ -36,7 +36,7 @@ public class AccidentHistory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DashboardDAO rdao = new DashboardDAO();
-        List<org.example.insurance_card_be.model.AccidentHistory> listAh = rdao.getAccidentHistory();
+        List<org.example.insurance_card_be.model.Accident> listAh = rdao.getAccidentHistory();
         request.setAttribute("listAh", listAh);
         request.getRequestDispatcher("/views/history/accidentHistory.jsp").forward(request, response);
     }

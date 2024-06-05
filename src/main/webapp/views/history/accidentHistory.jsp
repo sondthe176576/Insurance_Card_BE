@@ -20,28 +20,29 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>User ID</th>
-                <th>Personal Info</th>
+                <th>Customer ID</th>
                 <th>Full Name</th>
                 <th>Accident ID</th>
                 <th>Description</th>
                 <th>Date</th>
+                <th>Type</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${listAh}" var="accident">
                 <tr>
-                    <td>${accident.userId}</td>
-                    <td>${accident.personalInfo}</td>
-                    <td>${accident.fullName}</td>
-                    <td>${accident.accidentId}</td>
+                    <td>${accident.customerID}</td>
+                    <td>${accident.customerName}</td>
+                    <td>${accident.accidentID}</td>
                     <td>${accident.description}</td>
-                    <td>${accident.date}</td>
+                    <td>${accident.accidentDate}</td>
+                    <td>${accident.accidentType}</td>
+                    <td>${accident.status}</td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-        </form>
     </div>
 </div>
 <jsp:include page="/views/includes/footer.jsp"/>

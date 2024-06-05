@@ -1,8 +1,9 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.AccidentHistory;
+import org.example.insurance_card_be.model.Accident;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -10,28 +11,34 @@ import java.util.List;
 
 public class DashboardDAO extends DBContext {
 
-    //tao Dao cua Dashboard
-
-
-    public List<AccidentHistory > getAccidentHistory() {
-        List<AccidentHistory> list = new ArrayList<>();
+    // Tạo DAO của Dashboard
+    public List<Accident> getAccidentHistory() {
+        List<Accident> list = new ArrayList<>();
         try {
-            String sql = "SELECT c.*, a.*, u.FullName FROM Customers c " +
-                    "JOIN Users u ON u.UserID = c.UserID " +
-                    "JOIN AccidentHistory a ON a.CustomerID = c.CustomerID";
+            String sql = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, " +
+                    "a.Description AS AccidentDescription, a.Status, " +
+                    "h.CustomerID, u.FullName " +
+                    "FROM Accidents a " +
+                    "INNER JOIN AccidentHistory h ON a.AccidentID = h.AccidentID " +
+                    "INNER JOIN Users u ON h.CustomerID = u.UserID";
+
+            // Access the connection from the superclass DBContext
+            Connection connection = super.connection;
+
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                AccidentHistory AccidentHistory = new AccidentHistory(
+                Accident accident = new Accident(
+                        rs.getInt("AccidentID"),
+                        rs.getInt("ContractID"),
                         rs.getInt("CustomerID"),
-                        rs.getInt("UserID"),
-                        rs.getString("PersonalInfo"),
+                        rs.getString("AccidentType"),
+                        rs.getString("AccidentDate"),
+                        rs.getString("AccidentDescription"),
                         rs.getString("FullName"),
-                        rs.getInt("AccidentId"),
-                        rs.getString("Description"),
-                        rs.getDate("Date")
+                        rs.getString("Status")
                 );
-                list.add(AccidentHistory);
+                list.add(accident);
             }
         } catch (Exception e) {
             e.printStackTrace(); // In ra stack trace nếu có lỗi
@@ -44,17 +51,18 @@ public class DashboardDAO extends DBContext {
         DashboardDAO dashboardDAO = new DashboardDAO();
 
         // Lấy danh sách sự cố giao thông
-        List<AccidentHistory> accidentList = dashboardDAO.getAccidentHistory();
+        List<Accident> accidentList = dashboardDAO.getAccidentHistory();
 
         // In thông tin về mỗi sự cố
-        for (AccidentHistory AccidentHistory : accidentList) {
-            System.out.println("Customer ID: " + AccidentHistory.getCustomerId());
-            System.out.println("User ID: " + AccidentHistory.getUserId());
-            System.out.println("Personal Info: " + AccidentHistory.getPersonalInfo());
-            System.out.println("Full Name: " + AccidentHistory.getFullName());
-            System.out.println("Accident ID: " + AccidentHistory.getAccidentId());
-            System.out.println("Description: " + AccidentHistory.getDescription());
-            System.out.println("Date: " + AccidentHistory.getDate());
+        for (Accident accident : accidentList) {
+            System.out.println("Accident ID: " + accident.getAccidentID());
+            System.out.println("Contract ID: " + accident.getContractID());
+            System.out.println("Customer ID: " + accident.getCustomerID());
+            System.out.println("Accident Type: " + accident.getAccidentType());
+            System.out.println("Accident Date: " + accident.getAccidentDate());
+            System.out.println("Description: " + accident.getDescription());
+            System.out.println("Customer Name: " + accident.getCustomerName());
+            System.out.println("Status: " + accident.getStatus());
             System.out.println("----------------------");
         }
     }
