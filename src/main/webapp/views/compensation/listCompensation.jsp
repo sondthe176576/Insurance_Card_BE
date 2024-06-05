@@ -129,7 +129,8 @@
             <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
         </select>
         <label for="customerNameSearch">Search by Customer Name:</label>
-        <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
+        <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
+               placeholder="Enter customer name"/>
         <button type="submit" class="btn-submit">Filter</button>
     </form>
     <table class="compensation-table">
@@ -158,7 +159,8 @@
                 <td><c:out value="${compensation.status}"/></td>
                 <td><c:out value="${compensation.requestDate}"/></td>
                 <td>
-                    <a href="/compensation/update?compensationID=${compensation.requestID}" class="btn-submit">View</a>
+                    <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}"
+                       class="btn-submit">View</a>
                 </td>
             </tr>
         </c:forEach>
@@ -168,7 +170,8 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}"
+                       class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
                     <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
