@@ -39,17 +39,8 @@
                      <button id="submit" type="submit" class="ibtn">Login</button>
                      <a href="${pageContext.request.contextPath}/forgot">Forget password?</a>
                   </div>
-                  <div class="other-links">
-                         <span>Or login with</span><a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
-
-&redirect_uri=http://localhost:8080/Insurance_Card_BE/login&response_type=code
-
-&client_id=118161104901-9k1alked83pno18nuc0clpmvf6b5ml0l.apps.googleusercontent.com
-
-&approval_prompt=force" class="ibtn">Google</a>
                   <p class="error">${requestScope.mess}</p>
                </div>
-            </div>
          </div>
       </div>
    </form>
