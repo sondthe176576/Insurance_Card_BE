@@ -25,6 +25,7 @@ public class CustomerDAO extends DBContext {
         }
         return list;
     }
+
     public void deleteByID(Users users) {
         Connection connection = getConnection();
         String sql = "delete from [Users] where UserID = ?";
@@ -36,7 +37,8 @@ public class CustomerDAO extends DBContext {
             System.out.println(e.getMessage());
         }
     }
-// insert customer
+
+    // insert customer
     public void insert(Users customer) {
         String sql = "INSERT INTO [Users] (Username, Password, Role, Email, Mobile, Address, FullName, Gender) VALUES (?, ?, 'customer', ?, ?, ?, ?, ?)";
         try (Connection connection = getConnection();
@@ -59,7 +61,7 @@ public class CustomerDAO extends DBContext {
     public static void main(String[] args) {
         CustomerDAO cus = new CustomerDAO();
         try {
-            List<Users> list =cus.findAll();
+            List<Users> list = cus.findAll();
             if (list.isEmpty()) {
                 System.out.println("Danh sách người dùng trống.");
             } else {
@@ -76,7 +78,7 @@ public class CustomerDAO extends DBContext {
 
     public List<Users> findByUsername(String keyword) {
         List<Users> list = new ArrayList<>();
-        String sql = "Select * from [Users] where Role ='Customer' and Username like ?";
+        String sql = "Select * from [Users] where Role ='Customer' and FullName like ?";
         try {
             PreparedStatement st = getConnection().prepareStatement(sql);
             st.setString(1, "%" + keyword + "%");
@@ -91,5 +93,28 @@ public class CustomerDAO extends DBContext {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public void update(Users customer) {
+        Connection connection = getConnection();
+        String sql = "update [Users] set Username = ?" +
+                ", Password = ?," +
+                " Email = ?," +
+                " Mobile = ?," +
+                " Address = ?," + " FullName = ?," + "Mobile = ?," + "email = ?," + "where UserID = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, customer.getUsername());
+            statement.setString(2, customer.getPassword());
+            statement.setString(3, customer.getEmail());
+            statement.setString(4, customer.getMobile());
+            statement.setString(5, customer.getAddress());
+            statement.setString(6, customer.getFullName());
+            statement.setString(7, customer.getGender());
+            statement.setInt(8, customer.getUserID());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
