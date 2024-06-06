@@ -102,4 +102,51 @@ public class ResolveCompensationDAO {
             ps.executeUpdate();
         }
     }
+
+    // Ham main de test lay thoong tin yeu cau boi thuong theo ID
+    public static void main(String[] args) {
+        ResolveCompensationDAO resolveCompensationDAO = new ResolveCompensationDAO();
+        try {
+            CompensationRequests request = resolveCompensationDAO.getCompensationRequestByID(1);
+            if (request != null) {
+                System.out.println(request.getRequestID());
+                System.out.println(request.getCustomerID());
+                System.out.println(request.getContractID());
+                System.out.println(request.getRequestDate());
+                System.out.println(request.getStatus());
+                System.out.println(request.getDescription());
+                System.out.println(request.getAmount());
+                System.out.println(request.getCustomerName());
+                System.out.println(request.getContract().getContractID());
+                System.out.println(request.getContract().getContractInfo());
+                System.out.println(request.getContract().getStatus());
+                System.out.println(request.getContract().getStartDate());
+                System.out.println(request.getContract().getEndDate());
+                System.out.println(request.getContract().getInsuranceType());
+                System.out.println(request.getContract().getCoverage());
+                System.out.println(request.getContract().getPremium());
+                System.out.println(request.getContract().getDetail());
+                System.out.println(request.getContract().getValue());
+                System.out.println(request.getContract().getCustomer().getCustomerID());
+                System.out.println(request.getContract().getCustomer().getPersonalInfo());
+                System.out.println(request.getContract().getCustomer().getUser().getUserID());
+                System.out.println(request.getContract().getCustomer().getUser().getUsername());
+                System.out.println(request.getContract().getCustomer().getUser().getEmail());
+                System.out.println(request.getContract().getCustomer().getUser().getMobile());
+                System.out.println(request.getContract().getCustomer().getUser().getAddress());
+                System.out.println(request.getContract().getCustomer().getUser().getFullName());
+                System.out.println(request.getContract().getCustomer().getUser().getGender());
+                System.out.println(request.getContract().getMotorcycle().getMotorcycleID());
+                System.out.println(request.getContract().getMotorcycle().getLicensePlate());
+                System.out.println(request.getContract().getMotorcycle().getBrand());
+                System.out.println(request.getContract().getMotorcycle().getModel());
+                System.out.println(request.getContract().getMotorcycle().getFrameNumber());
+                System.out.println(request.getContract().getMotorcycle().getEngineNumber());
+                System.out.println(request.getContract().getMotorcycle().getYearOfManufacture());
+                System.out.println(request.getContract().getMotorcycle().getColor());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

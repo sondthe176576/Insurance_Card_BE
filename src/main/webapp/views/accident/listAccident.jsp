@@ -146,6 +146,19 @@
 
         .pagination a:hover {
             background-color: #ecf0f1;
+
+        }
+
+        .status-pending {
+            color: #f1c40f;
+        }
+
+        .status-approved {
+            color: #2ecc71;
+        }
+
+        .status-rejected {
+            color: #e74c3c;
         }
     </style>
 </head>
@@ -172,7 +185,8 @@
         </div>
         <div class="form-group">
             <label for="customerNameSearch">Search by Customer Name:</label>
-            <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
+            <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
+                   placeholder="Enter customer name"/>
         </div>
         <button type="submit" class="btn-submit">Filter</button>
     </form>
@@ -180,7 +194,6 @@
         <thead>
         <tr>
             <th>No</th>
-            <th>Accident ID</th>
             <th>Customer ID</th>
             <th>Customer Name</th>
             <th>Contract ID</th>
@@ -195,14 +208,15 @@
         <c:forEach var="accident" items="${accidents}" varStatus="status">
             <tr>
                 <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
-                <td><c:out value="${accident.accidentID}"/></td>
                 <td><c:out value="${accident.customerID}"/></td>
                 <td><c:out value="${accident.customerName}"/></td>
                 <td><c:out value="${accident.contractID}"/></td>
                 <td><c:out value="${accident.accidentType}"/></td>
                 <td><fmt:formatDate value="${accident.accidentDate}" pattern="dd-MM-yyyy"/></td>
                 <td><c:out value="${accident.description}"/></td>
-                <td><c:out value="${accident.status}"/></td>
+                <td class="<c:out value="${accident.status == 'Pending' ? 'status-pending' : accident.status == 'Approved' ? 'status-approved' : accident.status == 'Rejected' ? 'status-rejected' : ''}"/>">
+                    <c:out value="${accident.status}"/>
+                </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/resolveAccident?accidentID=${accident.accidentID}" class="btn-view">View</a>
                 </td>
@@ -214,7 +228,8 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}"
+                       class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
                     <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>

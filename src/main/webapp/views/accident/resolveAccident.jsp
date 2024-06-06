@@ -123,10 +123,6 @@
     <div class="details">
         <label>Accident ID:</label>
         <p><c:out value="${accident.accidentID}"/></p>
-        <label>Contract ID:</label>
-        <p><c:out value="${accident.contractID}"/></p>
-        <label>Customer ID:</label>
-        <p><c:out value="${accident.customerID}"/></p>
         <label>Customer Name:</label>
         <p><c:out value="${accident.customer.user.fullName}"/></p>
         <label>Accident Type:</label>
@@ -138,8 +134,27 @@
         <label>Status:</label>
         <p><c:out value="${accident.status}"/></p>
     </div>
+    <h3>Customer Information</h3>
+    <div class="details">
+        <label>Customer ID:</label>
+        <p><c:out value="${accident.customerID}"/></p>
+        <label>Full Name:</label>
+        <p><c:out value="${accident.customer.user.fullName}"/></p>
+        <label>Phone Number:</label>
+        <p><c:out value="${accident.customer.user.mobile}"/></p>
+        <label>Email:</label>
+        <p><c:out value="${accident.customer.user.email}"/></p>
+        <label>Address:</label>
+        <p><c:out value="${accident.customer.user.address}"/></p>
+        <label>Gender:</label>
+        <p><c:out value="${accident.customer.user.gender}"/></p>
+        <label>Personal Info:</label>
+        <p><c:out value="${accident.customer.personalInfo}"/></p>
+    </div>
     <h3>Contract Information</h3>
     <div class="details">
+        <label>Contract ID:</label>
+        <p><c:out value="${accident.contractID}"/></p>
         <label>Contract Info:</label>
         <p><c:out value="${accident.contract.contractInfo}"/></p>
         <label>Contract Status:</label>
@@ -154,6 +169,10 @@
         <p><c:out value="${accident.contract.coverage}"/></p>
         <label>Premium:</label>
         <p><fmt:formatNumber value="${accident.contract.premium}" type="currency" currencySymbol="$"/></p>
+        <label>Detail:</label>
+        <p><c:out value="${accident.contract.detail}"/></p>
+        <label>Value:</label>
+        <p><fmt:formatNumber value="${accident.contract.value}" type="currency" currencySymbol="$"/></p>
     </div>
     <h3>Motorcycle Information</h3>
     <div class="details">

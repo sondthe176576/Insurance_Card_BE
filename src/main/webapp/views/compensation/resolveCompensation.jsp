@@ -123,12 +123,6 @@
     <div class="details">
         <label>Compensation ID:</label>
         <p><c:out value="${compensation.requestID}"/></p>
-        <label>Customer ID:</label>
-        <p><c:out value="${compensation.customerID}"/></p>
-        <label>Contract ID:</label>
-        <p><c:out value="${compensation.contractID}"/></p>
-        <label>Customer Name:</label>
-        <p><c:out value="${compensation.customerName}"/></p>
         <label>Description:</label>
         <p><c:out value="${compensation.description}"/></p>
         <label>Amount:</label>
@@ -138,8 +132,29 @@
         <label>Date:</label>
         <p><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></p>
     </div>
+    <h3>Customer Information</h3>
+    <div class="details">
+        <label>Customer ID:</label>
+        <p><c:out value="${compensation.customerID}"/></p>
+        <label>Customer Name:</label>
+        <p><c:out value="${compensation.customerName}"/></p>
+        <label>Full Name:</label>
+        <p><c:out value="${compensation.contract.customer.user.fullName}"/></p>
+        <label>Phone Number:</label>
+        <p><c:out value="${compensation.contract.customer.user.mobile}"/></p>
+        <label>Email:</label>
+        <p><c:out value="${compensation.contract.customer.user.email}"/></p>
+        <label>Address:</label>
+        <p><c:out value="${compensation.contract.customer.user.address}"/></p>
+        <label>Gender:</label>
+        <p><c:out value="${compensation.contract.customer.user.gender}"/></p>
+        <label>Personal Info:</label>
+        <p><c:out value="${compensation.contract.customer.personalInfo}"/></p>
+    </div>
     <h3>Contract Information</h3>
     <div class="details">
+        <label>Contract ID:</label>
+        <p><c:out value="${compensation.contractID}"/></p>
         <label>Contract Info:</label>
         <p><c:out value="${compensation.contract.contractInfo}"/></p>
         <label>Contract Status:</label>

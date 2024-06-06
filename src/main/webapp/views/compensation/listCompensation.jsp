@@ -148,6 +148,18 @@
         .pagination a:hover {
             background-color: #ecf0f1;
         }
+
+        .status-pending {
+            color: #f1c40f;
+        }
+
+        .status-approved {
+            color: #2ecc71;
+        }
+
+        .status-rejected {
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -182,7 +194,6 @@
         <thead>
         <tr>
             <th>No</th>
-            <th>Compensation ID</th>
             <th>Customer ID</th>
             <th>Contract ID</th>
             <th>Customer Name</th>
@@ -197,13 +208,14 @@
         <c:forEach var="compensation" items="${requests}" varStatus="status">
             <tr>
                 <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
-                <td><c:out value="${compensation.requestID}"/></td>
                 <td><c:out value="${compensation.customerID}"/></td>
                 <td><c:out value="${compensation.contractID}"/></td>
                 <td><c:out value="${compensation.customerName}"/></td>
                 <td><c:out value="${compensation.description}"/></td>
                 <td><fmt:formatNumber value="${compensation.amount}" type="currency" currencySymbol="$"/></td>
-                <td><c:out value="${compensation.status}"/></td>
+                <td class="<c:out value="${compensation.status == 'Pending' ? 'status-pending' : compensation.status == 'Approved' ? 'status-approved' : compensation.status == 'Rejected' ? 'status-rejected' : ''}"/>">
+                    <c:out value="${compensation.status}"/>
+                </td>
                 <td><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></td>
                 <td>
                     <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}"
