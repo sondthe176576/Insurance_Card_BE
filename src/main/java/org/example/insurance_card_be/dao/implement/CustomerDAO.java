@@ -96,14 +96,9 @@ public class CustomerDAO extends DBContext {
     }
 
     public void update(Users customer) {
-        Connection connection = getConnection();
-        String sql = "update [Users] set Username = ?" +
-                ", Password = ?," +
-                " Email = ?," +
-                " Mobile = ?," +
-                " Address = ?," + " FullName = ?," + "Mobile = ?," + "email = ?," + "where UserID = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+        String sql = "UPDATE [Users] SET Username = ?, Password = ?, Email = ?, Mobile = ?, Address = ?, FullName = ?, Gender = ? WHERE UserID = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, customer.getUsername());
             statement.setString(2, customer.getPassword());
             statement.setString(3, customer.getEmail());
@@ -117,4 +112,31 @@ public class CustomerDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
+    public Users findById(int userID) {
+
+        String sql = "SELECT * FROM [Users] WHERE UserID = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userID);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return new Users(
+                        rs.getInt("UserID"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Role"),
+                        rs.getString("Email"),
+                        rs.getString("Mobile"),
+                        rs.getString("Address"),
+                        rs.getString("FullName"),
+                        rs.getString("Gender")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
+
