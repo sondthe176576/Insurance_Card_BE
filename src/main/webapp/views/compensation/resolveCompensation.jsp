@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Resolve Compensation</title>
@@ -131,11 +132,11 @@
         <label>Description:</label>
         <p><c:out value="${compensation.description}"/></p>
         <label>Amount:</label>
-        <p><c:out value="${compensation.amount}"/></p>
+        <p><fmt:formatNumber value="${compensation.amount}" type="currency" currencySymbol="$"/></p>
         <label>Status:</label>
         <p><c:out value="${compensation.status}"/></p>
         <label>Date:</label>
-        <p><c:out value="${compensation.requestDate}"/></p>
+        <p><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></p>
     </div>
     <h3>Contract Information</h3>
     <div class="details">
@@ -144,19 +145,19 @@
         <label>Contract Status:</label>
         <p><c:out value="${compensation.contract.status}"/></p>
         <label>Start Date:</label>
-        <p><c:out value="${compensation.contract.startDate}"/></p>
+        <p><fmt:formatDate value="${compensation.contract.startDate}" pattern="dd-MM-yyyy"/></p>
         <label>End Date:</label>
-        <p><c:out value="${compensation.contract.endDate}"/></p>
+        <p><fmt:formatDate value="${compensation.contract.endDate}" pattern="dd-MM-yyyy"/></p>
         <label>Insurance Type:</label>
         <p><c:out value="${compensation.contract.insuranceType}"/></p>
         <label>Coverage:</label>
         <p><c:out value="${compensation.contract.coverage}"/></p>
         <label>Premium:</label>
-        <p><c:out value="${compensation.contract.premium}"/></p>
+        <p><fmt:formatNumber value="${compensation.contract.premium}" type="currency" currencySymbol="$"/></p>
         <label>Detail:</label>
         <p><c:out value="${compensation.contract.detail}"/></p>
         <label>Value:</label>
-        <p><c:out value="${compensation.contract.value}"/></p>
+        <p><fmt:formatNumber value="${compensation.contract.value}" type="currency" currencySymbol="$"/></p>
     </div>
     <h3>Motorcycle Information</h3>
     <div class="details">

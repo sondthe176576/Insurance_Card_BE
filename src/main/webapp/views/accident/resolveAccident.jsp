@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Resolve Accident</title>
@@ -131,7 +132,7 @@
         <label>Accident Type:</label>
         <p><c:out value="${accident.accidentType}"/></p>
         <label>Accident Date:</label>
-        <p><c:out value="${accident.accidentDate}"/></p>
+        <p><fmt:formatDate value="${accident.accidentDate}" pattern="dd-MM-yyyy"/></p>
         <label>Description:</label>
         <p><c:out value="${accident.description}"/></p>
         <label>Status:</label>
@@ -144,15 +145,15 @@
         <label>Contract Status:</label>
         <p><c:out value="${accident.contract.status}"/></p>
         <label>Start Date:</label>
-        <p><c:out value="${accident.contract.startDate}"/></p>
+        <p><fmt:formatDate value="${accident.contract.startDate}" pattern="dd-MM-yyyy"/></p>
         <label>End Date:</label>
-        <p><c:out value="${accident.contract.endDate}"/></p>
+        <p><fmt:formatDate value="${accident.contract.endDate}" pattern="dd-MM-yyyy"/></p>
         <label>Insurance Type:</label>
         <p><c:out value="${accident.contract.insuranceType}"/></p>
         <label>Coverage:</label>
         <p><c:out value="${accident.contract.coverage}"/></p>
         <label>Premium:</label>
-        <p><c:out value="${accident.contract.premium}"/></p>
+        <p><fmt:formatNumber value="${accident.contract.premium}" type="currency" currencySymbol="$"/></p>
     </div>
     <h3>Motorcycle Information</h3>
     <div class="details">

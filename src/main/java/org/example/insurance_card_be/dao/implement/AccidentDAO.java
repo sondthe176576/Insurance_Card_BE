@@ -55,7 +55,7 @@ public class AccidentDAO {
                     accident.setAccidentID(rs.getInt("AccidentID"));
                     accident.setContractID(rs.getInt("ContractID"));
                     accident.setAccidentType(rs.getString("AccidentType"));
-                    accident.setAccidentDate(rs.getDate("AccidentDate").toString());
+                    accident.setAccidentDate(rs.getDate("AccidentDate"));
                     accident.setDescription(rs.getString("Description"));
                     accident.setCustomerID(rs.getInt("CustomerID"));
                     accident.setCustomerName(rs.getString("CustomerName"));
@@ -117,7 +117,7 @@ public class AccidentDAO {
                     accident.setAccidentID(rs.getInt("AccidentID"));
                     accident.setContractID(rs.getInt("ContractID"));
                     accident.setAccidentType(rs.getString("AccidentType"));
-                    accident.setAccidentDate(rs.getDate("AccidentDate").toString());
+                    accident.setAccidentDate(rs.getDate("AccidentDate"));
                     accident.setDescription(rs.getString("Description"));
                     accident.setCustomerID(rs.getInt("CustomerID"));
                     accident.setCustomerName(rs.getString("CustomerName"));
@@ -127,5 +127,16 @@ public class AccidentDAO {
             }
         }
         return null;
+    }
+
+    public void updateAccidentStatus(int accidentID, String status) {
+        String query = "UPDATE Accidents SET Status = ? WHERE AccidentID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status);
+            stmt.setInt(2, accidentID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

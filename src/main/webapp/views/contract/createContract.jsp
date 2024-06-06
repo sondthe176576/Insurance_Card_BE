@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,13 +150,13 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
-        <!-- Thông tin Khách Hàng -->
+        <!-- Customer Information -->
         <h3>Customer Information</h3>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
@@ -185,7 +186,7 @@
             <label for="customerGender">Gender:</label>
             <input type="text" id="customerGender" name="customerGender" value="${customer.user.gender}" readonly>
         </div>
-        <!-- Thông tin Xe Máy -->
+        <!-- Motorcycle Information -->
         <h3>Motorcycle Information</h3>
         <c:forEach var="motorcycle" items="${motorcycles}">
             <div class="form-group">
@@ -221,7 +222,7 @@
                 <input type="text" id="frameNumber" name="frameNumber" value="${motorcycle.frameNumber}" readonly>
             </div>
         </c:forEach>
-        <!-- Thông tin Bảo Hiểm -->
+        <!-- Insurance Information -->
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractInfo">Contract Info:</label>
@@ -241,7 +242,8 @@
         </div>
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="50" required>
+            <fmt:formatNumber value="${contract.value}" var="formattedValue" type="currency" currencySymbol="$" />
+            <input type="text" id="value" name="value" value="${formattedValue}" required>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and conditions)</label>
@@ -261,7 +263,8 @@
         </div>
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance contract)</label>
-            <input type="number" id="premium" name="premium" step="50" required>
+            <fmt:formatNumber value="${contract.premium}" var="formattedPremium" type="currency" currencySymbol="$" />
+            <input type="text" id="premium" name="premium" value="${formattedPremium}" required>
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>

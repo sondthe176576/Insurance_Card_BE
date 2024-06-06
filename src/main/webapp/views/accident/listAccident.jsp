@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>List Accidents</title>
@@ -178,6 +179,7 @@
     <table class="accident-table">
         <thead>
         <tr>
+            <th>No</th>
             <th>Accident ID</th>
             <th>Customer ID</th>
             <th>Customer Name</th>
@@ -190,14 +192,15 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="accident" items="${accidents}">
+        <c:forEach var="accident" items="${accidents}" varStatus="status">
             <tr>
+                <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
                 <td><c:out value="${accident.accidentID}"/></td>
                 <td><c:out value="${accident.customerID}"/></td>
                 <td><c:out value="${accident.customerName}"/></td>
                 <td><c:out value="${accident.contractID}"/></td>
                 <td><c:out value="${accident.accidentType}"/></td>
-                <td><c:out value="${accident.accidentDate}"/></td>
+                <td><fmt:formatDate value="${accident.accidentDate}" pattern="dd-MM-yyyy"/></td>
                 <td><c:out value="${accident.description}"/></td>
                 <td><c:out value="${accident.status}"/></td>
                 <td>

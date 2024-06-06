@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,12 +150,13 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
+     style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/renewContract" method="post">
-        <h2>Information of the Contract</h2>
+        <h2>Renew Contract</h2>
         <!-- Thông tin Khách Hàng -->
         <h3>Customer Information</h3>
         <div class="form-group">
@@ -239,7 +241,8 @@
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="50" value="${contract.value}" readonly>
+            <fmt:formatNumber value="${contract.value}" var="formattedValue" type="currency" currencySymbol="$"/>
+            <input type="text" id="value" name="value" value="${formattedValue}" readonly>
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
@@ -258,7 +261,8 @@
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="50" value="${contract.premium}" readonly>
+            <fmt:formatNumber value="${contract.premium}" var="formattedPremium" type="currency" currencySymbol="$"/>
+            <input type="text" id="premium" name="premium" value="${formattedPremium}" readonly>
         </div>
         <!-- Gia han hop dong -->
         <h3>Renew Contract</h3>
@@ -268,7 +272,7 @@
         </div>
         <div class="form-group">
             <label for="newPremium">New Premium:</label>
-            <input type="number" id="newPremium" name="newPremium" step="0.01" required>
+            <input type="number" id="newPremium" name="newPremium" required>
         </div>
         <div class="form-group">
             <label for="newCoverage">New Coverage:</label>
