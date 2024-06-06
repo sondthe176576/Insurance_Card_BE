@@ -16,4 +16,6 @@ public class Accident {
     private String description;
     private String customerName;
     private String status;
+    private Contract contract;
+    private Customers customer;
 }

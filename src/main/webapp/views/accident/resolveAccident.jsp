@@ -127,7 +127,7 @@
         <label>Customer ID:</label>
         <p><c:out value="${accident.customerID}"/></p>
         <label>Customer Name:</label>
-        <p><c:out value="${accident.customerName}"/></p>
+        <p><c:out value="${accident.customer.user.fullName}"/></p>
         <label>Accident Type:</label>
         <p><c:out value="${accident.accidentType}"/></p>
         <label>Accident Date:</label>
@@ -136,6 +136,40 @@
         <p><c:out value="${accident.description}"/></p>
         <label>Status:</label>
         <p><c:out value="${accident.status}"/></p>
+    </div>
+    <h3>Contract Information</h3>
+    <div class="details">
+        <label>Contract Info:</label>
+        <p><c:out value="${accident.contract.contractInfo}"/></p>
+        <label>Contract Status:</label>
+        <p><c:out value="${accident.contract.status}"/></p>
+        <label>Start Date:</label>
+        <p><c:out value="${accident.contract.startDate}"/></p>
+        <label>End Date:</label>
+        <p><c:out value="${accident.contract.endDate}"/></p>
+        <label>Insurance Type:</label>
+        <p><c:out value="${accident.contract.insuranceType}"/></p>
+        <label>Coverage:</label>
+        <p><c:out value="${accident.contract.coverage}"/></p>
+        <label>Premium:</label>
+        <p><c:out value="${accident.contract.premium}"/></p>
+    </div>
+    <h3>Motorcycle Information</h3>
+    <div class="details">
+        <label>License Plate:</label>
+        <p><c:out value="${accident.contract.motorcycle.licensePlate}"/></p>
+        <label>Brand:</label>
+        <p><c:out value="${accident.contract.motorcycle.brand}"/></p>
+        <label>Model:</label>
+        <p><c:out value="${accident.contract.motorcycle.model}"/></p>
+        <label>Frame Number:</label>
+        <p><c:out value="${accident.contract.motorcycle.frameNumber}"/></p>
+        <label>Engine Number:</label>
+        <p><c:out value="${accident.contract.motorcycle.engineNumber}"/></p>
+        <label>Year Of Manufacture:</label>
+        <p><c:out value="${accident.contract.motorcycle.yearOfManufacture}"/></p>
+        <label>Color:</label>
+        <p><c:out value="${accident.contract.motorcycle.color}"/></p>
     </div>
     <form method="post" action="${pageContext.request.contextPath}/resolveAccident">
         <input type="hidden" name="accidentID" value="${accident.accidentID}"/>
