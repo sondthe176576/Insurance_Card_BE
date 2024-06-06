@@ -150,8 +150,16 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" style="width: 100%; margin-bottom: 20px;">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
+     style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
+<!-- Notification Message -->
+<c:if test="${not empty message}">
+    <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'}">
+        <c:out value="${message}"/>
+    </div>
+</c:if>
+<!-- End of notification message -->
 <!-- Form -->
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="post">
@@ -207,7 +215,8 @@
             </div>
             <div class="form-group">
                 <label for="yearOfManufacture">Year Of Manufacture:</label>
-                <input type="number" id="yearOfManufacture" name="yearOfManufacture" value="${motorcycle.yearOfManufacture}" readonly>
+                <input type="number" id="yearOfManufacture" name="yearOfManufacture"
+                       value="${motorcycle.yearOfManufacture}" readonly>
             </div>
             <div class="form-group">
                 <label for="color">Color:</label>
@@ -241,12 +250,14 @@
             <input type="date" id="endDate" name="endDate" required>
         </div>
         <div class="form-group">
-            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount or the insurance value)</label>
-            <fmt:formatNumber value="${contract.value}" var="formattedValue" type="currency" currencySymbol="$" />
+            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
+                amount or the insurance value)</label>
+            <fmt:formatNumber value="${contract.value}" var="formattedValue" type="currency" currencySymbol="$"/>
             <input type="text" id="value" name="value" value="${formattedValue}" required>
         </div>
         <div class="form-group">
-            <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and conditions)</label>
+            <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
+                conditions)</label>
             <textarea id="detail" name="detail" required></textarea>
         </div>
         <div class="form-group">
@@ -258,22 +269,40 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the contract)</label>
+            <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
+                contract)</label>
             <input type="text" id="coverage" name="coverage" required>
         </div>
         <div class="form-group">
-            <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance contract)</label>
-            <fmt:formatNumber value="${contract.premium}" var="formattedPremium" type="currency" currencySymbol="$" />
+            <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
+                contract)</label>
+            <fmt:formatNumber value="${contract.premium}" var="formattedPremium" type="currency" currencySymbol="$"/>
             <input type="text" id="premium" name="premium" value="${formattedPremium}" required>
         </div>
         <div class="membership-info">
-            <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>
+            <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
+                motorcycle. After completing your contact information and selecting your insurance package, please
+                submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend
+                an information session. We aim to provide you with as much information as possible about our insurance
+                policies. At the end of the session, you may complete the application for insurance and pay the $100
+                insurance fee.</p>
 
-            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any situation.</p>
+            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your
+                motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters
+                with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not
+                only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire,
+                and vandalism. This ensures that you have peace of mind in any situation.</p>
 
-            <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of coverage. This includes all the benefits of comprehensive insurance, plus additional features such as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest response in case of any incident. Our premium plan also includes a personal advisor who will assist you with all your insurance needs.</p>
+            <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of
+                coverage. This includes all the benefits of comprehensive insurance, plus additional features such as
+                roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium
+                insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest
+                response in case of any incident. Our premium plan also includes a personal advisor who will assist you
+                with all your insurance needs.</p>
 
-            <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive the support you need in case of any accidents or incidents. Our team is dedicated to helping you understand the different options and choose the one that best suits your needs.</p>
+            <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive
+                the support you need in case of any accidents or incidents. Our team is dedicated to helping you
+                understand the different options and choose the one that best suits your needs.</p>
         </div>
         <div class="address-info">
             <h3>Application can be dropped off or mailed to:</h3>
@@ -291,5 +320,12 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
+<!-- Notification Message Script -->
+<script>
+    setTimeout(function () {
+        document.getElementById('notification').style.display = 'none';
+    }, 3000);
+</script>
+<!-- End of notification message script -->
 </body>
 </html>
