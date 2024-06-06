@@ -81,7 +81,7 @@ public class ResolveCompensationDAO {
                         rs.getInt("RequestID"),
                         rs.getInt("CustomerID"),
                         rs.getInt("ContractID"),
-                        rs.getDate("RequestDate").toString(),
+                        rs.getDate("RequestDate"),
                         rs.getString("Status"),
                         rs.getString("Description"),
                         rs.getBigDecimal("Amount"),

@@ -82,7 +82,7 @@ public class ResolveAccidentDAO {
                         rs.getInt("ContractID"),
                         rs.getInt("CustomerID"),
                         rs.getString("AccidentType"),
-                        rs.getDate("AccidentDate").toString(),
+                        rs.getDate("AccidentDate"),
                         rs.getString("Description"),
                         user.getFullName(),
                         rs.getString("Status"),

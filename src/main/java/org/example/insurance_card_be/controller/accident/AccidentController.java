@@ -16,16 +16,13 @@ import java.util.List;
 
 @WebServlet(name = "AccidentController", urlPatterns = "/listAccident")
 public class AccidentController extends HttpServlet {
-    // Khai bao accidentService
     private AccidentService accidentService;
 
-    // Khoi tao accidentService
     public AccidentController() {
         Connection connection = DBContext.getConnection();
         this.accidentService = new AccidentService(connection);
     }
 
-    // Ham doGet de hien thi trang list accident
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
         if ("/listAccident".equals(path)) {
@@ -35,7 +32,6 @@ public class AccidentController extends HttpServlet {
         }
     }
 
-    // Ham listAccident de hien thi danh sach cac tai nan
     private void listAccident(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int page = 1;
@@ -43,33 +39,33 @@ public class AccidentController extends HttpServlet {
             if (req.getParameter("page") != null) {
                 page = Integer.parseInt(req.getParameter("page"));
             }
-            if (req.getParameter("limit") != null) {
-                limit = Integer.parseInt(req.getParameter("limit"));
-            }
             String status = req.getParameter("status");
             String customerName = req.getParameter("customerName");
-            List<Accident> accidents = accidentService.getAllAccidents(page, limit, status, customerName);
-            int totalAccidents = accidentService.getTotalAccidents(status, customerName);
-            int totalPages = (int) Math.ceil((double) totalAccidents / limit);
-            req.setAttribute("accidents", accidents);
-            req.setAttribute("totalPages", totalPages);
-            req.setAttribute("currentPage", page);
-            req.setAttribute("status", status);
-            req.setAttribute("customerName", customerName); // Add this line to pass customerName to the JSP
-            req.getRequestDispatcher("/views/accident/listAccident.jsp").forward(req, resp);
-        } catch (SQLException e) {
+            try {
+                List<Accident> accidents = accidentService.getAllAccidents(page, limit, status, customerName);
+                int totalAccidents = accidentService.getTotalAccidents(status, customerName);
+                int totalPages = (int) Math.ceil((double) totalAccidents / limit);
+                req.setAttribute("accidents", accidents);
+                req.setAttribute("totalAccidents", totalAccidents);
+                req.setAttribute("totalPages", totalPages);
+                req.setAttribute("currentPage", page);
+                req.setAttribute("customerName", customerName);
+                req.getRequestDispatcher("/views/accident/listAccident.jsp").forward(req, resp);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // Ham viewAccident de hien thi thong tin cua mot tai nan
-    private void viewAccident(HttpServletRequest req, HttpServletResponse resp) {
+    private void viewAccident(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int accidentID = Integer.parseInt(req.getParameter("accidentID"));
+        String status = req.getParameter("status");
         try {
-            int accidentID = Integer.parseInt(req.getParameter("accidentID"));
-            Accident accident = accidentService.getAccidentByID(accidentID);
-            req.setAttribute("accident", accident);
-            req.getRequestDispatcher("/views/accident/viewAccident.jsp").forward(req, resp);
-        } catch (SQLException | ServletException | IOException e) {
+            accidentService.updateAccidentStatus(accidentID, status);
+            resp.sendRedirect(req.getContextPath() + "/listAccident");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

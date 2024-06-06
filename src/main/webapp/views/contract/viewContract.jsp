@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -162,109 +163,109 @@
     <h3>Customer Information</h3>
     <div class="form-group">
         <label for="customerID">Customer ID:</label>
-        <input type="number" id="customerID" name="customerID" value="<c:out value='${contract.customer.customerID}'/>" readonly>
+        <input type="number" id="customerID" name="customerID" value="${contract.customer.customerID}" readonly>
     </div>
     <div class="form-group">
         <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" value="<c:out value='${contract.customer.user.fullName}'/>" readonly>
+        <input type="text" id="fullName" name="fullName" value="${contract.customer.user.fullName}" readonly>
     </div>
     <div class="form-group">
         <label for="address">Address:</label>
-        <input type="text" id="address" name="address" value="<c:out value='${contract.customer.user.address}'/>" readonly>
+        <input type="text" id="address" name="address" value="${contract.customer.user.address}" readonly>
     </div>
     <div class="form-group">
         <label for="mobile">Mobile:</label>
-        <input type="text" id="mobile" name="mobile" value="<c:out value='${contract.customer.user.mobile}'/>" readonly>
+        <input type="text" id="mobile" name="mobile" value="${contract.customer.user.mobile}" readonly>
     </div>
     <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<c:out value='${contract.customer.user.email}'/>" readonly>
+        <input type="email" id="email" name="email" value="${contract.customer.user.email}" readonly>
     </div>
     <div class="form-group">
         <label for="gender">Gender: </label>
-        <input type="text" id="gender" name="gender" value="<c:out value='${contract.customer.user.gender}'/>" readonly>
+        <input type="text" id="gender" name="gender" value="${contract.customer.user.gender}" readonly>
     </div>
     <!-- Thông tin Xe -->
     <h3>Vehicle Information</h3>
     <div class="form-group">
         <label for="motorcycleID">Motorcycle ID:</label>
-        <input type="number" id="motorcycleID" name="motorcycleID" value="<c:out value='${contract.motorcycle.motorcycleID}'/>" readonly>
+        <input type="number" id="motorcycleID" name="motorcycleID" value="${contract.motorcycle.motorcycleID}" readonly>
     </div>
     <div class="form-group">
         <label for="licensePlate">License Plate:</label>
-        <input type="text" id="licensePlate" name="licensePlate" value="<c:out value='${contract.motorcycle.licensePlate}'/>" readonly>
+        <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}" readonly>
     </div>
     <div class="form-group">
         <label for="brand">Brand:</label>
-        <input type="text" id="brand" name="brand" value="<c:out value='${contract.motorcycle.brand}'/>" readonly>
+        <input type="text" id="brand" name="brand" value="${contract.motorcycle.brand}" readonly>
     </div>
     <div class="form-group">
         <label for="model">Model:</label>
-        <input type="text" id="model" name="model" value="<c:out value='${contract.motorcycle.model}'/>" readonly>
+        <input type="text" id="model" name="model" value="${contract.motorcycle.model}" readonly>
     </div>
     <div class="form-group">
         <label for="yearOfManufacture">Year of Manufacture:</label>
-        <input type="number" id="yearOfManufacture" name="yearOfManufacture" value="<c:out value='${contract.motorcycle.yearOfManufacture}'/>" readonly>
+        <input type="number" id="yearOfManufacture" name="yearOfManufacture" value="${contract.motorcycle.yearOfManufacture}" readonly>
     </div>
     <div class="form-group">
         <label for="color">Color:</label>
-        <input type="text" id="color" name="color" value="<c:out value='${contract.motorcycle.color}'/>" readonly>
+        <input type="text" id="color" name="color" value="${contract.motorcycle.color}" readonly>
     </div>
     <div class="form-group">
         <label for="engineNumber">Engine Number:</label>
-        <input type="text" id="engineNumber" name="engineNumber" value="<c:out value='${contract.motorcycle.engineNumber}'/>" readonly>
+        <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}" readonly>
     </div>
     <div class="form-group">
         <label for="frameNumber">Frame Number:</label>
-        <input type="text" id="frameNumber" name="frameNumber" value="<c:out value='${contract.motorcycle.frameNumber}'/>" readonly>
+        <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}" readonly>
     </div>
     <!-- Thông tin Bảo Hiểm -->
     <h3>Insurance Information</h3>
     <div class="form-group">
         <label for="contractID">Contract ID:</label>
-        <input type="number" id="contractID" name="contractID" value="<c:out value='${contract.contractID}'/>" readonly>
+        <input type="number" id="contractID" name="contractID" value="${contract.contractID}" readonly>
     </div>
     <div class="form-group">
         <label for="contractInfo">Contract Info:</label>
-        <input type="text" id="contractInfo" name="contractInfo" value="<c:out value='${contract.contractInfo}'/>" readonly>
+        <input type="text" id="contractInfo" name="contractInfo" value="${contract.contractInfo}" readonly>
     </div>
     <div class="form-group">
         <label for="status">Status:</label>
-        <input type="text" id="status" name="status" value="<c:out value='${contract.status}'/>" readonly>
+        <input type="text" id="status" name="status" value="${contract.status}" readonly>
     </div>
     <div class="form-group">
         <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate" name="startDate" value="<c:out value='${contract.startDate}'/>" readonly>
+        <input type="text" id="startDate" name="startDate" value="<fmt:formatDate value='${contract.startDate}' pattern='dd-MM-yyyy'/>" readonly>
     </div>
     <div class="form-group">
         <label for="endDate">End Date:</label>
-        <input type="date" id="endDate" name="endDate" value="<c:out value='${contract.endDate}'/>" readonly>
+        <input type="text" id="endDate" name="endDate" value="<fmt:formatDate value='${contract.endDate}' pattern='dd-MM-yyyy'/>" readonly>
     </div>
     <div class="form-group">
         <label>Time remaining:</label>
         <p style="color: red;">
-            <c:out value='${diffDays}'/> days
+            <c:out value="${diffDays}"/> days
         </p>
     </div>
     <div class="form-group">
         <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount or the insurance value)</label>
-        <input type="number" id="value" name="value" step="50" value="<c:out value='${contract.value}'/>" readonly>
+        <input type="text" id="value" name="value" value="<fmt:formatNumber value='${contract.value}' type='currency' currencySymbol='$'/>" readonly>
     </div>
     <div class="form-group">
         <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and conditions)</label>
-        <textarea id="detail" name="detail" readonly><c:out value='${contract.detail}'/></textarea>
+        <textarea id="detail" name="detail" readonly>${contract.detail}</textarea>
     </div>
     <div class="form-group">
         <label for="insuranceType">Insurance Type:</label>
-        <input type="text" id="insuranceType" name="insuranceType" value="<c:out value='${contract.insuranceType}'/>" readonly>
+        <input type="text" id="insuranceType" name="insuranceType" value="${contract.insuranceType}" readonly>
     </div>
     <div class="form-group">
         <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the contract)</label>
-        <input type="text" id="coverage" name="coverage" value="<c:out value='${contract.coverage}'/>" readonly>
+        <input type="text" id="coverage" name="coverage" value="${contract.coverage}" readonly>
     </div>
     <div class="form-group">
         <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance contract)</label>
-        <input type="number" id="premium" name="premium" step="50" value="<c:out value='${contract.premium}'/>" readonly>
+        <input type="text" id="premium" name="premium" value="<fmt:formatNumber value='${contract.premium}' type='currency' currencySymbol='$'/>" readonly>
     </div>
     <div class="membership-info">
         <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>

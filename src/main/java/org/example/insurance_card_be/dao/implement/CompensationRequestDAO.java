@@ -55,7 +55,7 @@ public class CompensationRequestDAO {
                     request.setRequestID(rs.getInt("RequestID"));
                     request.setCustomerID(rs.getInt("CustomerID"));
                     request.setContractID(rs.getInt("ContractID"));
-                    request.setRequestDate(rs.getDate("RequestDate").toString());
+                    request.setRequestDate(rs.getDate("RequestDate"));
                     request.setStatus(rs.getString("Status"));
                     request.setDescription(rs.getString("Description"));
                     request.setAmount(rs.getBigDecimal("Amount"));

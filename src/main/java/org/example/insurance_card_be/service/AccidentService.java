@@ -27,8 +27,8 @@ public class AccidentService {
         return accidentDAO.getTotalAccidents(status, customerName);
     }
 
-    // Ham lay thong tin tai nan theo ID
-    public Accident getAccidentByID(int accidentID) throws SQLException {
-        return accidentDAO.getAccidentById(accidentID);
+    // Ham cap nhat trang thai cua tai nan
+    public void updateAccidentStatus(int accidentID, String status) throws SQLException {
+        accidentDAO.updateAccidentStatus(accidentID, status);
     }
 }

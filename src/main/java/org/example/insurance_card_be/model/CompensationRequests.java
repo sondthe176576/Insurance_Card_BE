@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +14,7 @@ public class CompensationRequests {
     private int requestID;
     private int customerID;
     private int contractID;
-    private String requestDate;
+    private Date requestDate;
     private String status;
     private String description;
     private BigDecimal amount;

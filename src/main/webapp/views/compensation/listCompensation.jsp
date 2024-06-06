@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -180,6 +181,7 @@
     <table class="compensation-table">
         <thead>
         <tr>
+            <th>No</th>
             <th>Compensation ID</th>
             <th>Customer ID</th>
             <th>Contract ID</th>
@@ -192,16 +194,17 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="compensation" items="${requests}">
+        <c:forEach var="compensation" items="${requests}" varStatus="status">
             <tr>
+                <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
                 <td><c:out value="${compensation.requestID}"/></td>
                 <td><c:out value="${compensation.customerID}"/></td>
                 <td><c:out value="${compensation.contractID}"/></td>
                 <td><c:out value="${compensation.customerName}"/></td>
                 <td><c:out value="${compensation.description}"/></td>
-                <td><c:out value="${compensation.amount}"/></td>
+                <td><fmt:formatNumber value="${compensation.amount}" type="currency" currencySymbol="$"/></td>
                 <td><c:out value="${compensation.status}"/></td>
-                <td><c:out value="${compensation.requestDate}"/></td>
+                <td><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></td>
                 <td>
                     <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}"
                        class="btn-view">View</a>

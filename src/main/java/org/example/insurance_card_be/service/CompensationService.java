@@ -27,7 +27,7 @@ public class CompensationService {
         return compensationRequestDAO.getTotalCompensationRequests(status, customerName);
     }
 
-    // Hàm lấy thông tin yêu cầu bồi thường theo ID
+    // Hàm cập nhật trạng thái của yêu cầu bồi thường
     public void updateCompensationRequestStatus(int requestID, String status) throws SQLException{
         compensationRequestDAO.updateCompensationRequestStatus(requestID, status);
     }
