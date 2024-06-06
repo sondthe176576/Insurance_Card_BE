@@ -156,6 +156,13 @@
 <img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
      style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
+<!-- Notification Message -->
+<c:if test="${param.message != null}">
+    <div id="notification" class="alert ${param.status eq 'true' ? 'alert-success' : 'alert-danger'}">
+        <c:out value="${param.message}"/>
+    </div>
+</c:if>
+<!-- End of Notification Message -->
 <!-- Form -->
 <div class="form-container">
     <h2>Information of the Contract</h2>
@@ -291,5 +298,12 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
+<!-- Notification Message Script -->
+<script>
+    setTimeout(function () {
+        document.getElementById('notification').style.display = 'none';
+    }, 3000);
+</script>
+<!-- End of Notification Message Script -->
 </body>
 </html>

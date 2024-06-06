@@ -70,6 +70,6 @@ public class UpdateContractController extends HttpServlet {
 
         updateContractService.updateContractDetail(contractDetail);
 
-        resp.sendRedirect(req.getContextPath() + "/viewContract?contractID=" + contractID);
+        resp.sendRedirect(req.getContextPath() + "/viewContract?contractID=" + contractID + "&message=Update+contract+successfully&status=true");
     }
 }
