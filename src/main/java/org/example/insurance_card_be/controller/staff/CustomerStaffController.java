@@ -17,14 +17,30 @@ import org.example.insurance_card_be.model.Users;
 public class CustomerStaffController extends HttpServlet{
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+
         CustomerDAO dao = new CustomerDAO();
-        HttpSession session = req.getSession();
-        List<Users> listCustomer = (List<Users>) session.getAttribute("listProduct");
-        if (listCustomer == null){
-            listCustomer = dao.findAll();
+        if ("create".equals(action)) {
+            req.getRequestDispatcher("/views/staff/createCustomer.jsp").forward(req, resp);
+        } else if ("edit".equals(action)) {
+            int userID = Integer.parseInt(req.getParameter("userID"));
+            Users customer = dao.findById(userID);
+            req.setAttribute("customer", customer);
+            req.getRequestDispatcher("/views/staff/editCustomer.jsp").forward(req, resp);
+        } else if ("view".equals(action)) {
+            int userID = Integer.parseInt(req.getParameter("userID"));
+            Users customer = dao.findById(userID);
+            req.setAttribute("customer", customer);
+            req.getRequestDispatcher("/views/staff/viewCustomer.jsp").forward(req, resp);
+        } else {
+            HttpSession session = req.getSession();
+            List<Users> listCustomer = (List<Users>) session.getAttribute("listCustomer");
+            if (listCustomer == null) {
+                listCustomer = dao.findAll();
+            }
+            session.setAttribute("listCustomer", listCustomer);
+            req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
         }
-        session.setAttribute("listCustomer", listCustomer);
-        req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
     }
 
     @Override
@@ -39,13 +55,15 @@ public class CustomerStaffController extends HttpServlet{
                     break;
                 case "insert":
                     listCustomer = insertCustomer(req, resp);
+                    req.setAttribute("message", "Customer created successfully.");
                     break;
                 case "update":
                     listCustomer = updateCustomer(req, resp);
-
+                    req.setAttribute("message", "Customer updated successfully.");
                     break;
                 case "delete":
                     listCustomer = delete(req, resp);
+                    req.setAttribute("message", "Customer deleted successfully.");
                     break;
                 default:
                     throw new AssertionError("Unknown action: " + action);
@@ -59,6 +77,7 @@ public class CustomerStaffController extends HttpServlet{
         }
     }
 
+
     private List<Users> updateCustomer(HttpServletRequest req, HttpServletResponse resp) {
         CustomerDAO customerDAO = new CustomerDAO();
         int id = Integer.parseInt(req.getParameter("userID"));
@@ -68,19 +87,22 @@ public class CustomerStaffController extends HttpServlet{
         String fullName = req.getParameter("fullName");
         String mobile = req.getParameter("mobile");
         String email = req.getParameter("email");
-        Users Customer = new Users();
-        Customer.setUserID(id);
-        Customer.setUsername(username);
-        Customer.setPassword(password);
-        Customer.setAddress(address);
-        Customer.setFullName(fullName);
-        Customer.setMobile(mobile);
-        Customer.setEmail(email);
-        customerDAO.update(Customer);
+        String gender = req.getParameter("gender");
+
+        Users customer = new Users();
+        customer.setUserID(id);
+        customer.setUsername(username);
+        customer.setPassword(password);
+        customer.setAddress(address);
+        customer.setFullName(fullName);
+        customer.setMobile(mobile);
+        customer.setEmail(email);
+        customer.setGender(gender);
+
+        customerDAO.update(customer);
 
         return customerDAO.findAll();
     }
-
 
     //
     private List<Users> searchCustomer(HttpServletRequest req, HttpServletResponse resp) {
