@@ -86,22 +86,29 @@
 <table>
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th style="display: none">username</th>
+        <th style="display: none">PassWord</th>
         <th>Address</th>
+        <th>FullName</th>
         <th>Phone</th>
         <th>Email</th>
+        <th>Gender</th>
         <th>Actions</th>
     </tr>
     <c:forEach items="${sessionScope.listCustomer}" var="c">
         <tr>
-            <td>${c.userID}</td>
-            <td>${c.username}</td>
-            <td>${c.address}</td>
-            <td>${c.mobile}</td>
-            <td>${c.email}</td>
+            <td name="userID">${c.userID}</td>
+            <td name="username"style="display: none">${c.username} </td>
+            <td name="password"style="display: none">${c.password}</td>
+            <td name="address">${c.address}</td>
+            <td name="fullName">${c.fullName}</td>
+            <td name="mobile">${c.mobile}</td>
+            <td name="email">${c.email}</td>
+            <td>${c.gender}</td>
+
             <td>
                 <div class="button-container">
-                    <a href="/viewCustomer?id=${c.userID}" class="button">Update</a>
+                    <a href="#" onclick="editCustomer(this)" class="button">Edit</a>
                     <a href="/viewCustomerInfo?id=${c.userID}" class="button">View Info</a>
                     <form action="customer-staff?action=delete" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="${c.userID}" />
@@ -114,6 +121,7 @@
 </table>
 <form action="customer-staff?action=insert" id="formAddEdit" method="post" style="display: none">
     <h1>Form Add Cusomer</h1>
+    <input type="hidden" name="userID" value="0">
     <div class="form-group">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
@@ -169,6 +177,30 @@
         }else {
             form.style.display = 'none';
         }
+
+
+    }
+    function editCustomer(e) {
+        displayForm();
+        let tr = e.closest('tr');
+        let userID = tr.querySelector('td[name="userID"]').innerHTML;
+        let username = tr.querySelector('td[name="username"]').innerHTML;
+        let password = tr.querySelector('td[name="password"]').innerHTML;
+        let address = tr.querySelector('td[name="address"]').innerHTML;
+        let fullName = tr.querySelector('td[name="fullName"]').innerHTML;
+        let mobile = tr.querySelector('td[name="mobile"]').innerHTML;
+        let email = tr.querySelector('td[name="email"]').innerHTML;
+
+        let form = document.querySelector('#formAddEdit');
+        form.querySelector('input[name="username"]').value = username;
+        form.querySelector('input[name="password"]').value = password;
+        form.querySelector('input[name="address"]').value = address;
+        form.querySelector('input[name="fullName"]').value = fullName;
+        form.querySelector('input[name="mobile"]').value = mobile;
+        form.querySelector('input[name="email"]').value = email;
+        form.querySelector('input[name="id"]').value = userID;
+        form.action = "customer-staff?action=update";
+
     }
 </script>
 </html>

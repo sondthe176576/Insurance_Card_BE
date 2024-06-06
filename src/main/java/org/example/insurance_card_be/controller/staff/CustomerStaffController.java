@@ -41,6 +41,7 @@ public class CustomerStaffController extends HttpServlet{
                     listCustomer = insertCustomer(req, resp);
                     break;
                 case "update":
+                    listCustomer = updateCustomer(req, resp);
 
                     break;
                 case "delete":
@@ -58,8 +59,30 @@ public class CustomerStaffController extends HttpServlet{
         }
     }
 
+    private List<Users> updateCustomer(HttpServletRequest req, HttpServletResponse resp) {
+        CustomerDAO customerDAO = new CustomerDAO();
+        int id = Integer.parseInt(req.getParameter("userID"));
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        String address = req.getParameter("address");
+        String fullName = req.getParameter("fullName");
+        String mobile = req.getParameter("mobile");
+        String email = req.getParameter("email");
+        Users Customer = new Users();
+        Customer.setUserID(id);
+        Customer.setUsername(username);
+        Customer.setPassword(password);
+        Customer.setAddress(address);
+        Customer.setFullName(fullName);
+        Customer.setMobile(mobile);
+        Customer.setEmail(email);
+        customerDAO.update(Customer);
 
-//
+        return customerDAO.findAll();
+    }
+
+
+    //
     private List<Users> searchCustomer(HttpServletRequest req, HttpServletResponse resp) {
         String keyword = req.getParameter("keyword");
         CustomerDAO dao = new CustomerDAO();
