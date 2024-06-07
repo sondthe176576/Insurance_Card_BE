@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO extends DBContext {
+    private static final int CUSTOMERS_PER_PAGE = 5;
     public List<Users> findAll() {
         List<Users> list = new ArrayList<>();
         String sql = "Select * from [Users] where Role ='Customer'";
@@ -138,5 +139,39 @@ public class CustomerDAO extends DBContext {
         }
         return null;
     }
+    public List<Users> findAll(int page) {
+        List<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM [Users] WHERE Role ='Customer' ORDER BY UserID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setInt(1, (page - 1) * CUSTOMERS_PER_PAGE);
+            st.setInt(2, CUSTOMERS_PER_PAGE);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Users user = new Users(rs.getInt("UserID"), rs.getString("Username"), rs.getString("Password"),
+                        rs.getString("Role"), rs.getString("Email"), rs.getString("Mobile"), rs.getString("Address"),
+                        rs.getString("FullName"), rs.getString("Gender"));
+                list.add(user);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public int getTotalCustomers() {
+        String sql = "SELECT COUNT(*) FROM [Users] WHERE Role ='Customer'";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
+
 }
 

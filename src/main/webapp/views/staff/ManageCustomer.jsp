@@ -1,162 +1,247 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/views/includes/header.jsp" />
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    //
     <title>Manage Customer</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
             margin: 0;
             padding: 0;
         }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-top: 20px;
-        }
-        table {
-            margin: 20px auto;
-            border-collapse: collapse;
-            width: 80%;
-            max-width: 800px;
+
+        .form-container {
+            max-width: 1200px;
+            margin: 40px auto;
             background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
         }
-        th, td {
-            padding: 12px 15px;
+
+        .form-container h2 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .form-container h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .filter-form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-form .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filter-form label {
+            margin-right: 10px;
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .filter-form input, .filter-form select {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .filter-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .filter-form button:hover {
+            background-color: #2980b9;
+        }
+
+        .customer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        .customer-table th, .customer-table td {
+            padding: 15px;
             border: 1px solid #ddd;
             text-align: left;
         }
-        th {
-            background-color: #007bff;
-            color: #fff;
+
+        .customer-table th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+
+        .customer-table tr:nth-child(even) {
+            background-color: #f4f7f6;
         }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        .button {
-            display: inline-block;
-            width: 120px; /* Đặt chiều rộng cố định cho các nút */
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
+
+        .btn-submit, .btn-view {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
-            text-align: center;
-            text-decoration: none;
             cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
         }
-        .button:hover {
-            background-color: #0056b3;
+
+        .btn-submit:hover, .btn-view:hover {
+            background-color: #2980b9;
         }
-        .button-create {
-            background-color: #28a745;
-        }
-        .button-create:hover {
-            background-color: #218838;
-        }
-        .button-container {
+
+        .pagination {
             display: flex;
-            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
         }
-        form {
-            margin: 0; /* Đảm bảo form không có margin */
+
+        .pagination a {
+            color: #3498db;
+            padding: 10px 15px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #3498db;
+            color: white;
+            border: 1px solid #3498db;
+        }
+
+        .pagination a:hover {
+            background-color: #ecf0f1;
+        }
+
+        .message {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 15px;
+            border: 1px solid #d6e9c6;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: none; /* Ẩn thông báo mặc định */
         }
     </style>
 </head>
 <body>
+<!-- Include header -->
+<jsp:include page="/views/includes/header.jsp"/>
+<!-- End of header -->
+<!-- Include navbar -->
+<jsp:include page="/views/includes/navbar.jsp"/>
+<!-- End of navbar -->
 
-<h1>Manage Customer</h1>
+<!-- Form -->
+<div class="form-container">
+    <h2>Customer Management</h2>
+    <h3>List of Customers</h3>
 
-<div style="text-align: center;">
-    <button onclick="addCustomer()">Add Cusomer</button>
-</div>
-<form action="/customer-staff?action=search" method="POST">
-    <input type="text" name="keyword" placeholder="Nhap vao name cua san pham"/>
-    <input type="submit" value="Search"/>
-</form>
-<table>
-    <tr>
-        <th>ID</th>
-        <th style="display: none">username</th>
-        <th style="display: none">PassWord</th>
-        <th>Address</th>
-        <th>FullName</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Gender</th>
-        <th>Actions</th>
-    </tr>
-    <c:forEach items="${sessionScope.listCustomer}" var="c">
+    <!-- Hiển thị thông báo nếu có -->
+    <c:if test="${not empty message}">
+        <div class="message" id="message">
+                ${message}
+        </div>
+    </c:if>
+
+    <form method="post" class="filter-form" action="${pageContext.request.contextPath}/customer-staff?action=search">
+        <div class="form-group">
+            <label for="customerNameSearch">Search by Customer Name:</label>
+            <input type="text" id="customerNameSearch" name="keyword" value="${param.customerName}" placeholder="Enter customer name"/>
+        </div>
+        <button type="submit" class="btn-submit">Filter</button>
+    </form>
+    <button class="btn-submit" onclick="window.location.href='${pageContext.request.contextPath}/customer-staff?action=create'">Create Customer</button>
+    <table class="customer-table">
+        <thead>
         <tr>
-            <td name="userID">${c.userID}</td>
-            <td name="username"style="display: none">${c.username} </td>
-            <td name="password"style="display: none">${c.password}</td>
-            <td name="address">${c.address}</td>
-            <td name="fullName">${c.fullName}</td>
-            <td name="mobile">${c.mobile}</td>
-            <td name="email">${c.email}</td>
-            <td>${c.gender}</td>
-
-            <td>
-                <div class="button-container">
-                    <a href="#" onclick="editCustomer(this)" class="button">Edit</a>
-                    <a href="/viewCustomerInfo?id=${c.userID}" class="button">View Info</a>
-                    <form action="customer-staff?action=delete" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="${c.userID}" />
-                        <button type="button" onclick="deleteCustomer(this)" class="button">Delete</button>
-                    </form>
-                </div>
-            </td>
+            <th>No</th>
+            <th style="display: none">username</th>
+            <th style="display: none">PassWord</th>
+            <th>FullName</th>
+            <th style="display: none">Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th style="display: none">Gender</th>
+            <th>Actions</th>
         </tr>
-    </c:forEach>
-</table>
-<form action="customer-staff?action=insert" id="formAddEdit" method="post" style="display: none">
-    <h1>Form Add Cusomer</h1>
-    <input type="hidden" name="userID" value="0">
-    <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-    </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div class="form-group">
-        <label for="mobile">Mobile:</label>
-        <input type="text" id="mobile" name="mobile" required>
-    </div>
-    <div class="form-group">
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required>
-    </div>
-    <div class="form-group">
-        <label for="fullName">Full Name:</label>
-        <input type="text" id="fullName" name="fullName" required>
-    </div>
-    <div class="form-group">
-        <label for="gender">Gender:</label>
-        <input type="text" id="gender" name="gender" required>
-    </div>
-    <div class="form-group">
-        <button onclick="addCustomer()" type="submit">Next</button>
-    </div>
-</form>
+        </thead>
+        <tbody>
+        <c:forEach items="${sessionScope.listCustomer}" var="c" varStatus="status">
+            <tr>
+                <td>${(currentPage-1)*CUSTOMERS_PER_PAGE + status.index + 1}</td>
+                <td name="username" style="display: none">${c.username} </td>
+                <td name="password" style="display: none">${c.password}</td>
+                <td name="fullName">${c.fullName}</td>
+                <td name="address"style="display: none" >${c.address}</td>
+                <td name="mobile">${c.mobile}</td>
+                <td name="email">${c.email}</td>
+                <td name="gender" style="display: none">${c.gender}</td>
+                <td>
+                    <div class="button-container">
+                        <a href="${pageContext.request.contextPath}/customer-staff?action=view&userID=${c.userID}" class="btn-view">View Info</a>
+                        <form action="${pageContext.request.contextPath}/customer-staff?action=delete" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="${c.userID}" />
+                            <button type="button" onclick="deleteCustomer(this)" class="btn-submit">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
 
-
-<jsp:include page="/views/includes/footer.jsp" />
+    <div class="pagination">
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            <c:choose>
+                <c:when test="${i == currentPage}">
+                    <a href="${pageContext.request.contextPath}/customer-staff?page=${i}" class="active">${i}</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/customer-staff?page=${i}">${i}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </div>
+</div>
+<!-- End of form -->
+<!-- Include footer -->
+<jsp:include page="/views/includes/footer.jsp"/>
+<!-- End of footer -->
 </body>
 <script>
     function deleteCustomer(e){
@@ -164,21 +249,28 @@
             e.closest('form').submit();
         }
     }
+
+    window.onload = function() {
+        var messageElement = document.getElementById("message");
+        if (messageElement) {
+            messageElement.style.display = "block";
+            setTimeout(function() {
+                messageElement.style.display = "none";
+            }, 5000);
+        }
+    };
 </script>
 <script>
     function addCustomer(){
         displayForm();
     }
     function displayForm(){
-
         let form = document.querySelector('#formAddEdit');
         if(form.style.display === 'none') {
             form.style.display = 'block';
         }else {
             form.style.display = 'none';
         }
-
-
     }
     function editCustomer(e) {
         displayForm();
@@ -200,7 +292,6 @@
         form.querySelector('input[name="email"]').value = email;
         form.querySelector('input[name="id"]').value = userID;
         form.action = "customer-staff?action=update";
-
     }
 </script>
 </html>
