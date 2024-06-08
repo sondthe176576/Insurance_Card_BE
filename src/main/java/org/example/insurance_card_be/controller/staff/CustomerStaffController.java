@@ -15,9 +15,11 @@ import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerStaffController", urlPatterns = "/customer-staff")
 public class CustomerStaffController extends HttpServlet{
+    private static final int CUSTOMERS_PER_PAGE = 5;
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
+        int page = req.getParameter("page") != null ? Integer.parseInt(req.getParameter("page")) : 1;
 
         CustomerDAO dao = new CustomerDAO();
         if ("create".equals(action)) {
@@ -34,11 +36,13 @@ public class CustomerStaffController extends HttpServlet{
             req.getRequestDispatcher("/views/staff/viewCustomer.jsp").forward(req, resp);
         } else {
             HttpSession session = req.getSession();
-            List<Users> listCustomer = (List<Users>) session.getAttribute("listCustomer");
-            if (listCustomer == null) {
-                listCustomer = dao.findAll();
-            }
+            List<Users> listCustomer = dao.findAll(page);
+            int totalCustomers = dao.getTotalCustomers();
+            int totalPages = (int) Math.ceil((double) totalCustomers / CUSTOMERS_PER_PAGE);
+
             session.setAttribute("listCustomer", listCustomer);
+            session.setAttribute("totalPages", totalPages);
+            session.setAttribute("currentPage", page);
             req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
         }
     }
