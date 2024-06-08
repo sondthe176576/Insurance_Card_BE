@@ -140,14 +140,24 @@
         <p><c:out value="${compensation.customerName}"/></p>
         <label>Full Name:</label>
         <p><c:out value="${compensation.contract.customer.user.fullName}"/></p>
+        <label>First Name:</label>
+        <p><c:out value="${compensation.contract.customer.user.firstName}"/></p>
+        <label>Last Name:</label>
+        <p><c:out value="${compensation.contract.customer.user.lastName}"/></p>
         <label>Phone Number:</label>
         <p><c:out value="${compensation.contract.customer.user.mobile}"/></p>
         <label>Email:</label>
         <p><c:out value="${compensation.contract.customer.user.email}"/></p>
-        <label>Address:</label>
-        <p><c:out value="${compensation.contract.customer.user.address}"/></p>
+        <label>Province:</label>
+        <p><c:out value="${compensation.contract.customer.user.province}"/></p>
+        <label>District:</label>
+        <p><c:out value="${compensation.contract.customer.user.district}"/></p>
+        <label>Country:</label>
+        <p><c:out value="${compensation.contract.customer.user.country}"/></p>
         <label>Gender:</label>
         <p><c:out value="${compensation.contract.customer.user.gender}"/></p>
+        <label>Birth Date:</label>
+        <p><fmt:formatDate value="${compensation.contract.customer.user.birthDate}" pattern="dd-MM-yyyy"/></p>
         <label>Personal Info:</label>
         <p><c:out value="${compensation.contract.customer.personalInfo}"/></p>
     </div>

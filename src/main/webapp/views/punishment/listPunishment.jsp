@@ -1,14 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: admin
-  Date: 5/19/2024
-  Time: 10:13 AM
+  Date: 6/8/2024
+  Time: 8:47 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Resolve Punishment</title>
+    <title>List Punishments</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -74,40 +76,41 @@
 <!-- End of navbar -->
 <!-- Form -->
 <div class="form-container">
-    <h2>Contract Details</h2>
+    <h2>Contract Management System</h2>
+    <h3>List of Cancelled Contracts</h3>
     <table class="accident-table">
+        <thead>
         <tr>
-            <th>Contract ID</th>
-            <td><c:out value="${contract.contractID}"/></td>
-        </tr>
-        <tr>
+            <th>No</th>
             <th>Customer ID</th>
-            <td><c:out value="${contract.customerID}"/></td>
-        </tr>
-        <tr>
             <th>Customer Name</th>
-            <td><c:out value="${contract.customerName}"/></td>
-        </tr>
-        <tr>
+            <th>Contract ID</th>
             <th>Start Date</th>
-            <td><fmt:formatDate value="${contract.startDate}" pattern="dd-MM-yyyy"/></td>
-        </tr>
-        <tr>
             <th>End Date</th>
-            <td><fmt:formatDate value="${contract.endDate}" pattern="dd-MM-yyyy"/></td>
-        </tr>
-        <tr>
             <th>Cancellation Date</th>
-            <td><fmt:formatDate value="${contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
-        </tr>
-        <tr>
             <th>Contract Info</th>
-            <td><c:out value="${contract.contractInfo}"/></td>
-        </tr>
-        <tr>
             <th>Status</th>
-            <td><c:out value="${contract.status}"/></td>
+            <th>Action</th>
         </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="contract" items="${cancelledContracts}" varStatus="status">
+            <tr>
+                <td><c:out value="${status.count}"/></td>
+                <td><c:out value="${contract.customerID}"/></td>
+                <td><c:out value="${contract.customerName}"/></td>
+                <td><c:out value="${contract.contractID}"/></td>
+                <td><fmt:formatDate value="${contract.startDate}" pattern="dd-MM-yyyy"/></td>
+                <td><fmt:formatDate value="${contract.endDate}" pattern="dd-MM-yyyy"/></td>
+                <td><fmt:formatDate value="${contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
+                <td><c:out value="${contract.contractInfo}"/></td>
+                <td><c:out value="${contract.status}"/></td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/viewContract?contractID=${contract.contractID}" class="btn-view">View</a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
     </table>
 </div>
 <!-- End of form -->
