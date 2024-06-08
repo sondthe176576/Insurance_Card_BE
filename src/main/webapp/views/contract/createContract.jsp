@@ -179,8 +179,12 @@
             <input type="text" id="customerName" name="customerName" value="${customer.user.fullName}" readonly>
         </div>
         <div class="form-group">
-            <label for="customerAddress">Customer Address:</label>
-            <input type="text" id="customerAddress" name="customerAddress" value="${customer.user.address}" readonly>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" value="${customer.user.firstName}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" value="${customer.user.lastName}" readonly>
         </div>
         <div class="form-group">
             <label for="customerPhone">Customer Phone:</label>
@@ -193,6 +197,22 @@
         <div class="form-group">
             <label for="customerGender">Gender:</label>
             <input type="text" id="customerGender" name="customerGender" value="${customer.user.gender}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="province">Province:</label>
+            <input type="text" id="province" name="province" value="${customer.user.province}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="district">District:</label>
+            <input type="text" id="district" name="district" value="${customer.user.district}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" value="${customer.user.country}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="birthDate">Birth Date:</label>
+            <input type="date" id="birthDate" name="birthDate" value="${customer.user.birthDate}" readonly>
         </div>
         <!-- Motorcycle Information -->
         <h3>Motorcycle Information</h3>

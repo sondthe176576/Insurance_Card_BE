@@ -23,7 +23,7 @@ public class CompensationRequestDAO {
     public List<CompensationRequests> getAllCompensationRequests(int page, int pageSize, String status, String customerName) throws SQLException {
         List<CompensationRequests> requests = new ArrayList<>();
         String query = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
-                "u.FullName AS CustomerName " +
+                "u.Full_name AS CustomerName " +
                 "FROM CompensationRequests cr " +
                 "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
                 "JOIN Users u ON cu.UserID = u.UserID ";
@@ -32,7 +32,7 @@ public class CompensationRequestDAO {
             conditions.add("cr.Status = ?");
         }
         if (customerName != null && !customerName.isEmpty()) {
-            conditions.add("u.FullName LIKE ?");
+            conditions.add("u.Full_name LIKE ?");
         }
         if (!conditions.isEmpty()) {
             query += "WHERE " + String.join(" AND ", conditions) + " ";

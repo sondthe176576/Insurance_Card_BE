@@ -14,7 +14,12 @@ public class Users {
     private String role;
     private String email;
     private String mobile;
-    private String address;
     private String fullName;
     private String gender;
+    private int province;
+    private int district;
+    private int country;
+    private String firstName;
+    private String lastName;
+    private String birthDate;
 }

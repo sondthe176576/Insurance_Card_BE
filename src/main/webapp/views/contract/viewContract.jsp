@@ -177,8 +177,28 @@
         <input type="text" id="fullName" name="fullName" value="${contract.customer.user.fullName}" readonly>
     </div>
     <div class="form-group">
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" value="${contract.customer.user.address}" readonly>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" value="${contract.customer.user.firstName}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" value="${contract.customer.user.lastName}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="province">Province:</label>
+        <input type="text" id="province" name="province" value="${contract.customer.user.province}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="district">District:</label>
+        <input type="text" id="district" name="district" value="${contract.customer.user.district}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" value="${contract.customer.user.country}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="birthDate">Birth Date:</label>
+        <input type="date" id="birthDate" name="birthDate" value="${contract.customer.user.birthDate}" readonly>
     </div>
     <div class="form-group">
         <label for="mobile">Mobile:</label>

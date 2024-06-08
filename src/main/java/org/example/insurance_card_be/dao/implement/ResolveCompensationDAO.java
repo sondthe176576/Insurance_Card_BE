@@ -20,7 +20,7 @@ public class ResolveCompensationDAO {
     // Hàm lấy thông tin yêu cầu bồi thường theo ID
     public CompensationRequests getCompensationRequestByID(int requestID) throws SQLException {
         String sql = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
-                "u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
+                "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
                 "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
                 "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
@@ -41,9 +41,14 @@ public class ResolveCompensationDAO {
                 user.setUsername(rs.getString("Username"));
                 user.setEmail(rs.getString("Email"));
                 user.setMobile(rs.getString("Mobile"));
-                user.setAddress(rs.getString("Address"));
-                user.setFullName(rs.getString("FullName"));
+                user.setFullName(rs.getString("Full_name"));
                 user.setGender(rs.getString("Gender"));
+                user.setProvince(rs.getInt("Province"));
+                user.setDistrict(rs.getInt("District"));
+                user.setCountry(rs.getInt("Country"));
+                user.setFirstName(rs.getString("First_name"));
+                user.setLastName(rs.getString("Last_name"));
+                user.setBirthDate(rs.getString("Birth_date"));
 
                 Motorcycle motorcycle = new Motorcycle();
                 motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));
@@ -69,11 +74,8 @@ public class ResolveCompensationDAO {
                 contract.setInsuranceType(rs.getString("InsuranceType"));
                 contract.setCoverage(rs.getString("Coverage"));
                 contract.setPremium(rs.getDouble("Premium"));
-
-                // Bạn cần đảm bảo rằng bạn có các trường "Detail" và "Value" trong bảng của bạn
                 contract.setDetail(rs.getString("Detail"));
                 contract.setValue(rs.getDouble("Value"));
-
                 contract.setCustomer(customer);
                 contract.setMotorcycle(motorcycle);
 
@@ -100,53 +102,6 @@ public class ResolveCompensationDAO {
             ps.setString(1, request.getStatus());
             ps.setInt(2, request.getRequestID());
             ps.executeUpdate();
-        }
-    }
-
-    // Ham main de test lay thoong tin yeu cau boi thuong theo ID
-    public static void main(String[] args) {
-        ResolveCompensationDAO resolveCompensationDAO = new ResolveCompensationDAO();
-        try {
-            CompensationRequests request = resolveCompensationDAO.getCompensationRequestByID(1);
-            if (request != null) {
-                System.out.println(request.getRequestID());
-                System.out.println(request.getCustomerID());
-                System.out.println(request.getContractID());
-                System.out.println(request.getRequestDate());
-                System.out.println(request.getStatus());
-                System.out.println(request.getDescription());
-                System.out.println(request.getAmount());
-                System.out.println(request.getCustomerName());
-                System.out.println(request.getContract().getContractID());
-                System.out.println(request.getContract().getContractInfo());
-                System.out.println(request.getContract().getStatus());
-                System.out.println(request.getContract().getStartDate());
-                System.out.println(request.getContract().getEndDate());
-                System.out.println(request.getContract().getInsuranceType());
-                System.out.println(request.getContract().getCoverage());
-                System.out.println(request.getContract().getPremium());
-                System.out.println(request.getContract().getDetail());
-                System.out.println(request.getContract().getValue());
-                System.out.println(request.getContract().getCustomer().getCustomerID());
-                System.out.println(request.getContract().getCustomer().getPersonalInfo());
-                System.out.println(request.getContract().getCustomer().getUser().getUserID());
-                System.out.println(request.getContract().getCustomer().getUser().getUsername());
-                System.out.println(request.getContract().getCustomer().getUser().getEmail());
-                System.out.println(request.getContract().getCustomer().getUser().getMobile());
-                System.out.println(request.getContract().getCustomer().getUser().getAddress());
-                System.out.println(request.getContract().getCustomer().getUser().getFullName());
-                System.out.println(request.getContract().getCustomer().getUser().getGender());
-                System.out.println(request.getContract().getMotorcycle().getMotorcycleID());
-                System.out.println(request.getContract().getMotorcycle().getLicensePlate());
-                System.out.println(request.getContract().getMotorcycle().getBrand());
-                System.out.println(request.getContract().getMotorcycle().getModel());
-                System.out.println(request.getContract().getMotorcycle().getFrameNumber());
-                System.out.println(request.getContract().getMotorcycle().getEngineNumber());
-                System.out.println(request.getContract().getMotorcycle().getYearOfManufacture());
-                System.out.println(request.getContract().getMotorcycle().getColor());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

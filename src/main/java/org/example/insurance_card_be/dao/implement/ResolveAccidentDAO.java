@@ -20,7 +20,7 @@ public class ResolveAccidentDAO {
     // Ham lay thong tin tai nan theo ID
     public Accident getAccidentByID(int accidentID) throws SQLException {
         String sql = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, a.Status, " +
-                "u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
+                "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
                 "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
                 "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
@@ -41,9 +41,14 @@ public class ResolveAccidentDAO {
                 user.setUsername(rs.getString("Username"));
                 user.setEmail(rs.getString("Email"));
                 user.setMobile(rs.getString("Mobile"));
-                user.setAddress(rs.getString("Address"));
-                user.setFullName(rs.getString("FullName"));
+                user.setFullName(rs.getString("Full_name"));
                 user.setGender(rs.getString("Gender"));
+                user.setProvince(rs.getInt("Province"));
+                user.setDistrict(rs.getInt("District"));
+                user.setCountry(rs.getInt("Country"));
+                user.setFirstName(rs.getString("First_name"));
+                user.setLastName(rs.getString("Last_name"));
+                user.setBirthDate(rs.getString("Birth_date"));
 
                 Motorcycle motorcycle = new Motorcycle();
                 motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));
@@ -69,11 +74,8 @@ public class ResolveAccidentDAO {
                 contract.setInsuranceType(rs.getString("InsuranceType"));
                 contract.setCoverage(rs.getString("Coverage"));
                 contract.setPremium(rs.getDouble("Premium"));
-
-                // Bạn cần đảm bảo rằng bạn có các trường "Detail" và "Value" trong bảng của bạn
                 contract.setDetail(rs.getString("Detail"));
                 contract.setValue(rs.getDouble("Value"));
-
                 contract.setCustomer(customer);
                 contract.setMotorcycle(motorcycle);
 
