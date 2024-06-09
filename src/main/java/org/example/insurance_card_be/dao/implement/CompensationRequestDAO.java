@@ -78,7 +78,7 @@ public class CompensationRequestDAO {
             conditions.add("cr.Status = ?");
         }
         if (customerName != null && !customerName.isEmpty()) {
-            conditions.add("u.FullName LIKE ?");
+            conditions.add("u.Full_name LIKE ?");
         }
         if (!conditions.isEmpty()) {
             query += "WHERE " + String.join(" AND ", conditions);
