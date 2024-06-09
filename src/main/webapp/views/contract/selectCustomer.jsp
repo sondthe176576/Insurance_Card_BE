@@ -74,11 +74,6 @@
             background-color: #2980b9;
         }
 
-        .header, .navbar, .footer {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
         .slider-image {
             width: 100%;
             margin-bottom: 20px;
@@ -88,14 +83,10 @@
 </head>
 <body>
 <!-- Include header -->
-<div class="header">
-    <jsp:include page="/views/includes/header.jsp"/>
-</div>
+<jsp:include page="/views/includes/header.jsp"/>
 <!-- End of header -->
 <!-- Include navbar -->
-<div class="navbar">
-    <jsp:include page="/views/includes/navbar.jsp"/>
-</div>
+<jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
 <img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" class="slider-image">
@@ -118,9 +109,7 @@
 </div>
 <!-- End of form -->
 <!-- Include footer -->
-<div class="footer">
-    <jsp:include page="/views/includes/footer.jsp"/>
-</div>
+<jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
 </body>
 </html>
