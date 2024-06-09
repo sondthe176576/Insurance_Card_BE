@@ -142,22 +142,43 @@
         }
 
         .notification {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .alert-success {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             background-color: #dff0d8;
             color: #3c763d;
+            padding: 15px;
             border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-size: 16px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
         }
 
-        .alert-danger {
+        .notification.alert-danger {
             background-color: #f2dede;
             color: #a94442;
-            border: 1px solid #ebccd1;
+            border-color: #ebccd1;
+        }
+
+        .notification.alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-color: #d6e9c6;
+        }
+
+        .notification .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            line-height: 20px;
+            color: inherit;
+            cursor: pointer;
+            float: right;
         }
     </style>
 </head>
@@ -172,15 +193,16 @@
 <img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
      style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
+<!-- Notification Message -->
+<c:if test="${not empty message}">
+    <div id="notification" class="notification ${status ? 'alert-success' : 'alert-danger'}">
+        <button type="button" class="close-btn" onclick="document.getElementById('notification').style.display='none'">&times;</button>
+        <c:out value="${message}"/>
+    </div>
+</c:if>
+<!-- End of notification message -->
 <!-- Form -->
 <div class="form-container">
-    <!-- Notification Message -->
-    <c:if test="${not empty message}">
-        <div id="notification" class="notification ${status ? 'alert-success' : 'alert-danger'}">
-            <c:out value="${message}"/>
-        </div>
-    </c:if>
-    <!-- End of notification message -->
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
         <!-- Customer Information -->
@@ -362,7 +384,10 @@
 <!-- Notification Message Script -->
 <script>
     setTimeout(function () {
-        document.getElementById('notification').style.display = 'none';
+        var notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.display = 'none';
+        }
     }, 5000);
 </script>
 <!-- End of notification message script -->

@@ -143,6 +143,46 @@
         .address-info a:hover {
             text-decoration: underline;
         }
+
+        .notification {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 15px;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-size: 16px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .notification.alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border-color: #ebccd1;
+        }
+
+        .notification.alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-color: #d6e9c6;
+        }
+
+        .notification .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            line-height: 20px;
+            color: inherit;
+            cursor: pointer;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -158,7 +198,8 @@
 <!-- End of image slider -->
 <!-- Notification Message -->
 <c:if test="${param.message != null}">
-    <div id="notification" class="alert ${param.status eq 'true' ? 'alert-success' : 'alert-danger'}">
+    <div id="notification" class="notification ${param.status eq 'true' ? 'alert-success' : 'alert-danger'}">
+        <button type="button" class="close-btn" onclick="document.getElementById('notification').style.display='none'">&times;</button>
         <c:out value="${param.message}"/>
     </div>
 </c:if>
@@ -321,8 +362,11 @@
 <!-- Notification Message Script -->
 <script>
     setTimeout(function () {
-        document.getElementById('notification').style.display = 'none';
-    }, 3000);
+        var notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.display = 'none';
+        }
+    }, 5000);
 </script>
 <!-- End of Notification Message Script -->
 </body>

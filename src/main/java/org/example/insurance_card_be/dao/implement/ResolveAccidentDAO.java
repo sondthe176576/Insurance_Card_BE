@@ -105,15 +105,4 @@ public class ResolveAccidentDAO {
             ps.executeUpdate();
         }
     }
-
-    // Ham main de test lay thong tin tai nan theo ID
-    public static void main(String[] args) {
-        ResolveAccidentDAO resolveAccidentDAO = new ResolveAccidentDAO();
-        try {
-            Accident accident = resolveAccidentDAO.getAccidentByID(1);
-            System.out.println(accident);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
