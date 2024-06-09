@@ -27,8 +27,8 @@ public class SelectCustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Lay danh sach customerID
         try {
-            List<Integer> customerIDs = customerService.getAllCustomers();
-            req.setAttribute("customerIDs", customerIDs);
+            List<Customers> customers = customerService.getAllCustomers();
+            req.setAttribute("customers", customers);
             req.getRequestDispatcher("/views/contract/selectCustomer.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();

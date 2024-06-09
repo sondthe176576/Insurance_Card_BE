@@ -89,16 +89,35 @@ public class CustomerInfoDAO {
     }
 
     // Get list of all customer IDs
-    public List<Integer> getAllCustomerIDs() throws SQLException {
-        List<Integer> customerIDs = new ArrayList<>();
-        String sql = "SELECT CustomerID FROM Customers";
+    public List<Customers> getAllCustomerIDs() throws SQLException {
+        List<Customers> customers = new ArrayList<>();
+        String sql = "SELECT c.CustomerID, u.Full_name FROM Customers c JOIN Users u ON c.UserID = u.UserID";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                customerIDs.add(rs.getInt("CustomerID"));
+                Customers customer = new Customers();
+                customer.setCustomerID(rs.getInt("CustomerID"));
+                Users user = new Users();
+                user.setFullName(rs.getString("Full_name"));
+                customer.setUser(user);
+                customers.add(customer);
             }
         }
-        return customerIDs;
+        return customers;
+    }
+
+    // Ham main de test lay danh sach customerID va name
+    public static void main(String[] args) {
+        CustomerInfoDAO customerInfoDAO = new CustomerInfoDAO();
+        try {
+            List<Customers> customers = customerInfoDAO.getAllCustomerIDs();
+            for (Customers customer : customers) {
+                // Replace 'getFullName' with the actual method name in your Users class
+                System.out.println(customer.getCustomerID() + " - " + customer.getUser().getFullName());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

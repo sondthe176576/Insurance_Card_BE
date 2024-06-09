@@ -99,8 +99,8 @@
             <label for="customerID">Customer ID:</label>
             <select id="customerID" name="customerID">
                 <option value="">Select Customer ID</option>
-                <c:forEach var="customerID" items="${customerIDs}">
-                    <option value="${customerID}">${customerID}</option>
+                <c:forEach var="customer" items="${customers}">
+                    <option value="${customer.customerID}">${customer.customerID} - ${customer.user.fullName}</option>
                 </c:forEach>
             </select>
         </div>
