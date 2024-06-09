@@ -16,4 +16,7 @@ public class Punishments {
     private Date punishmentDate;
     private String description;
     private String status;
+    private Contract contract;
+    private Customers customer;
+    private String customerName;
 }

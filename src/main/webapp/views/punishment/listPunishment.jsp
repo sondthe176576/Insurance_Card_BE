@@ -77,36 +77,38 @@
 <!-- Form -->
 <div class="form-container">
     <h2>Contract Management System</h2>
-    <h3>List of Cancelled Contracts</h3>
+    <h3>List of Punishments</h3>
     <table class="accident-table">
         <thead>
         <tr>
             <th>No</th>
+            <th>Punishment ID</th>
+            <th>Contract ID</th>
+            <th>Punishment Type</th>
+            <th>Punishment Date</th>
+            <th>Description</th>
+            <th>Status</th>
             <th>Customer ID</th>
             <th>Customer Name</th>
-            <th>Contract ID</th>
-            <th>Start Date</th>
-            <th>End Date</th>
             <th>Cancellation Date</th>
-            <th>Contract Info</th>
-            <th>Status</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="contract" items="${cancelledContracts}" varStatus="status">
+        <c:forEach var="punishment" items="${punishments}" varStatus="status">
             <tr>
                 <td><c:out value="${status.count}"/></td>
-                <td><c:out value="${contract.customerID}"/></td>
-                <td><c:out value="${contract.customerName}"/></td>
-                <td><c:out value="${contract.contractID}"/></td>
-                <td><fmt:formatDate value="${contract.startDate}" pattern="dd-MM-yyyy"/></td>
-                <td><fmt:formatDate value="${contract.endDate}" pattern="dd-MM-yyyy"/></td>
-                <td><fmt:formatDate value="${contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
-                <td><c:out value="${contract.contractInfo}"/></td>
-                <td><c:out value="${contract.status}"/></td>
+                <td><c:out value="${punishment.punishmentID}"/></td>
+                <td><c:out value="${punishment.contractID}"/></td>
+                <td><c:out value="${punishment.punishmentType}"/></td>
+                <td><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></td>
+                <td><c:out value="${punishment.description}"/></td>
+                <td><c:out value="${punishment.status}"/></td>
+                <td><c:out value="${punishment.customer.customerID}"/></td>
+                <td><c:out value="${punishment.customerName}"/></td>
+                <td><fmt:formatDate value="${punishment.contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/viewContract?contractID=${contract.contractID}" class="btn-view">View</a>
+                    <a href="${pageContext.request.contextPath}/resolvePunishment?punishmentID=${punishment.punishmentID}" class="btn-view">View</a>
                 </td>
             </tr>
         </c:forEach>
