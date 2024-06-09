@@ -15,9 +15,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/navbar.css">
 </head>
 <body>
-<%--<button class="back-btn" onclick="history.back()">--%>
-<%--    <img src="${pageContext.request.contextPath}/img/back.jpg" alt="back">--%>
-<%--</button>--%>
 <nav class="navbar">
     <div class="navbar-container">
         <ul class="nav-links">

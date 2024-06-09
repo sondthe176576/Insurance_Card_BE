@@ -140,6 +140,25 @@
         .address-info a:hover {
             text-decoration: underline;
         }
+
+        .notification {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+
+        .alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
     </style>
 </head>
 <body>
@@ -153,15 +172,15 @@
 <img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
      style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
-<!-- Notification Message -->
-<c:if test="${not empty message}">
-    <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'}">
-        <c:out value="${message}"/>
-    </div>
-</c:if>
-<!-- End of notification message -->
 <!-- Form -->
 <div class="form-container">
+    <!-- Notification Message -->
+    <c:if test="${not empty message}">
+        <div id="notification" class="notification ${status ? 'alert-success' : 'alert-danger'}">
+            <c:out value="${message}"/>
+        </div>
+    </c:if>
+    <!-- End of notification message -->
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
         <!-- Customer Information -->
@@ -344,7 +363,7 @@
 <script>
     setTimeout(function () {
         document.getElementById('notification').style.display = 'none';
-    }, 3000);
+    }, 5000);
 </script>
 <!-- End of notification message script -->
 </body>
