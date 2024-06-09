@@ -27,7 +27,21 @@ public class CustomerService {
     }
 
     // Ham lay danh sach cac customerID
-    public List<Integer> getAllCustomers() throws SQLException {
+    public List<Customers> getAllCustomers() throws SQLException {
         return customerInfoDAO.getAllCustomerIDs();
+    }
+
+    // Ham main de test lay danh sach customerID va name
+    public static void main(String[] args) {
+        CustomerService customerService = new CustomerService();
+        try {
+            List<Customers> customers = customerService.getAllCustomers();
+            for (Customers customer : customers) {
+                // Replace 'getFullName' with the actual method name in your Users class
+                System.out.println(customer.getCustomerID() + " - " + customer.getUser().getFullName());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
