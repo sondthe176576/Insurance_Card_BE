@@ -20,6 +20,7 @@ public class AccidentDAO {
     }
 
     // Ham lay thong tin tat ca cac tai nan
+    // Ham lay thong tin tat ca cac tai nan
     public List<Accident> getAllAccidents(int page, int pageSize, String status, String customerName) throws SQLException {
         List<Accident> accidents = new ArrayList<>();
         String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, u.Full_name AS CustomerName, a.Status " +
@@ -79,7 +80,7 @@ public class AccidentDAO {
             conditions.add("a.Status = ?");
         }
         if (customerName != null && !customerName.isEmpty()) {
-            conditions.add("u.FullName LIKE ?");
+            conditions.add("u.Full_name LIKE ?");
         }
         if (!conditions.isEmpty()) {
             query += "WHERE " + String.join(" AND ", conditions);

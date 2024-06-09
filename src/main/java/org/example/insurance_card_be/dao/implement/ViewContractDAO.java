@@ -52,7 +52,7 @@ public class ViewContractDAO {
                     user.setCountry(rs.getInt("Country"));
                     user.setFirstName(rs.getString("First_name"));
                     user.setLastName(rs.getString("Last_name"));
-                    user.setBirthDate(rs.getString("Birth_date"));
+                    user.setBirthDate(rs.getDate("Birth_date"));
 
                     Motorcycle motorcycle = new Motorcycle();
                     motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));
