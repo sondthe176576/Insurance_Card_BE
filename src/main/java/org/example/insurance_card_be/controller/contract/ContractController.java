@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +59,6 @@ public class ContractController extends HttpServlet {
         String customerID = req.getParameter("customerID");
         String contractInfo = req.getParameter("contractInfo");
         String status = req.getParameter("status");
-        String startDateStr = req.getParameter("startDate");
         String endDateStr = req.getParameter("endDate");
         String detail = req.getParameter("detail");
         String valueStr = req.getParameter("value");
@@ -72,7 +72,7 @@ public class ContractController extends HttpServlet {
             contract.setCustomerID(Integer.parseInt(customerID));
             contract.setContractInfo(contractInfo);
             contract.setStatus(status);
-            contract.setStartDate(sdf.parse(startDateStr));
+            contract.setStartDate(new Date()); // Set ngay hien tai
             contract.setEndDate(sdf.parse(endDateStr));
             contract.setDetail(detail);
             contract.setValue(Double.parseDouble(valueStr));

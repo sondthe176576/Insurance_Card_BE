@@ -196,7 +196,9 @@
 <!-- Notification Message -->
 <c:if test="${not empty message}">
     <div id="notification" class="notification ${status ? 'alert-success' : 'alert-danger'}">
-        <button type="button" class="close-btn" onclick="document.getElementById('notification').style.display='none'">&times;</button>
+        <button type="button" class="close-btn" onclick="document.getElementById('notification').style.display='none'">
+            &times;
+        </button>
         <c:out value="${message}"/>
     </div>
 </c:if>
@@ -313,8 +315,7 @@
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
-            <fmt:formatNumber value="${contract.value}" var="formattedValue" type="currency" currencySymbol="$"/>
-            <input type="text" id="value" name="value" value="${formattedValue}" required>
+            <input type="text" id="value" name="value" required oninput="formatCurrency(this)">
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
@@ -337,8 +338,7 @@
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <fmt:formatNumber value="${contract.premium}" var="formattedPremium" type="currency" currencySymbol="$"/>
-            <input type="text" id="premium" name="premium" value="${formattedPremium}" required>
+            <input type="text" id="premium" name="premium" required oninput="formatCurrency(this)">
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
@@ -389,6 +389,29 @@
             notification.style.display = 'none';
         }
     }, 5000);
+
+    // Function to format currency input
+    function formatCurrency(input) {
+        let value = input.value.replace(/,/g, '');
+        if (!isNaN(value)) {
+            input.value = parseFloat(value).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).replace('$', '');
+        } else {
+            input.value = input.value.substring(0, input.value.length - 1);
+        }
+    }
+
+    // Function to set today's date for startDate input
+    window.onload = function() {
+        var today = new Date();
+        var day = ("0" + today.getDate()).slice(-2);
+        var month = ("0" + (today.getMonth() + 1)).slice(-2);
+        var year = today.getFullYear();
+        var todayDate = year + "-" + month + "-" + day;
+        document.getElementById('startDate').value = todayDate;
+    }
 </script>
 <!-- End of notification message script -->
 </body>
