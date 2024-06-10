@@ -25,18 +25,4 @@ public class PunishmentService {
         }
         return null;
     }
-
-    // Ham main de test lay du lieu
-    public static void main(String[] args) {
-        try {
-            PunishmentDAO punishmentDAO = new PunishmentDAO(DBContext.getConnection());
-            PunishmentService punishmentService = new PunishmentService(punishmentDAO);
-            List<Punishments> punishments = punishmentService.getAllPunishments();
-            for (Punishments punishment : punishments) {
-                System.out.println(punishment);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

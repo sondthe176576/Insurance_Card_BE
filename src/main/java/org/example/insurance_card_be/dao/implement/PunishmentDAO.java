@@ -56,16 +56,4 @@ public class PunishmentDAO {
         }
         return punishments;
     }
-
-    public static void main(String[] args) {
-        try {
-            PunishmentDAO punishmentDAO = new PunishmentDAO(DBContext.getConnection());
-            List<Punishments> punishments = punishmentDAO.getAllPunishments();
-            for (Punishments punishment : punishments) {
-                System.out.println(punishment);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

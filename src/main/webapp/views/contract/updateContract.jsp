@@ -165,76 +165,76 @@
         </div>
         <div class="form-group">
             <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" value="${contract.customer.user.fullName}" required>
+            <input type="text" id="fullName" name="fullName" value="${contract.customer.user.fullName}" readonly>
         </div>
         <div class="form-group">
             <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" value="${contract.customer.user.firstName}" required>
+            <input type="text" id="firstName" name="firstName" value="${contract.customer.user.firstName}" readonly>
         </div>
         <div class="form-group">
             <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" value="${contract.customer.user.lastName}" required>
+            <input type="text" id="lastName" name="lastName" value="${contract.customer.user.lastName}" readonly>
         </div>
         <div class="form-group">
             <label for="province">Province:</label>
-            <input type="text" id="province" name="province" value="${contract.customer.user.province}" required>
+            <input type="text" id="province" name="province" value="${contract.customer.user.province}" readonly>
         </div>
         <div class="form-group">
             <label for="district">District:</label>
-            <input type="text" id="district" name="district" value="${contract.customer.user.district}" required>
+            <input type="text" id="district" name="district" value="${contract.customer.user.district}" readonly>
         </div>
         <div class="form-group">
             <label for="country">Country:</label>
-            <input type="text" id="country" name="country" value="${contract.customer.user.country}" required>
+            <input type="text" id="country" name="country" value="${contract.customer.user.country}" readonly>
         </div>
         <div class="form-group">
             <label for="birthDate">Birth Date:</label>
-            <input type="date" id="birthDate" name="birthDate" value="${contract.customer.user.birthDate}" required>
+            <input type="date" id="birthDate" name="birthDate" value="<fmt:formatDate value='${contract.customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
         </div>
         <div class="form-group">
             <label for="mobile">Mobile:</label>
-            <input type="text" id="mobile" name="mobile" value="${contract.customer.user.mobile}" required>
+            <input type="text" id="mobile" name="mobile" value="${contract.customer.user.mobile}" readonly>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="${contract.customer.user.email}" required>
+            <input type="email" id="email" name="email" value="${contract.customer.user.email}" readonly>
         </div>
         <div class="form-group">
             <label for="gender">Gender: </label>
-            <input type="text" id="gender" name="gender" value="${contract.customer.user.gender}" required>
+            <input type="text" id="gender" name="gender" value="${contract.customer.user.gender}" readonly>
         </div>
         <!-- Thông tin Xe -->
         <h3>Vehicle Information</h3>
         <div class="form-group">
             <label for="licensePlate">License Plate:</label>
             <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}"
-                   required>
+                   readonly>
         </div>
         <div class="form-group">
             <label for="brand">Brand:</label>
-            <input type="text" id="brand" name="brand" value="${contract.motorcycle.brand}" required>
+            <input type="text" id="brand" name="brand" value="${contract.motorcycle.brand}" readonly>
         </div>
         <div class="form-group">
             <label for="model">Model:</label>
-            <input type="text" id="model" name="model" value="${contract.motorcycle.model}" required>
+            <input type="text" id="model" name="model" value="${contract.motorcycle.model}" readonly>
         </div>
         <div class="form-group">
             <label for="yearOfManufacture">Year of Manufacture:</label>
             <input type="number" id="yearOfManufacture" name="yearOfManufacture"
-                   value="${contract.motorcycle.yearOfManufacture}" required>
+                   value="${contract.motorcycle.yearOfManufacture}" readonly>
         </div>
         <div class="form-group">
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" value="${contract.motorcycle.color}" required>
+            <input type="text" id="color" name="color" value="${contract.motorcycle.color}" readonly>
         </div>
         <div class="form-group">
             <label for="engineNumber">Engine Number:</label>
             <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}"
-                   required>
+                   readonly>
         </div>
         <div class="form-group">
             <label for="frameNumber">Frame Number:</label>
-            <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}" required>
+            <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}" readonly>
         </div>
         <!-- Thông tin Bảo Hiểm -->
         <h3>Insurance Information</h3>

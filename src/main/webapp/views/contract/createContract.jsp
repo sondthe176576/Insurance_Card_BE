@@ -255,7 +255,7 @@
         </div>
         <div class="form-group">
             <label for="birthDate">Birth Date:</label>
-            <input type="date" id="birthDate" name="birthDate" value="${customer.user.birthDate}" readonly>
+            <input type="date" id="birthDate" name="birthDate" value="<fmt:formatDate value='${customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
         </div>
         <!-- Motorcycle Information -->
         <h3>Motorcycle Information</h3>
