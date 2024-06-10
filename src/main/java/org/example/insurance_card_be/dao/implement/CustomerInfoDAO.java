@@ -106,18 +106,4 @@ public class CustomerInfoDAO {
         }
         return customers;
     }
-
-    // Ham main de test lay danh sach customerID va name
-    public static void main(String[] args) {
-        CustomerInfoDAO customerInfoDAO = new CustomerInfoDAO();
-        try {
-            List<Customers> customers = customerInfoDAO.getAllCustomerIDs();
-            for (Customers customer : customers) {
-                // Replace 'getFullName' with the actual method name in your Users class
-                System.out.println(customer.getCustomerID() + " - " + customer.getUser().getFullName());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

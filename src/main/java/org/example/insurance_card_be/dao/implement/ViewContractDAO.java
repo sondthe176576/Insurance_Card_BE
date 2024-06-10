@@ -87,15 +87,4 @@ public class ViewContractDAO {
         }
         return contract;
     }
-
-    // Ham main de test lay thong tin contract theo ID
-    public static void main(String[] args) {
-        ViewContractDAO viewContractDAO = new ViewContractDAO();
-        try {
-            Contract contract = viewContractDAO.getContractDetailById(1);
-            System.out.println(contract);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
