@@ -44,26 +44,121 @@
             font-size: 24px;
         }
 
-        .accident-table {
+        .filter-form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-form .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filter-form label {
+            margin-right: 10px;
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .filter-form input, .filter-form select {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .filter-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .filter-form button:hover {
+            background-color: #2980b9;
+        }
+
+        .punishment-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 30px;
         }
 
-        .accident-table th, .accident-table td {
+        .punishment-table th, .punishment-table td {
             padding: 15px;
             border: 1px solid #ddd;
             text-align: left;
         }
 
-        .accident-table th {
+        .punishment-table th {
             background-color: #2c3e50;
             color: white;
             font-weight: bold;
         }
 
-        .accident-table tr:nth-child(even) {
+        .punishment-table tr:nth-child(even) {
             background-color: #f4f7f6;
+        }
+
+        .btn-submit, .btn-view {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .btn-submit:hover, .btn-view:hover {
+            background-color: #2980b9;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            color: #3498db;
+            padding: 10px 15px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #3498db;
+            color: white;
+            border: 1px solid #3498db;
+        }
+
+        .pagination a:hover {
+            background-color: #ecf0f1;
+
+        }
+
+        .status-pending {
+            color: #f1c40f;
+        }
+
+        .status-approved {
+            color: #2ecc71;
+        }
+
+        .status-rejected {
+            color: #e74c3c;
         }
     </style>
 </head>
@@ -78,18 +173,33 @@
 <div class="form-container">
     <h2>Contract Management System</h2>
     <h3>List of Punishments</h3>
-    <table class="accident-table">
+    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listPunishment">
+        <div class="form-group">
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter" name="status" class="status-select">
+                <option value="">All</option>
+                <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Resolved" ${param.status == 'Resolved' ? 'selected' : ''}>Resolved</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="customerNameSearch">Search by Customer Name:</label>
+            <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
+                   placeholder="Enter customer name"/>
+        </div>
+        <button type="submit" class="btn-submit">Filter</button>
+    </form>
+    <table class="punishment-table">
         <thead>
         <tr>
             <th>No</th>
-            <th>Punishment ID</th>
+            <th>Customer ID</th>
+            <th>Customer Name</th>
             <th>Contract ID</th>
             <th>Punishment Type</th>
             <th>Punishment Date</th>
             <th>Description</th>
             <th>Status</th>
-            <th>Customer ID</th>
-            <th>Customer Name</th>
             <th>Cancellation Date</th>
             <th>Action</th>
         </tr>
@@ -97,15 +207,16 @@
         <tbody>
         <c:forEach var="punishment" items="${punishments}" varStatus="status">
             <tr>
-                <td><c:out value="${status.count}"/></td>
-                <td><c:out value="${punishment.punishmentID}"/></td>
+                <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
+                <td><c:out value="${punishment.customer.customerID}"/></td>
+                <td><c:out value="${punishment.customerName}"/></td>
                 <td><c:out value="${punishment.contractID}"/></td>
                 <td><c:out value="${punishment.punishmentType}"/></td>
                 <td><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></td>
                 <td><c:out value="${punishment.description}"/></td>
-                <td><c:out value="${punishment.status}"/></td>
-                <td><c:out value="${punishment.customer.customerID}"/></td>
-                <td><c:out value="${punishment.customerName}"/></td>
+                <td class="<c:out value="${punishment.status == 'Pending' ? 'status-pending' : punishment.status == 'Resolved' ? 'status-approved' : ''}"/>">
+                    <c:out value="${punishment.status}"/>
+                </td>
                 <td><fmt:formatDate value="${punishment.contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
                 <td>
                     <a href="${pageContext.request.contextPath}/resolvePunishment?punishmentID=${punishment.punishmentID}" class="btn-view">View</a>
@@ -114,6 +225,18 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="pagination">
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            <c:choose>
+                <c:when test="${i == currentPage}">
+                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </div>
 </div>
 <!-- End of form -->
 <!-- Include footer -->

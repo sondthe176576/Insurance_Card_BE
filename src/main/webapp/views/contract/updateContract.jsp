@@ -157,7 +157,7 @@
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/updateContract" method="post">
         <h2>Update Contract</h2>
-        <!-- Thông tin Khách Hàng -->
+        <!-- Customer Information -->
         <h3>Customer Information</h3>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
@@ -203,12 +203,11 @@
             <label for="gender">Gender: </label>
             <input type="text" id="gender" name="gender" value="${contract.customer.user.gender}" readonly>
         </div>
-        <!-- Thông tin Xe -->
+        <!-- Vehicle Information -->
         <h3>Vehicle Information</h3>
         <div class="form-group">
             <label for="licensePlate">License Plate:</label>
-            <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}"
-                   readonly>
+            <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}" readonly>
         </div>
         <div class="form-group">
             <label for="brand">Brand:</label>
@@ -220,8 +219,7 @@
         </div>
         <div class="form-group">
             <label for="yearOfManufacture">Year of Manufacture:</label>
-            <input type="number" id="yearOfManufacture" name="yearOfManufacture"
-                   value="${contract.motorcycle.yearOfManufacture}" readonly>
+            <input type="number" id="yearOfManufacture" name="yearOfManufacture" value="${contract.motorcycle.yearOfManufacture}" readonly>
         </div>
         <div class="form-group">
             <label for="color">Color:</label>
@@ -229,14 +227,13 @@
         </div>
         <div class="form-group">
             <label for="engineNumber">Engine Number:</label>
-            <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}"
-                   readonly>
+            <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}" readonly>
         </div>
         <div class="form-group">
             <label for="frameNumber">Frame Number:</label>
             <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}" readonly>
         </div>
-        <!-- Thông tin Bảo Hiểm -->
+        <!-- Insurance Information -->
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractID">Contract ID:</label>
@@ -259,61 +256,39 @@
             <input type="date" id="endDate" name="endDate" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" required>
         </div>
         <div class="form-group">
-            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
-                amount or the insurance value)</label>
+            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount or the insurance value)</label>
             <fmt:formatNumber value="${contract.value}" var="formattedValue" type="number"/>
-            <input type="text" id="value" name="value" value="${formattedValue}" required>
+            <input type="text" id="value" name="value" value="${formattedValue}" required oninput="formatCurrency(this)">
         </div>
         <div class="form-group">
-            <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
-                conditions)</label>
+            <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and conditions)</label>
             <textarea id="detail" name="detail" required>${contract.detail}</textarea>
         </div>
         <div class="form-group">
             <label for="insuranceType">Insurance Type:</label>
             <select id="insuranceType" name="insuranceType" required>
                 <option value="Basic" ${contract.insuranceType == 'Basic' ? 'selected' : ''}>Basic</option>
-                <option value="Comprehensive" ${contract.insuranceType == 'Comprehensive' ? 'selected' : ''}>
-                    Comprehensive
-                </option>
+                <option value="Comprehensive" ${contract.insuranceType == 'Comprehensive' ? 'selected' : ''}>Comprehensive</option>
                 <option value="Premium" ${contract.insuranceType == 'Premium' ? 'selected' : ''}>Premium</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
-                contract)</label>
+            <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the contract)</label>
             <input type="text" id="coverage" name="coverage" value="${contract.coverage}" required>
         </div>
         <div class="form-group">
-            <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
-                contract)</label>
+            <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance contract)</label>
             <fmt:formatNumber value="${contract.premium}" var="formattedPremium" type="number"/>
-            <input type="text" id="premium" name="premium" value="${formattedPremium}" required>
+            <input type="text" id="premium" name="premium" value="${formattedPremium}" required oninput="formatCurrency(this)">
         </div>
         <div class="membership-info">
-            <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
-                motorcycle. After completing your contact information and selecting your insurance package, please
-                submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend
-                an information session. We aim to provide you with as much information as possible about our insurance
-                policies. At the end of the session, you may complete the application for insurance and pay the $100
-                insurance fee.</p>
+            <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>
 
-            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your
-                motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters
-                with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not
-                only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire,
-                and vandalism. This ensures that you have peace of mind in any situation.</p>
+            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any situation.</p>
 
-            <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of
-                coverage. This includes all the benefits of comprehensive insurance, plus additional features such as
-                roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium
-                insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest
-                response in case of any incident. Our premium plan also includes a personal advisor who will assist you
-                with all your insurance needs.</p>
+            <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of coverage. This includes all the benefits of comprehensive insurance, plus additional features such as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest response in case of any incident. Our premium plan also includes a personal advisor who will assist you with all your insurance needs.</p>
 
-            <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive
-                the support you need in case of any accidents or incidents. Our team is dedicated to helping you
-                understand the different options and choose the one that best suits your needs.</p>
+            <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive the support you need in case of any accidents or incidents. Our team is dedicated to helping you understand the different options and choose the one that best suits your needs.</p>
         </div>
         <div class="address-info">
             <h3>Application can be dropped off or mailed to:</h3>
@@ -331,5 +306,38 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
+<!-- Notification Message Script -->
+<script>
+    setTimeout(function () {
+        var notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.display = 'none';
+        }
+    }, 5000);
+
+    // Function to format currency input
+    function formatCurrency(input) {
+        let value = input.value.replace(/,/g, '');
+        if (!isNaN(value)) {
+            input.value = parseFloat(value).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).replace('$', '');
+        } else {
+            input.value = input.value.substring(0, input.value.length - 1);
+        }
+    }
+
+    // Function to set today's date for startDate input
+    window.onload = function() {
+        var today = new Date();
+        var day = ("0" + today.getDate()).slice(-2);
+        var month = ("0" + (today.getMonth() + 1)).slice(-2);
+        var year = today.getFullYear();
+        var todayDate = year + "-" + month + "-" + day;
+        document.getElementById('startDate').value = todayDate;
+    }
+</script>
+<!-- End of notification message script -->
 </body>
 </html>

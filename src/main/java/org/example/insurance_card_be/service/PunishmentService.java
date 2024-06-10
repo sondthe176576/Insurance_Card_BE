@@ -16,13 +16,15 @@ public class PunishmentService {
         this.punishmentDAO = punishmentDAO;
     }
 
-    // Goi ham lay danh sach punishments
-    public List<Punishments> getAllPunishments() throws SQLException {
-        try {
-            return punishmentDAO.getAllPunishments();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List<Punishments> getAllPunishments(int page, int limit, String status, String customerName) throws SQLException {
+        return punishmentDAO.getPunishments(page, limit, status, customerName);
+    }
+
+    public int getTotalPunishments(String status, String customerName) throws SQLException {
+        return punishmentDAO.getTotalPunishments(status, customerName);
+    }
+
+    public void resolvePunishment(int punishmentID) throws SQLException {
+        punishmentDAO.resolvePunishment(punishmentID);
     }
 }

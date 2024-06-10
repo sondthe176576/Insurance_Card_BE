@@ -140,6 +140,46 @@
         .address-info a:hover {
             text-decoration: underline;
         }
+
+        .notification {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 15px;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-size: 16px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .notification.alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border-color: #ebccd1;
+        }
+
+        .notification.alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-color: #d6e9c6;
+        }
+
+        .notification .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            line-height: 20px;
+            color: inherit;
+            cursor: pointer;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -153,11 +193,21 @@
 <img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
      style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
+<!-- Notification Message -->
+<c:if test="${not empty message}">
+    <div id="notification" class="notification ${status ? 'alert-success' : 'alert-danger'}">
+        <button type="button" class="close-btn" onclick="document.getElementById('notification').style.display='none'">
+            &times;
+        </button>
+        <c:out value="${message}"/>
+    </div>
+</c:if>
+<!-- End of notification message -->
 <!-- Form -->
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/renewContract" method="post">
         <h2>Renew Contract</h2>
-        <!-- Thông tin Khách Hàng -->
+        <!-- Customer Information -->
         <h3>Customer Information</h3>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
@@ -203,12 +253,11 @@
             <label for="gender">Gender: </label>
             <input type="text" id="gender" name="gender" value="${contract.customer.user.gender}" readonly>
         </div>
-        <!-- Thông tin Xe -->
+        <!-- Vehicle Information -->
         <h3>Vehicle Information</h3>
         <div class="form-group">
             <label for="licensePlate">License Plate:</label>
-            <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}"
-                   readonly>
+            <input type="text" id="licensePlate" name="licensePlate" value="${contract.motorcycle.licensePlate}" readonly>
         </div>
         <div class="form-group">
             <label for="brand">Brand:</label>
@@ -220,8 +269,7 @@
         </div>
         <div class="form-group">
             <label for="yearOfManufacture">Year of Manufacture:</label>
-            <input type="number" id="yearOfManufacture" name="yearOfManufacture"
-                   value="${contract.motorcycle.yearOfManufacture}" readonly>
+            <input type="number" id="yearOfManufacture" name="yearOfManufacture" value="${contract.motorcycle.yearOfManufacture}" readonly>
         </div>
         <div class="form-group">
             <label for="color">Color:</label>
@@ -229,14 +277,13 @@
         </div>
         <div class="form-group">
             <label for="engineNumber">Engine Number:</label>
-            <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}"
-                   readonly>
+            <input type="text" id="engineNumber" name="engineNumber" value="${contract.motorcycle.engineNumber}" readonly>
         </div>
         <div class="form-group">
             <label for="frameNumber">Frame Number:</label>
             <input type="text" id="frameNumber" name="frameNumber" value="${contract.motorcycle.frameNumber}" readonly>
         </div>
-        <!-- Thông tin Bảo Hiểm -->
+        <!-- Insurance Information -->
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractID">Contract ID:</label>
@@ -259,14 +306,12 @@
             <input type="date" id="endDate" name="endDate" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" readonly>
         </div>
         <div class="form-group">
-            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
-                amount or the insurance value)</label>
+            <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation amount or the insurance value)</label>
             <fmt:formatNumber value="${contract.value}" var="formattedValue" type="currency" currencySymbol="$"/>
             <input type="text" id="value" name="value" value="${formattedValue}" readonly>
         </div>
         <div class="form-group">
-            <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
-                conditions)</label>
+            <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and conditions)</label>
             <textarea id="detail" name="detail" readonly>${contract.detail}</textarea>
         </div>
         <div class="form-group">
@@ -274,17 +319,15 @@
             <input type="text" id="insuranceType" name="insuranceType" value="${contract.insuranceType}" readonly>
         </div>
         <div class="form-group">
-            <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the
-                contract)</label>
+            <label for="coverage">Coverage: (Describe the insurance coverage, risks, and damages covered by the contract)</label>
             <input type="text" id="coverage" name="coverage" value="${contract.coverage}" readonly>
         </div>
         <div class="form-group">
-            <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
-                contract)</label>
+            <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance contract)</label>
             <fmt:formatNumber value="${contract.premium}" var="formattedPremium" type="currency" currencySymbol="$"/>
             <input type="text" id="premium" name="premium" value="${formattedPremium}" readonly>
         </div>
-        <!-- Gia han hop dong -->
+        <!-- Renew Contract -->
         <h3>Renew Contract</h3>
         <div class="form-group">
             <label for="renewalDate">Renewal Date:</label>
@@ -292,7 +335,7 @@
         </div>
         <div class="form-group">
             <label for="newPremium">New Premium:</label>
-            <input type="number" id="newPremium" name="newPremium" required>
+            <input type="text" id="newPremium" name="newPremium" required oninput="formatCurrency(this)">
         </div>
         <div class="form-group">
             <label for="newCoverage">New Coverage:</label>
@@ -344,5 +387,38 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
+<!-- Notification Message Script -->
+<script>
+    setTimeout(function () {
+        var notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.display = 'none';
+        }
+    }, 5000);
+
+    // Function to format currency input
+    function formatCurrency(input) {
+        let value = input.value.replace(/,/g, '');
+        if (!isNaN(value)) {
+            input.value = parseFloat(value).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).replace('$', '') + ' $';
+        } else {
+            input.value = input.value.substring(0, input.value.length - 1);
+        }
+    }
+
+    // Function to set today's date for startDate input
+    window.onload = function() {
+        var today = new Date();
+        var day = ("0" + today.getDate()).slice(-2);
+        var month = ("0" + (today.getMonth() + 1)).slice(-2);
+        var year = today.getFullYear();
+        var todayDate = year + "-" + month + "-" + day;
+        document.getElementById('renewalDate').value = todayDate;
+    }
+</script>
+<!-- End of notification message script -->
 </body>
 </html>

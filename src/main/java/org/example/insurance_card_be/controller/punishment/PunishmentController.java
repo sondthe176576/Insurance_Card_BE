@@ -26,10 +26,46 @@ public class PunishmentController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String path = req.getServletPath();
+        if ("/listPunishment".equals(path)) {
+            listPunishment(req, resp);
+        } else if ("/resolvePunishment".equals(path)) {
+            resolvePunishment(req, resp);
+        }
+    }
+
+    private void listPunishment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Punishments> punishments = punishmentService.getAllPunishments();
-            req.setAttribute("punishments", punishments);
-            req.getRequestDispatcher("/views/punishment/listPunishment.jsp").forward(req, resp);
+            int page = 1;
+            int limit = 10;
+            if (req.getParameter("page") != null) {
+                page = Integer.parseInt(req.getParameter("page"));
+            }
+            String status = req.getParameter("status");
+            String customerName = req.getParameter("customerName");
+            try {
+                List<Punishments> punishments = punishmentService.getAllPunishments(page, limit, status, customerName);
+                int totalPunishments = punishmentService.getTotalPunishments(status, customerName);
+                int totalPages = (int) Math.ceil((double) totalPunishments / limit);
+                req.setAttribute("punishments", punishments);
+                req.setAttribute("totalPunishments", totalPunishments);
+                req.setAttribute("totalPages", totalPages);
+                req.setAttribute("currentPage", page);
+                req.setAttribute("customerName", customerName);
+                req.getRequestDispatcher("/views/punishment/listPunishment.jsp").forward(req, resp);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void resolvePunishment(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int punishmentID = Integer.parseInt(req.getParameter("punishmentID"));
+        try {
+            punishmentService.resolvePunishment(punishmentID);
+            resp.sendRedirect(req.getContextPath() + "/listPunishment");
         } catch (SQLException e) {
             e.printStackTrace();
         }
