@@ -15,13 +15,31 @@
 <div class="container">
     <h1>Accident History</h1>
     <div class="form-container">
-        <form action="${pageContext.request.contextPath}/accidentHistory" method="post">
+        <form action="${pageContext.request.contextPath}/Ach" method="get" class="row g-3 mb-3">
+            <div class="col-md-2">
+                <label for="page" class="form-label">Page</label>
+                <input type="number" class="form-control" id="page" name="page" value="${param.page != null ? param.page : 1}">
+            </div>
+            <div class="col-md-2">
+                <label for="pageSize" class="form-label">Page Size</label>
+                <input type="number" class="form-control" id="pageSize" name="pageSize" value="${param.pageSize != null ? param.pageSize : 10}">
+            </div>
+            <div class="col-md-4">
+                <label for="status" class="form-label">Status</label>
+                <input type="text" class="form-control" id="status" name="status" value="${param.status}">
+            </div>
+            <div class="col-md-4">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" class="form-control" id="description" name="description" value="${param.description}">
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary mt-3">Filter</button>
+            </div>
         </form>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Customer ID</th>
-                <th>Full Name</th>
                 <th>Accident ID</th>
                 <th>Description</th>
                 <th>Date</th>
@@ -33,7 +51,6 @@
             <c:forEach items="${listAh}" var="accident">
                 <tr>
                     <td>${accident.customerID}</td>
-                    <td>${accident.customerName}</td>
                     <td>${accident.accidentID}</td>
                     <td>${accident.description}</td>
                     <td>${accident.accidentDate}</td>
