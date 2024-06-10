@@ -19,41 +19,100 @@ public class PunishmentDAO {
         this.connection = connection;
     }
 
-    public List<Punishments> getAllPunishments() throws SQLException {
+    public List<Punishments> getPunishments(int page, int limit, String status, String customerName) throws SQLException {
         List<Punishments> punishments = new ArrayList<>();
         String query = "SELECT p.PunishmentID, p.ContractID, p.PunishmentType, p.PunishmentDate, p.Description, p.Status, " +
                 "co.CustomerID, u.Full_name AS CustomerName, co.CancellationDate " +
                 "FROM Punishments p " +
                 "JOIN Contracts co ON p.ContractID = co.ContractID " +
                 "JOIN Customers cu ON co.CustomerID = cu.CustomerID " +
-                "JOIN Users u ON cu.UserID = u.UserID";
+                "JOIN Users u ON cu.UserID = u.UserID ";
+        List<String> conditions = new ArrayList<>();
+        if (status != null && !status.isEmpty()) {
+            conditions.add("p.Status = ?");
+        }
+        if (customerName != null && !customerName.isEmpty()) {
+            conditions.add("u.Full_name LIKE ?");
+        }
+        if (!conditions.isEmpty()) {
+            query += "WHERE " + String.join(" AND ", conditions) + " ";
+        }
+        query += "ORDER BY p.PunishmentID " +
+                "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            int paramIndex = 1;
+            if (status != null && !status.isEmpty()) {
+                stmt.setString(paramIndex++, status);
+            }
+            if (customerName != null && !customerName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + customerName + "%");
+            }
+            stmt.setInt(paramIndex++, (page - 1) * limit);
+            stmt.setInt(paramIndex, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Punishments punishment = new Punishments();
+                    punishment.setPunishmentID(rs.getInt("PunishmentID"));
+                    punishment.setContractID(rs.getInt("ContractID"));
+                    punishment.setPunishmentType(rs.getString("PunishmentType"));
+                    punishment.setPunishmentDate(rs.getDate("PunishmentDate"));
+                    punishment.setDescription(rs.getString("Description"));
+                    punishment.setStatus(rs.getString("Status"));
+                    punishment.setCustomerName(rs.getString("CustomerName"));
 
-        try (PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
+                    Contract contract = new Contract();
+                    contract.setContractID(rs.getInt("ContractID"));
+                    contract.setCancellationDate(rs.getDate("CancellationDate"));
+                    punishment.setContract(contract);
 
-            while (resultSet.next()) {
-                Punishments punishment = new Punishments();
-                punishment.setPunishmentID(resultSet.getInt("PunishmentID"));
-                punishment.setContractID(resultSet.getInt("ContractID"));
-                punishment.setPunishmentType(resultSet.getString("PunishmentType"));
-                punishment.setPunishmentDate(resultSet.getDate("PunishmentDate"));
-                punishment.setDescription(resultSet.getString("Description"));
-                punishment.setStatus(resultSet.getString("Status"));
-                punishment.setCustomerName(resultSet.getString("CustomerName"));
-
-                // Create and set Contract object
-                Contract contract = new Contract();
-                contract.setContractID(resultSet.getInt("ContractID"));
-                contract.setCancellationDate(resultSet.getDate("CancellationDate"));
-                punishment.setContract(contract);
-
-                // Create and set Customers object
-                Customers customer = new Customers();
-                customer.setCustomerID(resultSet.getInt("CustomerID"));
-                punishment.setCustomer(customer);
-                punishments.add(punishment);
+                    Customers customer = new Customers();
+                    customer.setCustomerID(rs.getInt("CustomerID"));
+                    punishment.setCustomer(customer);
+                    punishments.add(punishment);
+                }
             }
         }
         return punishments;
+    }
+
+    public int getTotalPunishments(String status, String customerName) throws SQLException {
+        String query = "SELECT COUNT(p.PunishmentID) AS Total " +
+                "FROM Punishments p " +
+                "JOIN Contracts co ON p.ContractID = co.ContractID " +
+                "JOIN Customers cu ON co.CustomerID = cu.CustomerID " +
+                "JOIN Users u ON cu.UserID = u.UserID ";
+        List<String> conditions = new ArrayList<>();
+        if (status != null && !status.isEmpty()) {
+            conditions.add("p.Status = ?");
+        }
+        if (customerName != null && !customerName.isEmpty()) {
+            conditions.add("u.Full_name LIKE ?");
+        }
+        if (!conditions.isEmpty()) {
+            query += "WHERE " + String.join(" AND ", conditions);
+        }
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            int paramIndex = 1;
+            if (status != null && !status.isEmpty()) {
+                stmt.setString(paramIndex++, status);
+            }
+            if (customerName != null && !customerName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + customerName + "%");
+            }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("Total");
+                }
+            }
+        }
+        return 0;
+    }
+
+    public void resolvePunishment(int punishmentID) throws SQLException {
+        String query = "UPDATE Punishments SET Status = 'Resolved' WHERE PunishmentID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, punishmentID);
+            stmt.executeUpdate();
+        }
     }
 }
