@@ -40,9 +40,9 @@ public class CustomerInfoDAO {
                         rs.getString("Mobile"),
                         rs.getString("Full_name"),
                         rs.getString("Gender"),
-                        rs.getInt("Province"),
-                        rs.getInt("District"),
-                        rs.getInt("Country"),
+                        rs.getString("Province"),
+                        rs.getString("District"),
+                        rs.getString("Country"),
                         rs.getString("First_name"),
                         rs.getString("Last_name"),
                         rs.getDate("Birth_date")

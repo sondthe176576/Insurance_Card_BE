@@ -18,9 +18,9 @@ public class Users {
     private String mobile;
     private String fullName;
     private String gender;
-    private int province;
-    private int district;
-    private int country;
+    private String province;
+    private String district;
+    private String country;
     private String firstName;
     private String lastName;
     private Date birthDate;

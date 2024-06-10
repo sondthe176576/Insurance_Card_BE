@@ -43,9 +43,9 @@ public class ResolveAccidentDAO {
                 user.setMobile(rs.getString("Mobile"));
                 user.setFullName(rs.getString("Full_name"));
                 user.setGender(rs.getString("Gender"));
-                user.setProvince(rs.getInt("Province"));
-                user.setDistrict(rs.getInt("District"));
-                user.setCountry(rs.getInt("Country"));
+                user.setProvince(rs.getString("Province"));
+                user.setDistrict(rs.getString("District"));
+                user.setCountry(rs.getString("Country"));
                 user.setFirstName(rs.getString("First_name"));
                 user.setLastName(rs.getString("Last_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
