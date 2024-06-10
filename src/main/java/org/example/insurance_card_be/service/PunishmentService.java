@@ -16,14 +16,17 @@ public class PunishmentService {
         this.punishmentDAO = punishmentDAO;
     }
 
+    // Hàm lấy thông tin tất cả các hình thức phạt
     public List<Punishments> getAllPunishments(int page, int limit, String status, String customerName) throws SQLException {
         return punishmentDAO.getPunishments(page, limit, status, customerName);
     }
 
+    // Hàm lấy tổng số hình thức phạt
     public int getTotalPunishments(String status, String customerName) throws SQLException {
         return punishmentDAO.getTotalPunishments(status, customerName);
     }
 
+    // Hàm cập nhật trạng thái của hình thức phạt
     public void resolvePunishment(int punishmentID) throws SQLException {
         punishmentDAO.resolvePunishment(punishmentID);
     }
