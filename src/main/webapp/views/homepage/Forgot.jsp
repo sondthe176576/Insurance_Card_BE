@@ -28,7 +28,7 @@
                     <h3>Password Reset</h3>
                     <p>To reset your password, enter the email address you use to sign in to iofrm</p>
                     <form>
-                        <input class="form-control" type="text" name="username" placeholder="E-mail Address" required>
+                        <input class="form-control" type="text" name="usernameforgot" placeholder="E-mail Address" required>
                         <div class="form-button full-width">
                             <button id="submit" type="submit" class="ibtn btn-forget">Send Reset Link</button>
                         </div>
@@ -46,7 +46,7 @@
                         <div class="tick-icon"></div>
                     </div>
                     <h3>Password link sent</h3>
-                    <p>Please check your inbox <a href="https://brandio.io/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="95fcfaf3e7f8d5fcfaf3e7f8e1f0f8e5f9f4e1f0bbfcfa">[email&#160;protected]</a></p>
+
                     <div class="info-holder">
                         <span>Unsure if that email address was correct?</span> <a href="#">We can help</a>.
                     </div>
@@ -55,6 +55,7 @@
         </div>
         </form>
     </div>
+    <p class="error">${requestScope.messforgot}</p>
 </div>
 <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery.min.js"></script>
 <script src="../../js/popper.min.js"></script>
