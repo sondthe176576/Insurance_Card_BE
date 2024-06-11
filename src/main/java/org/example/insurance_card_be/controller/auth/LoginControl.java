@@ -24,6 +24,7 @@ public class LoginControl extends HttpServlet {
         if (session != null) {
             session.invalidate();
         }
+
         request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
     }
 
@@ -47,6 +48,45 @@ public class LoginControl extends HttpServlet {
             session.setAttribute("user", user);
             LOGGER.info("Login successful, user: " + user);
             request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
+
+
+            request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
+        }
+
+        @Override
+        protected void doPost (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+//        String code = request.getParameter("code");
+//        String accessToken = getToken(code);
+//        GoogleAccount acc = getUserInfo(accessToken);
+//        System.out.println(acc);
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            System.out.println("Username: " + username); // Debug print statement
+            System.out.println("Password: " + password); // Debug print statement
+
+            Users user = dao.login(username, password);
+
+            if (user == null) {
+                // Login failed, forward back to login page
+                request.setAttribute("mess", "Wrong username or password!");
+                // Debug print statement
+                System.out.println("Mess attribute: " + request.getAttribute("mess"));
+                System.out.println("Login failed");
+                request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
+            } else {
+                // Login successful, redirect to another page
+                HttpSession session = request.getSession();
+
+                session.setMaxInactiveInterval(7200);
+
+                session.setAttribute("user", user); // Set user in session
+                System.out.println("Login successful");
+                request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
+
         }
     }
-}
+
+

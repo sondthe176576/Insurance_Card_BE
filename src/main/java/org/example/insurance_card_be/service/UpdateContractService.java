@@ -8,10 +8,10 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 
 public class UpdateContractService {
-    // Khai báo các đối tượng DAO cần thiết
+    // Khai báo updateContractDAO
     private UpdateContractDAO updateContractDAO;
 
-    // Hàm khởi tạo không tham số
+    // Khởi tạo updateContractDAO
     public UpdateContractService() {
         this.updateContractDAO = new UpdateContractDAO();
     }

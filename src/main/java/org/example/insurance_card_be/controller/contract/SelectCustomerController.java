@@ -14,10 +14,10 @@ import java.util.List;
 
 @WebServlet(name = "SelectCustomerController", urlPatterns = "/selectCustomer")
 public class SelectCustomerController extends HttpServlet {
-    // Khoi tao doi tuong customerService
+    // Khai bao customerService
     public CustomerService customerService;
 
-    // Constructor
+    // Khoi tao customerService
     public void init() throws ServletException {
         this.customerService = new CustomerService();
     }
@@ -25,7 +25,7 @@ public class SelectCustomerController extends HttpServlet {
     // Hien thi danh sach customerID
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Chon id cua customer va chuyen sang trang tao contract
+        // Lay danh sach customerID
         try {
             List<Integer> customerIDs = customerService.getAllCustomers();
             req.setAttribute("customerIDs", customerIDs);
@@ -35,7 +35,7 @@ public class SelectCustomerController extends HttpServlet {
         }
     }
 
-    // Chuyen sang trang tao contract
+    // Chuyen huong den trang tao hop dong
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String customerID = req.getParameter("customerID");

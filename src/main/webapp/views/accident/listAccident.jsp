@@ -1,16 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: admin
-  Date: 5/19/2024
-  Time: 10:18 AM
+  Date: 6/3/2024
+  Time: 12:00 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
 <html>
 <head>
-    <title>List Compensation</title>
+    <title>List Accidents</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,25 +44,25 @@
             font-size: 24px;
         }
 
-        .compensation-table {
+        .accident-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 30px;
         }
 
-        .compensation-table th, .compensation-table td {
+        .accident-table th, .accident-table td {
             padding: 15px;
             border: 1px solid #ddd;
             text-align: left;
         }
 
-        .compensation-table th {
+        .accident-table th {
             background-color: #2c3e50;
             color: white;
             font-weight: bold;
         }
 
-        .compensation-table tr:nth-child(even) {
+        .accident-table tr:nth-child(even) {
             background-color: #f4f7f6;
         }
 
@@ -118,9 +117,9 @@
 <!-- End of navbar -->
 <!-- Form -->
 <div class="form-container">
-    <h2>Compensation Management</h2>
-    <h3>List Request From Customer</h3>
-    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listCompensation">
+    <h2>Accident Management</h2>
+    <h3>List of Accidents</h3>
+    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listAccident">
         <label for="statusFilter">Filter by Status:</label>
         <select id="statusFilter" name="status" class="status-select">
             <option value="">All</option>
@@ -132,33 +131,33 @@
         <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
         <button type="submit" class="btn-submit">Filter</button>
     </form>
-    <table class="compensation-table">
+    <table class="accident-table">
         <thead>
         <tr>
-            <th>Compensation ID</th>
+            <th>Accident ID</th>
             <th>Customer ID</th>
-            <th>Contract ID</th>
             <th>Customer Name</th>
+            <th>Contract ID</th>
+            <th>Accident Type</th>
+            <th>Accident Date</th>
             <th>Description</th>
-            <th>Amount</th>
             <th>Status</th>
-            <th>Date</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="compensation" items="${requests}">
+        <c:forEach var="accident" items="${accidents}">
             <tr>
-                <td><c:out value="${compensation.requestID}"/></td>
-                <td><c:out value="${compensation.customerID}"/></td>
-                <td><c:out value="${compensation.contractID}"/></td>
-                <td><c:out value="${compensation.customerName}"/></td>
-                <td><c:out value="${compensation.description}"/></td>
-                <td><c:out value="${compensation.amount}"/></td>
-                <td><c:out value="${compensation.status}"/></td>
-                <td><c:out value="${compensation.requestDate}"/></td>
+                <td><c:out value="${accident.accidentID}"/></td>
+                <td><c:out value="${accident.customerID}"/></td>
+                <td><c:out value="${accident.customerName}"/></td>
+                <td><c:out value="${accident.contractID}"/></td>
+                <td><c:out value="${accident.accidentType}"/></td>
+                <td><c:out value="${accident.accidentDate}"/></td>
+                <td><c:out value="${accident.description}"/></td>
+                <td><c:out value="${accident.status}"/></td>
                 <td>
-                    <a href="/compensation/update?compensationID=${compensation.requestID}" class="btn-submit">View</a>
+                    <a href="${pageContext.request.contextPath}/accident/view?accidentID=${accident.accidentID}" class="btn-view">View</a>
                 </td>
             </tr>
         </c:forEach>
@@ -168,10 +167,10 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
