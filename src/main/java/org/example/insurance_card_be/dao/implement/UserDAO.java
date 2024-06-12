@@ -143,6 +143,27 @@ public class UserDAO {
         return null;
     }
 
+    public Users ResetPass(String username, String password){
+        String query = "UPDATE Users SET Password = ? WHERE Username = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setString(1, password);
+            ps.setString(2, username);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 }
 
 //    public Users checkPhoneExist(String Mobile) {

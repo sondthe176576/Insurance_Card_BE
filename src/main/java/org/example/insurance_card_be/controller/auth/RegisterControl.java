@@ -11,20 +11,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @WebServlet("/register")
 public class RegisterControl extends HttpServlet {
     private UserDAO dao = new UserDAO();
 
-    //ham hien thi trang login
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
     }
 
-
-
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String full_name = request.getParameter("name");
@@ -38,53 +35,43 @@ public class RegisterControl extends HttpServlet {
         Users a = dao.checkUserExist(username);
         Users p = dao.checkPhoneExist(phone);
 
-        if(a != null){
+        if (a != null) {
             request.setAttribute("message", "Username already exists!");
-            // Debug print statement
             System.out.println("Mess attribute: " + request.getAttribute("message"));
             request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
-        }
-
-        //Users p = dao.checkPhoneExist(phone);
-
-
-        else if(p != null) {
+        } else if (p != null) {
             request.setAttribute("message", "Phone number already exists!");
-            // Debug print statement
             System.out.println("Mess attribute: " + request.getAttribute("message"));
             request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
-        }
-
-
-//        else if(p == null) {
-//            request.setAttribute("message", "Phone number already exists!");
-//            // Debug print statement
-//            System.out.println("Mess attribute: " + request.getAttribute("message"));
-//            request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
-//        }
-
-
-
-        else {
+        } else {
             SendEmailControl sm = new SendEmailControl();
             String code = sm.getRandom();
             UserVerify user = new UserVerify(full_name, username, code);
             boolean test = sm.sendEmail(user);
-            if (test) {
 
+            System.out.println("Username: " + username);
+            if (test) {
                 request.setAttribute("message", "Registered successfully! Please check your email to verify your account!");
-                // Debug print statement
                 System.out.println("Mess attribute: " + request.getAttribute("message"));
+
                 HttpSession session = request.getSession();
                 session.setAttribute("code", user);
+
+                // Set additional attributes to be used in other pages
+                session.setAttribute("full_name", full_name);
+                session.setAttribute("address", address);
+                session.setAttribute("email", email);
+                session.setAttribute("phone", phone);
+                session.setAttribute("username", username);
+                session.setAttribute("password", password);
+                session.setAttribute("gender", gender);
+
                 request.getRequestDispatcher("/views/homepage/Verify Email.jsp").forward(request, response);
             } else {
                 request.setAttribute("message", "Failed to send email!");
-                // Debug print statement
                 System.out.println("Mess attribute: " + request.getAttribute("message"));
                 request.getRequestDispatcher("/views/homepage/Register.jsp").forward(request, response);
             }
         }
-
     }
 }
