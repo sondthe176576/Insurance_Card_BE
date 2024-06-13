@@ -26,15 +26,10 @@ public class PunishmentController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = req.getServletPath();
-        if ("/listPunishment".equals(path)) {
-            listPunishment(req, resp);
-        } else if ("/resolvePunishment".equals(path)) {
-            resolvePunishment(req, resp);
-        }
+        listCancelledContracts(req, resp);
     }
 
-    private void listPunishment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void listCancelledContracts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int page = 1;
             int limit = 10;
@@ -43,30 +38,24 @@ public class PunishmentController extends HttpServlet {
             }
             String status = req.getParameter("status");
             String customerName = req.getParameter("customerName");
+
             try {
-                List<Punishments> punishments = punishmentService.getAllPunishments(page, limit, status, customerName);
-                int totalPunishments = punishmentService.getTotalPunishments(status, customerName);
-                int totalPages = (int) Math.ceil((double) totalPunishments / limit);
+                List<Punishments> punishments = punishmentService.getCancelledContractsBeforeExpiry(page, limit, status, customerName);
+                int totalCancelledContracts = punishmentService.getTotalCancelledContracts();
+                int totalPages = (int) Math.ceil((double) totalCancelledContracts / limit);
+
                 req.setAttribute("punishments", punishments);
-                req.setAttribute("totalPunishments", totalPunishments);
+                req.setAttribute("totalCancelledContracts", totalCancelledContracts);
                 req.setAttribute("totalPages", totalPages);
                 req.setAttribute("currentPage", page);
+                req.setAttribute("status", status);
                 req.setAttribute("customerName", customerName);
+
                 req.getRequestDispatcher("/views/punishment/listPunishment.jsp").forward(req, resp);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void resolvePunishment(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        int punishmentID = Integer.parseInt(req.getParameter("punishmentID"));
-        try {
-            punishmentService.resolvePunishment(punishmentID);
-            resp.sendRedirect(req.getContextPath() + "/listPunishment");
-        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

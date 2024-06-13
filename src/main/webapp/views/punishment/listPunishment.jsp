@@ -146,7 +146,6 @@
 
         .pagination a:hover {
             background-color: #ecf0f1;
-
         }
 
         .status-pending {
@@ -155,6 +154,18 @@
 
         .status-approved {
             color: #2ecc71;
+        }
+
+        .status-rejected {
+            color: #e74c3c;
+        }
+
+        .status-paid {
+            color: #27ae60;
+        }
+
+        .status-approved {
+            color: #2980b9;
         }
 
         .status-rejected {
@@ -172,14 +183,15 @@
 <!-- Form -->
 <div class="form-container">
     <h2>Contract Management System</h2>
-    <h3>List of Punishments</h3>
+    <h3>List of Cancelled Contracts Before Expiry</h3>
     <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listPunishment">
         <div class="form-group">
             <label for="statusFilter">Filter by Status:</label>
             <select id="statusFilter" name="status" class="status-select">
                 <option value="">All</option>
-                <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                <option value="Resolved" ${param.status == 'Resolved' ? 'selected' : ''}>Resolved</option>
+                <option value="Paid" ${param.status == 'Paid' ? 'selected' : ''}>Paid</option>
+                <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
+                <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
             </select>
         </div>
         <div class="form-group">
@@ -201,6 +213,7 @@
             <th>Description</th>
             <th>Status</th>
             <th>Cancellation Date</th>
+            <th>End Date</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -214,10 +227,11 @@
                 <td><c:out value="${punishment.punishmentType}"/></td>
                 <td><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></td>
                 <td><c:out value="${punishment.description}"/></td>
-                <td class="<c:out value="${punishment.status == 'Pending' ? 'status-pending' : punishment.status == 'Resolved' ? 'status-approved' : ''}"/>">
+                <td class="${punishment.status == 'Paid' ? 'status-paid' : punishment.status == 'Approved' ? 'status-approved' : punishment.status == 'Rejected' ? 'status-rejected' : ''}">
                     <c:out value="${punishment.status}"/>
                 </td>
                 <td><fmt:formatDate value="${punishment.contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
+                <td><fmt:formatDate value="${punishment.contract.endDate}" pattern="dd-MM-yyyy"/></td>
                 <td>
                     <a href="${pageContext.request.contextPath}/resolvePunishment?punishmentID=${punishment.punishmentID}" class="btn-view">View</a>
                 </td>

@@ -16,18 +16,18 @@ public class PunishmentService {
         this.punishmentDAO = punishmentDAO;
     }
 
-    // Hàm lấy thông tin tất cả các hình thức phạt
-    public List<Punishments> getAllPunishments(int page, int limit, String status, String customerName) throws SQLException {
-        return punishmentDAO.getPunishments(page, limit, status, customerName);
-    }
-
-    // Hàm lấy tổng số hình thức phạt
-    public int getTotalPunishments(String status, String customerName) throws SQLException {
-        return punishmentDAO.getTotalPunishments(status, customerName);
-    }
-
     // Hàm cập nhật trạng thái của hình thức phạt
     public void resolvePunishment(int punishmentID) throws SQLException {
         punishmentDAO.resolvePunishment(punishmentID);
+    }
+
+    // Hàm lấy danh sách hợp đồng bị hủy trước ngày hết hạn
+    public List<Punishments> getCancelledContractsBeforeExpiry(int page, int limit, String status, String customerName) throws SQLException {
+        return punishmentDAO.getCancelledContractsBeforeExpiry(page, limit, status, customerName);
+    }
+
+    // Hàm lấy tổng số hợp đồng bị hủy trước ngày hết hạn
+    public int getTotalCancelledContracts() throws SQLException {
+        return punishmentDAO.getTotalCancelledContracts();
     }
 }
