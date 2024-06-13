@@ -18,15 +18,17 @@ public class ResolvePunishmentController extends HttpServlet {
         resolvePunishmentService = new ResolvePunishmentService();
     }
 
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int punishmentID = Integer.parseInt(req.getParameter("punishmentID"));
         Punishments punishment = resolvePunishmentService.getPunishmentByID(punishmentID);
-        req.setAttribute("punishment", punishment);
-        req.getRequestDispatcher("/views/punishment/resolvePunishment.jsp").forward(req, resp);
+        if (punishment != null) {
+            req.setAttribute("punishment", punishment);
+            req.getRequestDispatcher("/views/punishment/resolvePunishment.jsp").forward(req, resp);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Punishment not found with ID " + punishmentID);
+        }
     }
 
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int punishmentID = Integer.parseInt(req.getParameter("punishmentID"));
         String status = req.getParameter("status");

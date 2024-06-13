@@ -5,6 +5,7 @@ import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.model.Customers;
 import org.example.insurance_card_be.model.Punishments;
 import org.example.insurance_card_be.model.Users;
+import org.example.insurance_card_be.model.Motorcycle; // Added this line
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,16 +19,19 @@ public class ResolvePunishmentDAO {
         this.connection = DBContext.getConnection();
     }
 
+    // Ham lay thong tin hinh phat theo ID
     public Punishments getPunishmentByID(int punishmentID) throws SQLException {
         String sql = "SELECT p.PunishmentID, p.ContractID, p.PunishmentType, p.PunishmentDate, p.Description, p.Status, " +
                 "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
-                "con.InsuranceType, con.Coverage, con.Premium, cd.detail AS ContractDetail, cd.value AS ContractValue " +
+                "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
+                "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
                 "FROM Punishments p " +
                 "JOIN Contracts con ON p.ContractID = con.ContractID " +
                 "JOIN ContractDetails cd ON con.ContractID = cd.ContractID " +
                 "JOIN Customers c ON con.CustomerID = c.CustomerID " +
                 "JOIN Users u ON c.UserID = u.UserID " +
+                "JOIN Motorcycles m ON c.CustomerID = m.CustomerID " +
                 "WHERE p.PunishmentID = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -48,6 +52,16 @@ public class ResolvePunishmentDAO {
                 user.setLastName(rs.getString("Last_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
 
+                Motorcycle motorcycle = new Motorcycle();
+                motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));
+                motorcycle.setLicensePlate(rs.getString("LicensePlate"));
+                motorcycle.setBrand(rs.getString("Brand"));
+                motorcycle.setModel(rs.getString("Model"));
+                motorcycle.setFrameNumber(rs.getString("FrameNumber"));
+                motorcycle.setEngineNumber(rs.getString("EngineNumber"));
+                motorcycle.setYearOfManufacture(rs.getInt("YearOfManufacture"));
+                motorcycle.setColor(rs.getString("Color"));
+
                 Customers customer = new Customers();
                 customer.setCustomerID(rs.getInt("CustomerID"));
                 customer.setPersonalInfo(rs.getString("PersonalInfo"));
@@ -62,22 +76,22 @@ public class ResolvePunishmentDAO {
                 contract.setInsuranceType(rs.getString("InsuranceType"));
                 contract.setCoverage(rs.getString("Coverage"));
                 contract.setPremium(rs.getDouble("Premium"));
-                contract.setDetail(rs.getString("ContractDetail"));
-                contract.setValue(rs.getDouble("ContractValue"));
+                contract.setDetail(rs.getString("Detail"));
+                contract.setValue(rs.getDouble("Value"));
                 contract.setCustomer(customer);
+                contract.setMotorcycle(motorcycle);
 
-                Punishments punishment = new Punishments();
-                punishment.setPunishmentID(rs.getInt("PunishmentID"));
-                punishment.setContractID(rs.getInt("ContractID"));
-                punishment.setPunishmentType(rs.getString("PunishmentType"));
-                punishment.setPunishmentDate(rs.getDate("PunishmentDate"));
-                punishment.setDescription(rs.getString("Description"));
-                punishment.setStatus(rs.getString("Status"));
-                punishment.setCustomerName(user.getFullName());
-                punishment.setCustomer(customer);
-                punishment.setContract(contract);
-
-                return punishment;
+                return new Punishments(
+                        rs.getInt("PunishmentID"),
+                        rs.getInt("ContractID"),
+                        rs.getString("PunishmentType"),
+                        rs.getDate("PunishmentDate"),
+                        rs.getString("Description"),
+                        rs.getString("Status"),
+                        contract,
+                        customer,
+                        user.getFullName()
+                );
             }
         }
         return null;
@@ -89,16 +103,6 @@ public class ResolvePunishmentDAO {
             ps.setString(1, status);
             ps.setInt(2, punishmentID);
             ps.executeUpdate();
-        }
-    }
-
-    public static void main(String[] args) {
-        ResolvePunishmentDAO punishmentDAO = new ResolvePunishmentDAO();
-        try {
-            Punishments punishment = punishmentDAO.getPunishmentByID(1);
-            System.out.println(punishment);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }
