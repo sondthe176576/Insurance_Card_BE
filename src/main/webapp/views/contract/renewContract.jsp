@@ -401,15 +401,15 @@
         let value = input.value.replace(/,/g, '');
         if (!isNaN(value)) {
             input.value = parseFloat(value).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD'
-            }).replace('$', '') + ' $';
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
         } else {
             input.value = input.value.substring(0, input.value.length - 1);
         }
     }
 
-    // Function to set today's date for startDate input
+    // Function to set today's date for renewalDate input
     window.onload = function() {
         var today = new Date();
         var day = ("0" + today.getDate()).slice(-2);
