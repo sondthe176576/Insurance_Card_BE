@@ -19,14 +19,24 @@ public class PunishmentDAO {
         this.connection = connection;
     }
 
-    public List<Punishments> getPunishments(int page, int limit, String status, String customerName) throws SQLException {
+    public void resolvePunishment(int punishmentID) throws SQLException {
+        String query = "UPDATE Punishments SET Status = 'Resolved' WHERE PunishmentID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, punishmentID);
+            stmt.executeUpdate();
+        }
+    }
+
+    public List<Punishments> getCancelledContractsBeforeExpiry(int page, int limit, String status, String customerName) throws SQLException {
         List<Punishments> punishments = new ArrayList<>();
         String query = "SELECT p.PunishmentID, p.ContractID, p.PunishmentType, p.PunishmentDate, p.Description, p.Status, " +
-                "co.CustomerID, u.Full_name AS CustomerName, co.CancellationDate " +
+                "co.CustomerID, u.Full_name AS CustomerName, co.CancellationDate, co.EndDate " +
                 "FROM Punishments p " +
                 "JOIN Contracts co ON p.ContractID = co.ContractID " +
                 "JOIN Customers cu ON co.CustomerID = cu.CustomerID " +
-                "JOIN Users u ON cu.UserID = u.UserID ";
+                "JOIN Users u ON cu.UserID = u.UserID " +
+                "WHERE co.CancellationDate < co.EndDate ";
+
         List<String> conditions = new ArrayList<>();
         if (status != null && !status.isEmpty()) {
             conditions.add("p.Status = ?");
@@ -35,10 +45,11 @@ public class PunishmentDAO {
             conditions.add("u.Full_name LIKE ?");
         }
         if (!conditions.isEmpty()) {
-            query += "WHERE " + String.join(" AND ", conditions) + " ";
+            query += "AND " + String.join(" AND ", conditions) + " ";
         }
         query += "ORDER BY p.PunishmentID " +
                 "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             int paramIndex = 1;
             if (status != null && !status.isEmpty()) {
@@ -63,6 +74,7 @@ public class PunishmentDAO {
                     Contract contract = new Contract();
                     contract.setContractID(rs.getInt("ContractID"));
                     contract.setCancellationDate(rs.getDate("CancellationDate"));
+                    contract.setEndDate(rs.getDate("EndDate"));
                     punishment.setContract(contract);
 
                     Customers customer = new Customers();
@@ -75,30 +87,14 @@ public class PunishmentDAO {
         return punishments;
     }
 
-    public int getTotalPunishments(String status, String customerName) throws SQLException {
+    public int getTotalCancelledContracts() throws SQLException {
         String query = "SELECT COUNT(p.PunishmentID) AS Total " +
                 "FROM Punishments p " +
                 "JOIN Contracts co ON p.ContractID = co.ContractID " +
                 "JOIN Customers cu ON co.CustomerID = cu.CustomerID " +
-                "JOIN Users u ON cu.UserID = u.UserID ";
-        List<String> conditions = new ArrayList<>();
-        if (status != null && !status.isEmpty()) {
-            conditions.add("p.Status = ?");
-        }
-        if (customerName != null && !customerName.isEmpty()) {
-            conditions.add("u.Full_name LIKE ?");
-        }
-        if (!conditions.isEmpty()) {
-            query += "WHERE " + String.join(" AND ", conditions);
-        }
+                "JOIN Users u ON cu.UserID = u.UserID " +
+                "WHERE co.CancellationDate < co.EndDate";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            int paramIndex = 1;
-            if (status != null && !status.isEmpty()) {
-                stmt.setString(paramIndex++, status);
-            }
-            if (customerName != null && !customerName.isEmpty()) {
-                stmt.setString(paramIndex++, "%" + customerName + "%");
-            }
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt("Total");
@@ -106,13 +102,5 @@ public class PunishmentDAO {
             }
         }
         return 0;
-    }
-
-    public void resolvePunishment(int punishmentID) throws SQLException {
-        String query = "UPDATE Punishments SET Status = 'Resolved' WHERE PunishmentID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, punishmentID);
-            stmt.executeUpdate();
-        }
     }
 }
