@@ -25,7 +25,7 @@ public class ForgotControl extends HttpServlet {
 
 
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("usernameforgot");
         String full_name = request.getParameter("name");
@@ -46,7 +46,9 @@ public class ForgotControl extends HttpServlet {
                 System.out.println("Mess attribute: " + request.getAttribute("message"));
                 HttpSession session = request.getSession();
                 session.setAttribute("code", user);
-                request.getRequestDispatcher("/views/homepage/Verify Email.jsp").forward(request, response);
+                session.setAttribute("usernameforgot", username);
+                System.out.println("Username: " + username);
+                request.getRequestDispatcher("/views/homepage/Verify Forgot Email.jsp").forward(request, response);
             } else {
                 request.setAttribute("message", "Failed to send email!");
                 // Debug print statement

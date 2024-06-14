@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +16,12 @@ public class Users {
     private String role;
     private String email;
     private String mobile;
-    private String address;
+    private String province;
+    private String district;
+    private String country;
+    private String firstName;
+    private String lastName;
     private String fullName;
+    private Date birthDate;
     private String gender;
 }
