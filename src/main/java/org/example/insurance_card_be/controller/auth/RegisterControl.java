@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 
 @WebServlet("/register")
 public class RegisterControl extends HttpServlet {
@@ -25,11 +26,17 @@ public class RegisterControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String full_name = request.getParameter("name");
-        String address = request.getParameter("address");
         String email = request.getParameter("email-address");
         String phone = request.getParameter("phone");
         String username = request.getParameter("email");
         String password = request.getParameter("password");
+        String tinhtp = request.getParameter("tinh");
+        String quan = request.getParameter("quan");
+        String phuong = request.getParameter("phuong");
+        String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String fullname = request.getParameter("fullname");
+        Date date = Date.valueOf(request.getParameter("birthdate"));
         String gender = request.getParameter("gender");
 
         Users a = dao.checkUserExist(username);
@@ -59,11 +66,17 @@ public class RegisterControl extends HttpServlet {
 
                 // Set additional attributes to be used in other pages
                 session.setAttribute("full_name", full_name);
-                session.setAttribute("address", address);
                 session.setAttribute("email", email);
                 session.setAttribute("phone", phone);
                 session.setAttribute("username", username);
                 session.setAttribute("password", password);
+                session.setAttribute("tinh", tinhtp);
+                session.setAttribute("huyen", quan);
+                session.setAttribute("xa", phuong);
+                session.setAttribute("firstname", firstname);
+                session.setAttribute("lastname", lastname);
+                session.setAttribute("full_name", fullname);
+                session.setAttribute("birthdate", date);
                 session.setAttribute("gender", gender);
 
                 request.getRequestDispatcher("/views/homepage/Verify Email.jsp").forward(request, response);
