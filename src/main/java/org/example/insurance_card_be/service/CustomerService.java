@@ -27,7 +27,7 @@ public class CustomerService {
     }
 
     // Ham lay danh sach cac customerID
-    public List<Integer> getAllCustomers() throws SQLException {
+    public List<Customers> getAllCustomers() throws SQLException {
         return customerInfoDAO.getAllCustomerIDs();
     }
 }

@@ -7,42 +7,45 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Create New Contract</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
         .form-container {
-            background-color: white;
-            padding: 20px;
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 800px;
-            margin: 40px auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
         }
 
         .form-container h2 {
             text-align: center;
-            color: #007bff;
+            color: #2c3e50;
             font-size: 28px;
             margin-bottom: 20px;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
         }
 
         .form-container h3 {
-            margin-bottom: 10px;
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 20px;
+            border-bottom: 2px solid #3498db;
             padding-bottom: 5px;
-            font-size: 22px;
         }
 
         .form-group {
@@ -52,7 +55,7 @@
         .form-group label {
             display: block;
             margin-bottom: 5px;
-            color: #333;
+            color: #2980b9;
             font-weight: bold;
         }
 
@@ -72,7 +75,7 @@
         }
 
         .btn-submit {
-            background-color: #007bff;
+            background-color: #3498db;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -88,7 +91,7 @@
         }
 
         .btn-submit:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
         }
 
         .membership-info {
@@ -137,6 +140,46 @@
         .address-info a:hover {
             text-decoration: underline;
         }
+
+        .notification {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 15px;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-size: 16px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .notification.alert-danger {
+            background-color: #f2dede;
+            color: #a94442;
+            border-color: #ebccd1;
+        }
+
+        .notification.alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border-color: #d6e9c6;
+        }
+
+        .notification .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            line-height: 20px;
+            color: inherit;
+            cursor: pointer;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -147,13 +190,24 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
+     style="width: 100%; margin-bottom: 20px;">
 <!-- End of image slider -->
+<!-- Notification Message -->
+<c:if test="${not empty message}">
+    <div id="notification" class="notification ${status ? 'alert-success' : 'alert-danger'}">
+        <button type="button" class="close-btn" onclick="document.getElementById('notification').style.display='none'">
+            &times;
+        </button>
+        <c:out value="${message}"/>
+    </div>
+</c:if>
+<!-- End of notification message -->
 <!-- Form -->
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/createContract" method="post">
         <h2>Create New Contract</h2>
-        <!-- Thông tin Khách Hàng -->
+        <!-- Customer Information -->
         <h3>Customer Information</h3>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
@@ -168,8 +222,12 @@
             <input type="text" id="customerName" name="customerName" value="${customer.user.fullName}" readonly>
         </div>
         <div class="form-group">
-            <label for="customerAddress">Customer Address:</label>
-            <input type="text" id="customerAddress" name="customerAddress" value="${customer.user.address}" readonly>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" value="${customer.user.firstName}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" value="${customer.user.lastName}" readonly>
         </div>
         <div class="form-group">
             <label for="customerPhone">Customer Phone:</label>
@@ -183,7 +241,23 @@
             <label for="customerGender">Gender:</label>
             <input type="text" id="customerGender" name="customerGender" value="${customer.user.gender}" readonly>
         </div>
-        <!-- Thông tin Xe Máy -->
+        <div class="form-group">
+            <label for="province">Province:</label>
+            <input type="text" id="province" name="province" value="${customer.user.province}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="district">District:</label>
+            <input type="text" id="district" name="district" value="${customer.user.district}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" value="${customer.user.country}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="birthDate">Birth Date:</label>
+            <input type="date" id="birthDate" name="birthDate" value="<fmt:formatDate value='${customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
+        </div>
+        <!-- Motorcycle Information -->
         <h3>Motorcycle Information</h3>
         <c:forEach var="motorcycle" items="${motorcycles}">
             <div class="form-group">
@@ -205,8 +279,7 @@
             <div class="form-group">
                 <label for="yearOfManufacture">Year Of Manufacture:</label>
                 <input type="number" id="yearOfManufacture" name="yearOfManufacture"
-                       value="${motorcycle.yearOfManufacture}"
-                       readonly>
+                       value="${motorcycle.yearOfManufacture}" readonly>
             </div>
             <div class="form-group">
                 <label for="color">Color:</label>
@@ -221,7 +294,7 @@
                 <input type="text" id="frameNumber" name="frameNumber" value="${motorcycle.frameNumber}" readonly>
             </div>
         </c:forEach>
-        <!-- Thông tin Bảo Hiểm -->
+        <!-- Insurance Information -->
         <h3>Insurance Information</h3>
         <div class="form-group">
             <label for="contractInfo">Contract Info:</label>
@@ -242,7 +315,7 @@
         <div class="form-group">
             <label for="value">Value: (The corresponding value for the contract detail, which can be the compensation
                 amount or the insurance value)</label>
-            <input type="number" id="value" name="value" step="50" required>
+            <input type="text" id="value" name="value" required oninput="formatCurrency(this)">
         </div>
         <div class="form-group">
             <label for="detail">Detail: (Describe the specific details of the contract, such as insurance terms and
@@ -251,7 +324,7 @@
         </div>
         <div class="form-group">
             <label for="insuranceType">Insurance Type:</label>
-            <select id="insuranceType" name="insuranceType">
+            <select id="insuranceType" name="insuranceType" required>
                 <option value="Basic">Basic</option>
                 <option value="Comprehensive">Comprehensive</option>
                 <option value="Premium">Premium</option>
@@ -265,44 +338,41 @@
         <div class="form-group">
             <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance
                 contract)</label>
-            <input type="number" id="premium" name="premium" step="50" required>
+            <input type="text" id="premium" name="premium" required oninput="formatCurrency(this)">
         </div>
         <div class="membership-info">
             <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
                 motorcycle. After completing your contact information and selecting your insurance package, please
-                submit the form to the Insurance Advisor at the address below. You will receive an invitation to
-                attend an information session. We aim to provide you with as much information as possible about our
-                insurance policies. At the end of the session, you may complete the application for insurance and
-                pay the $100 insurance fee.</p>
+                submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend
+                an information session. We aim to provide you with as much information as possible about our insurance
+                policies. At the end of the session, you may complete the application for insurance and pay the $100
+                insurance fee.</p>
 
-            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for
-                your motorcycle, including accident and theft insurance. Additionally, you will receive monthly
-                newsletters with updates on your insurance coverage. The insurance fee is $150 per year.
-                Comprehensive insurance not only covers basic liabilities but also includes coverage for damage
-                caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any
-                situation.</p>
+            <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your
+                motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters
+                with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not
+                only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire,
+                and vandalism. This ensures that you have peace of mind in any situation.</p>
 
             <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of
-                coverage. This includes all the benefits of comprehensive insurance, plus additional features such
-                as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The
-                premium insurance fee is $250 per year. With this package, you are guaranteed the best support and
-                quickest response in case of any incident. Our premium plan also includes a personal advisor who
-                will assist you with all your insurance needs.</p>
+                coverage. This includes all the benefits of comprehensive insurance, plus additional features such as
+                roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium
+                insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest
+                response in case of any incident. Our premium plan also includes a personal advisor who will assist you
+                with all your insurance needs.</p>
 
-            <div class="membership-info">
-                <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you
-                    receive the support you need in case of any accidents or incidents. Our team is dedicated to
-                    helping you understand the different options and choose the one that best suits your needs.</p>
-            </div>
-            <div class="address-info">
-                <h3>Application can be dropped off or mailed to:</h3>
-                <p>Motorcycle Insurance Company,<br>
-                    123 Hola Street,<br>
-                    District Thach That, Ha Noi,<br>
-                    Vietnam</p>
-                <p>Phone: 0123-456-789<br>
-                    <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
-            </div>
+            <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive
+                the support you need in case of any accidents or incidents. Our team is dedicated to helping you
+                understand the different options and choose the one that best suits your needs.</p>
+        </div>
+        <div class="address-info">
+            <h3>Application can be dropped off or mailed to:</h3>
+            <p>Motorcycle Insurance Company,<br>
+                123 Hola Street,<br>
+                District Thach That, Ha Noi,<br>
+                Vietnam</p>
+            <p>Phone: 0123-456-789<br>
+                <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
         </div>
         <button type="submit" class="btn-submit">Create Contract</button>
     </form>
@@ -311,5 +381,38 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
+<!-- Notification Message Script -->
+<script>
+    setTimeout(function () {
+        var notification = document.getElementById('notification');
+        if (notification) {
+            notification.style.display = 'none';
+        }
+    }, 5000);
+
+    // Function to format currency input
+    function formatCurrency(input) {
+        let value = input.value.replace(/,/g, '');
+        if (!isNaN(value)) {
+            input.value = parseFloat(value).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).replace('$', '');
+        } else {
+            input.value = input.value.substring(0, input.value.length - 1);
+        }
+    }
+
+    // Function to set today's date for startDate input
+    window.onload = function() {
+        var today = new Date();
+        var day = ("0" + today.getDate()).slice(-2);
+        var month = ("0" + (today.getMonth() + 1)).slice(-2);
+        var year = today.getFullYear();
+        var todayDate = year + "-" + month + "-" + day;
+        document.getElementById('startDate').value = todayDate;
+    }
+</script>
+<!-- End of notification message script -->
 </body>
 </html>

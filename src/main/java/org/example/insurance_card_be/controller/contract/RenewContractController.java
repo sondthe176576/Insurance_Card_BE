@@ -63,6 +63,6 @@ public class RenewContractController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect(req.getContextPath() + "/viewContract?contractID=" + contractID);
+        resp.sendRedirect(req.getContextPath() + "/viewContract?contractID=" + contractID + "&message=Renew+contract+successfully&status=true");
     }
 }

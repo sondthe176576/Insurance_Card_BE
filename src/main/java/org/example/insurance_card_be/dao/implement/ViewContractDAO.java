@@ -9,6 +9,7 @@ import org.example.insurance_card_be.model.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ViewContractDAO {
     // Ket noi den database
@@ -20,8 +21,9 @@ public class ViewContractDAO {
     }
 
     // Ham lay thong tin cua mot contract theo ID
-    public Contract getContractDetailById(int contractID) throws Exception {
-        String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Address, u.FullName, u.Gender, " +
+    public Contract getContractDetailById(int contractID) throws SQLException {
+        String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, " +
+                "u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status, con.StartDate, con.EndDate, " +
                 "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
                 "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
@@ -43,9 +45,14 @@ public class ViewContractDAO {
                     user.setUsername(rs.getString("Username"));
                     user.setEmail(rs.getString("Email"));
                     user.setMobile(rs.getString("Mobile"));
-                    user.setAddress(rs.getString("Address"));
-                    user.setFullName(rs.getString("FullName"));
+                    user.setFullName(rs.getString("Full_name"));
                     user.setGender(rs.getString("Gender"));
+                    user.setProvince(rs.getString("Province"));
+                    user.setDistrict(rs.getString("District"));
+                    user.setCountry(rs.getString("Country"));
+                    user.setFirstName(rs.getString("First_name"));
+                    user.setLastName(rs.getString("Last_name"));
+                    user.setBirthDate(rs.getDate("Birth_date"));
 
                     Motorcycle motorcycle = new Motorcycle();
                     motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));

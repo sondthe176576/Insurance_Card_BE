@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: admin
@@ -7,31 +6,32 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Select Customer</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #e6f7ff; /* Light blue background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
         .form-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
             max-width: 600px;
             margin: 60px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
         }
 
         .form-container h2 {
             text-align: center;
-            color: #007bff;
+            color: #2c3e50;
             font-size: 28px;
             margin-bottom: 20px;
         }
@@ -43,7 +43,7 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #007bff;
+            color: #2980b9;
             font-weight: bold;
         }
 
@@ -57,7 +57,7 @@
         }
 
         .btn-submit {
-            background-color: #007bff;
+            background-color: #3498db;
             color: white;
             padding: 14px 20px;
             border: none;
@@ -71,7 +71,13 @@
         }
 
         .btn-submit:hover {
-            background-color: #0056b3;
+            background-color: #2980b9;
+        }
+
+        .slider-image {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -83,19 +89,18 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image"
-     style="width: 100%; margin-bottom: 20px;">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" class="slider-image">
 <!-- End of image slider -->
 <!-- Form -->
 <div class="form-container">
     <form action="${pageContext.request.contextPath}/selectCustomer" method="post">
-        <h2>Select CustomerID To Create A Contract</h2>
+        <h2>Select Customer ID To Create A Contract</h2>
         <div class="form-group">
             <label for="customerID">Customer ID:</label>
             <select id="customerID" name="customerID">
                 <option value="">Select Customer ID</option>
-                <c:forEach var="customerID" items="${customerIDs}">
-                    <option value="${customerID}">${customerID}</option>
+                <c:forEach var="customer" items="${customers}">
+                    <option value="${customer.customerID}">${customer.customerID} - ${customer.user.fullName}</option>
                 </c:forEach>
             </select>
         </div>

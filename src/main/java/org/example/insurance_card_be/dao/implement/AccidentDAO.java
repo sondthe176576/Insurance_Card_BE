@@ -20,9 +20,10 @@ public class AccidentDAO {
     }
 
     // Ham lay thong tin tat ca cac tai nan
+    // Ham lay thong tin tat ca cac tai nan
     public List<Accident> getAllAccidents(int page, int pageSize, String status, String customerName) throws SQLException {
         List<Accident> accidents = new ArrayList<>();
-        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, u.FullName AS CustomerName, a.Status " +
+        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, u.Full_name AS CustomerName, a.Status " +
                 "FROM Accidents a " +
                 "JOIN Contracts c ON a.ContractID = c.ContractID " +
                 "JOIN Customers cu ON c.CustomerID = cu.CustomerID " +
@@ -32,7 +33,7 @@ public class AccidentDAO {
             conditions.add("a.Status = ?");
         }
         if (customerName != null && !customerName.isEmpty()) {
-            conditions.add("u.FullName LIKE ?");
+            conditions.add("u.Full_name LIKE ?");
         }
         if (!conditions.isEmpty()) {
             query += "WHERE " + String.join(" AND ", conditions) + " ";
@@ -55,7 +56,7 @@ public class AccidentDAO {
                     accident.setAccidentID(rs.getInt("AccidentID"));
                     accident.setContractID(rs.getInt("ContractID"));
                     accident.setAccidentType(rs.getString("AccidentType"));
-                    accident.setAccidentDate(rs.getDate("AccidentDate").toString());
+                    accident.setAccidentDate(rs.getDate("AccidentDate"));
                     accident.setDescription(rs.getString("Description"));
                     accident.setCustomerID(rs.getInt("CustomerID"));
                     accident.setCustomerName(rs.getString("CustomerName"));
@@ -79,7 +80,7 @@ public class AccidentDAO {
             conditions.add("a.Status = ?");
         }
         if (customerName != null && !customerName.isEmpty()) {
-            conditions.add("u.FullName LIKE ?");
+            conditions.add("u.Full_name LIKE ?");
         }
         if (!conditions.isEmpty()) {
             query += "WHERE " + String.join(" AND ", conditions);
@@ -103,7 +104,7 @@ public class AccidentDAO {
 
     // Ham lay thong tin tai nan theo ID
     public Accident getAccidentById(int accidentID) throws SQLException {
-        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, a.Status, u.FullName " +
+        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, a.Status, u.Full_name " +
                 "FROM Accidents a " +
                 "JOIN Contracts c ON a.ContractID = c.ContractID " +
                 "JOIN Customers cu ON c.CustomerID = cu.CustomerID " +
@@ -117,7 +118,7 @@ public class AccidentDAO {
                     accident.setAccidentID(rs.getInt("AccidentID"));
                     accident.setContractID(rs.getInt("ContractID"));
                     accident.setAccidentType(rs.getString("AccidentType"));
-                    accident.setAccidentDate(rs.getDate("AccidentDate").toString());
+                    accident.setAccidentDate(rs.getDate("AccidentDate"));
                     accident.setDescription(rs.getString("Description"));
                     accident.setCustomerID(rs.getInt("CustomerID"));
                     accident.setCustomerName(rs.getString("CustomerName"));
@@ -127,5 +128,16 @@ public class AccidentDAO {
             }
         }
         return null;
+    }
+
+    public void updateAccidentStatus(int accidentID, String status) {
+        String query = "UPDATE Accidents SET Status = ? WHERE AccidentID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status);
+            stmt.setInt(2, accidentID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

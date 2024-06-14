@@ -23,4 +23,5 @@ public class Contract {
     private double Premium;
     private Customers customer;
     private Motorcycle motorcycle;
+    private Date cancellationDate;
 }

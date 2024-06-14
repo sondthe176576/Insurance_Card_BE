@@ -7,31 +7,31 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>List Accidents</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
         .form-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
             max-width: 1200px;
             margin: 40px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
         }
 
         .form-container h2 {
             text-align: center;
-            color: #34495e;
+            color: #2c3e50;
             font-size: 32px;
             margin-bottom: 30px;
         }
@@ -39,9 +39,51 @@
         .form-container h3 {
             margin-bottom: 15px;
             color: #2c3e50;
-            border-bottom: 3px solid #2c3e50;
+            border-bottom: 3px solid #3498db;
             padding-bottom: 10px;
             font-size: 24px;
+        }
+
+        .filter-form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-form .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .filter-form label {
+            margin-right: 10px;
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .filter-form input, .filter-form select {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .filter-form button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .filter-form button:hover {
+            background-color: #2980b9;
         }
 
         .accident-table {
@@ -66,7 +108,7 @@
             background-color: #f4f7f6;
         }
 
-        .btn-submit {
+        .btn-submit, .btn-view {
             background-color: #3498db;
             color: white;
             padding: 10px 15px;
@@ -74,11 +116,10 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            text-align: center;
             text-decoration: none;
         }
 
-        .btn-submit:hover {
+        .btn-submit:hover, .btn-view:hover {
             background-color: #2980b9;
         }
 
@@ -105,6 +146,19 @@
 
         .pagination a:hover {
             background-color: #ecf0f1;
+
+        }
+
+        .status-pending {
+            color: #f1c40f;
+        }
+
+        .status-approved {
+            color: #2ecc71;
+        }
+
+        .status-rejected {
+            color: #e74c3c;
         }
     </style>
 </head>
@@ -120,21 +174,26 @@
     <h2>Accident Management</h2>
     <h3>List of Accidents</h3>
     <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listAccident">
-        <label for="statusFilter">Filter by Status:</label>
-        <select id="statusFilter" name="status" class="status-select">
-            <option value="">All</option>
-            <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
-            <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
-            <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
-        </select>
-        <label for="customerNameSearch">Search by Customer Name:</label>
-        <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
+        <div class="form-group">
+            <label for="statusFilter">Filter by Status:</label>
+            <select id="statusFilter" name="status" class="status-select">
+                <option value="">All</option>
+                <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
+                <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="customerNameSearch">Search by Customer Name:</label>
+            <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
+                   placeholder="Enter customer name"/>
+        </div>
         <button type="submit" class="btn-submit">Filter</button>
     </form>
     <table class="accident-table">
         <thead>
         <tr>
-            <th>Accident ID</th>
+            <th>No</th>
             <th>Customer ID</th>
             <th>Customer Name</th>
             <th>Contract ID</th>
@@ -146,18 +205,20 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="accident" items="${accidents}">
+        <c:forEach var="accident" items="${accidents}" varStatus="status">
             <tr>
-                <td><c:out value="${accident.accidentID}"/></td>
+                <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
                 <td><c:out value="${accident.customerID}"/></td>
                 <td><c:out value="${accident.customerName}"/></td>
                 <td><c:out value="${accident.contractID}"/></td>
                 <td><c:out value="${accident.accidentType}"/></td>
-                <td><c:out value="${accident.accidentDate}"/></td>
+                <td><fmt:formatDate value="${accident.accidentDate}" pattern="dd-MM-yyyy"/></td>
                 <td><c:out value="${accident.description}"/></td>
-                <td><c:out value="${accident.status}"/></td>
+                <td class="<c:out value="${accident.status == 'Pending' ? 'status-pending' : accident.status == 'Approved' ? 'status-approved' : accident.status == 'Rejected' ? 'status-rejected' : ''}"/>">
+                    <c:out value="${accident.status}"/>
+                </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/accident/view?accidentID=${accident.accidentID}" class="btn-view">View</a>
+                    <a href="${pageContext.request.contextPath}/resolveAccident?accidentID=${accident.accidentID}" class="btn-view">View</a>
                 </td>
             </tr>
         </c:forEach>
@@ -167,7 +228,8 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}"
+                       class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
                     <a href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>

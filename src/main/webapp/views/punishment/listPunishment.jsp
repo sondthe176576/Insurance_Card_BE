@@ -1,17 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: admin
-  Date: 5/19/2024
-  Time: 10:18 AM
+  Date: 6/8/2024
+  Time: 8:47 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
 <html>
 <head>
-    <title>List Compensation</title>
+    <title>List Punishments</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -87,25 +86,25 @@
             background-color: #2980b9;
         }
 
-        .compensation-table {
+        .punishment-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 30px;
         }
 
-        .compensation-table th, .compensation-table td {
+        .punishment-table th, .punishment-table td {
             padding: 15px;
             border: 1px solid #ddd;
             text-align: left;
         }
 
-        .compensation-table th {
+        .punishment-table th {
             background-color: #2c3e50;
             color: white;
             font-weight: bold;
         }
 
-        .compensation-table tr:nth-child(even) {
+        .punishment-table tr:nth-child(even) {
             background-color: #f4f7f6;
         }
 
@@ -160,6 +159,18 @@
         .status-rejected {
             color: #e74c3c;
         }
+
+        .status-paid {
+            color: #27ae60;
+        }
+
+        .status-approved {
+            color: #2980b9;
+        }
+
+        .status-rejected {
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
@@ -171,14 +182,14 @@
 <!-- End of navbar -->
 <!-- Form -->
 <div class="form-container">
-    <h2>Compensation Management</h2>
-    <h3>List Request From Customer</h3>
-    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listCompensation">
+    <h2>Contract Management System</h2>
+    <h3>List of Cancelled Contracts Before Expiry</h3>
+    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listPunishment">
         <div class="form-group">
             <label for="statusFilter">Filter by Status:</label>
             <select id="statusFilter" name="status" class="status-select">
                 <option value="">All</option>
-                <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Paid" ${param.status == 'Paid' ? 'selected' : ''}>Paid</option>
                 <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
                 <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
             </select>
@@ -190,36 +201,39 @@
         </div>
         <button type="submit" class="btn-submit">Filter</button>
     </form>
-    <table class="compensation-table">
+    <table class="punishment-table">
         <thead>
         <tr>
             <th>No</th>
             <th>Customer ID</th>
-            <th>Contract ID</th>
             <th>Customer Name</th>
+            <th>Contract ID</th>
+            <th>Punishment Type</th>
+            <th>Punishment Date</th>
             <th>Description</th>
-            <th>Amount</th>
             <th>Status</th>
-            <th>Date</th>
+            <th>Cancellation Date</th>
+            <th>End Date</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="compensation" items="${requests}" varStatus="status">
+        <c:forEach var="punishment" items="${punishments}" varStatus="status">
             <tr>
                 <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
-                <td><c:out value="${compensation.customerID}"/></td>
-                <td><c:out value="${compensation.contractID}"/></td>
-                <td><c:out value="${compensation.customerName}"/></td>
-                <td><c:out value="${compensation.description}"/></td>
-                <td><fmt:formatNumber value="${compensation.amount}" type="currency" currencySymbol="$"/></td>
-                <td class="<c:out value="${compensation.status == 'Pending' ? 'status-pending' : compensation.status == 'Approved' ? 'status-approved' : compensation.status == 'Rejected' ? 'status-rejected' : ''}"/>">
-                    <c:out value="${compensation.status}"/>
+                <td><c:out value="${punishment.customer.customerID}"/></td>
+                <td><c:out value="${punishment.customerName}"/></td>
+                <td><c:out value="${punishment.contractID}"/></td>
+                <td><c:out value="${punishment.punishmentType}"/></td>
+                <td><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></td>
+                <td><c:out value="${punishment.description}"/></td>
+                <td class="${punishment.status == 'Paid' ? 'status-paid' : punishment.status == 'Approved' ? 'status-approved' : punishment.status == 'Rejected' ? 'status-rejected' : ''}">
+                    <c:out value="${punishment.status}"/>
                 </td>
-                <td><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></td>
+                <td><fmt:formatDate value="${punishment.contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
+                <td><fmt:formatDate value="${punishment.contract.endDate}" pattern="dd-MM-yyyy"/></td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}"
-                       class="btn-view">View</a>
+                    <a href="${pageContext.request.contextPath}/resolvePunishment?punishmentID=${punishment.punishmentID}" class="btn-view">View</a>
                 </td>
             </tr>
         </c:forEach>
@@ -229,11 +243,10 @@
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}"
-                       class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>
