@@ -1,6 +1,7 @@
 package org.example.insurance_card_be.controller.auth;
 
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.dao.implement.UserDAO;
 import org.example.insurance_card_be.model.Users;
 
@@ -24,19 +25,37 @@ public class ForgotControl extends HttpServlet {
 
 
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter("usernameforgot");
+        String full_name = request.getParameter("name");
+        Users check = dao.checkUserExist(username);
 
-        Users user = dao.login(username, password);
-
-        if (user != null) {
+        if (check == null) {
             // Login successful, redirect to another page
-            response.sendRedirect("successPage.jsp");
+            response.sendRedirect("forgot");
         } else {
-            // Login failed, redirect back to login page
-            response.sendRedirect("home.jsp");
+            SendEmailControl sm = new SendEmailControl();
+            String code = sm.getRandom();
+            UserVerify user = new UserVerify(full_name, username, code);
+            boolean test = sm.sendEmail(user);
+            if (test) {
+
+                request.setAttribute("message", "Registered successfully! Please check your email to verify your account!");
+                // Debug print statement
+                System.out.println("Mess attribute: " + request.getAttribute("message"));
+                HttpSession session = request.getSession();
+                session.setAttribute("code", user);
+                session.setAttribute("usernameforgot", username);
+                System.out.println("Username: " + username);
+                request.getRequestDispatcher("/views/homepage/Verify Forgot Email.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "Failed to send email!");
+                // Debug print statement
+                System.out.println("Mess attribute: " + request.getAttribute("message"));
+                request.getRequestDispatcher("/views/homepage/Forgot.jsp").forward(request, response);
+            }
+
         }
     }
 }

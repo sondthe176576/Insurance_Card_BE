@@ -13,7 +13,7 @@
 <body>
 <div class="form-body">
     <div class="row">
-        <form action="${pageContext.request.contextPath}/verify" method="post">
+        <form action="${pageContext.request.contextPath}/verifyforgot" method="post">
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">

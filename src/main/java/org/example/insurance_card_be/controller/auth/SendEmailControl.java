@@ -19,19 +19,17 @@ public class SendEmailControl {
         boolean test = false;
         String toUserName = user.getEmail();
         String fromEmail = "son465331@gmail.com";
-        String password = "flxmagxcvgahnnce";
+        String password = "psintawqruhihrpr";
 
         try{
             Properties props = new Properties();
-            props.setProperty("mail.smtp.host", "smtp.gmail.com");
-            props.setProperty("mail.smtp.port", "587");
-            props.setProperty("mail.smtp.auth", "true");
-            props.setProperty("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.socketFactory.port", "587");
-            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
             Session session = Session.getInstance(props, new Authenticator() {
-                @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(fromEmail, password);
                 }
@@ -40,12 +38,11 @@ public class SendEmailControl {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(fromEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(toUserName));
-            message.setSubject("User Verification");
-            message.setText("Register succesfully, please fill code in this blank in your email:" + user.getCode());
+            message.setSubject("Verification Code");
+            message.setText("Your verification code is: " + user.getCode());
+
             Transport.send(message);
-
             test = true;
-
         } catch (Exception e) {
             e.printStackTrace();
         }

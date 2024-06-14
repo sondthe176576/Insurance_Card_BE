@@ -13,7 +13,7 @@
 <body>
 <div class="form-body">
     <div class="row">
-        <form action="${pageContext.request.contextPath}/verify" method="post">
+        <form action="${pageContext.request.contextPath}/reset" method="post">
             <div class="form-holder">
                 <div class="form-content">
                     <div class="form-items">
@@ -28,7 +28,8 @@
                         <h3>Email Verification</h3>
                         <p>To sign in, fill numbers in this blank that we sent to your email</p>
                         <form>
-                            <input class="form-control" type="text" name="code" placeholder="Verify Code" required>
+                            <input class="form-control" type="password" name="newpass" placeholder="New Password" required>
+                            <input class="form-control" type="password" name="verifypass" placeholder="Type New Password again" required>
                             <div class="form-button full-width">
                                 <button id="submit" type="submit" class="ibtn btn-forget">Send Verification Code</button>
                             </div>
