@@ -9,13 +9,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Accident {
-    private int accidentID;
+public class Punishments {
+    private int punishmentID;
     private int contractID;
-    private int customerID;
-    private String accidentType;
-    private Date accidentDate;
+    private String punishmentType;
+    private Date punishmentDate;
     private String description;
-    private String customerName;
     private String status;
+    private Contract contract;
+    private Customers customer;
+    private String customerName;
 }
