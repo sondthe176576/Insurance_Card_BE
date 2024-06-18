@@ -15,16 +15,15 @@
 <div class="container">
     <h1>Payment History</h1>
     <div class="form-container">
-        <form action="${pageContext.request.contextPath}/payments" method="get" class="row g-3 mb-3">
+        <form action="${pageContext.request.contextPath}/paymentHistory" method="get" class="row g-3 mb-3">
             <div class="col-md-2">
                 <label for="page" class="form-label">Page</label>
-                <input type="number" class="form-control" id="page" name="page" value="${param.page != null ? param.page : 1}">
+                <input type="number" class="form-control" id="page" name="page" value="${page}">
             </div>
             <div class="col-md-2">
                 <label for="pageSize" class="form-label">Page Size</label>
-                <input type="number" class="form-control" id="pageSize" name="pageSize" value="${param.pageSize != null ? param.pageSize : 10}">
+                <input type="number" class="form-control" id="pageSize" name="pageSize" value="${pageSize}">
             </div>
-            <!-- Add other filter fields here if needed -->
             <div class="col-md-12">
                 <button type="submit" class="btn btn-primary mt-3">Filter</button>
             </div>

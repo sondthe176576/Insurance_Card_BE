@@ -22,7 +22,7 @@
             </div>
             <div class="col-md-2">
                 <label for="pageSize" class="form-label">Page Size</label>
-                <input type="number" class="form-control" id="pageSize" name="pageSize" value="${param.pageSize != null ? param.pageSize : 10}">
+                <input type="number" class="form-control" id="pageSize" name="pageSize" value="${param.pageSize != null ? param.pageSize : 5}">
             </div>
             <!-- Add other filter fields here if needed -->
             <div class="col-md-12">

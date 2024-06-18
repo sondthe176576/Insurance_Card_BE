@@ -65,17 +65,4 @@ public class AccidentDAO {
         }
         return accidents;
     }
-
-    // Main method for testing
-    public static void main(String[] args) {
-        try {
-            AccidentDAO rdao = new AccidentDAO();
-            List<Accident> listAh = rdao.getAccidentHistory(1, 10, null, null); // Removed customerName
-            for (Accident accident : listAh) {
-                System.out.println(accident);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
-}

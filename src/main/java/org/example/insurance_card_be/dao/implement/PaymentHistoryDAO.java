@@ -17,32 +17,29 @@ public class PaymentHistoryDAO {
         this.dbContext = new DBContext();
     }
 
-    public List<PaymentHistory> getAllPayments() {
+    public List<PaymentHistory> getPayments(int page, int pageSize) {
         List<PaymentHistory> payments = new ArrayList<>();
-        String query = "SELECT * FROM PaymentHistory";
+        String query = "SELECT * FROM PaymentHistory ORDER BY PaymentID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        int offset = (page - 1) * pageSize;
         try (Connection connection = dbContext.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                PaymentHistory payment = new PaymentHistory();
-                payment.setPaymentID(resultSet.getInt("PaymentID"));
-                payment.setCustomerID(resultSet.getInt("CustomerID"));
-                payment.setAmount(resultSet.getBigDecimal("Amount"));
-                payment.setPaymentDate(resultSet.getDate("PaymentDate"));
-                payment.setPaymentMethodID(resultSet.getInt("PaymentMethodID"));
-                payment.setContractID(resultSet.getInt("ContractID"));
-                payments.add(payment);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, offset);
+            statement.setInt(2, pageSize);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    PaymentHistory payment = new PaymentHistory();
+                    payment.setPaymentID(resultSet.getInt("PaymentID"));
+                    payment.setCustomerID(resultSet.getInt("CustomerID"));
+                    payment.setAmount(resultSet.getBigDecimal("Amount"));
+                    payment.setPaymentDate(resultSet.getDate("PaymentDate"));
+                    payment.setPaymentMethodID(resultSet.getInt("PaymentMethodID"));
+                    payment.setContractID(resultSet.getInt("ContractID"));
+                    payments.add(payment);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace(); // Handle this exception appropriately
         }
         return payments;
-    }
-    public static void main(String[] args) {
-        PaymentHistoryDAO paymentHistoryDAO = new PaymentHistoryDAO();
-        List<PaymentHistory> payments = paymentHistoryDAO.getAllPayments();
-        for (PaymentHistory payment : payments) {
-            System.out.println(payment.toString());
-        }
     }
 }

@@ -90,9 +90,9 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="nav flex-column">
-            <li><a class="nav-link" href="${pageContext.request.contextPath}/payments">Payment History</a></li>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/paymentHistory">Payment History</a></li>
             <li><a class="nav-link" href="${pageContext.request.contextPath}/Ach">Accident History</a></li>
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/punishmentHistory.jsp')">Punishment History</a>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/punishmentHistory">Punishment History</a></li>
             <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/compensationHistory.jsp')">Compensation History</a>
             <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/contractInformation.jsp')">Contract Information</a>
         </div>
