@@ -110,6 +110,10 @@ body {
     font-weight: bold;
 }
 
+.compensation-table td {
+    text-align: center;
+}
+
 .compensation-table tr:nth-child(even) {
     background-color: #f4f7f6;
 }
@@ -147,7 +151,7 @@ body {
 
 .pagination-nav {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 20px;
 }
 
