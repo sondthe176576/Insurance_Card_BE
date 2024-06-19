@@ -16,7 +16,7 @@
     <title>List Compensation</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pagination.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/request-list.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/listCompensation.css">
 </head>
 <body>
 <!-- Include header -->
