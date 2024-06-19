@@ -1,28 +1,25 @@
-/* pagination.css */
-.pagination-nav {
+.pagination {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    justify-content: flex-end; /* Aligns pagination to the right */
+    margin: 20px 0;
+    padding-right: 20px; /* Optional: Add padding to move the pagination away from the edge */
 }
 
-.pagination-nav .page-btn {
+.pagination a {
     color: #3498db;
     padding: 10px 15px;
     text-decoration: none;
     border: 1px solid #ddd;
     margin: 0 5px;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.pagination-nav .page-btn.active {
+.pagination a.active {
     background-color: #3498db;
     color: white;
     border: 1px solid #3498db;
 }
 
-.pagination-nav .page-btn:hover {
+.pagination a:hover {
     background-color: #ecf0f1;
-    color: #3498db;
 }
