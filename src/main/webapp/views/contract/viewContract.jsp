@@ -203,18 +203,6 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
-<!-- Notification Message Script -->
-<script>
-    setTimeout(function () {
-        var notification = document.getElementById('notification');
-        if (notification) {
-            notification.style.opacity = '0';
-            setTimeout(function() {
-                notification.style.display = 'none';
-            }, 300);
-        }
-    }, 5000);
-</script>
-<!-- End of Notification Message Script -->
+<script src="${pageContext.request.contextPath}/js/viewContract.js"></script>
 </body>
 </html>
