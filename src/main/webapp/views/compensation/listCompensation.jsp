@@ -9,177 +9,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Compensation</title>
-    <!-- Liên kết đến Font Awesome cục bộ -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css" />
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .title {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 36px;
-            margin: 30px 0;
-        }
-
-        .section {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .section h2 {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 28px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #2980b9;
-            padding-bottom: 10px;
-        }
-
-        .section h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-            font-size: 24px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-        }
-
-        .filter-form {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .filter-form .form-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .filter-form label {
-            margin-right: 10px;
-            color: #2980b9;
-            font-weight: bold;
-        }
-
-        .filter-form input, .filter-form select {
-            padding: 10px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .filter-form button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            color: #2980b9;
-        }
-
-        .filter-form button:hover {
-            color: #1a6ba1;
-        }
-
-        .compensation-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-        }
-
-        .compensation-table th, .compensation-table td {
-            padding: 15px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        .compensation-table th {
-            background-color: #2c3e50;
-            color: white;
-            font-weight: bold;
-        }
-
-        .compensation-table tr:nth-child(even) {
-            background-color: #f4f7f6;
-        }
-
-        .btn-view {
-            background: none;
-            border: none;
-            color: #3498db;
-            cursor: pointer;
-            font-size: 20px;
-            padding: 0;
-            margin: 0;
-        }
-
-        .btn-view:hover {
-            color: #1a6ba1;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: flex-end;
-            margin: 20px 0;
-        }
-
-        .pagination a {
-            color: #3498db;
-            padding: 10px 15px;
-            text-decoration: none;
-            border: 1px solid #ddd;
-            margin: 0 5px;
-            border-radius: 5px;
-        }
-
-        .pagination a.active {
-            background-color: #3498db;
-            color: white;
-            border: 1px solid #3498db;
-        }
-
-        .pagination a:hover {
-            background-color: #ecf0f1;
-        }
-
-        .status-pending {
-            color: #f1c40f;
-        }
-
-        .status-approved {
-            color: #2ecc71;
-        }
-
-        .status-rejected {
-            color: #e74c3c;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pagination.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/request-list.css">
 </head>
 <body>
 <!-- Include header -->
@@ -243,14 +80,15 @@
             </c:forEach>
             </tbody>
         </table>
-        <div class="pagination">
+        <!-- Include pagination -->
+        <div class="pagination-nav">
             <c:forEach var="i" begin="1" end="${totalPages}">
                 <c:choose>
                     <c:when test="${i == currentPage}">
-                        <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                        <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}" class="page-btn active">${i}</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                        <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}" class="page-btn">${i}</a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
