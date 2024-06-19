@@ -13,6 +13,7 @@
 <head>
     <title>Renew Contract</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/renewContract.css">
+    <script src="${pageContext.request.contextPath}/js/renewContract.js" defer></script>
 </head>
 <body>
 <!-- Include header -->
@@ -37,7 +38,7 @@
 <!-- Form -->
 <div class="container">
     <div class="title">Renew Contract</div>
-    <form action="${pageContext.request.contextPath}/renewContract" method="post">
+    <form id="renewContractForm" action="${pageContext.request.contextPath}/renewContract" method="post">
         <div class="section grid-2-columns">
             <div>
                 <h2>Customer Information</h2>
@@ -175,7 +176,7 @@
                 </div>
                 <div class="form-group">
                     <label for="newPremium">New Premium:</label>
-                    <input type="text" id="newPremium" name="newPremium" required oninput="formatCurrency(this)">
+                    <input type="number" id="newPremium" name="newPremium" step="50" min="50" required>
                 </div>
                 <div class="form-group">
                     <label for="newCoverage">New Coverage:</label>
@@ -215,40 +216,7 @@
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
 <!-- Notification Message Script -->
-<script>
-    setTimeout(function () {
-        var notification = document.getElementById('notification');
-        if (notification) {
-            notification.style.opacity = '0';
-            setTimeout(function() {
-                notification.style.display = 'none';
-            }, 300);
-        }
-    }, 5000);
-
-    // Function to format currency input
-    function formatCurrency(input) {
-        let value = input.value.replace(/,/g, '');
-        if (!isNaN(value)) {
-            input.value = parseFloat(value).toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
-        } else {
-            input.value = input.value.substring(0, input.value.length - 1);
-        }
-    }
-
-    // Function to set today's date for renewalDate input
-    window.onload = function() {
-        var today = new Date();
-        var day = ("0" + today.getDate()).slice(-2);
-        var month = ("0" + (today.getMonth() + 1)).slice(-2);
-        var year = today.getFullYear();
-        var todayDate = year + "-" + month + "-" + day;
-        document.getElementById('renewalDate').value = todayDate;
-    }
-</script>
+<script src="${pageContext.request.contextPath}/js/renewContract.js" defer></script>
 <!-- End of notification message script -->
 </body>
 </html>
