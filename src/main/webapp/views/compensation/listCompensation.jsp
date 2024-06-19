@@ -12,37 +12,59 @@
 <html>
 <head>
     <title>List Compensation</title>
+    <!-- Liên kết đến Font Awesome cục bộ -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/all.min.css" />
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: #f4f6f8;
             color: #333;
             margin: 0;
             padding: 0;
         }
 
-        .form-container {
+        .container {
+            padding: 20px;
             max-width: 1200px;
-            margin: 40px auto;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            margin: 0 auto;
         }
 
-        .form-container h2 {
+        .title {
             text-align: center;
             color: #2c3e50;
-            font-size: 32px;
-            margin-bottom: 30px;
+            font-size: 36px;
+            margin: 30px 0;
         }
 
-        .form-container h3 {
+        .section {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section h2 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2980b9;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
             margin-bottom: 15px;
             color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
             font-size: 24px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
         }
 
         .filter-form {
@@ -74,17 +96,15 @@
         }
 
         .filter-form button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 15px;
+            background: none;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 20px;
+            color: #2980b9;
         }
 
         .filter-form button:hover {
-            background-color: #2980b9;
+            color: #1a6ba1;
         }
 
         .compensation-table {
@@ -109,19 +129,18 @@
             background-color: #f4f7f6;
         }
 
-        .btn-submit, .btn-view {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 15px;
+        .btn-view {
+            background: none;
             border: none;
-            border-radius: 5px;
+            color: #3498db;
             cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
+            font-size: 20px;
+            padding: 0;
+            margin: 0;
         }
 
-        .btn-submit:hover, .btn-view:hover {
-            background-color: #2980b9;
+        .btn-view:hover {
+            color: #1a6ba1;
         }
 
         .pagination {
@@ -170,73 +189,72 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Form -->
-<div class="form-container">
-    <h2>Compensation Management</h2>
-    <h3>List Request From Customer</h3>
-    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listCompensation">
-        <div class="form-group">
-            <label for="statusFilter">Filter by Status:</label>
-            <select id="statusFilter" name="status" class="status-select">
-                <option value="">All</option>
-                <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
-                <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="customerNameSearch">Search by Customer Name:</label>
-            <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
-                   placeholder="Enter customer name"/>
-        </div>
-        <button type="submit" class="btn-submit">Filter</button>
-    </form>
-    <table class="compensation-table">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Customer ID</th>
-            <th>Contract ID</th>
-            <th>Customer Name</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="compensation" items="${requests}" varStatus="status">
+<div class="container">
+    <div class="section">
+        <h2>Compensation Management</h2>
+        <h3>List Request From Customer</h3>
+        <form method="get" class="filter-form" action="${pageContext.request.contextPath}/listCompensation">
+            <div class="form-group">
+                <label for="statusFilter">Filter by Status:</label>
+                <select id="statusFilter" name="status" class="status-select">
+                    <option value="">All</option>
+                    <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                    <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
+                    <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="customerNameSearch">Search by Customer Name:</label>
+                <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
+            </div>
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <table class="compensation-table">
+            <thead>
             <tr>
-                <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
-                <td><c:out value="${compensation.customerID}"/></td>
-                <td><c:out value="${compensation.contractID}"/></td>
-                <td><c:out value="${compensation.customerName}"/></td>
-                <td><c:out value="${compensation.description}"/></td>
-                <td><fmt:formatNumber value="${compensation.amount}" type="currency" currencySymbol="$"/></td>
-                <td class="<c:out value="${compensation.status == 'Pending' ? 'status-pending' : compensation.status == 'Approved' ? 'status-approved' : compensation.status == 'Rejected' ? 'status-rejected' : ''}"/>">
-                    <c:out value="${compensation.status}"/>
-                </td>
-                <td><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}"
-                       class="btn-view">View</a>
-                </td>
+                <th>No</th>
+                <th>Customer ID</th>
+                <th>Contract ID</th>
+                <th>Customer Name</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Action</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <c:forEach var="i" begin="1" end="${totalPages}">
-            <c:choose>
-                <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}"
-                       class="active">${i}</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+            </thead>
+            <tbody>
+            <c:forEach var="compensation" items="${requests}" varStatus="status">
+                <tr>
+                    <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
+                    <td><c:out value="${compensation.customerID}"/></td>
+                    <td><c:out value="${compensation.contractID}"/></td>
+                    <td><c:out value="${compensation.customerName}"/></td>
+                    <td><c:out value="${compensation.description}"/></td>
+                    <td><fmt:formatNumber value="${compensation.amount}" type="currency" currencySymbol="$"/></td>
+                    <td class="<c:out value="${compensation.status == 'Pending' ? 'status-pending' : compensation.status == 'Approved' ? 'status-approved' : compensation.status == 'Rejected' ? 'status-rejected' : ''}"/>">
+                        <c:out value="${compensation.status}"/>
+                    </td>
+                    <td><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}" class="btn-view"><i class="fa-solid fa-eye"></i></a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <c:choose>
+                    <c:when test="${i == currentPage}">
+                        <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </div>
     </div>
 </div>
 <!-- End of form -->
