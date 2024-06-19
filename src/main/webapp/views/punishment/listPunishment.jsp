@@ -81,14 +81,14 @@
         </c:forEach>
         </tbody>
     </table>
-    <div class="pagination">
+    <div class="pagination-nav">
         <c:forEach var="i" begin="1" end="${totalPages}">
             <c:choose>
                 <c:when test="${i == currentPage}">
-                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}" class="active">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}" class="page-btn active">${i}</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                    <a href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}" class="page-btn">${i}</a>
                 </c:otherwise>
             </c:choose>
         </c:forEach>

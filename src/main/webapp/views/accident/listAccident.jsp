@@ -42,8 +42,7 @@
             </div>
             <div class="form-group">
                 <label for="customerNameSearch">Search by Customer Name:</label>
-                <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
-                       placeholder="Enter customer name"/>
+                <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
             </div>
             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
@@ -71,7 +70,7 @@
                     <td><c:out value="${accident.accidentType}"/></td>
                     <td><fmt:formatDate value="${accident.accidentDate}" pattern="dd-MM-yyyy"/></td>
                     <td><c:out value="${accident.description}"/></td>
-                    <td class="<c:out value="${accident.status == 'Pending' ? 'status-pending' : accident.status == 'Approved' ? 'status-approved' : accident.status == 'Rejected' ? 'status-rejected' : ''}"/>">
+                    <td class="${accident.status == 'Pending' ? 'status-pending' : accident.status == 'Approved' ? 'status-approved' : accident.status == 'Rejected' ? 'status-rejected' : ''}">
                         <c:out value="${accident.status}"/>
                     </td>
                     <td>

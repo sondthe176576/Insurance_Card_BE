@@ -24,7 +24,7 @@
             <li><a href="#">Contract</a></li>
         </ul>
         <div class="nav-actions">
-            <button class="search-btn"><i class="fa fa-search"></i></button>
+            <!-- Loại bỏ nút tìm kiếm -->
             <a href="${pageContext.request.contextPath}/selectCustomer" class="btn btn-primary">Create Contract</a>
         </div>
     </div>

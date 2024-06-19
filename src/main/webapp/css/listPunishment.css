@@ -109,28 +109,29 @@ body {
     background-color: #2980b9;
 }
 
-.pagination {
+.pagination-nav {
     display: flex;
     justify-content: flex-end;
     margin: 20px 0;
 }
 
-.pagination a {
+.pagination-nav .page-btn {
     color: #3498db;
     padding: 10px 15px;
     text-decoration: none;
     border: 1px solid #ddd;
     margin: 0 5px;
     border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.pagination a.active {
+.pagination-nav .page-btn.active {
     background-color: #3498db;
     color: white;
     border: 1px solid #3498db;
 }
 
-.pagination a:hover {
+.pagination-nav .page-btn:hover {
     background-color: #ecf0f1;
 }
 

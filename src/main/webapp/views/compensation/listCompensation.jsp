@@ -44,7 +44,7 @@
                 <label for="customerNameSearch">Search by Customer Name:</label>
                 <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" placeholder="Enter customer name"/>
             </div>
-            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button type="submit" class="btn-submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
         <table class="compensation-table">
             <thead>
@@ -69,7 +69,7 @@
                     <td><c:out value="${compensation.customerName}"/></td>
                     <td><c:out value="${compensation.description}"/></td>
                     <td><fmt:formatNumber value="${compensation.amount}" type="currency" currencySymbol="$"/></td>
-                    <td class="<c:out value="${compensation.status == 'Pending' ? 'status-pending' : compensation.status == 'Approved' ? 'status-approved' : compensation.status == 'Rejected' ? 'status-rejected' : ''}"/>">
+                    <td class="${compensation.status == 'Pending' ? 'status-pending' : compensation.status == 'Approved' ? 'status-approved' : compensation.status == 'Rejected' ? 'status-rejected' : 'status-pending'}">
                         <c:out value="${compensation.status}"/>
                     </td>
                     <td><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></td>
