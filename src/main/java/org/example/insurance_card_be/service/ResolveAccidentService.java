@@ -2,20 +2,19 @@ package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.ResolveAccidentDAO;
 import org.example.insurance_card_be.model.Accident;
+import org.example.insurance_card_be.model.AccidentHistory;
 import org.example.insurance_card_be.util.EmailUtil;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class ResolveAccidentService {
-    // Khai bao resolveAccidentDAO
     private ResolveAccidentDAO resolveAccidentDAO;
 
-    // Khoi tao resolveAccidentDAO
     public ResolveAccidentService() {
         resolveAccidentDAO = new ResolveAccidentDAO();
     }
 
-    // Ham lay thong tin tai nan theo ID
     public Accident getAccidentByID(int accidentID) {
         try {
             return resolveAccidentDAO.getAccidentByID(accidentID);
@@ -25,12 +24,20 @@ public class ResolveAccidentService {
         }
     }
 
-    // Ham cap nhat trang thai cua tai nan
     public void updateAccidentStatus(int accidentID, String status) {
         try {
             Accident accident = resolveAccidentDAO.getAccidentByID(accidentID);
             if (accident != null) {
                 resolveAccidentDAO.updateAccidentStatus(accidentID, status);
+
+                // Lưu thông tin vào bảng AccidentHistory
+                AccidentHistory accidentHistory = new AccidentHistory(
+                        accidentID,
+                        accident.getCustomerID(),
+                        accident.getDescription(),
+                        new Date()
+                );
+                resolveAccidentDAO.saveAccidentHistory(accidentHistory);
 
                 // Tạo nội dung email
                 String email = accident.getContract().getCustomer().getUser().getEmail();
