@@ -104,4 +104,15 @@ public class ResolveCompensationDAO {
             ps.executeUpdate();
         }
     }
+
+    // Phương thức lưu thông tin vào CompensationHistory
+    public void saveCompensationHistory(CompensationHistory compensationHistory) throws SQLException {
+        String sql = "INSERT INTO CompensationHistory (CustomerID, Amount, Date) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, compensationHistory.getCustomerID());
+            ps.setBigDecimal(2, compensationHistory.getAmount());
+            ps.setDate(3, new java.sql.Date(compensationHistory.getDate().getTime()));
+            ps.executeUpdate();
+        }
+    }
 }
