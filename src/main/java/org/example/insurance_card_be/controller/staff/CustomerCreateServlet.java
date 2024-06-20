@@ -20,7 +20,7 @@ public class CustomerCreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/views/staff/createCustomer.jsp").forward(req, resp);
     }
-
+//aa
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         CustomerDAO dao = new CustomerDAO();
