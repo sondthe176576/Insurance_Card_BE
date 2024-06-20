@@ -5,15 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.insurance_card_be.model.Contract;
-import org.example.insurance_card_be.model.Customers;
-import org.example.insurance_card_be.model.Motorcycle;
+import org.example.insurance_card_be.model.*;
 import org.example.insurance_card_be.service.ContractService;
 import org.example.insurance_card_be.service.CustomerService;
+import org.example.insurance_card_be.service.PaymentService;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,12 +24,14 @@ public class ContractController extends HttpServlet {
     // Khai bao contractService va customerService
     private ContractService contractService;
     private CustomerService customerService;
+    private PaymentService paymentService;
 
     // Khoi tao contractService va customerService
     @Override
     public void init() throws ServletException {
         this.contractService = new ContractService();
         this.customerService = new CustomerService();
+        this.paymentService = new PaymentService();
     }
 
     // Ham doGet de hien thi trang tao contract
@@ -65,14 +66,17 @@ public class ContractController extends HttpServlet {
         String coverage = req.getParameter("coverage");
         String insuranceType = req.getParameter("insuranceType");
         String premiumStr = req.getParameter("premium");
+        String paymentMethod = req.getParameter("paymentMethod");
+        String paymentMethodIDStr = req.getParameter("paymentMethodID");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Dinh dang ngay thang
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Contract contract = new Contract();
+
         try {
             contract.setCustomerID(Integer.parseInt(customerID));
             contract.setContractInfo(contractInfo);
             contract.setStatus(status);
-            contract.setStartDate(new Date()); // Set ngay hien tai
+            contract.setStartDate(new Date());
             contract.setEndDate(sdf.parse(endDateStr));
             contract.setDetail(detail);
             contract.setValue(Double.parseDouble(valueStr));
@@ -80,16 +84,36 @@ public class ContractController extends HttpServlet {
             contract.setInsuranceType(insuranceType);
             contract.setPremium(Double.parseDouble(premiumStr));
 
-            contractService.createContract(contract); // Tao contract
-            req.setAttribute("message", "Create contract successfully!");
-            req.setAttribute("status", true);
-        } catch (ParseException | SQLException e) {
-            Logger logger = Logger.getLogger(ContractController.class.getName()); // Log loi
-            logger.log(Level.SEVERE, "Create contract failure!", e);
-            req.setAttribute("message", "Create contract failure!" + e.getMessage()); // Thong bao loi
-            req.setAttribute("status", true); // Thong bao danger
-            e.printStackTrace();
+            contractService.createContract(contract);
+
+            PaymentMethod paymentMethodObj = new PaymentMethod();
+            paymentMethodObj.setCustomerID(Integer.parseInt(customerID));
+            paymentMethodObj.setMethodType(paymentMethod);
+            paymentMethodObj.setDetails("Payment method details");
+            int paymentMethodID = paymentService.savePaymentMethod(paymentMethodObj);
+
+            PaymentHistory paymentHistory = new PaymentHistory();
+            paymentHistory.setCustomerID(Integer.parseInt(customerID));
+            paymentHistory.setAmount(new BigDecimal(premiumStr));
+            paymentHistory.setPaymentDate(new Date());
+            paymentHistory.setPaymentMethodID(paymentMethodID);
+            paymentHistory.setContractID(contract.getContractID());
+            paymentService.savePaymentHistory(paymentHistory);
+
+            if ("cash".equals(paymentMethod)) {
+                resp.sendRedirect(req.getContextPath() + "/viewBill?contractID=" + contract.getContractID());
+            } else if ("bankTransfer".equals(paymentMethod)) {
+                resp.sendRedirect(req.getContextPath() + "/viewBill?contractID=" + contract.getContractID());
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/contracts");
+            }
+
+        } catch (Exception e) {
+            Logger logger = Logger.getLogger(ContractController.class.getName());
+            logger.log(Level.SEVERE, "Failed to create contract!", e);
+            req.setAttribute("message", "Failed to create contract: " + e.getMessage());
+            req.setAttribute("status", false);
+            req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
     }
 }
