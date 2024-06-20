@@ -1,15 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 09114
-  Date: 6/7/2024
-  Time: 12:45 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>View Customer</title>
+    <title>Customer Details</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,106 +13,122 @@
             padding: 0;
         }
 
-        .form-container {
-            max-width: 900px;
-            margin: 50px auto;
+        .detail-container {
+            max-width: 800px;
+            margin: 40px auto;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
         }
 
-        .form-container h2 {
+        .detail-container h2 {
             text-align: center;
             color: #2c3e50;
-            font-size: 28px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #2980b9;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .detail-container h3 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
             padding-bottom: 10px;
+            font-size: 24px;
         }
 
-        .details {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+        .detail-item {
+            margin-bottom: 15px;
         }
 
-        .details label {
+        .detail-item label {
             font-weight: bold;
-            width: 30%;
-            margin-bottom: 10px;
             color: #2980b9;
         }
 
-        .details p {
-            width: 70%;
-            margin: 0 0 10px 0;
-            padding: 10px;
-            background-color: #ecf0f1;
-            border-radius: 4px;
+        .detail-item span {
+            color: #333;
         }
 
         .btn-container {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
             margin-top: 20px;
         }
 
-        .btn {
+        .btn-back, .btn-update {
             background-color: #3498db;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin: 0 10px;
-            text-align: center;
             text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
+            text-align: center;
         }
 
-        .btn:hover {
+        .btn-back:hover, .btn-update:hover {
             background-color: #2980b9;
         }
     </style>
 </head>
 <body>
-<!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
-<!-- End of header -->
-<!-- Include navbar -->
-<jsp:include page="/views/includes/navbar.jsp"/>
-<!-- End of navbar -->
-
-<div class="form-container">
-    <h2>Customer Detail</h2>
-    <div class="details">
-        <label>Customer ID:</label>
-        <p><c:out value="${customer.userID}"/></p>
-        <label>Full Name:</label>
-        <p><c:out value="${customer.fullName}"/></p>
+<jsp:include page="/views/includes/header.jsp" />
+<div class="detail-container">
+    <h2>View Customer</h2>
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger">${error}</div>
+    </c:if>
+    <div class="detail-item">
         <label>Username:</label>
-        <p><c:out value="${customer.username}"/></p>
-        <label>Mobile:</label>
-        <p><c:out value="${customer.mobile}"/></p>
+        <span>${customer.userName}</span>
+    </div>
+    <div class="detail-item">
         <label>Email:</label>
-        <p><c:out value="${customer.email}"/></p>
-        <label>Address:</label>
-        <p><c:out value="${customer.address}"/></p>
+        <span>${customer.email}</span>
+    </div>
+    <div class="detail-item">
+        <label>Mobile:</label>
+        <span>${customer.mobile}</span>
+    </div>
+    <div class="detail-item">
+        <label>Province:</label>
+        <span>${customer.province}</span>
+    </div>
+    <div class="detail-item">
+        <label>District:</label>
+        <span>${customer.district}</span>
+    </div>
+    <div class="detail-item">
+        <label>Country:</label>
+        <span>${customer.country}</span>
+    </div>
+    <div class="detail-item">
+        <label>First Name:</label>
+        <span>${customer.firstName}</span>
+    </div>
+    <div class="detail-item">
+        <label>Last Name:</label>
+        <span>${customer.lastName}</span>
+    </div>
+    <div class="detail-item">
+        <label>Full Name:</label>
+        <span>${customer.fullName}</span>
+    </div>
+    <div class="detail-item">
+        <label>Birth Date:</label>
+        <span>${customer.birthDate}</span>
+    </div>
+    <div class="detail-item">
         <label>Gender:</label>
-        <p><c:out value="${customer.gender}"/></p>
+        <span>${customer.gender}</span>
     </div>
     <div class="btn-container">
-        <a href="${pageContext.request.contextPath}/customer-staff?action=edit&userID=${customer.userID}" class="btn">Update</a>
-        <a href="${pageContext.request.contextPath}/customer-staff" class="btn">Back to List</a>
-
+        <a href="${pageContext.request.contextPath}/customer-manage" class="btn-back">Back</a>
+        <a href="${pageContext.request.contextPath}/customer-edit?userID=${customer.userId}" class="btn-update">Update</a>
     </div>
 </div>
-<!-- End of form -->
-<!-- Include footer -->
-<jsp:include page="/views/includes/footer.jsp"/>
-<!-- End of footer -->
+<jsp:include page="/views/includes/footer.jsp" />
 </body>
 </html>
