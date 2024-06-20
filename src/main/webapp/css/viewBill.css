@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.table-container {
+    width: 90%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th, .table-container td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.table-container th {
+    background-color: #1E90FF; /* Changed to blue */
+    color: white;
+}
+
+.table-container tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-container th, .table-container td {
+    border: none;
+    padding: 15px;
+    text-align: left;
+}
+
+.table-container td {
+    background-color: #fafafa;
+}
+
+.btn-view-detail {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-view-detail i {
+    color: #1E90FF; /* Changed to blue */
+    font-size: 1.2em;
+}
+
+.btn-view-detail i:hover {
+    color: #1C86EE; /* Changed to a darker shade of blue */
+}

@@ -174,6 +174,14 @@
                     <label for="premium">Premium: (The insurance fee that the customer must pay to maintain the insurance contract)</label>
                     <input type="number" id="premium" name="premium" step="50" min="50" required>
                 </div>
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" name="paymentMethod" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="cash">Cash</option>
+                        <option value="bankTransfer">Bank Transfer</option>
+                    </select>
+                </div>
             </div>
 
             <div>
@@ -190,15 +198,26 @@
             </div>
         </div>
 
-        <div class="section address-info">
-            <h3>Application can be dropped off or mailed to:</h3>
-            <p>Motorcycle Insurance Company,<br>
-                123 Hola Street,<br>
-                District Thach That, Ha Noi,<br>
-                Vietnam</p>
-            <p>Phone: 0123-456-789<br>
-                <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
+        <!-- Payment Details Section -->
+        <div class="section" id="cashPaymentDetails" style="display:none;">
+            <h2>Cash Payment Details</h2>
+            <p>Please bring your contract to our office to complete the payment in cash.</p>
+            <div class="address-info">
+                <p>Motorcycle Insurance Company,<br>
+                    123 Hola Street,<br>
+                    District Thach That, Ha Noi,<br>
+                    Vietnam</p>
+                <p>Phone: 0123-456-789<br>
+                    <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
+            </div>
         </div>
+
+        <div class="section" id="bankTransferDetails" style="display:none;">
+            <h2>Bank Transfer Details</h2>
+            <p>You will be redirected to the bank transfer page to complete the payment.</p>
+        </div>
+        <!-- End of Payment Details Section -->
+
         <button type="submit" class="btn-submit">Create Contract</button>
     </form>
 </div>
