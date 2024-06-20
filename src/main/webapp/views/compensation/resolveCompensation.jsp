@@ -142,7 +142,6 @@
     </div>
 </div>
 <!-- End of modal -->
-
 <!-- End of form -->
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
