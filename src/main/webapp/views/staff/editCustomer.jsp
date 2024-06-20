@@ -1,12 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 09114
-  Date: 6/7/2024
-  Time: 1:28 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Edit Customer</title>
@@ -41,14 +34,14 @@
             color: #2980b9;
             font-weight: bold;
         }
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
         }
-        .btn-submit {
+        .btn-submit, .btn-reset {
             background-color: #3498db;
             color: white;
             padding: 10px 15px;
@@ -57,20 +50,13 @@
             cursor: pointer;
             font-size: 16px;
             width: 100%;
-        }
-        .btn-submit:hover {
-            background-color: #2980b9;
+            margin-top: 10px;
         }
         .btn-reset {
             background-color: #e74c3c;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            background-color: #2980b9;
         }
         .btn-reset:hover {
             background-color: #c0392b;
@@ -81,17 +67,28 @@
             cursor: pointer;
             color: #2980b9;
         }
+        .css_select_div {
+            text-align: center;
+        }
+        .css_select {
+            display: inline-table;
+            width: 30%;
+            padding: 5px;
+            margin: 5px 2%;
+            border: solid 1px #ccc;
+            border-radius: 5px;
+        }
     </style>
+    <script src="https://esgoo.net/scripts/jquery.js"></script>
 </head>
-<jsp:include page="/views/includes/header.jsp"/>
-<jsp:include page="/views/includes/navbar.jsp"/>
+<body>
 <div class="form-container">
     <h2>Edit Customer</h2>
-    <form method="post" action="${pageContext.request.contextPath}/customer-staff?action=update">
-        <input type="hidden" name="userID" value="${customer.userID}" />
+    <form id="editCustomerForm" method="post" action="${pageContext.request.contextPath}/customer-edit">
+        <input type="hidden" name="userId" value="${customer.userId}" />
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="${customer.username}" required />
+            <input type="text" id="username" name="username" value="${customer.userName}" required />
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
@@ -99,8 +96,20 @@
             <span class="show-password" onclick="togglePassword()">Show Password</span>
         </div>
         <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" value="${customer.firstName}" required />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" value="${customer.lastName}" required />
+        </div>
+        <div class="form-group">
             <label for="fullName">Full Name:</label>
             <input type="text" id="fullName" name="fullName" value="${customer.fullName}" required />
+        </div>
+        <div class="form-group">
+            <label for="birthDate">Birth Date:</label>
+            <input type="date" id="birthDate" name="birthDate" value="<fmt:formatDate value='${customer.birthDate}' pattern='yyyy-MM-dd'/>" required />
         </div>
         <div class="form-group">
             <label for="mobile">Mobile:</label>
@@ -111,8 +120,21 @@
             <input type="email" id="email" name="email" value="${customer.email}" required />
         </div>
         <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" value="${customer.address}" required />
+            <label for="hidden_tinh">Address:</label>
+            <div class="css_select_div">
+                <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
+                    <option value="0">Tỉnh Thành</option>
+                </select>
+                <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
+                    <option value="0">Quận Huyện</option>
+                </select>
+                <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
+                    <option value="0">Phường Xã</option>
+                </select>
+            </div>
+            <input type="hidden" name="hidden_tinh" id="hidden_tinh" value="${customer.province}">
+            <input type="hidden" name="hidden_quan" id="hidden_quan" value="${customer.district}">
+            <input type="hidden" name="hidden_phuong" id="hidden_phuong" value="${customer.country}">
         </div>
         <div class="form-group">
             <label for="gender">Gender:</label>
@@ -137,7 +159,67 @@
             showPasswordText.textContent = "Show Password";
         }
     }
+
+    $(document).ready(function () {
+        // Fetch provinces and set selected value
+        $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+            if (data_tinh.error == 0) {
+                $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                    $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                });
+                $("#tinh").val('${customer.province}');
+                loadDistricts();
+            }
+        });
+
+        function loadDistricts() {
+            var idtinh = $("#tinh").val();
+            if (idtinh) {
+                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                    if (data_quan.error == 0) {
+                        $("#quan").html('<option value="0">Quận Huyện</option>');
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_quan.data, function (key_quan, val_quan) {
+                            $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
+                        });
+                        $("#quan").val('${customer.district}');
+                        loadWards();
+                    }
+                });
+            }
+        }
+
+        function loadWards() {
+            var idquan = $("#quan").val();
+            if (idquan) {
+                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                    if (data_phuong.error == 0) {
+                        $("#phuong").html('<option value="0">Phường Xã</option>');
+                        $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                            $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
+                        });
+                        $("#phuong").val('${customer.country}');
+                        $("#hidden_tinh").val($("#tinh option:selected").text());
+                        $("#hidden_quan").val($("#quan option:selected").text());
+                        $("#hidden_phuong").val($("#phuong option:selected").text());
+                    }
+                });
+            }
+        }
+
+        // Event listener for change events
+        $("#tinh").change(function () {
+            loadDistricts();
+        });
+
+        $("#quan").change(function () {
+            loadWards();
+        });
+
+        $("#phuong").change(function () {
+            $("#hidden_phuong").val($("#phuong option:selected").text());
+        });
+    });
 </script>
 </body>
-<jsp:include page="/views/includes/footer.jsp"/>
 </html>
