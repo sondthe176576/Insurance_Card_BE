@@ -2,9 +2,11 @@ package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.ResolvePunishmentDAO;
 import org.example.insurance_card_be.model.Punishments;
+import org.example.insurance_card_be.model.PunishmentHistory;
 import org.example.insurance_card_be.util.EmailUtil;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class ResolvePunishmentService {
     private ResolvePunishmentDAO resolvePunishmentDAO;
@@ -27,6 +29,15 @@ public class ResolvePunishmentService {
             Punishments punishment = resolvePunishmentDAO.getPunishmentByID(punishmentID);
             if (punishment != null) {
                 resolvePunishmentDAO.updatePunishmentStatus(punishmentID, status);
+
+                // Lưu thông tin vào bảng PunishmentHistory
+                PunishmentHistory punishmentHistory = new PunishmentHistory(
+                        0, // PunishmentID sẽ tự động tăng
+                        punishment.getCustomer().getCustomerID(),
+                        punishment.getDescription(),
+                        new Date()
+                );
+                resolvePunishmentDAO.savePunishmentHistory(punishmentHistory);
 
                 // Tạo nội dung email
                 String email = punishment.getContract().getCustomer().getUser().getEmail();

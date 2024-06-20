@@ -1,11 +1,7 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.Contract;
-import org.example.insurance_card_be.model.Customers;
-import org.example.insurance_card_be.model.Punishments;
-import org.example.insurance_card_be.model.Users;
-import org.example.insurance_card_be.model.Motorcycle; // Added this line
+import org.example.insurance_card_be.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -102,6 +98,17 @@ public class ResolvePunishmentDAO {
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, status);
             ps.setInt(2, punishmentID);
+            ps.executeUpdate();
+        }
+    }
+
+    // Phương thức lưu thông tin vào PunishmentHistory
+    public void savePunishmentHistory(PunishmentHistory punishmentHistory) throws SQLException {
+        String sql = "INSERT INTO PunishmentHistory (CustomerID, Description, Date) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, punishmentHistory.getCustomerID());
+            ps.setString(2, punishmentHistory.getDescription());
+            ps.setDate(3, new java.sql.Date(punishmentHistory.getDate().getTime()));
             ps.executeUpdate();
         }
     }
