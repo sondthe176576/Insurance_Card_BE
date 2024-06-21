@@ -31,9 +31,9 @@ public class EditInforControl extends HttpServlet {
         String email_id = request.getParameter("email_id");
         String gender = request.getParameter("gender");
         Date birthdate = Date.valueOf(request.getParameter("birthdate"));
-        String tinh = request.getParameter("hidden_tinh");
-        String quan = request.getParameter("hidden_quan");
-        String phuong = request.getParameter("hidden_phuong");
+        String tinh = request.getParameter("tinh");
+        String quan = request.getParameter("quan");
+        String phuong = request.getParameter("phuong");
 
         UserDAO dao = new UserDAO();
         dao.updateProfile(username, email_id, mobile, tinh, quan, phuong, first_name, last_name, full_name, birthdate, gender);

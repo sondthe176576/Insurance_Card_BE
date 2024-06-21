@@ -13,10 +13,15 @@ import java.io.IOException;
 public class LogoutControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false); // không tạo session mới nếu chưa tồn tại
         if (session != null) {
-            session.invalidate();
+            try {
+                session.invalidate(); // ngắt session hiện tại của user
+            } catch (IllegalStateException ex) {
+                // Xử lý nếu có lỗi khi invalidate session
+                System.err.println("Error invalidating session: " + ex.getMessage());
+            }
         }
-        response.sendRedirect("login");
+        response.sendRedirect(request.getContextPath() + "/login"); // chuyển hướng về trang đăng nhập
     }
 }

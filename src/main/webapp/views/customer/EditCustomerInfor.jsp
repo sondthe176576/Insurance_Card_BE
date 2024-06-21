@@ -29,6 +29,16 @@
         .back:hover { color: #682773; cursor: pointer; }
         .labels { font-size: 11px; }
         .add-experience:hover { background: #BA68C8; color: #fff; cursor: pointer; border: solid 1px #BA68C8; }
+
+        .css_select_div {
+            display: flex;
+            gap: 10px; /* Adjust the gap between the selects as needed */
+        }
+
+        .css_select {
+            flex: 1; /* Allows the selects to grow and fill the container */
+            min-width: 100px; /* Ensures a minimum width for the selects */
+        }
     </style>
 </head>
 <body>
@@ -74,30 +84,21 @@
                                         <label class="labels">BirthDate</label>
                                         <input type="date" name="birthdate" class="form-control" placeholder="BirthDate" value="<%= userFromDB.getBirthDate() %>">
                                     </div>
-                                    <div class="row mt-3">
-                                        <div class="col-md-4">
-                                            <label class="labels">Province</label>
-                                            <select class="form-control" id="tinh" name="tinh">
-                                                <option value="0">Province</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="labels">District</label>
-                                            <select class="form-control" id="quan" name="quan">
-                                                <option value="0">District</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="labels">Country</label>
-                                            <select class="form-control" id="phuong" name="phuong">
-                                                <option value="0">Country</option>
-                                            </select>
-                                        </div>
+                                    <div class="css_select_div">
+                                        <select class="css_select" id="tinh" name="tinh" title="Choose Province">
+                                            <option value="0">Province</option>
+                                        </select>
+                                        <select class="css_select" id="quan" name="quan" title="Choose District">
+                                            <option value="0">District</option>
+                                        </select>
+                                        <select class="css_select" id="phuong" name="phuong" title="Choose Country">
+                                            <option value="0">Country</option>
+                                        </select>
                                     </div>
 
-                                    <input type="hidden" name="hidden_tinh" id="hidden_tinh">
-                                    <input type="hidden" name="hidden_quan" id="hidden_quan">
-                                    <input type="hidden" name="hidden_phuong" id="hidden_phuong">
+                                    <input type="hidden" name="tinh" id="hidden_tinh">
+                                    <input type="hidden" name="quan" id="hidden_quan">
+                                    <input type="hidden" name="phuong" id="hidden_phuong">
 
                                     <script src="https://esgoo.net/scripts/jquery.js"></script>
                                     <script>
@@ -139,7 +140,6 @@
                                             });
                                         });
                                     </script>
-
                                     <div class="col-md-12">
                                         <label class="labels">Email ID</label>
                                         <input type="text" name="email_id" class="form-control" placeholder="Email ID" value="<%= userFromDB.getEmail() %>">
@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-primary profile-button" type="submit">Edit Profile</button>
+                                    <button class="btn btn-primary profile-button" type="submit">Save</button>
                                 </div>
                             </div>
                         </div>

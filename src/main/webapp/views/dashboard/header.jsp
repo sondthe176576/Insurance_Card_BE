@@ -7,6 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <html>
 <head>
     <title>Title</title>
@@ -53,7 +55,7 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.user}">
                         <a class="nav-link" href="${pageContext.request.contextPath}/customerinfo">
-                            <i class="fas fa-user-circle"></i>
+                            <i class="fas fa-user-circle fa-6x"></i>
                         </a>
                         <span class="user-name">Hello, ${sessionScope.user.username}</span>
                         <a href="${pageContext.request.contextPath}/logout" class="btn tp-btn tp-btn-blue">Logout</a>
