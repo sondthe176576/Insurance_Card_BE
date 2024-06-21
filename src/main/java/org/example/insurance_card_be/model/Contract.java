@@ -24,4 +24,5 @@ public class Contract {
     private Customers customer;
     private Motorcycle motorcycle;
     private Date cancellationDate;
+    private String methodPaymentType;
 }
