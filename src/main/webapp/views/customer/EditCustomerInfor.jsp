@@ -150,7 +150,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-primary profile-button" type="submit">Edit Profile</button>
+                                    <button class="btn btn-primary profile-button" type="submit">Save</button>
                                 </div>
                             </div>
                         </div>
