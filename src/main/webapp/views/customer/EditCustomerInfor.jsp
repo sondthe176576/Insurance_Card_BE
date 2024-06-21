@@ -85,13 +85,13 @@
                                         <input type="date" name="birthdate" class="form-control" placeholder="BirthDate" value="<%= userFromDB.getBirthDate() %>">
                                     </div>
                                     <div class="css_select_div">
-                                        <select class="css_select" id="tinh" name="tinh" title="Choose Province">
+                                        <select class="css_select" id="tinh" name="tinh" title="Choose Province" required>
                                             <option value="0">Province</option>
                                         </select>
-                                        <select class="css_select" id="quan" name="quan" title="Choose District">
+                                        <select class="css_select" id="quan" name="quan" title="Choose District" required>
                                             <option value="0">District</option>
                                         </select>
-                                        <select class="css_select" id="phuong" name="phuong" title="Choose Country">
+                                        <select class="css_select" id="phuong" name="phuong" title="Choose Country" required>
                                             <option value="0">Country</option>
                                         </select>
                                     </div>
@@ -146,7 +146,10 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Gender</label>
-                                        <input type="text" name="gender" class="form-control" placeholder="Gender" value="<%= userFromDB.getGender() %>">
+                                        <select name="gender" class="form-control">
+                                            <option value="Male" <%= "Male".equals(userFromDB.getGender()) ? "selected" : "" %>>Male</option>
+                                            <option value="Female" <%= "Female".equals(userFromDB.getGender()) ? "selected" : "" %>>Female</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="mt-5 text-center">

@@ -225,6 +225,7 @@
         background-color: #004080;
         color: white;
     }
+
 </style>
 <div class="container content-section">
     <h2>Peace Insurance has over 25 years of experience in the insurance industry.</h2>
@@ -233,12 +234,9 @@
         <div class="box">
             <h3>Insurance Products</h3>
             <p>We offer various solutions tailored to your needs, covering a wide range of insurance products.</p>
+            <a href="${pageContext.request.contextPath}/product">
             <button class="btn">View Our Products</button>
-        </div>
-        <div class="box">
-            <h3>Find An Agent</h3>
-            <p>Our experienced agents are ready to assist you in finding the best insurance solutions for your situation.</p>
-            <button class="btn">Find An Agent</button>
+            </a>
         </div>
     </div>
 
@@ -246,25 +244,10 @@
     <p>Insurance coverage tailored to your needs is easier than you think. Sometimes on purpose injected humor and the like, simple dummy.</p>
 
     <div class="row coverage-section">
-        <div class="col-md-3 coverage-box">
-            <div class="icon"><i class="fa fa-home"></i></div>
-            <h3>Home Insurance</h3>
+        <div class="coverage-box">
+            <div class="icon"><i class="fa fa-motorcycle"></i></div>
+            <h3>Motorbike Insurance</h3>
             <p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </div>
-        <div class="col-md-3 coverage-box">
-            <div class="icon"><i class="fa fa-briefcase"></i></div>
-            <h3>Business Insurance</h3>
-            <p>Aliquam at lacus ac sapien molestie consequat nec in nibh. Mauris sagittis magna ut nunc.</p>
-        </div>
-        <div class="col-md-3 coverage-box">
-            <div class="icon"><i class="fa fa-plane"></i></div>
-            <h3>Travel Insurance</h3>
-            <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Quisque pharetra elit ut nisl.</p>
-        </div>
-        <div class="col-md-3 coverage-box">
-            <div class="icon"><i class="fa fa-heart"></i></div>
-            <h3>Heart – Life Insurance</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
         </div>
     </div>
 
