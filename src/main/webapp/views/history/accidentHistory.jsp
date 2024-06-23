@@ -48,14 +48,14 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${listAh}" var="accident">
+            <c:forEach items="${listAh}" var="accidentHistoryCus">
                 <tr>
-                    <td>${accident.customerID}</td>
-                    <td>${accident.accidentID}</td>
-                    <td>${accident.description}</td>
-                    <td>${accident.accidentDate}</td>
-                    <td>${accident.accidentType}</td>
-                    <td>${accident.status}</td>
+                    <td>${accidentHistoryCus.customerID}</td>
+                    <td>${accidentHistoryCus.accidentID}</td>
+                    <td>${accidentHistoryCus.description}</td>
+                    <td>${accidentHistoryCus.accidentDate}</td>
+                    <td>${accidentHistoryCus.accidentType}</td>
+                    <td>${accidentHistoryCus.status}</td>
                 </tr>
             </c:forEach>
             </tbody>

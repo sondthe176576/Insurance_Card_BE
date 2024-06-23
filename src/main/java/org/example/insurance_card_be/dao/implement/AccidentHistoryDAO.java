@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.Accident;
+import org.example.insurance_card_be.model.AccidentHistoryCus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,8 +20,8 @@ public class AccidentHistoryDAO {
     }
 
     // Ham lay thong tin tat ca cac tai nan
-    public List<Accident> getAccidentHistory(int page, int pageSize, String status, String description) throws SQLException {
-        List<Accident> accidents = new ArrayList<>();
+    public List<AccidentHistoryCus> getAccidentHistory(int page, int pageSize, String status, String description) throws SQLException {
+        List<AccidentHistoryCus> accidentHistories = new ArrayList<>();
         String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, a.Status " +
                 "FROM Accidents a " +
                 "JOIN Contracts c ON a.ContractID = c.ContractID " +
@@ -51,18 +51,18 @@ public class AccidentHistoryDAO {
             stmt.setInt(paramIndex, pageSize);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    Accident accident = new Accident();
-                    accident.setAccidentID(rs.getInt("AccidentID"));
-                    accident.setContractID(rs.getInt("ContractID"));
-                    accident.setAccidentType(rs.getString("AccidentType"));
-                    accident.setAccidentDate(rs.getDate("AccidentDate"));
-                    accident.setDescription(rs.getString("Description"));
-                    accident.setCustomerID(rs.getInt("CustomerID"));
-                    accident.setStatus(rs.getString("Status"));
-                    accidents.add(accident);
+                    AccidentHistoryCus accidentHistoryCus = new AccidentHistoryCus();
+                    accidentHistoryCus.setAccidentID(rs.getInt("AccidentID"));
+                    accidentHistoryCus.setContractID(rs.getInt("ContractID"));
+                    accidentHistoryCus.setAccidentType(rs.getString("AccidentType"));
+                    accidentHistoryCus.setAccidentDate(rs.getDate("AccidentDate"));
+                    accidentHistoryCus.setDescription(rs.getString("Description"));
+                    accidentHistoryCus.setCustomerID(rs.getInt("CustomerID"));
+                    accidentHistoryCus.setStatus(rs.getString("Status"));
+                    accidentHistories.add(accidentHistoryCus);
                 }
             }
         }
-        return accidents;
+        return accidentHistories;
     }
     }

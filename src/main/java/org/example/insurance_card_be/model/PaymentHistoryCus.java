@@ -10,9 +10,11 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompensationHistory {
-    private int compensationID;
-    private int CustomerID;
+public class PaymentHistoryCus {
+    private int paymentID;
+    private int customerID;
     private BigDecimal amount;
-    private Date date;
+    private Date paymentDate;
+    private int paymentMethodID;
+    private int contractID;
 }

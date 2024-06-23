@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.PunishmentHistory;
+import org.example.insurance_card_be.model.PunishmentHistoryCus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +17,8 @@ public class PunishmentHistoryDAO {
         this.dbContext = new DBContext();
     }
 
-    public List<PunishmentHistory> getAllPunishmentHistoriesForCustomer(int customerId, int page, int pageSize) throws SQLException {
-        List<PunishmentHistory> punishmentHistoryList = new ArrayList<>();
+    public List<PunishmentHistoryCus> getAllPunishmentHistoriesForCustomer(int customerId, int page, int pageSize) throws SQLException {
+        List<PunishmentHistoryCus> punishmentHistoryCusList = new ArrayList<>();
         String query = "SELECT PunishmentID, CustomerID, Description, Date " +
                 "FROM PunishmentHistory " +
                 "WHERE CustomerID = ? " +
@@ -44,15 +44,15 @@ public class PunishmentHistoryDAO {
             stmt.setInt(3, pageSize);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    PunishmentHistory punishmentHistory = new PunishmentHistory();
-                    punishmentHistory.setPunishmentID(rs.getInt("PunishmentID"));
-                    punishmentHistory.setCustomerID(rs.getInt("CustomerID"));
-                    punishmentHistory.setDescription(rs.getString("Description"));
-                    punishmentHistory.setDate(rs.getDate("Date"));
-                    punishmentHistoryList.add(punishmentHistory);
+                    PunishmentHistoryCus punishmentHistoryCus = new PunishmentHistoryCus();
+                    punishmentHistoryCus.setPunishmentID(rs.getInt("PunishmentID"));
+                    punishmentHistoryCus.setCustomerID(rs.getInt("CustomerID"));
+                    punishmentHistoryCus.setDescription(rs.getString("Description"));
+                    punishmentHistoryCus.setDate(rs.getDate("Date"));
+                    punishmentHistoryCusList.add(punishmentHistoryCus);
                 }
             }
         }
-        return punishmentHistoryList;
+        return punishmentHistoryCusList;
     }
 }

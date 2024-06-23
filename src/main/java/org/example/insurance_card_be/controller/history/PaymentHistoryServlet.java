@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.example.insurance_card_be.dao.implement.PaymentHistoryDAO;
-import org.example.insurance_card_be.model.PaymentHistory;
+import org.example.insurance_card_be.model.PaymentHistoryCus;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +36,7 @@ public class PaymentHistoryServlet extends HttpServlet {
             pageSize = Integer.parseInt(request.getParameter("pageSize"));
         }
 
-        List<PaymentHistory> payments = paymentHistoryDAO.getPayments(page, pageSize);
+        List<PaymentHistoryCus> payments = paymentHistoryDAO.getPayments(page, pageSize);
         request.setAttribute("listPayment", payments);
         request.setAttribute("page", page);
         request.setAttribute("pageSize", pageSize);

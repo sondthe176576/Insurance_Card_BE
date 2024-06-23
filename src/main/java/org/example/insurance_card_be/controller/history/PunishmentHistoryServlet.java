@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.controller.history;
 
 import org.example.insurance_card_be.dao.implement.PunishmentHistoryDAO;
-import org.example.insurance_card_be.model.PunishmentHistory;
+import org.example.insurance_card_be.model.PunishmentHistoryCus;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -33,9 +33,9 @@ public class PunishmentHistoryServlet extends HttpServlet {
         }
 
         try {
-            List<PunishmentHistory> punishmentHistoryList = punishmentHistoryDAO.getAllPunishmentHistoriesForCustomer(customerId, page, pageSize);
+            List<PunishmentHistoryCus> punishmentHistoryCusList = punishmentHistoryDAO.getAllPunishmentHistoriesForCustomer(customerId, page, pageSize);
 
-            request.setAttribute("punishmentHistoryList", punishmentHistoryList);
+            request.setAttribute("punishmentHistoryList", punishmentHistoryCusList);
 
             request.getRequestDispatcher("/views/history/punishmentHistory.jsp").forward(request, response);
         } catch (SQLException e) {

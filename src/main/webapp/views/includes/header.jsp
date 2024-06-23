@@ -16,7 +16,7 @@
 <div class="tp-header" id="tp-header">
     <div class="container">
         <div class="row">
-            <div class="col-md-4"><a class="navbar-brand" href="${pageContext.request.contextPath}/views/dashboard/HomePageForCustomer.jsp"><img
+            <div class="col-md-4"><a class="navbar-brand" href="index.html"><img
                     src="${pageContext.request.contextPath}/img/logo.png" alt="logo"></a></div>
             <div class="col-md-8 cta-box text-right"><span class="call">Phone: 0123 456 789</span>
                 <!-- Single button -->
@@ -29,7 +29,7 @@
                         <li><a href="home-land.html"> <i class="fa fa-home"></i>Home Insurance</a></li>
                     </ul>
                 </div>
-                <a href="login-page.html" class="btn tp-btn tp-btn-blue">Login</a>
+                <a href="views/hompage/Login.jsp" class="btn tp-btn tp-btn-blue">Login</a>
                 <form class="form-inline my-2 my-lg-0 ml-3" onsubmit="return handleSearch(event)">
                     <div class="input-group">
                         <input class="form-control" type="search" placeholder="Search..." aria-label="Search"

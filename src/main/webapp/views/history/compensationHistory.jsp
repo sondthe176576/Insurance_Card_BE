@@ -33,9 +33,9 @@
                     <td>${history.amount}</td>
                     <td>${history.date}</td>
                     <td>
-                        <a href="compensationHistory?action=view&id=${history.compensationID}">View</a>
-                        <a href="compensationHistory?action=edit&id=${history.compensationID}">Edit</a>
-                        <form action="compensationHistory" method="post" style="display:inline;">
+                        <a href="compensationHistoryCus?action=view&id=${history.compensationID}">View</a>
+                        <a href="compensationHistoryCus?action=edit&id=${history.compensationID}">Edit</a>
+                        <form action="compensationHistoryCus" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="compensationID" value="${history.compensationID}">
                             <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
@@ -71,7 +71,7 @@
 
 
         <h2>Add New Compensation History</h2>
-        <form action="compensationHistory" method="post">
+        <form action="compensationHistoryCus" method="post">
             <input type="hidden" name="action" value="add">
             <label for="customerID">Customer ID:</label>
             <input type="text" id="addcustomerID" name="customerID" required><br>
@@ -80,25 +80,25 @@
             <input type="submit" value="Add">
         </form>
 
-        <c:if test="${not empty compensationHistory}">
+        <c:if test="${not empty compensationHistoryCus}">
             <h2>Edit Compensation History</h2>
-            <form action="compensationHistory" method="post">
+            <form action="compensationHistoryCus" method="post">
                 <input type="hidden" name="action" value="update">
-                <input type="hidden" name="compensationID" value="${compensationHistory.compensationID}">
+                <input type="hidden" name="compensationID" value="${compensationHistoryCus.compensationID}">
                 <label for="customerID">Customer ID:</label>
-                <input type="text" id="customerID" name="customerID" value="${compensationHistory.customerID}" required><br>
+                <input type="text" id="customerID" name="customerID" value="${compensationHistoryCus.customerID}" required><br>
                 <label for="amount">Amount:</label>
-                <input type="text" id="amount" name="amount" value="${compensationHistory.amount}" required><br>
+                <input type="text" id="amount" name="amount" value="${compensationHistoryCus.amount}" required><br>
                 <input type="submit" value="Update">
             </form>
         </c:if>
 
-        <c:if test="${not empty compensationHistory}">
+        <c:if test="${not empty compensationHistoryCus}">
             <h2>View Compensation History</h2>
-            <p>ID: ${compensationHistory.compensationID}</p>
-            <p>Customer ID: ${compensationHistory.customerID}</p>
-            <p>Amount: ${compensationHistory.amount}</p>
-            <p>Date: ${compensationHistory.date}</p>
+            <p>ID: ${compensationHistoryCus.compensationID}</p>
+            <p>Customer ID: ${compensationHistoryCus.customerID}</p>
+            <p>Amount: ${compensationHistoryCus.amount}</p>
+            <p>Date: ${compensationHistoryCus.date}</p>
         </c:if>
     </div>
 </div>

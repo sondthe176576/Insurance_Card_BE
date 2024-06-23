@@ -15,7 +15,7 @@
 <div class="container">
     <h1>Punishment History</h1>
     <div class="form-container">
-        <form action="${pageContext.request.contextPath}/punishmentHistory" method="get" class="row g-3 mb-3">
+        <form action="${pageContext.request.contextPath}/punishmentHistoryCus" method="get" class="row g-3 mb-3">
             <div class="col-md-2">
                 <label for="page" class="form-label">Page</label>
                 <input type="number" class="form-control" id="page" name="page" value="${param.page != null ? param.page : 1}">
@@ -39,12 +39,12 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${punishmentHistoryList}" var="punishmentHistory">
+            <c:forEach items="${punishmentHistoryCusList}" var="punishmentHistoryCus">
                 <tr>
-                    <td>${punishmentHistory.punishmentID}</td>
-                    <td>${punishmentHistory.customerID}</td>
-                    <td>${punishmentHistory.description}</td>
-                    <td>${punishmentHistory.date}</td>
+                    <td>${punishmentHistoryCus.punishmentID}</td>
+                    <td>${punishmentHistoryCus.customerID}</td>
+                    <td>${punishmentHistoryCus.description}</td>
+                    <td>${punishmentHistoryCus.date}</td>
                 </tr>
             </c:forEach>
             </tbody>

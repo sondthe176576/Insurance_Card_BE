@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.PaymentHistory;
+import org.example.insurance_card_be.model.PaymentHistoryCus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +17,8 @@ public class PaymentHistoryDAO {
         this.dbContext = new DBContext();
     }
 
-    public List<PaymentHistory> getPayments(int page, int pageSize) {
-        List<PaymentHistory> payments = new ArrayList<>();
+    public List<PaymentHistoryCus> getPayments(int page, int pageSize) {
+        List<PaymentHistoryCus> payments = new ArrayList<>();
         String query = "SELECT * FROM PaymentHistory ORDER BY PaymentID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         int offset = (page - 1) * pageSize;
         try (Connection connection = dbContext.getConnection();
@@ -27,7 +27,7 @@ public class PaymentHistoryDAO {
             statement.setInt(2, pageSize);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    PaymentHistory payment = new PaymentHistory();
+                    PaymentHistoryCus payment = new PaymentHistoryCus();
                     payment.setPaymentID(resultSet.getInt("PaymentID"));
                     payment.setCustomerID(resultSet.getInt("CustomerID"));
                     payment.setAmount(resultSet.getBigDecimal("Amount"));

@@ -4,17 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentHistory {
-    private int paymentID;
+public class PunishmentHistoryCus {
+    private int punishmentID;
     private int customerID;
-    private BigDecimal amount;
-    private Date paymentDate;
-    private int paymentMethodID;
-    private int contractID;
+    private String description;
+    private Date date;
 }

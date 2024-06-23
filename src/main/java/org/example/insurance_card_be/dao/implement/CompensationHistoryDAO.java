@@ -1,6 +1,6 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.model.CompensationHistory;
+import org.example.insurance_card_be.model.CompensationHistoryCus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import org.example.insurance_card_be.dao.DBContext;
 
 public class CompensationHistoryDAO {
 
-    public List<CompensationHistory> getAllCompensationHistories() {
-        List<CompensationHistory> list = new ArrayList<>();
+    public List<CompensationHistoryCus> getAllCompensationHistories() {
+        List<CompensationHistoryCus> list = new ArrayList<>();
         String query = "SELECT * FROM CompensationHistory";
 
         try (Connection connection = DBContext.getConnection();
@@ -25,7 +25,7 @@ public class CompensationHistoryDAO {
                 BigDecimal amount = resultSet.getBigDecimal("amount");
                 Date date = resultSet.getDate("date");
 
-                list.add(new CompensationHistory(compensationID, customerID, amount, date));
+                list.add(new CompensationHistoryCus(compensationID, customerID, amount, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,8 +35,8 @@ public class CompensationHistoryDAO {
     }
 
 
-    public CompensationHistory getCompensationHistoryById(int compensationID) {
-        CompensationHistory compensationHistory = null;
+    public CompensationHistoryCus getCompensationHistoryById(int compensationID) {
+        CompensationHistoryCus compensationHistoryCus = null;
         String query = "SELECT * FROM CompensationHistory WHERE compensationID = ?";
 
         try (Connection connection = DBContext.getConnection();
@@ -50,26 +50,26 @@ public class CompensationHistoryDAO {
                     BigDecimal amount = resultSet.getBigDecimal("amount");
                     Date date = resultSet.getDate("date");
 
-                    compensationHistory = new CompensationHistory(compensationID, customerID, amount, date);
+                    compensationHistoryCus = new CompensationHistoryCus(compensationID, customerID, amount, date);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return compensationHistory;
+        return compensationHistoryCus;
     }
 
 
-    public void addCompensationHistory(CompensationHistory compensationHistory) {
+    public void addCompensationHistory(CompensationHistoryCus compensationHistoryCus) {
         String query = "INSERT INTO CompensationHistory (CustomerID, amount, date) VALUES (?, ?, ?)";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, compensationHistory.getCustomerID());
-            preparedStatement.setBigDecimal(2, compensationHistory.getAmount());
-            preparedStatement.setDate(3, new java.sql.Date(compensationHistory.getDate().getTime()));
+            preparedStatement.setInt(1, compensationHistoryCus.getCustomerID());
+            preparedStatement.setBigDecimal(2, compensationHistoryCus.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(compensationHistoryCus.getDate().getTime()));
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -77,16 +77,16 @@ public class CompensationHistoryDAO {
         }
     }
 
-    public void updateCompensationHistory(CompensationHistory compensationHistory) {
+    public void updateCompensationHistory(CompensationHistoryCus compensationHistoryCus) {
         String query = "UPDATE CompensationHistory SET CustomerID = ?, amount = ?, date = ? WHERE compensationID = ?";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, compensationHistory.getCustomerID());
-            preparedStatement.setBigDecimal(2, compensationHistory.getAmount());
-            preparedStatement.setDate(3, new java.sql.Date(compensationHistory.getDate().getTime()));
-            preparedStatement.setInt(4, compensationHistory.getCompensationID());
+            preparedStatement.setInt(1, compensationHistoryCus.getCustomerID());
+            preparedStatement.setBigDecimal(2, compensationHistoryCus.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(compensationHistoryCus.getDate().getTime()));
+            preparedStatement.setInt(4, compensationHistoryCus.getCompensationID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
