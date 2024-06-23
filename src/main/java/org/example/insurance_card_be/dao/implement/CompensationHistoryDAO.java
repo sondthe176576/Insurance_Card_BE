@@ -34,6 +34,31 @@ public class CompensationHistoryDAO {
         return list;
     }
 
+    public List<CompensationHistoryCus> getCompensationHistoriesByCustomerID(int customerID) {
+        List<CompensationHistoryCus> list = new ArrayList<>();
+        String query = "SELECT * FROM CompensationHistory WHERE CustomerID = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, customerID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int compensationID = resultSet.getInt("compensationID");
+                    BigDecimal amount = resultSet.getBigDecimal("amount");
+                    Date date = resultSet.getDate("date");
+
+                    list.add(new CompensationHistoryCus(compensationID, customerID, amount, date));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 
     public CompensationHistoryCus getCompensationHistoryById(int compensationID) {
         CompensationHistoryCus compensationHistoryCus = null;

@@ -12,15 +12,18 @@ public class CompensationHistoryService {
     public CompensationHistoryService() {
         this.compensationHistoryDAO = new CompensationHistoryDAO();
     }
+
     public List<CompensationHistoryCus> getAllCompensationHistories() {
         return compensationHistoryDAO.getAllCompensationHistories();
     }
-
 
     public CompensationHistoryCus getCompensationHistoryById(int compensationID) {
         return compensationHistoryDAO.getCompensationHistoryById(compensationID);
     }
 
+    public List<CompensationHistoryCus> getCompensationHistoriesByCustomerID(int customerID) {
+        return compensationHistoryDAO.getCompensationHistoriesByCustomerID(customerID);
+    }
 
     public void addCompensationHistory(CompensationHistoryCus compensationHistoryCus) {
         compensationHistoryDAO.addCompensationHistory(compensationHistoryCus);
@@ -32,9 +35,5 @@ public class CompensationHistoryService {
 
     public void deleteCompensationHistory(int compensationID) {
         compensationHistoryDAO.deleteCompensationHistory(compensationID);
-    }
-
-    public List<CompensationHistoryCus> getCompensationHistoriesByCustomerID(int customerID) {
-        return compensationHistoryDAO.getAllCompensationHistories();
     }
 }

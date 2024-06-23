@@ -4,18 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccidentHistoryCus {
     private int accidentID;
-    private int contractID;
     private int customerID;
-    private String accidentType;
-    private Date accidentDate;
     private String description;
-    private String customerName;
-    private String status;
+    private Date accidentDate;
 }

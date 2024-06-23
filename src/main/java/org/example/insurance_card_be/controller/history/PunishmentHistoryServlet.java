@@ -1,52 +1,86 @@
 package org.example.insurance_card_be.controller.history;
 
-import org.example.insurance_card_be.dao.implement.PunishmentHistoryDAO;
 import org.example.insurance_card_be.model.PunishmentHistoryCus;
+import org.example.insurance_card_be.service.PunishmentHistoryService;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
 @WebServlet("/punishmentHistory")
 public class PunishmentHistoryServlet extends HttpServlet {
-    private PunishmentHistoryDAO punishmentHistoryDAO;
+    private PunishmentHistoryService punishmentHistoryService;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        punishmentHistoryDAO = new PunishmentHistoryDAO();
+        punishmentHistoryService = new PunishmentHistoryService();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int customerId = 1; // Example: Hardcoded customer ID, replace with dynamic value from session or request parameter
-        int page = 1; // Default page number
-        int pageSize = 5; // Default page size
-
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
+        String action = request.getParameter("action");
 
         try {
-            List<PunishmentHistoryCus> punishmentHistoryCusList = punishmentHistoryDAO.getAllPunishmentHistoriesForCustomer(customerId, page, pageSize);
-
-            request.setAttribute("punishmentHistoryList", punishmentHistoryCusList);
-
-            request.getRequestDispatcher("/views/history/punishmentHistory.jsp").forward(request, response);
-        } catch (SQLException e) {
-            throw new ServletException(e);
+            if (action == null || action.isEmpty()) {
+                List<PunishmentHistoryCus> list = punishmentHistoryService.getAllPunishmentHistories();
+                request.setAttribute("punishmentHistories", list);
+                request.getRequestDispatcher("/views/history/punishmentHistory.jsp").forward(request, response);
+            } else if ("view".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                PunishmentHistoryCus punishmentHistoryCus = punishmentHistoryService.getPunishmentHistoryById(id);
+                request.setAttribute("punishmentHistory", punishmentHistoryCus);
+                request.getRequestDispatcher("/views/history/viewPunishmentHistory.jsp").forward(request, response);
+            } else if ("edit".equals(action)) {
+                int id = Integer.parseInt(request.getParameter("punishmentID"));
+                PunishmentHistoryCus punishmentHistoryCus = punishmentHistoryService.getPunishmentHistoryById(id);
+                request.setAttribute("punishmentHistory", punishmentHistoryCus);
+                request.getRequestDispatcher("/views/history/editPunishmentHistory.jsp").forward(request, response);
+            } else if ("listByCustomerID".equals(action)) {
+                int customerID = Integer.parseInt(request.getParameter("customerID"));
+                List<PunishmentHistoryCus> list = punishmentHistoryService.getPunishmentHistoriesByCustomerID(customerID);
+                request.setAttribute("punishmentHistories", list);
+                request.getRequestDispatcher("/views/history/punishmentHistory.jsp").forward(request, response);
+            }
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID format");
+        } catch (Exception e) {
+            throw new ServletException("Error processing request", e);
         }
     }
 
     @Override
-    public void destroy() {
-        // Clean up resources if needed
-        super.destroy();
-    }
-}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String action = request.getParameter("action");
 
+        if ("add".equals(action)) {
+            int customerID = Integer.parseInt(request.getParameter("customerID"));
+            String description = request.getParameter("description");
+            Date date = new Date();  // Assuming the current date
+
+            PunishmentHistoryCus punishmentHistoryCus = new PunishmentHistoryCus(0, customerID, description, date);
+            punishmentHistoryService.addPunishmentHistory(punishmentHistoryCus);
+            response.sendRedirect("punishmentHistory");
+        } else if ("update".equals(action)) {
+            int punishmentID = Integer.parseInt(request.getParameter("punishmentID"));
+            int customerID = Integer.parseInt(request.getParameter("customerID"));
+            String description = request.getParameter("description");
+            Date date = new Date();  // Assuming the current date
+
+            PunishmentHistoryCus punishmentHistoryCus = new PunishmentHistoryCus(punishmentID, customerID, description, date);
+            punishmentHistoryService.updatePunishmentHistory(punishmentHistoryCus);
+            response.sendRedirect("punishmentHistory");
+        } else if ("delete".equals(action)) {
+            int punishmentID = Integer.parseInt(request.getParameter("punishmentID"));
+            punishmentHistoryService.deletePunishmentHistory(punishmentID);
+            response.sendRedirect("punishmentHistory");
+        }
+    }
+
+}

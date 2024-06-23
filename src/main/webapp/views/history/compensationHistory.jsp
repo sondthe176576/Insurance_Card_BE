@@ -13,10 +13,10 @@
 </head>
 <body>
 <div class="container">
-    <h1>Compensation History</h1>
+    <h1 class="mt-4 mb-4">Compensation History</h1>
     <div class="form-container">
-        <table class="table table-bordered">
-            <thead>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
             <tr>
                 <th>ID</th>
                 <th>Customer ID</th>
@@ -33,12 +33,12 @@
                     <td>${history.amount}</td>
                     <td>${history.date}</td>
                     <td>
-                        <a href="compensationHistoryCus?action=view&id=${history.compensationID}">View</a>
-                        <a href="compensationHistoryCus?action=edit&id=${history.compensationID}">Edit</a>
-                        <form action="compensationHistoryCus" method="post" style="display:inline;">
+                        <a href="compensationHistory?action=view&id=${history.compensationID}" class="btn btn-primary btn-sm">View</a>
+                        <a href="compensationHistory?action=edit&id=${history.compensationID}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="compensationHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="compensationID" value="${history.compensationID}">
-                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
                         </form>
                     </td>
                 </tr>
@@ -47,58 +47,63 @@
         </table>
 
         <!-- Pagination -->
-        <style type="text/css">
-                .pagination .page-link {
-                color: black;
-        }
-        </style>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <c:if test="${page > 1}">
+                    <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=1&pageSize=${pageSize}">First</a></li>
+                    <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=${page - 1}&pageSize=${pageSize}">Previous</a></li>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <li class="page-item ${page == i ? 'active' : ''}"><a class="page-link" href="?customerId=${customerId}&page=${i}&pageSize=${pageSize}">${i}</a></li>
+                </c:forEach>
+                <c:if test="${page < totalPages}">
+                    <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=${page + 1}&pageSize=${pageSize}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=${totalPages}&pageSize=${pageSize}">Last</a></li>
+                </c:if>
+            </ul>
+        </nav>
 
-        <ul class="pagination">
-            <c:if test="${page > 1}">
-                <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=1&pageSize=${pageSize}">First</a></li>
-                <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=${page - 1}&pageSize=${pageSize}">Previous</a></li>
-            </c:if>
-            <c:forEach var="i" begin="1" end="${totalPages}">
-                <li class="page-item ${page == i ? 'active' : ''}"><a class="page-link" href="?customerId=${customerId}&page=${i}&pageSize=${pageSize}">${i}</a></li>
-            </c:forEach>
-            <c:if test="${page < totalPages}">
-                <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=${page + 1}&pageSize=${pageSize}">Next</a></li>
-                <li class="page-item"><a class="page-link" href="?customerId=${customerId}&page=${totalPages}&pageSize=${pageSize}">Last</a></li>
-            </c:if>
-        </ul>
-
-
-
-
-        <h2>Add New Compensation History</h2>
-        <form action="compensationHistoryCus" method="post">
+        <h2 class="mt-4 mb-4">Add New Compensation History</h2>
+        <form action="compensationHistory" method="post">
             <input type="hidden" name="action" value="add">
-            <label for="customerID">Customer ID:</label>
-            <input type="text" id="addcustomerID" name="customerID" required><br>
-            <label for="amount">Amount:</label>
-            <input type="text" id="addamount" name="amount" required><br>
-            <input type="submit" value="Add">
+            <div class="mb-3">
+                <label for="addcustomerID" class="form-label">Customer ID:</label>
+                <input type="text" class="form-control" id="addcustomerID" name="customerID" required>
+            </div>
+            <div class="mb-3">
+                <label for="addamount" class="form-label">Amount:</label>
+                <input type="text" class="form-control" id="addamount" name="amount" required>
+            </div>
+            <button type="submit" class="btn btn-success">Add</button>
         </form>
 
         <c:if test="${not empty compensationHistoryCus}">
-            <h2>Edit Compensation History</h2>
-            <form action="compensationHistoryCus" method="post">
+            <h2 class="mt-4 mb-4">Edit Compensation History</h2>
+            <form action="compensationHistory" method="post">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="compensationID" value="${compensationHistoryCus.compensationID}">
-                <label for="customerID">Customer ID:</label>
-                <input type="text" id="customerID" name="customerID" value="${compensationHistoryCus.customerID}" required><br>
-                <label for="amount">Amount:</label>
-                <input type="text" id="amount" name="amount" value="${compensationHistoryCus.amount}" required><br>
-                <input type="submit" value="Update">
+                <div class="mb-3">
+                    <label for="customerID" class="form-label">Customer ID:</label>
+                    <input type="text" class="form-control" id="customerID" name="customerID" value="${compensationHistoryCus.customerID}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount:</label>
+                    <input type="text" class="form-control" id="amount" name="amount" value="${compensationHistoryCus.amount}" required>
+                </div>
+                <button type="submit" class="btn btn-warning">Update</button>
             </form>
         </c:if>
 
         <c:if test="${not empty compensationHistoryCus}">
-            <h2>View Compensation History</h2>
-            <p>ID: ${compensationHistoryCus.compensationID}</p>
-            <p>Customer ID: ${compensationHistoryCus.customerID}</p>
-            <p>Amount: ${compensationHistoryCus.amount}</p>
-            <p>Date: ${compensationHistoryCus.date}</p>
+            <h2 class="mt-4 mb-4">View Compensation History</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p>ID: ${compensationHistoryCus.compensationID}</p>
+                    <p>Customer ID: ${compensationHistoryCus.customerID}</p>
+                    <p>Amount: ${compensationHistoryCus.amount}</p>
+                    <p>Date: ${compensationHistoryCus.date}</p>
+                </div>
+            </div>
         </c:if>
     </div>
 </div>

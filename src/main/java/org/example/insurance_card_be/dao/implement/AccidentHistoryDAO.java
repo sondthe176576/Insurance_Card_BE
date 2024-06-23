@@ -1,68 +1,132 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.AccidentHistoryCus;
+import org.example.insurance_card_be.dao.DBContext;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccidentHistoryDAO {
-    // Khai bao connection
-    private Connection connection;
 
-    // Khởi tạo connection
-    public AccidentHistoryDAO() {
-        this.connection = new DBContext().getConnection();
+    public List<AccidentHistoryCus> getAllAccidentHistories() {
+        List<AccidentHistoryCus> list = new ArrayList<>();
+        String query = "SELECT [AccidentID], [CustomerID], [Description], [Date] FROM [SWP391_TEAM6].[dbo].[AccidentHistory]";
+
+        try (Connection connection = DBContext.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                int accidentID = resultSet.getInt("AccidentID");
+                int customerID = resultSet.getInt("CustomerID");
+                String description = resultSet.getString("Description");
+                Date accidentDate = resultSet.getDate("Date");
+
+                list.add(new AccidentHistoryCus(accidentID, customerID, description, accidentDate));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
-    // Ham lay thong tin tat ca cac tai nan
-    public List<AccidentHistoryCus> getAccidentHistory(int page, int pageSize, String status, String description) throws SQLException {
-        List<AccidentHistoryCus> accidentHistories = new ArrayList<>();
-        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, a.Status " +
-                "FROM Accidents a " +
-                "JOIN Contracts c ON a.ContractID = c.ContractID " +
-                "JOIN Customers cu ON c.CustomerID = cu.CustomerID " +
-                "JOIN Users u ON cu.UserID = u.UserID ";
-        List<String> conditions = new ArrayList<>();
-        if (status != null && !status.isEmpty()) {
-            conditions.add("a.Status = ?");
-        }
-        if (description != null && !description.isEmpty()) {
-            conditions.add("a.Description LIKE ?");
-        }
-        if (!conditions.isEmpty()) {
-            query += "WHERE " + String.join(" AND ", conditions) + " ";
-        }
-        query += "ORDER BY a.AccidentID " +
-                "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            int paramIndex = 1;
-            if (status != null && !status.isEmpty()) {
-                stmt.setString(paramIndex++, status);
-            }
-            if (description != null && !description.isEmpty()) {
-                stmt.setString(paramIndex++, "%" + description + "%");
-            }
-            stmt.setInt(paramIndex++, (page - 1) * pageSize);
-            stmt.setInt(paramIndex, pageSize);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    AccidentHistoryCus accidentHistoryCus = new AccidentHistoryCus();
-                    accidentHistoryCus.setAccidentID(rs.getInt("AccidentID"));
-                    accidentHistoryCus.setContractID(rs.getInt("ContractID"));
-                    accidentHistoryCus.setAccidentType(rs.getString("AccidentType"));
-                    accidentHistoryCus.setAccidentDate(rs.getDate("AccidentDate"));
-                    accidentHistoryCus.setDescription(rs.getString("Description"));
-                    accidentHistoryCus.setCustomerID(rs.getInt("CustomerID"));
-                    accidentHistoryCus.setStatus(rs.getString("Status"));
-                    accidentHistories.add(accidentHistoryCus);
+    public AccidentHistoryCus getAccidentHistoryById(int accidentID) {
+        AccidentHistoryCus accidentHistoryCus = null;
+        String query = "SELECT [AccidentID], [CustomerID], [Description], [Date] FROM [SWP391_TEAM6].[dbo].[AccidentHistory] WHERE [AccidentID] = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, accidentID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int customerID = resultSet.getInt("CustomerID");
+                    String description = resultSet.getString("Description");
+                    Date accidentDate = resultSet.getDate("Date");
+
+                    accidentHistoryCus = new AccidentHistoryCus(accidentID, customerID, description, accidentDate);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return accidentHistories;
+
+        return accidentHistoryCus;
     }
+
+    public void addAccidentHistory(AccidentHistoryCus accidentHistoryCus) {
+        String query = "INSERT INTO [SWP391_TEAM6].[dbo].[AccidentHistory] ([CustomerID], [Description], [Date]) VALUES (?, ?, ?)";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, accidentHistoryCus.getCustomerID());
+            preparedStatement.setString(2, accidentHistoryCus.getDescription());
+            preparedStatement.setDate(3, new java.sql.Date(accidentHistoryCus.getAccidentDate().getTime()));
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+
+    public void updateAccidentHistory(AccidentHistoryCus accidentHistoryCus) {
+        String query = "UPDATE [SWP391_TEAM6].[dbo].[AccidentHistory] SET [CustomerID] = ?, [Description] = ?, [Date] = ? WHERE [AccidentID] = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, accidentHistoryCus.getCustomerID());
+            preparedStatement.setString(2, accidentHistoryCus.getDescription());
+            preparedStatement.setDate(3, new java.sql.Date(accidentHistoryCus.getAccidentDate().getTime()));
+            preparedStatement.setInt(4, accidentHistoryCus.getAccidentID());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteAccidentHistory(int accidentID) {
+        String query = "DELETE FROM [SWP391_TEAM6].[dbo].[AccidentHistory] WHERE [AccidentID] = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, accidentID);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<AccidentHistoryCus> getAccidentHistoriesByCustomerID(int customerID) {
+        List<AccidentHistoryCus> list = new ArrayList<>();
+        String query = "SELECT [AccidentID], [CustomerID], [Description], [Date] FROM [SWP391_TEAM6].[dbo].[AccidentHistory] WHERE [CustomerID] = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, customerID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int accidentID = resultSet.getInt("AccidentID");
+                    String description = resultSet.getString("Description");
+                    Date accidentDate = resultSet.getDate("Date");
+
+                    list.add(new AccidentHistoryCus(accidentID, customerID, description, accidentDate));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+}
