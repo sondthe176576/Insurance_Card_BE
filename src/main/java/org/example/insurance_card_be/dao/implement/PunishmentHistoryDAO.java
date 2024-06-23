@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PunishmentDAO {
+public class PunishmentHistoryDAO {
     private final DBContext dbContext;
 
-    public PunishmentDAO() {
+    public PunishmentHistoryDAO() {
         this.dbContext = new DBContext();
     }
 

@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.example.insurance_card_be.dao.implement.AccidentDAO;
+import org.example.insurance_card_be.dao.implement.AccidentHistoryDAO;
 import org.example.insurance_card_be.model.Accident;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class AccidentHistory extends HttpServlet {
             int page = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
             int pageSize = (pageSizeParam != null && !pageSizeParam.isEmpty()) ? Integer.parseInt(pageSizeParam) : 10;
 
-            AccidentDAO rdao = new AccidentDAO();
+            AccidentHistoryDAO rdao = new AccidentHistoryDAO();
             List<Accident> listAh = rdao.getAccidentHistory(page, pageSize, status, description);  // Updated method call
             request.setAttribute("listAh", listAh);
             request.getRequestDispatcher("/views/history/accidentHistory.jsp").forward(request, response);

@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ContractDAO {
+public class ContractCustomerDAO {
     // Khai bao connection
     private Connection connection;
 
     // Khoi tao connection
-    public ContractDAO() {
+    public ContractCustomerDAO() {
         this.connection = DBContext.getConnection();
     }
 

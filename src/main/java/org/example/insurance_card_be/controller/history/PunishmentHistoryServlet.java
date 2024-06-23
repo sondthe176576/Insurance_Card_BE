@@ -1,6 +1,6 @@
 package org.example.insurance_card_be.controller.history;
 
-import org.example.insurance_card_be.dao.implement.PunishmentDAO;
+import org.example.insurance_card_be.dao.implement.PunishmentHistoryDAO;
 import org.example.insurance_card_be.model.PunishmentHistory;
 
 import java.io.IOException;
@@ -14,12 +14,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/punishmentHistory")
 public class PunishmentHistoryServlet extends HttpServlet {
-    private PunishmentDAO punishmentDAO;
+    private PunishmentHistoryDAO punishmentHistoryDAO;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        punishmentDAO = new PunishmentDAO();
+        punishmentHistoryDAO = new PunishmentHistoryDAO();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PunishmentHistoryServlet extends HttpServlet {
         }
 
         try {
-            List<PunishmentHistory> punishmentHistoryList = punishmentDAO.getAllPunishmentHistoriesForCustomer(customerId, page, pageSize);
+            List<PunishmentHistory> punishmentHistoryList = punishmentHistoryDAO.getAllPunishmentHistoriesForCustomer(customerId, page, pageSize);
 
             request.setAttribute("punishmentHistoryList", punishmentHistoryList);
 

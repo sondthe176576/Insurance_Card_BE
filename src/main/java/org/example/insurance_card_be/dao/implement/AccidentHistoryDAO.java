@@ -10,12 +10,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccidentDAO {
+public class AccidentHistoryDAO {
     // Khai bao connection
     private Connection connection;
 
     // Khởi tạo connection
-    public AccidentDAO() {
+    public AccidentHistoryDAO() {
         this.connection = new DBContext().getConnection();
     }
 
