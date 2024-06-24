@@ -1,45 +1,115 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.PaymentHistoryCus;
+import org.example.insurance_card_be.dao.DBContext;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 public class PaymentHistoryDAO {
-    private final DBContext dbContext;
 
-    public PaymentHistoryDAO() {
-        this.dbContext = new DBContext();
+    public List<PaymentHistoryCus> getAllPaymentHistories() {
+        List<PaymentHistoryCus> list = new ArrayList<>();
+        String query = "SELECT * FROM PaymentHistory";
+
+        try (Connection connection = DBContext.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                int paymentID = resultSet.getInt("paymentID");
+                int customerID = resultSet.getInt("customerID");
+                BigDecimal amount = resultSet.getBigDecimal("amount");
+                Date paymentDate = resultSet.getDate("paymentDate");
+                int paymentMethodID = resultSet.getInt("paymentMethodID");
+                int contractID = resultSet.getInt("contractID");
+
+                list.add(new PaymentHistoryCus(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
-    public List<PaymentHistoryCus> getPayments(int page, int pageSize) {
-        List<PaymentHistoryCus> payments = new ArrayList<>();
-        String query = "SELECT * FROM PaymentHistory ORDER BY PaymentID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        int offset = (page - 1) * pageSize;
-        try (Connection connection = dbContext.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, offset);
-            statement.setInt(2, pageSize);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    PaymentHistoryCus payment = new PaymentHistoryCus();
-                    payment.setPaymentID(resultSet.getInt("PaymentID"));
-                    payment.setCustomerID(resultSet.getInt("CustomerID"));
-                    payment.setAmount(resultSet.getBigDecimal("Amount"));
-                    payment.setPaymentDate(resultSet.getDate("PaymentDate"));
-                    payment.setPaymentMethodID(resultSet.getInt("PaymentMethodID"));
-                    payment.setContractID(resultSet.getInt("ContractID"));
-                    payments.add(payment);
+    public PaymentHistoryCus getPaymentHistoryById(int paymentID) {
+        PaymentHistoryCus paymentHistoryCus = null;
+        String query = "SELECT * FROM PaymentHistory WHERE paymentID = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, paymentID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int customerID = resultSet.getInt("customerID");
+                    BigDecimal amount = resultSet.getBigDecimal("amount");
+                    Date paymentDate = resultSet.getDate("paymentDate");
+                    int paymentMethodID = resultSet.getInt("paymentMethodID");
+                    int contractID = resultSet.getInt("contractID");
+
+                    paymentHistoryCus = new PaymentHistoryCus(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle this exception appropriately
+            e.printStackTrace();
         }
-        return payments;
+
+        return paymentHistoryCus;
+    }
+
+    public void addPaymentHistory(PaymentHistoryCus paymentHistoryCus) {
+        String query = "INSERT INTO PaymentHistory (customerID, amount, paymentDate, paymentMethodID, contractID) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, paymentHistoryCus.getCustomerID());
+            preparedStatement.setBigDecimal(2, paymentHistoryCus.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCus.getPaymentDate().getTime()));
+            preparedStatement.setInt(4, paymentHistoryCus.getPaymentMethodID());
+            preparedStatement.setInt(5, paymentHistoryCus.getContractID());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePaymentHistory(PaymentHistoryCus paymentHistoryCus) {
+        String query = "UPDATE PaymentHistory SET customerID = ?, amount = ?, paymentDate = ?, paymentMethodID = ?, contractID = ? WHERE paymentID = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, paymentHistoryCus.getCustomerID());
+            preparedStatement.setBigDecimal(2, paymentHistoryCus.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCus.getPaymentDate().getTime()));
+            preparedStatement.setInt(4, paymentHistoryCus.getPaymentMethodID());
+            preparedStatement.setInt(5, paymentHistoryCus.getContractID());
+            preparedStatement.setInt(6, paymentHistoryCus.getPaymentID());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePaymentHistory(int paymentID) {
+        String query = "DELETE FROM PaymentHistory WHERE paymentID = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, paymentID);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -94,7 +94,7 @@
             <li><a class="nav-link" href="${pageContext.request.contextPath}/accidentHistory">Accident History</a></li>
             <li><a class="nav-link" href="${pageContext.request.contextPath}/punishmentHistory">Punishment History</a></li>
             <li><a class="nav-link" href="${pageContext.request.contextPath}/compensationHistory">Compensation History</a></li>
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/contractInformation.jsp')">Contract Information</a>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/contracts">Contract Information</a></li>
         </div>
     </div>
 
