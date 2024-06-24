@@ -48,8 +48,8 @@ public class CustomerEditServlet extends HttpServlet {
         }
 
         Users customer = new Users();
-        customer.setUserId(id);
-        customer.setUserName(username);
+        customer.setUserID(id);
+        customer.setUsername(username);
         customer.setPassword(password);
         customer.setEmail(email);
         customer.setMobile(mobile);

@@ -279,7 +279,7 @@
         <a href="#" class="page-link">2</a>
     </div>
 </div>
-<%@ include file="/views/dashboard/footer.jsp" %>
+<%@ include file="/views/includes/footer.jsp" %>
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

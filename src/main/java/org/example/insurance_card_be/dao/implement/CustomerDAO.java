@@ -17,8 +17,8 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
-               user.setUserId(rs.getInt("UserID"));
-               user.setUserName(rs.getString("Username"));
+               user.setUserID(rs.getInt("UserID"));
+               user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 user.setEmail(rs.getString("Email"));
@@ -55,7 +55,7 @@ public class CustomerDAO extends DBContext {
         String sql = "delete from [Users] where UserID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setObject(1, users.getUserId());
+            st.setObject(1, users.getUserID());
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -73,8 +73,8 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
-                user.setUserId(rs.getInt("UserID"));
-                user.setUserName(rs.getString("Username"));
+                user.setUserID(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 user.setEmail(rs.getString("Email"));
@@ -119,7 +119,7 @@ public class CustomerDAO extends DBContext {
                 "VALUES (?, ?, 'Customer', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, customer.getUserName());
+            statement.setString(1, customer.getUsername());
             statement.setString(2, customer.getPassword());
             statement.setString(3, customer.getEmail());
             statement.setString(4, customer.getMobile());
@@ -166,7 +166,7 @@ public class CustomerDAO extends DBContext {
                 "[Gender] = ? WHERE [UserID] = ?";
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, customer.getUserName());
+            statement.setString(1, customer.getUsername());
             statement.setString(2, customer.getPassword());
             statement.setString(3, "Customer");  // Ensure the role is set
             statement.setString(4, customer.getEmail());
@@ -179,7 +179,7 @@ public class CustomerDAO extends DBContext {
             statement.setString(11, customer.getFullName());
             statement.setDate(12, new java.sql.Date(customer.getBirthDate().getTime()));
             statement.setString(13, customer.getGender());
-            statement.setInt(14, customer.getUserId());
+            statement.setInt(14, customer.getUserID());
 
             // Debugging statement
             System.out.println("Executing SQL: " + statement.toString());
@@ -233,8 +233,8 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
-                user.setUserId(rs.getInt("UserID"));
-                user.setUserName(rs.getString("Username"));
+                user.setUserID(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 user.setEmail(rs.getString("Email"));
@@ -269,8 +269,8 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
-                user.setUserId(rs.getInt("UserID"));
-                user.setUserName(rs.getString("Username"));
+                user.setUserID(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 user.setEmail(rs.getString("Email"));
@@ -305,8 +305,8 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
-                user.setUserId(rs.getInt("UserID"));
-                user.setUserName(rs.getString("Username"));
+                user.setUserID(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 user.setEmail(rs.getString("Email"));
@@ -340,8 +340,8 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
-                user.setUserId(rs.getInt("UserID"));
-                user.setUserName(rs.getString("Username"));
+                user.setUserID(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 user.setEmail(rs.getString("Email"));

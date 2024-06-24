@@ -46,7 +46,7 @@ public class CustomerCreateServlet extends HttpServlet {
         }
 
         Users customer = new Users();
-        customer.setUserName(username);
+        customer.setUsername(username);
         customer.setPassword(password);
         customer.setEmail(email);
         customer.setMobile(mobile);
