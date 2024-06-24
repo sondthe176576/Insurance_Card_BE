@@ -1,8 +1,5 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.implement.ResolveAccidentDAO;
-import org.example.insurance_card_be.model.Accident;
-import org.example.insurance_card_be.model.AccidentHistory;
 import org.example.insurance_card_be.util.EmailUtil;
 
 import java.sql.SQLException;

@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.example.insurance_card_be.dao.implement.UserDAO;
-import org.example.insurance_card_be.model.Users;
 import jakarta.servlet.ServletException;
 import java.io.IOException;
 import java.util.logging.Logger;

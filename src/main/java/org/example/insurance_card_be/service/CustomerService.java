@@ -1,9 +1,5 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.implement.CustomerInfoDAO;
-import org.example.insurance_card_be.model.Customers;
-import org.example.insurance_card_be.model.Motorcycle;
-
 import java.sql.SQLException;
 import java.util.List;
 

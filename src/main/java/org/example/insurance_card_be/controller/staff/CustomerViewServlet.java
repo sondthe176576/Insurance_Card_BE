@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.example.insurance_card_be.dao.implement.CustomerDAO;
-import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerViewServlet", urlPatterns = "/customer-view")
 public class CustomerViewServlet extends HttpServlet {

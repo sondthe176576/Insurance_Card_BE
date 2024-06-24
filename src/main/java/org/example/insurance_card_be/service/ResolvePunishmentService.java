@@ -1,8 +1,5 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.implement.ResolvePunishmentDAO;
-import org.example.insurance_card_be.model.Punishments;
-import org.example.insurance_card_be.model.PunishmentHistory;
 import org.example.insurance_card_be.util.EmailUtil;
 
 import java.sql.SQLException;

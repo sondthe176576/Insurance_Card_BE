@@ -1,12 +1,5 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.implement.UpdateContractDAO;
-import org.example.insurance_card_be.model.Contract;
-import org.example.insurance_card_be.model.ContractDetail;
-
-import java.math.BigDecimal;
-import java.sql.Connection;
-
 public class UpdateContractService {
     // Khai báo updateContractDAO
     private UpdateContractDAO updateContractDAO;

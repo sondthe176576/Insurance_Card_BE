@@ -1,9 +1,5 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.implement.RenewContractDAO;
-import org.example.insurance_card_be.dao.implement.ViewContractDAO;
-import org.example.insurance_card_be.model.Contract;
-
 public class RenewContractService {
     // Khai bao renewContractDAO
     private RenewContractDAO renewContractDAO;

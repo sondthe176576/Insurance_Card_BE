@@ -12,9 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import org.example.insurance_card_be.dao.implement.CustomerDAO;
-import org.example.insurance_card_be.model.Users;
-
 @WebServlet(name = "CustomerCreateServlet", urlPatterns = "/customer-create")
 public class CustomerCreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

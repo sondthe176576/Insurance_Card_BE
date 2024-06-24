@@ -1,9 +1,5 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.implement.PaymentDAO;
-import org.example.insurance_card_be.model.PaymentHistory;
-import org.example.insurance_card_be.model.PaymentMethod;
-
 import java.sql.SQLException;
 
 public class PaymentService {

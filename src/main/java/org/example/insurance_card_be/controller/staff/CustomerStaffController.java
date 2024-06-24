@@ -10,8 +10,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.example.insurance_card_be.dao.implement.CustomerDAO;
-import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerStaffController", urlPatterns = "/customer-staff")
 public class CustomerStaffController extends HttpServlet{

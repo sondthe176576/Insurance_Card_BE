@@ -8,8 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import org.example.insurance_card_be.dao.implement.CustomerDAO;
-import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerManageServlet", urlPatterns = "/customer-manage")
 public class CustomerManageServlet extends HttpServlet {

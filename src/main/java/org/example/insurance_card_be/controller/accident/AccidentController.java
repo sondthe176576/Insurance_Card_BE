@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.Accident;
 import org.example.insurance_card_be.service.AccidentService;
 
 import java.io.IOException;

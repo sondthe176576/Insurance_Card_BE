@@ -7,8 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import org.example.insurance_card_be.dao.implement.CustomerDAO;
-import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerDeleteServlet", urlPatterns = "/customer-delete")
 public class CustomerDeleteServlet extends HttpServlet {

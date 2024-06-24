@@ -10,8 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import org.example.insurance_card_be.dao.implement.CustomerDAO;
-import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerEditServlet", urlPatterns = "/customer-edit")
 public class CustomerEditServlet extends HttpServlet {

@@ -1,9 +1,5 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.dao.implement.AccidentDAO;
-import org.example.insurance_card_be.model.Accident;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;

@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.dao.implement.PunishmentDAO;
-import org.example.insurance_card_be.model.Punishments;
 import org.example.insurance_card_be.service.PunishmentService;
 
 import java.io.IOException;
