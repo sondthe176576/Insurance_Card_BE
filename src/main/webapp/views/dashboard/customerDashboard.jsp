@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@include file="header.jsp" %>
+<jsp:include page="/views/includes/header.jsp"/>
 
 <html lang="en">
 <head>
@@ -90,11 +90,11 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="nav flex-column">
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/paymentHistory.jsp')">Payment History</a>
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/accidentHistory.jsp')">Accident History</a>
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/punishmentHistory.jsp')">Punishment History</a>
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/compensationHistory.jsp')">Compensation History</a>
-            <a class="nav-link" href="javascript:void(0);" onclick="loadPage('/views/history/contractInformation.jsp')">Contract Information</a>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/paymentHistory">Payment History</a></li>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/accidentHistory">Accident History</a></li>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/punishmentHistory">Punishment History</a></li>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/compensationHistory">Compensation History</a></li>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/contracts">Contract Information</a></li>
         </div>
     </div>
 
@@ -105,7 +105,7 @@
             <form id="customerInfoForm" method="post">
                 <div class="info-section">
                     <!-- Personal Information -->
-                    <div class="customer-info">
+                    <div class="AccidentHistory-info">
                         <h2>Personal Information</h2>
                         <div class="form-group">
                             <label for="email">Email:</label>
@@ -131,14 +131,7 @@
                             <label for="address">Address:</label>
                             <input type="text" class="form-control" id="address" name="address" value="">
                         </div>
-                        <div class="form-group">
-                            <label for="job">Job:</label>
-                            <input type="text" class="form-control" id="job" name="job" value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Company:</label>
-                            <input type="text" class="form-control" id="company" name="company" value="">
-                        </div>
+
                     </div>
 
                     <!-- Insurance Card Information -->
@@ -169,12 +162,11 @@
 
         <div id="content">
             <!-- Dynamic content will be loaded here -->
-
         </div>
     </div>
 </div>
 
-<%@ include file="footer.jsp" %>
+<jsp:include page="/views/includes/footer.jsp"/>
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
@@ -220,12 +212,12 @@
                         <p>Expiry Date: ${response.data.expiryDate}</p>
                     `);
                 } else {
-                    alert('Failed to save customer information.');
+                    alert('Failed to save AccidentHistory information.');
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Error saving customer information:', status, error);
-                alert('Error saving customer information: ' + error);
+                console.error('Error saving AccidentHistory information:', status, error);
+                alert('Error saving AccidentHistory information: ' + error);
             }
         });
     });
