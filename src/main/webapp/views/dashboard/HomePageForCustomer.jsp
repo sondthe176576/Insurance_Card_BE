@@ -73,7 +73,7 @@
             <li><a href="#">Service</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contract</a></li>
-            <li><a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp">Dashboard</a></li>
+            <li><a href="${pageContext.request.contextPath}/customerDashboard">Dashboard</a></li>
         </ul>
 
     </div>
