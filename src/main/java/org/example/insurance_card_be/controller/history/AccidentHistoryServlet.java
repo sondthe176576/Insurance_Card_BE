@@ -21,7 +21,7 @@ public class AccidentHistoryServlet extends HttpServlet {
     public void init() {
         accidentHistoryService = new AccidentHistoryService();
     }
-
+//commit
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
