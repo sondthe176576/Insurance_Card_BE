@@ -10,6 +10,8 @@
     <title>Payment History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Bootstrap Icons CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -21,7 +23,7 @@
                 <th>Payment ID</th>
                 <th>Customer ID</th>
                 <th>Amount</th>
-                <th>Date</th>
+                <th>Payment Date</th>
                 <th>Payment Method ID</th>
                 <th>Contract ID</th>
                 <th>Actions</th>
@@ -37,12 +39,18 @@
                     <td>${paymentHistory.paymentMethodID}</td>
                     <td>${paymentHistory.contractID}</td>
                     <td>
-                        <a href="paymentHistory?action=view&paymentID=${paymentHistory.paymentID}" class="btn btn-info btn-sm">View</a>
-                        <a href="paymentHistory?action=edit&paymentID=${paymentHistory.paymentID}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="paymentHistory?action=view&paymentID=${paymentHistory.paymentID}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="paymentHistory?action=edit&paymentID=${paymentHistory.paymentID}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
                         <form action="paymentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="paymentID" value="${paymentHistory.paymentID}">
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -94,7 +102,7 @@
         </form>
 
         <c:if test="${not empty paymentHistoryCus}">
-            <h2 class="mt-4 mb-4">Edit Payment History</h2>
+            <h2 class="mt-4 mb-4">Edit Payment</h2>
             <form action="paymentHistory" method="post">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="paymentID" value="${paymentHistoryCus.paymentID}">
@@ -123,7 +131,7 @@
         </c:if>
 
         <c:if test="${not empty paymentHistoryCus}">
-            <h2 class="mt-4 mb-4">View Payment History</h2>
+            <h2 class="mt-4 mb-4">View Payment</h2>
             <div class="card">
                 <div class="card-body">
                     <p>ID: ${paymentHistoryCus.paymentID}</p>

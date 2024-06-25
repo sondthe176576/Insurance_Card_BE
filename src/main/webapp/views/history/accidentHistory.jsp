@@ -10,6 +10,8 @@
     <title>Accident History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Bootstrap Icons CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
         .form-container {
             margin-top: 20px;
@@ -38,12 +40,18 @@
                     <td>${history.description}</td>
                     <td>${history.accidentDate}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${history.accidentID}" class="btn btn-primary btn-sm">View</a>
-                        <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${history.accidentID}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${history.accidentID}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${history.accidentID}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
                         <form action="${pageContext.request.contextPath}/accidentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="accidentID" value="${history.accidentID}">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>

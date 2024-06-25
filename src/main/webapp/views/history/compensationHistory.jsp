@@ -10,6 +10,8 @@
     <title>Compensation History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Bootstrap Icons CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -33,12 +35,18 @@
                     <td>${history.amount}</td>
                     <td>${history.date}</td>
                     <td>
-                        <a href="compensationHistory?action=view&id=${history.compensationID}" class="btn btn-primary btn-sm">View</a>
-                        <a href="compensationHistory?action=edit&id=${history.compensationID}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="compensationHistory?action=view&id=${history.compensationID}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="compensationHistory?action=edit&id=${history.compensationID}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
                         <form action="compensationHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="compensationID" value="${history.compensationID}">
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
