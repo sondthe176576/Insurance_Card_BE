@@ -91,7 +91,7 @@
                                         <select class="css_select" id="quan" name="quan" title="Choose District" required>
                                             <option value="0">District</option>
                                         </select>
-                                        <select class="css_select" id="phuong" name="phuong" title="Choose Country" required>
+                                        <select class="css_select" id="phuong" name="phuong" title="Choose County" required>
                                             <option value="0">Country</option>
                                         </select>
                                     </div>
