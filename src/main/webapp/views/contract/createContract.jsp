@@ -24,9 +24,6 @@
 <!-- Include navbar -->
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
-<!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" class="img-fluid mb-4">
-<!-- End of image slider -->
 <!-- Notification Message -->
 <c:if test="${not empty message}">
     <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show" role="alert">
