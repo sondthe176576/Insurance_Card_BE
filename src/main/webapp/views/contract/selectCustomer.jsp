@@ -1,15 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/23/2024
-  Time: 11:13 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Select Customer</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,9 +15,11 @@
             padding: 0;
         }
 
+        .container {
+            margin-top: 60px;
+        }
+
         .form-container {
-            max-width: 600px;
-            margin: 60px auto;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -34,26 +32,6 @@
             color: #2c3e50;
             font-size: 28px;
             margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #2980b9;
-            font-weight: bold;
-        }
-
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
         }
 
         .btn-submit {
@@ -89,27 +67,30 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Link image slider -->
-<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" class="slider-image">
+<img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" class="img-fluid mb-4 slider-image">
 <!-- End of image slider -->
 <!-- Form -->
-<div class="form-container">
-    <form action="${pageContext.request.contextPath}/selectCustomer" method="post">
-        <h2>Select Customer ID To Create A Contract</h2>
-        <div class="form-group">
-            <label for="customerID">Customer ID:</label>
-            <select id="customerID" name="customerID">
-                <option value="">Select Customer ID</option>
-                <c:forEach var="customer" items="${customers}">
-                    <option value="${customer.customerID}">${customer.customerID} - ${customer.user.fullName}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button type="submit" class="btn-submit">Select</button>
-    </form>
+<div class="container">
+    <div class="form-container p-4">
+        <form action="${pageContext.request.contextPath}/selectCustomer" method="post">
+            <h2>Select Customer ID To Create A Contract</h2>
+            <div class="mb-3">
+                <label for="customerID" class="form-label">Customer ID:</label>
+                <select id="customerID" name="customerID" class="form-select">
+                    <option value="">Select Customer ID</option>
+                    <c:forEach var="customer" items="${customers}">
+                        <option value="${customer.customerID}">${customer.customerID} - ${customer.user.fullName}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">Select</button>
+        </form>
+    </div>
 </div>
 <!-- End of form -->
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
