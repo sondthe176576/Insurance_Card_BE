@@ -88,7 +88,9 @@
             <ul class="pagination justify-content-end">
                 <c:if test="${currentPage > 1}">
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/listCompensation?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}">Previous</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/listCompensation?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}">
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
                     </li>
                 </c:if>
                 <c:forEach var="i" begin="1" end="${totalPages}">
@@ -100,7 +102,9 @@
                 </c:forEach>
                 <c:if test="${currentPage < totalPages}">
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/listCompensation?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}">Next</a>
+                        <a class="page-link" href="${pageContext.request.contextPath}/listCompensation?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
                     </li>
                 </c:if>
             </ul>
