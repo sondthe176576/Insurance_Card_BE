@@ -44,8 +44,8 @@ public class CustomerInfoDAO {
                         rs.getString("District"),
                         rs.getString("Country"),
                         rs.getString("First_name"),
-                        rs.getString("Last_name"),
-                        rs.getDate("Birth_date")
+                        rs.getDate("Birth_date"),
+                        rs.getString("Gender")
                 );
                 customer = new Customers(
                         rs.getInt("CustomerID"),

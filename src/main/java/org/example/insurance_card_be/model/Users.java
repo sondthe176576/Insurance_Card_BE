@@ -16,12 +16,12 @@ public class Users {
     private String role;
     private String email;
     private String mobile;
-    private String fullName;
-    private String gender;
     private String province;
     private String district;
     private String country;
     private String firstName;
     private String lastName;
+    private String fullName;
     private Date birthDate;
+    private String gender;
 }
