@@ -72,7 +72,7 @@
             <li><a href="#">Home</a></li>
             <li><a href="#">Service</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#">Contract</a></li>
+            <li><a href="${pageContext.request.contextPath}/contractDetail/1">Dashboard</a></li>
             <li><a href="${pageContext.request.contextPath}/customerDashboard">Dashboard</a></li>
         </ul>
 

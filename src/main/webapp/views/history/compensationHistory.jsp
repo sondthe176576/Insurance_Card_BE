@@ -71,19 +71,27 @@
             </ul>
         </nav>
 
-        <h2 class="mt-4 mb-4">Add New Compensation History</h2>
-        <form action="compensationHistory" method="post">
+
+
+        <h2 class="mt-4 mb-4">Request Compensation</h2>
+        <form action="${pageContext.request.contextPath}/compensationHistory" method="post">
             <input type="hidden" name="action" value="add">
             <div class="mb-3">
-                <label for="addcustomerID" class="form-label">Customer ID:</label>
-                <input type="text" class="form-control" id="addcustomerID" name="customerID" required>
+                <label for="customerID" class="form-label">Customer ID:</label>
+                <input type="text" class="form-control" id="customerID" name="customerID" required>
             </div>
             <div class="mb-3">
-                <label for="addamount" class="form-label">Amount:</label>
-                <input type="text" class="form-control" id="addamount" name="amount" required>
+                <label for="amount" class="form-label">Amount:</label>
+                <input type="text" class="form-control" id="amount" name="amount" required>
             </div>
-            <button type="submit" class="btn btn-success">Add</button>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <button type="submit" class="btn btn-success">Request</button>
         </form>
+    </div>
+</div>
 
         <c:if test="${not empty compensationHistoryCus}">
             <h2 class="mt-4 mb-4">Edit Compensation History</h2>

@@ -60,7 +60,7 @@ public class CompensationHistoryServlet extends HttpServlet {
 
             CompensationHistoryCus compensationHistoryCus = new CompensationHistoryCus(0, customerID, amount, date);
             compensationHistoryService.addCompensationHistory(compensationHistoryCus);
-            response.sendRedirect("compensationHistory");
+            response.sendRedirect(request.getContextPath() + "/views/history/pending.jsp");
         } else if ("update".equals(action)) {
             int compensationID = Integer.parseInt(request.getParameter("compensationID"));
             int customerID = Integer.parseInt(request.getParameter("customerID"));
@@ -77,6 +77,3 @@ public class CompensationHistoryServlet extends HttpServlet {
         }
     }
 }
-
-
-

@@ -1,34 +1,19 @@
 package org.example.insurance_card_be.service;
 
-import org.example.insurance_card_be.dao.implement.ContractInformationDAO;
-import org.example.insurance_card_be.model.ContractInformation;
+import org.example.insurance_card_be.dao.implement.ContractDetailDAO;
+import org.example.insurance_card_be.model.Contract;
 
-import java.util.List;
+import java.sql.SQLException;
 
 public class ContractInformationService {
-    private final ContractInformationDAO contractInformationDAO;
+    private ContractDetailDAO contractDetailDAO = new ContractDetailDAO();
 
-    public ContractInformationService() {
-        this.contractInformationDAO = new ContractInformationDAO();
+    public Contract getContractDetailById(int contractID) throws SQLException {
+        return contractDetailDAO.getContractDetailById(contractID);
     }
 
-    public void addContract(ContractInformation contract) {
-        contractInformationDAO.addContract(contract);
-    }
 
-    public ContractInformation getContractById(int contractId) {
-        return contractInformationDAO.getContractById(contractId);
-    }
+    public void requestRenewContract(int contractID) throws SQLException {
 
-    public List<ContractInformation> getAllContracts() {
-        return contractInformationDAO.getAllContracts();
-    }
-
-    public void updateContract(ContractInformation contract) {
-        contractInformationDAO.updateContract(contract);
-    }
-
-    public void deleteContract(int contractId) {
-        contractInformationDAO.deleteContract(contractId);
     }
 }
