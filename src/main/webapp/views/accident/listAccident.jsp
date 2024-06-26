@@ -86,11 +86,27 @@
         <!-- Include pagination -->
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-end">
-                <c:forEach var="i" begin="1" end="${totalPages}">
-                    <li class="page-item ${i == currentPage ? 'active' : ''}">
-                        <a class="page-link" href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                <c:if test="${currentPage > 1}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageContext.request.contextPath}/listAccident?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}">
+                            <i class="bi bi-arrow-left"></i>
+                        </a>
                     </li>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${totalPages}">
+                    <c:if test="${i >= currentPage - 1 && i <= currentPage + 1}">
+                        <li class="page-item ${i == currentPage ? 'active' : ''}">
+                            <a class="page-link" href="${pageContext.request.contextPath}/listAccident?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                        </li>
+                    </c:if>
                 </c:forEach>
+                <c:if test="${currentPage < totalPages}">
+                    <li class="page-item">
+                        <a class="page-link" href="${pageContext.request.contextPath}/listAccident?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}">
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </li>
+                </c:if>
             </ul>
         </nav>
     </div>
