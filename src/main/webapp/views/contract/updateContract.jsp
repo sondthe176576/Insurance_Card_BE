@@ -12,11 +12,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Renew Contract</title>
+    <title>Update Contract</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/renewContract.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/updateContract.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" defer></script>
-    <script src="${pageContext.request.contextPath}/js/renewContract.js" defer></script>
+    <script src="${pageContext.request.contextPath}/js/updateContract.js" defer></script>
 </head>
 <body>
 <!-- Include header -->
@@ -26,9 +26,9 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Notification Message -->
-<c:if test="${not empty message}">
-    <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show" role="alert">
-        <c:out value="${message}"/>
+<c:if test="${param.message != null}">
+    <div id="notification" class="alert ${param.status eq 'true' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show" role="alert">
+        <c:out value="${param.message}"/>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </c:if>
@@ -37,10 +37,10 @@
 <div class="container mt-4">
     <div class="card">
         <div class="card-header text-center">
-            <h2>Renew Contract</h2>
+            <h2>Update Contract</h2>
         </div>
         <div class="card-body">
-            <form id="renewContractForm" action="${pageContext.request.contextPath}/renewContract" method="post">
+            <form id="updateContractForm" action="${pageContext.request.contextPath}/updateContract" method="post">
                 <div class="row">
                     <div class="col-md-6">
                         <h3>Customer Information</h3>
@@ -92,6 +92,10 @@
                     <div class="col-md-6">
                         <h3>Vehicle Information</h3>
                         <div class="mb-3">
+                            <label for="motorcycleID" class="form-label">Motorcycle ID:</label>
+                            <input type="number" id="motorcycleID" name="motorcycleID" class="form-control" value="${contract.motorcycle.motorcycleID}" readonly>
+                        </div>
+                        <div class="mb-3">
                             <label for="licensePlate" class="form-label">License Plate:</label>
                             <input type="text" id="licensePlate" name="licensePlate" class="form-control" value="${contract.motorcycle.licensePlate}" readonly>
                         </div>
@@ -130,58 +134,85 @@
                         </div>
                         <div class="mb-3">
                             <label for="contractInfo" class="form-label">Contract Info:</label>
-                            <input type="text" id="contractInfo" name="contractInfo" class="form-control" value="${contract.contractInfo}" readonly>
+                            <input type="text" id="contractInfo" name="contractInfo" class="form-control" value="${contract.contractInfo}" required>
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status:</label>
-                            <input type="text" id="status" name="status" class="form-control" value="${contract.status}" readonly>
+                            <input type="text" id="status" name="status" class="form-control" value="${contract.status}" required>
                         </div>
                         <div class="mb-3">
                             <label for="startDate" class="form-label">Start Date:</label>
-                            <input type="date" id="startDate" name="startDate" class="form-control" value="<fmt:formatDate value='${contract.startDate}' pattern='yyyy-MM-dd'/>" readonly>
+                            <input type="date" id="startDate" name="startDate" class="form-control" value="<fmt:formatDate value='${contract.startDate}' pattern='yyyy-MM-dd'/>" required>
                         </div>
                         <div class="mb-3">
                             <label for="endDate" class="form-label">End Date:</label>
-                            <input type="date" id="endDate" name="endDate" class="form-control" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" readonly>
+                            <input type="date" id="endDate" name="endDate" class="form-control" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" required>
+                            <div id="dateError" class="text-danger" style="display:none;">End Date cannot be earlier than Start Date</div>
                         </div>
                         <div class="mb-3">
                             <label for="value" class="form-label">Value:</label>
-                            <input type="text" id="value" name="value" class="form-control" value="<fmt:formatNumber value='${contract.value}' type='currency' currencySymbol='$'/>" readonly>
+                            <input type="number" id="value" name="value" class="form-control" step="50" min="50" required>
                         </div>
                         <div class="mb-3">
                             <label for="detail" class="form-label">Detail:</label>
-                            <textarea id="detail" name="detail" class="form-control" rows="3" readonly>${contract.detail}</textarea>
+                            <textarea id="detail" name="detail" class="form-control" rows="3" required>${contract.detail}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="insuranceType" class="form-label">Insurance Type:</label>
-                            <input type="text" id="insuranceType" name="insuranceType" class="form-control" value="${contract.insuranceType}" readonly>
+                            <select id="insuranceType" name="insuranceType" class="form-select" required>
+                                <option value="Basic" ${contract.insuranceType == 'Basic' ? 'selected' : ''}>Basic</option>
+                                <option value="Comprehensive" ${contract.insuranceType == 'Comprehensive' ? 'selected' : ''}>Comprehensive</option>
+                                <option value="Premium" ${contract.insuranceType == 'Premium' ? 'selected' : ''}>Premium</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="coverage" class="form-label">Coverage:</label>
-                            <input type="text" id="coverage" name="coverage" class="form-control" value="${contract.coverage}" readonly>
+                            <input type="text" id="coverage" name="coverage" class="form-control" value="${contract.coverage}" required>
                         </div>
                         <div class="mb-3">
                             <label for="premium" class="form-label">Premium:</label>
-                            <input type="text" id="premium" name="premium" class="form-control" value="<fmt:formatNumber value='${contract.premium}' type='currency' currencySymbol='$'/>" readonly>
+                            <input type="number" id="premium" name="premium" class="form-control" step="50" min="50" required>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h3>Renew Contract</h3>
-                        <div class="mb-3">
-                            <label for="renewalDate" class="form-label">Renewal Date:</label>
-                            <input type="date" id="renewalDate" name="renewalDate" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="newPremium" class="form-label">New Premium:</label>
-                            <input type="number" id="newPremium" name="newPremium" class="form-control" step="50" min="50" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="newCoverage" class="form-label">New Coverage:</label>
-                            <input type="text" id="newCoverage" name="newCoverage" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="newContractInfo" class="form-label">New Contract Info:</label>
-                            <input type="text" id="newContractInfo" name="newContractInfo" class="form-control" required>
+                        <h3>Insurance Packages</h3>
+                        <div class="accordion" id="insurancePackages">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Basic Motorcycle Insurance
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#insurancePackages">
+                                    <div class="accordion-body">
+                                        <p>This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Comprehensive Motorcycle Insurance
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#insurancePackages">
+                                    <div class="accordion-body">
+                                        <p>This package offers complete protection for your motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any situation.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Premium Motorcycle Insurance
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#insurancePackages">
+                                    <div class="accordion-body">
+                                        <p>Our premium package provides the highest level of coverage. This includes all the benefits of comprehensive insurance, plus additional features such as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest response in case of any incident. Our premium plan also includes a personal advisor who will assist you with all your insurance needs.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -198,9 +229,8 @@
                             <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
                     </div>
                 </div>
-                <input type="hidden" name="contractID" value="${contract.contractID}">
                 <div class="d-flex justify-content-center mt-4">
-                    <button type="submit" class="btn btn-primary">Renew Contract</button>
+                    <button type="submit" class="btn btn-primary">Update Contract</button>
                 </div>
             </form>
         </div>
