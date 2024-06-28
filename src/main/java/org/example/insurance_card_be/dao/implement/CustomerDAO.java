@@ -371,4 +371,39 @@ public class CustomerDAO extends DBContext {
         }
         return 0;
     }
+
+    public List<Users> findAllWithAddress(int page, String province, String district, String ward) {
+        List<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM Users WHERE Role = 'Customer' AND (? = '0' OR Province = ?) AND (? = '0' OR District = ?) AND (? = '0' OR Country = ?) ORDER BY UserID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setString(1, province);
+            st.setString(2, province);
+            st.setString(3, district);
+            st.setString(4, district);
+            st.setString(5, ward);
+            st.setString(6, ward);
+            st.setInt(7, (page - 1) * CUSTOMERS_PER_PAGE);
+            st.setInt(8, CUSTOMERS_PER_PAGE);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Users user = new Users();
+                // Đọc dữ liệu từ rs và thêm vào danh sách
+                list.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
+
+
+
+
+
+
+}
+=======
 }
