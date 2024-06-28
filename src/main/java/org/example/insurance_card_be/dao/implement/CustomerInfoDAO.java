@@ -15,8 +15,8 @@ import java.util.List;
 public class CustomerInfoDAO {
     // SQL query to get customer information based on ID
     String sql = "SELECT c.CustomerID, c.PersonalInfo, " +
-            "u.UserID, u.Username, u.Password, u.Role, u.Email, u.Mobile, u.Full_name, u.Gender, " +
-            "u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date " +
+            "u.UserID, u.Username, u.Password, u.Role, u.Email, u.Mobile, u.Province, " +
+            "u.District, u.Country, u.First_name, u.Last_name, u.Full_name, u.Birth_date, u.Gender " +
             "FROM dbo.Customers c " +
             "JOIN dbo.Users u ON c.UserID = u.UserID " +
             "WHERE c.CustomerID = ?";
@@ -38,12 +38,12 @@ public class CustomerInfoDAO {
                         rs.getString("Role"),
                         rs.getString("Email"),
                         rs.getString("Mobile"),
-                        rs.getString("Full_name"),
-                        rs.getString("Gender"),
                         rs.getString("Province"),
                         rs.getString("District"),
                         rs.getString("Country"),
                         rs.getString("First_name"),
+                        rs.getString("Last_name"),
+                        rs.getString("Full_name"),
                         rs.getDate("Birth_date"),
                         rs.getString("Gender")
                 );
