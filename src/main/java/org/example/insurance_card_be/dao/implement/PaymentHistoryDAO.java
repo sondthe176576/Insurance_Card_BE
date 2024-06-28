@@ -112,13 +112,4 @@ public class PaymentHistoryDAO {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) throws SQLException {
-        PaymentHistoryDAO paymentHistoryDAO = new PaymentHistoryDAO();
-        List<PaymentHistoryCus> list = paymentHistoryDAO.getAllPaymentHistories();
-        for (PaymentHistoryCus paymentHistoryCus : list) {
-            System.out.println(paymentHistoryCus);
-        }
-    }
-
 }

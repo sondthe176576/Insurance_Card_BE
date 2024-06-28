@@ -21,7 +21,7 @@ public class AccidentHistoryServlet extends HttpServlet {
     public void init() {
         accidentHistoryService = new AccidentHistoryService();
     }
-
+//commit
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -54,7 +54,7 @@ public class AccidentHistoryServlet extends HttpServlet {
 
             AccidentHistoryCus accidentHistoryCus = new AccidentHistoryCus(0, customerID, description, accidentDate);
             accidentHistoryService.addAccidentHistory(accidentHistoryCus);
-            response.sendRedirect(request.getContextPath() + "/views/history/pending.jsp");
+            response.sendRedirect("accidentHistory");
         } else if ("update".equals(action)) {
             int accidentID = Integer.parseInt(request.getParameter("accidentID"));
             int customerID = Integer.parseInt(request.getParameter("customerID"));

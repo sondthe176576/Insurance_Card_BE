@@ -10,8 +10,6 @@
     <title>Accident History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Bootstrap Icons CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
         .form-container {
             margin-top: 20px;
@@ -40,18 +38,12 @@
                     <td>${history.description}</td>
                     <td>${history.accidentDate}</td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${history.accidentID}" class="btn btn-primary btn-sm">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${history.accidentID}" class="btn btn-warning btn-sm">
-                            <i class="bi bi-pencil"></i>
-                        </a>
+                        <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${history.accidentID}" class="btn btn-primary btn-sm">View</a>
+                        <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${history.accidentID}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="${pageContext.request.contextPath}/accidentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="accidentID" value="${history.accidentID}">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -76,7 +68,7 @@
             </ul>
         </nav>
 
-        <h2 class="mt-4 mb-4">Request Accident</h2>
+        <h2 class="mt-4 mb-4">Add New Accident History</h2>
         <form action="${pageContext.request.contextPath}/accidentHistory" method="post">
             <input type="hidden" name="action" value="add">
             <div class="mb-3">
@@ -91,7 +83,7 @@
                 <label for="accidentDate" class="form-label">Accident Date:</label>
                 <input type="date" class="form-control" id="accidentDate" name="accidentDate" required>
             </div>
-            <button type="submit" class="btn btn-success">Request</button>
+            <button type="submit" class="btn btn-success">Add</button>
         </form>
     </div>
 </div>

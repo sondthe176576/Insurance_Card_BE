@@ -1,20 +1,27 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.model.*;
 import org.example.insurance_card_be.dao.DBContext;
+import org.example.insurance_card_be.model.Contract;
+import org.example.insurance_card_be.model.Customers;
+import org.example.insurance_card_be.model.Motorcycle;
+import org.example.insurance_card_be.model.Users;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-
-public class ContractDetailDAO {
+public class RenewContractDAO {
+    // Khai báo connection
     private Connection connection;
 
-    public ContractDetailDAO() {
+    // Khởi tạo connection
+    public RenewContractDAO() {
         this.connection = DBContext.getConnection();
     }
 
-    // Retrieve contract details by contract ID
-    public Contract getContractDetailById(int contractID) throws SQLException {
+    // Lay thong tin cua mot contract theo ID
+    public Contract getContractDetailById(int contractID) throws Exception {
         String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, " +
                 "u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status, con.StartDate, con.EndDate, " +
@@ -81,14 +88,51 @@ public class ContractDetailDAO {
         return contract;
     }
 
+    // Gia han hop dong
+    public void renewContract(Contract contract) {
+        // Kiem tra contractID da ton tai hay chua
+        Contract existingContract = getContractByID(contract.getContractID());
+        if (existingContract != null) {
+            // Neu contractID da ton tai, thuc hien gia han hop dong
+            String sql = "UPDATE Contracts SET ContractInfo = ?, EndDate = ?, Coverage = ?, Premium = ? WHERE ContractID = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, contract.getContractInfo());
+                preparedStatement.setDate(2, new java.sql.Date(contract.getEndDate().getTime()));
+                preparedStatement.setString(3, contract.getCoverage());
+                preparedStatement.setDouble(4, contract.getPremium());
+                preparedStatement.setInt(5, contract.getContractID());
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Neu contractID khong ton tai, in ra thong bao
+            System.out.println("ContractID not found");
+        }
+    }
 
-    public static void main(String[] args) {
-        try {
-            ContractDetailDAO contractDetailDAO = new ContractDetailDAO();
-            Contract contract = contractDetailDAO.getContractDetailById(1);
-            System.out.println(contract);
+    // Lay thong tin cua mot contract theo ID
+    private Contract getContractByID(int contractID) {
+        String sql = "SELECT * FROM Contracts WHERE ContractID = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, contractID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Contract contract = new Contract();
+                    contract.setContractID(resultSet.getInt("ContractID"));
+                    contract.setContractInfo(resultSet.getString("ContractInfo"));
+                    contract.setStatus(resultSet.getString("Status"));
+                    contract.setStartDate(resultSet.getDate("StartDate"));
+                    contract.setEndDate(resultSet.getDate("EndDate"));
+                    contract.setInsuranceType(resultSet.getString("InsuranceType"));
+                    contract.setCoverage(resultSet.getString("Coverage"));
+                    contract.setPremium(resultSet.getDouble("Premium"));
+                    return contract;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

@@ -10,8 +10,6 @@
     <title>Compensation History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Bootstrap Icons CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -35,18 +33,12 @@
                     <td>${history.amount}</td>
                     <td>${history.date}</td>
                     <td>
-                        <a href="compensationHistory?action=view&id=${history.compensationID}" class="btn btn-primary btn-sm">
-                            <i class="bi bi-eye"></i>
-                        </a>
-                        <a href="compensationHistory?action=edit&id=${history.compensationID}" class="btn btn-warning btn-sm">
-                            <i class="bi bi-pencil"></i>
-                        </a>
+                        <a href="compensationHistory?action=view&id=${history.compensationID}" class="btn btn-primary btn-sm">View</a>
+                        <a href="compensationHistory?action=edit&id=${history.compensationID}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="compensationHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="compensationID" value="${history.compensationID}">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
                         </form>
                     </td>
                 </tr>
@@ -71,27 +63,19 @@
             </ul>
         </nav>
 
-
-
-        <h2 class="mt-4 mb-4">Request Compensation</h2>
-        <form action="${pageContext.request.contextPath}/compensationHistory" method="post">
+        <h2 class="mt-4 mb-4">Add New Compensation History</h2>
+        <form action="compensationHistory" method="post">
             <input type="hidden" name="action" value="add">
             <div class="mb-3">
-                <label for="customerID" class="form-label">Customer ID:</label>
-                <input type="text" class="form-control" id="customerID" name="customerID" required>
+                <label for="addcustomerID" class="form-label">Customer ID:</label>
+                <input type="text" class="form-control" id="addcustomerID" name="customerID" required>
             </div>
             <div class="mb-3">
-                <label for="amount" class="form-label">Amount:</label>
-                <input type="text" class="form-control" id="amount" name="amount" required>
+                <label for="addamount" class="form-label">Amount:</label>
+                <input type="text" class="form-control" id="addamount" name="amount" required>
             </div>
-            <div class="mb-3">
-                <label for="date" class="form-label">Date:</label>
-                <input type="date" class="form-control" id="date" name="date" required>
-            </div>
-            <button type="submit" class="btn btn-success">Request</button>
+            <button type="submit" class="btn btn-success">Add</button>
         </form>
-    </div>
-</div>
 
         <c:if test="${not empty compensationHistoryCus}">
             <h2 class="mt-4 mb-4">Edit Compensation History</h2>

@@ -94,6 +94,7 @@
             <li><a class="nav-link" href="${pageContext.request.contextPath}/accidentHistory">Accident History</a></li>
             <li><a class="nav-link" href="${pageContext.request.contextPath}/punishmentHistory">Punishment History</a></li>
             <li><a class="nav-link" href="${pageContext.request.contextPath}/compensationHistory">Compensation History</a></li>
+            <li><a class="nav-link" href="${pageContext.request.contextPath}/contracts">Contract Information</a></li>
         </div>
     </div>
 

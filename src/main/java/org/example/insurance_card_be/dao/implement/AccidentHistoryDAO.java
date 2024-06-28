@@ -67,7 +67,6 @@ public class AccidentHistoryDAO {
             preparedStatement.setString(2, accidentHistoryCus.getDescription());
             preparedStatement.setDate(3, new java.sql.Date(accidentHistoryCus.getAccidentDate().getTime()));
 
-
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
