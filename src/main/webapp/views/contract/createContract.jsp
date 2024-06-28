@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/createContract.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/js/createContract.js"></script>
 </head>
 <body>
 <!-- Include header -->
@@ -40,6 +41,7 @@
             <div class="row mb-4">
                 <div class="col-md-6">
                     <h3 class="mb-3">Customer Information</h3>
+                    <!-- Customer Information Fields -->
                     <div class="mb-3">
                         <label for="customerID" class="form-label">Customer ID:</label>
                         <input type="number" id="customerID" name="customerID" class="form-control" value="${customer.customerID}" readonly>
@@ -92,6 +94,7 @@
 
                 <div class="col-md-6">
                     <h3 class="mb-3">Motorcycle Information</h3>
+                    <!-- Motorcycle Information Fields -->
                     <c:forEach var="motorcycle" items="${motorcycles}">
                         <div class="mb-3">
                             <label for="motorcycleID" class="form-label">Motorcycle ID:</label>
@@ -131,48 +134,52 @@
 
             <div class="row mb-4">
                 <div class="col-md-6">
-                    <h3 class="mb-3">Insurance Information</h3>
+                    <h3 class="mb-3">Contract Information</h3>
                     <div class="mb-3">
-                        <label for="contractInfo" class="form-label">Contract Info:</label>
-                        <input type="text" id="contractInfo" name="contractInfo" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status:</label>
-                        <input type="text" id="status" name="status" class="form-control" required>
+                        <label for="contractYears" class="form-label">Contract Years:</label>
+                        <input type="number" id="contractYears" name="contractYears" class="form-control" min="1" required>
                     </div>
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" class="form-control" required>
+                        <input type="date" id="startDate" name="startDate" class="form-control" required readonly>
                     </div>
                     <div class="mb-3">
                         <label for="endDate" class="form-label">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" class="form-control" required>
-                        <span id="dateError" class="text-danger" style="display:none;">End Date cannot be earlier than Start Date</span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="value" class="form-label">Value:</label>
-                        <input type="number" id="value" name="value" class="form-control" step="50" min="50" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="detail" class="form-label">Detail:</label>
-                        <textarea id="detail" name="detail" class="form-control" rows="3" required></textarea>
+                        <input type="date" id="endDate" name="endDate" class="form-control" required readonly>
                     </div>
                     <div class="mb-3">
                         <label for="insuranceType" class="form-label">Insurance Type:</label>
                         <select id="insuranceType" name="insuranceType" class="form-select" required>
+                            <option value="">Select Insurance Type</option>
                             <option value="Basic">Basic</option>
                             <option value="Comprehensive">Comprehensive</option>
                             <option value="Premium">Premium</option>
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label for="contractInfo" class="form-label">Contract Info:</label>
+                        <input type="text" id="contractInfo" name="contractInfo" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="value" class="form-label">Value:</label>
+                        <input type="number" id="value" name="value" class="form-control" step="50" min="50" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="detail" class="form-label">Detail:</label>
+                        <textarea id="detail" name="detail" class="form-control" rows="3" required readonly></textarea>
+                    </div>
+                    <div class="mb-3">
                         <label for="coverage" class="form-label">Coverage:</label>
-                        <input type="text" id="coverage" name="coverage" class="form-control" required>
+                        <input type="text" id="coverage" name="coverage" class="form-control" required readonly>
                     </div>
                     <div class="mb-3">
                         <label for="premium" class="form-label">Premium:</label>
-                        <input type="number" id="premium" name="premium" class="form-control" step="50" min="50" required>
+                        <input type="number" id="premium" name="premium" class="form-control" step="50" min="50" required readonly>
                     </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h3 class="mb-3">Payment Information</h3>
                     <div class="mb-3">
                         <label for="paymentMethod" class="form-label">Payment Method:</label>
                         <select id="paymentMethod" name="paymentMethod" class="form-select" required>
@@ -181,9 +188,33 @@
                             <option value="bankTransfer">Bank Transfer</option>
                         </select>
                     </div>
+                    <div class="section" id="cashPaymentDetails" style="display:none;">
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-circle-fill"></i>
+                            <strong>Cash Payment Details</strong>
+                            <p>Please bring your contract to our office to complete the payment in cash.</p>
+                            <div class="address-info">
+                                <p>Motorcycle Insurance Company,<br>
+                                    123 Hola Street,<br>
+                                    Thach That District, Hanoi,<br>
+                                    Vietnam</p>
+                                <p>Phone: 0123-456-789<br>
+                                    <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section" id="bankTransferDetails" style="display:none;">
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-circle-fill"></i>
+                            <strong>Bank Transfer Details</strong>
+                            <p>You will be redirected to the bank transfer page to complete the payment.</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="col-md-6">
+            <div class="row mb-4">
+                <div class="col-md-12">
                     <h3 class="mb-3">Insurance Packages</h3>
                     <div class="accordion" id="insurancePackages">
                         <div class="accordion-item">
@@ -226,26 +257,7 @@
                 </div>
             </div>
 
-            <!-- Payment Details Section -->
-            <div class="section" id="cashPaymentDetails" style="display:none;">
-                <h2>Cash Payment Details</h2>
-                <p>Please bring your contract to our office to complete the payment in cash.</p>
-                <div class="address-info">
-                    <p>Motorcycle Insurance Company,<br>
-                        123 Hola Street,<br>
-                        District Thach That, Ha Noi,<br>
-                        Vietnam</p>
-                    <p>Phone: 0123-456-789<br>
-                        <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
-                </div>
-            </div>
-
-            <div class="section" id="bankTransferDetails" style="display:none;">
-                <h2>Bank Transfer Details</h2>
-                <p>You will be redirected to the bank transfer page to complete the payment.</p>
-            </div>
-            <!-- End of Payment Details Section -->
-
+            <!-- Submit Button -->
             <button type="submit" class="btn btn-primary btn-lg w-100">Create Contract</button>
         </form>
     </div>
@@ -254,6 +266,5 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
-<script src="${pageContext.request.contextPath}/js/createContract.js"></script>
 </body>
 </html>
