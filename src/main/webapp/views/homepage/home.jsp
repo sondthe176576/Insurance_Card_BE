@@ -1,5 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/views/dashboard/header.jsp" %>
+<%@ include file="/views/includes/header.jsp" %>
+<%
+    if (session.getAttribute("user") == null) {
+        response.sendRedirect(request.getContextPath() + "/login");
+        return;
+    }
+%>
 <html>
 <head>
     <title>Customer Dashboard</title>
