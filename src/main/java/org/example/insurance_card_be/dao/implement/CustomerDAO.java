@@ -18,8 +18,8 @@ public class CustomerDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Users user = new Users();
-                user.setUserID(rs.getInt("UserID"));
-                user.setUsername(rs.getString("Username"));
+               user.setUserID(rs.getInt("UserID"));
+               user.setUsername(rs.getString("Username"));
                 user.setPassword(rs.getString("Password"));
                 user.setRole(rs.getString("Role"));
                 user.setEmail(rs.getString("Email"));
@@ -45,7 +45,10 @@ public class CustomerDAO extends DBContext {
         String sql = "DELETE FROM [Users] WHERE UserID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+
             st.setInt(1, users.getUserID());
+
+         
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +168,8 @@ public class CustomerDAO extends DBContext {
             statement.setDate(12, new java.sql.Date(customer.getBirthDate().getTime()));
             statement.setString(13, customer.getGender());
             statement.setInt(14, customer.getUserID());
-
+            // Debugging statement
+            System.out.println("Executing SQL: " + statement.toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
