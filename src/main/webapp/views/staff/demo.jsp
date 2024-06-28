@@ -71,10 +71,12 @@
     </select>
 </div>
 <form action="#" >
+    <div>
 <input type="hidden" name="tinh" id="hidden_tinh" >
 <input type="hidden" name="quan" id="hidden_quan">
 <input type="hidden" name="phuong" id="hidden_phuong">
     <input type="submit" value="submit">
+    </div>
 </form>
 </body>
 
