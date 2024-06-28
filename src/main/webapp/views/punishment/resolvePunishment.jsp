@@ -12,156 +12,14 @@
 <html>
 <head>
     <title>Resolve Punishment</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        .form-container {
-            max-width: 900px;
-            margin: 50px auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            padding: 30px;
-        }
-
-        .form-container h2 {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 28px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #2980b9;
-            padding-bottom: 10px;
-        }
-
-        .form-container h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-            font-size: 20px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-        }
-
-        .details {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .details label {
-            font-weight: bold;
-            width: 30%;
-            margin-bottom: 10px;
-            color: #2980b9;
-        }
-
-        .details p {
-            width: 70%;
-            margin: 0 0 10px 0;
-            padding: 10px;
-            background-color: #ecf0f1;
-            border-radius: 4px;
-        }
-
-        .btn-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .btn {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 0 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-approve {
-            background-color: #2ecc71;
-        }
-
-        .btn-approve:hover {
-            background-color: #27ae60;
-        }
-
-        .btn-reject {
-            background-color: #e74c3c;
-        }
-
-        .btn-reject:hover {
-            background-color: #c0392b;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        .modal-content h4 {
-            margin-bottom: 20px;
-        }
-
-        .modal-content button {
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn-yes {
-            background-color: #2ecc71;
-            color: white;
-        }
-
-        .btn-no {
-            background-color: #e74c3c;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/resolvePunishment.css">
+    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" defer></script>
     <script>
         function showModal(status) {
             document.getElementById('modal-status').value = status;
-            document.getElementById('confirmationModal').style.display = 'block';
-        }
-
-        function hideModal() {
-            document.getElementById('confirmationModal').style.display = 'none';
+            new bootstrap.Modal(document.getElementById('confirmationModal')).show();
         }
 
         function confirmAction() {
@@ -179,112 +37,203 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Form -->
-<div class="form-container">
-    <h2>Punishment Detail</h2>
-    <h3>Punishment Information</h3>
-    <div class="details">
-        <label>Punishment ID:</label>
-        <p><c:out value="${punishment.punishmentID}"/></p>
-        <label>Customer Name:</label>
-        <p><c:out value="${punishment.customer.user.fullName}"/></p>
-        <label>Punishment Type:</label>
-        <p><c:out value="${punishment.punishmentType}"/></p>
-        <label>Punishment Date:</label>
-        <p><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></p>
-        <label>Description:</label>
-        <p><c:out value="${punishment.description}"/></p>
-        <label>Status:</label>
-        <p><c:out value="${punishment.status}"/></p>
-    </div>
-    <h3>Customer Information</h3>
-    <div class="details">
-        <label>Customer ID:</label>
-        <p><c:out value="${punishment.customer.customerID}"/></p>
-        <label>Full Name:</label>
-        <p><c:out value="${punishment.customer.user.fullName}"/></p>
-        <label>First Name:</label>
-        <p><c:out value="${punishment.customer.user.firstName}"/></p>
-        <label>Last Name:</label>
-        <p><c:out value="${punishment.customer.user.lastName}"/></p>
-        <label>Phone Number:</label>
-        <p><c:out value="${punishment.customer.user.mobile}"/></p>
-        <label>Email:</label>
-        <p><c:out value="${punishment.customer.user.email}"/></p>
-        <label>Province:</label>
-        <p><c:out value="${punishment.customer.user.province}"/></p>
-        <label>District:</label>
-        <p><c:out value="${punishment.customer.user.district}"/></p>
-        <label>Country:</label>
-        <p><c:out value="${punishment.customer.user.country}"/></p>
-        <label>Gender:</label>
-        <p><c:out value="${punishment.customer.user.gender}"/></p>
-        <label>Birth Date:</label>
-        <p><fmt:formatDate value="${punishment.customer.user.birthDate}" pattern="dd-MM-yyyy"/></p>
-        <label>Personal Info:</label>
-        <p><c:out value="${punishment.customer.personalInfo}"/></p>
-    </div>
-    <h3>Contract Information</h3>
-    <div class="details">
-        <label>Contract ID:</label>
-        <p><c:out value="${punishment.contract.contractID}"/></p>
-        <label>Contract Info:</label>
-        <p><c:out value="${punishment.contract.contractInfo}"/></p>
-        <label>Contract Status:</label>
-        <p><c:out value="${punishment.contract.status}"/></p>
-        <label>Start Date:</label>
-        <p><fmt:formatDate value="${punishment.contract.startDate}" pattern="dd-MM-yyyy"/></p>
-        <label>End Date:</label>
-        <p><fmt:formatDate value="${punishment.contract.endDate}" pattern="dd-MM-yyyy"/></p>
-        <label>Insurance Type:</label>
-        <p><c:out value="${punishment.contract.insuranceType}"/></p>
-        <label>Coverage:</label>
-        <p><c:out value="${punishment.contract.coverage}"/></p>
-        <label>Premium:</label>
-        <p><fmt:formatNumber value="${punishment.contract.premium}" type="currency" currencySymbol="$"/></p>
-        <label>Detail:</label>
-        <p><c:out value="${punishment.contract.detail}"/></p>
-        <label>Value:</label>
-        <p><fmt:formatNumber value="${punishment.contract.value}" type="currency" currencySymbol="$"/></p>
-    </div>
-    <h3>Motorcycle Information</h3>
-    <div class="details">
-        <label>License Plate:</label>
-        <p><c:out value="${punishment.contract.motorcycle.licensePlate}"/></p>
-        <label>Brand:</label>
-        <p><c:out value="${punishment.contract.motorcycle.brand}"/></p>
-        <label>Model:</label>
-        <p><c:out value="${punishment.contract.motorcycle.model}"/></p>
-        <label>Frame Number:</label>
-        <p><c:out value="${punishment.contract.motorcycle.frameNumber}"/></p>
-        <label>Engine Number:</label>
-        <p><c:out value="${punishment.contract.motorcycle.engineNumber}"/></p>
-        <label>Year Of Manufacture:</label>
-        <p><c:out value="${punishment.contract.motorcycle.yearOfManufacture}"/></p>
-        <label>Color:</label>
-        <p><c:out value="${punishment.contract.motorcycle.color}"/></p>
-    </div>
-    <form id="resolveForm" method="post" action="${pageContext.request.contextPath}/resolvePunishment">
-        <input type="hidden" id="status" name="status" value=""/>
-        <input type="hidden" name="punishmentID" value="${punishment.punishmentID}"/>
-        <div class="btn-container">
-            <button type="button" onclick="showModal('Approved')" class="btn btn-approve">Approve</button>
-            <button type="button" onclick="showModal('Rejected')" class="btn btn-reject">Reject</button>
-            <a href="${pageContext.request.contextPath}/listPunishment" class="btn">Back to List</a>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header text-center">
+            <h2><i class="bi bi-info-circle-fill"></i> Punishment Detail</h2>
         </div>
-    </form>
+        <div class="card-body">
+            <h3 class="text-primary">Punishment Information</h3>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="fw-bold">Punishment ID:</label>
+                    <p><c:out value="${punishment.punishmentID}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Customer Name:</label>
+                    <p><c:out value="${punishment.customer.user.fullName}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Punishment Type:</label>
+                    <p><c:out value="${punishment.punishmentType}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Punishment Date:</label>
+                    <p><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Description:</label>
+                    <p><c:out value="${punishment.description}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Status:</label>
+                    <p><c:out value="${punishment.status}"/></p>
+                </div>
+            </div>
+            <h3 class="text-primary">Customer Information</h3>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="fw-bold">Customer ID:</label>
+                    <p><c:out value="${punishment.customer.customerID}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Full Name:</label>
+                    <p><c:out value="${punishment.customer.user.fullName}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">First Name:</label>
+                    <p><c:out value="${punishment.customer.user.firstName}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Last Name:</label>
+                    <p><c:out value="${punishment.customer.user.lastName}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Phone Number:</label>
+                    <p><c:out value="${punishment.customer.user.mobile}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Email:</label>
+                    <p><c:out value="${punishment.customer.user.email}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Province:</label>
+                    <p><c:out value="${punishment.customer.user.province}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">District:</label>
+                    <p><c:out value="${punishment.customer.user.district}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Country:</label>
+                    <p><c:out value="${punishment.customer.user.country}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Gender:</label>
+                    <p><c:out value="${punishment.customer.user.gender}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Birth Date:</label>
+                    <p><fmt:formatDate value="${punishment.customer.user.birthDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Personal Info:</label>
+                    <p><c:out value="${punishment.customer.personalInfo}"/></p>
+                </div>
+            </div>
+            <h3 class="text-primary">Contract Information</h3>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="fw-bold">Contract ID:</label>
+                    <p><c:out value="${punishment.contract.contractID}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Contract Info:</label>
+                    <p><c:out value="${punishment.contract.contractInfo}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Contract Status:</label>
+                    <p><c:out value="${punishment.contract.status}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Start Date:</label>
+                    <p><fmt:formatDate value="${punishment.contract.startDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">End Date:</label>
+                    <p><fmt:formatDate value="${punishment.contract.endDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Insurance Type:</label>
+                    <p><c:out value="${punishment.contract.insuranceType}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Coverage:</label>
+                    <p><c:out value="${punishment.contract.coverage}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Premium:</label>
+                    <p><fmt:formatNumber value="${punishment.contract.premium}" type="currency" currencySymbol="$"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Detail:</label>
+                    <p><c:out value="${punishment.contract.detail}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Value:</label>
+                    <p><fmt:formatNumber value="${punishment.contract.value}" type="currency" currencySymbol="$"/></p>
+                </div>
+            </div>
+            <h3 class="text-primary">Motorcycle Information</h3>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="fw-bold">License Plate:</label>
+                    <p><c:out value="${punishment.contract.motorcycle.licensePlate}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Brand:</label>
+                    <p><c:out value="${punishment.contract.motorcycle.brand}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Model:</label>
+                    <p><c:out value="${punishment.contract.motorcycle.model}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Frame Number:</label>
+                    <p><c:out value="${punishment.contract.motorcycle.frameNumber}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Engine Number:</label>
+                    <p><c:out value="${punishment.contract.motorcycle.engineNumber}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Year Of Manufacture:</label>
+                    <p><c:out value="${punishment.contract.motorcycle.yearOfManufacture}"/></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="fw-bold">Color:</label>
+                    <p><c:out value="${punishment.contract.motorcycle.color}"/></p>
+                </div>
+            </div>
+            <form id="resolveForm" method="post" action="${pageContext.request.contextPath}/resolvePunishment">
+                <input type="hidden" id="status" name="status" value=""/>
+                <input type="hidden" name="punishmentID" value="${punishment.punishmentID}"/>
+                <div class="text-center">
+                    <button type="button" onclick="showModal('Approved')" class="btn btn-success me-2">
+                        <i class="bi bi-check-circle-fill"></i> Approve
+                    </button>
+                    <button type="button" onclick="showModal('Rejected')" class="btn btn-danger me-2">
+                        <i class="bi bi-x-circle-fill"></i> Reject
+                    </button>
+                    <a href="${pageContext.request.contextPath}/listPunishment" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle-fill"></i> Back to List
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- Modal -->
-<div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <h4>Are you sure you want to proceed?</h4>
-        <button class="btn-yes" onclick="confirmAction()">Yes</button>
-        <button class="btn-no" onclick="hideModal()">No</button>
-        <input type="hidden" id="modal-status" value=""/>
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to proceed?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="confirmAction()">Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <input type="hidden" id="modal-status" value=""/>
+            </div>
+        </div>
     </div>
 </div>
 <!-- End of modal -->
-
 <!-- End of form -->
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>

@@ -21,47 +21,41 @@
                                             <li><a href="${pageContext.request.contextPath}/index-2.html">Home</a></li>
                                             <li><a href="${pageContext.request.contextPath}/index-v2.html">Home v2</a></li>
                                         </ul>
-                                    </li>   <li class="dropdown"> <a href="${pageContext.request.contextPath}/customer-staff" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">ManagerCustomer <i class="fa fa-angle-down"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-
-                                    </ul>
-                                </li>
+                                    </li>
+                                    <li class="dropdown"> <a href="${pageContext.request.contextPath}/customer-manage" class="dropdown-toggle" role="button" aria-expanded="false">ManagerCustomer <i class="fa fa-angle-down"></i></a>
+                                    </li>
                                     <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About  <i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-
+                                            <!-- Add links as needed -->
                                         </ul>
                                     </li>
                                     <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Contact<i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-
+                                            <!-- Add links as needed -->
                                         </ul>
                                     </li>
                                     <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">History<i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-
+                                            <!-- Add links as needed -->
                                         </ul>
                                     </li>
-                                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dashboad<i class="fa fa-angle-down"></i></a>
+                                    <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dashboard<i class="fa fa-angle-down"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-
+                                            <!-- Add links as needed -->
                                         </ul>
                                     </li>
-
                                 </ul>
                             </div>
                             <!-- /.navbar-collapse -->
                         </div>
                         <!-- /.container-fluid -->
-
                     </nav>
                 </div>
-
 
                 <!-- page header  -->
                 <div class="page-header">
                     <h1>Insurance Card </h1>
-
-                    <p style="color: black" class="lead col-md-6 header-pic"   >ur Car Insurance template helps you manage your coverage details, discounts, and get quotes online easily.
+                    <p style="color: black" class="lead col-md-6 header-pic">Our Car Insurance template helps you manage your coverage details, discounts, and get quotes online easily.
                         It includes features like side navigation with a smooth scroll effect for effortless navigation.
                         With this template, accessing agent assistance and other essential insurance information is simple and efficient. Drive with confidence knowing you’re well-covered.
                     </p>
@@ -130,7 +124,5 @@
             <!-- Thêm nhận xét khác nếu cần -->
         </div>
     </div>
-//kkkk
 </div><!-- /.container -->
-</div><!-- /#main-container -->
 <jsp:include page="/views/includes/footer.jsp" />

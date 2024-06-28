@@ -55,4 +55,60 @@ public class ContractDAO {
             }
         }
     }
+
+    public Contract getContractByID(int contractID) {
+        Contract contract = null;
+        String sql = "SELECT c.*, cd.Detail, cd.Value, pm.methodType FROM Contracts c " +
+                "LEFT JOIN ContractDetails cd ON c.ContractID = cd.ContractID " +
+                "LEFT JOIN PaymentMethods pm ON c.CustomerID = pm.customerID " +
+                "WHERE c.ContractID = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, contractID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    contract = new Contract();
+                    contract.setContractID(rs.getInt("ContractID"));
+                    contract.setCustomerID(rs.getInt("CustomerID"));
+                    contract.setContractInfo(rs.getString("ContractInfo"));
+                    contract.setStatus(rs.getString("Status"));
+                    contract.setStartDate(rs.getDate("StartDate"));
+                    contract.setEndDate(rs.getDate("EndDate"));
+                    contract.setCoverage(rs.getString("Coverage"));
+                    contract.setInsuranceType(rs.getString("InsuranceType"));
+                    contract.setPremium(rs.getDouble("Premium"));
+                    contract.setDetail(rs.getString("Detail"));
+                    contract.setValue(rs.getDouble("Value"));
+                    contract.setMethodPaymentType(rs.getString("methodType"));  // Thêm methodType
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contract;
+    }
+
+    public Contract getLatestContractByCustomerID(int customerID) {
+        Contract contract = null;
+        String sql = "SELECT * FROM Contracts WHERE CustomerID = ? ORDER BY ContractID DESC LIMIT 1";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, customerID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    contract = new Contract();
+                    contract.setContractID(rs.getInt("ContractID"));
+                    contract.setCustomerID(rs.getInt("CustomerID"));
+                    contract.setContractInfo(rs.getString("ContractInfo"));
+                    contract.setStatus(rs.getString("Status"));
+                    contract.setStartDate(rs.getDate("StartDate"));
+                    contract.setEndDate(rs.getDate("EndDate"));
+                    contract.setCoverage(rs.getString("Coverage"));
+                    contract.setInsuranceType(rs.getString("InsuranceType"));
+                    contract.setPremium(rs.getDouble("Premium"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contract;
+    }
 }

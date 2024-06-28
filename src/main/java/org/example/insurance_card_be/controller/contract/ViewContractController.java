@@ -24,7 +24,8 @@ public class ViewContractController extends HttpServlet {
     // Ham doGet de hien thi trang xem contract
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int contractID = 1;
+        String contractIDStr = req.getParameter("contractID");
+        int contractID = Integer.parseInt(contractIDStr);
         Contract contract = viewContractService.getContractDetailByID(contractID);
 
         // Tinh so ngay con lai cua hop dong

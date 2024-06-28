@@ -9,15 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ResolveAccidentDAO {
-    // Khai bao connection
     private Connection connection;
 
-    // Khởi tạo connection
     public ResolveAccidentDAO() {
         connection = DBContext.getConnection();
     }
 
-    // Ham lay thong tin tai nan theo ID
     public Accident getAccidentByID(int accidentID) throws SQLException {
         String sql = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, a.Status, " +
                 "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
@@ -96,12 +93,21 @@ public class ResolveAccidentDAO {
         return null;
     }
 
-    // Ham cap nhat trang thai tai nan
     public void updateAccidentStatus(int accidentID, String status) throws SQLException {
         String sql = "UPDATE Accidents SET Status = ? WHERE AccidentID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, status);
             ps.setInt(2, accidentID);
+            ps.executeUpdate();
+        }
+    }
+
+    public void saveAccidentHistory(AccidentHistory accidentHistory) throws SQLException {
+        String sql = "INSERT INTO AccidentHistory (CustomerID, Description, Date) VALUES (?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, accidentHistory.getCustomerID());
+            ps.setString(2, accidentHistory.getDescription());
+            ps.setDate(3, new java.sql.Date(accidentHistory.getDate().getTime()));
             ps.executeUpdate();
         }
     }

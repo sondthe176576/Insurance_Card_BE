@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
+<jsp:include page="/views/includes/header.jsp"/>
+
 <html>
 <head>
     <title>Customer Dashboard</title>
@@ -14,125 +15,70 @@
             background-color: #004080;
             border-bottom: 3px solid #ff8000;
         }
-        .navbar-custom .navbar-nav .nav-link {
+        .navbar-custom .navbar-container {
+            display: flex;
+            justify-content: center; /* Căn giữa các phần tử trong thanh navbar */
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .navbar-custom .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .navbar-custom .nav-links li {
+            margin: 0 10px; /* Khoảng cách giữa các phần tử */
+        }
+        .navbar-custom .nav-links li a {
             color: white;
             font-weight: bold;
             text-transform: uppercase;
-            padding: 20px;
+            padding: 10px 15px;
+            text-decoration: none;
         }
-        .navbar-custom .navbar-nav .nav-link:hover {
+        .navbar-custom .nav-links li a:hover {
             color: #ff8000;
         }
-        .navbar-custom .dropdown-menu {
-            background-color: #004080;
+        .navbar-custom .nav-actions {
+            display: flex;
+            align-items: center;
+        }
+        .navbar-custom .search-btn {
+            background: transparent;
             border: none;
-        }
-        .navbar-custom .dropdown-menu .dropdown-item {
             color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 20px;
         }
-        .navbar-custom .dropdown-menu .dropdown-item:hover {
-            background-color: #ff8000;
+        .navbar-custom .search-btn:hover {
+            color: #ff8000;
+        }
+        .container.content-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
     </style>
-
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-custom">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon" style="color:white;"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">HOME</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        INSURANCE
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                        <a class="dropdown-item" href="#">Auto Insurance</a>
-                        <a class="dropdown-item" href="#">Home Insurance</a>
-                        <a class="dropdown-item" href="#">Life Insurance</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        FIND AN AGENT
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                        <a class="dropdown-item" href="#">Search Agent</a>
-                        <a class="dropdown-item" href="#">Agent Listing</a>
-                        <a class="dropdown-item" href="#">Agent Details</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        CLAIM CENTER
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                        <a class="dropdown-item" href="#">Claim Center</a>
-                        <a class="dropdown-item" href="#">Auto Claim</a>
-                        <a class="dropdown-item" href="#">Home Claim</a>
-                        <a class="dropdown-item" href="#">Life Claim</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        PAGES
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
-                        <a class="dropdown-item" href="#">Blog</a>
-                        <a class="dropdown-item" href="#">Blog details</a>
-                        <a class="dropdown-item" href="#">Faq's</a>
-                        <a class="dropdown-item" href="#">404 Error</a>
-                        <a class="dropdown-item" href="#">Investor</a>
-                        <a class="dropdown-item" href="#">Financial Report</a>
-                        <a class="dropdown-item" href="#">Annual Report</a>
-                        <a class="dropdown-item" href="#">Career Listing</a>
-                        <a class="dropdown-item" href="#">Career Details</a>
-                        <a class="dropdown-item" href="#">Career Form</a>
-                        <a class="dropdown-item" href="#">Story Testimonial</a>
-                        <a class="dropdown-item" href="#">Wizard Form</a>
-                        <a class="dropdown-item" href="#">How it works</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        SHORTCODES
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown5">
-                        <a class="dropdown-item" href="#">Alerts</a>
-                        <a class="dropdown-item" href="#">Tabs</a>
-                        <a class="dropdown-item" href="#">Accordion</a>
-                        <a class="dropdown-item" href="#">Pagination</a>
-                        <a class="dropdown-item" href="#">Call to action</a>
-                        <a class="dropdown-item" href="#">Dropcap</a>
-                        <a class="dropdown-item" href="#">Blockquotes</a>
-                        <a class="dropdown-item" href="#">Columns</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">CONTACT US</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        SHARE +
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown6">
-                        <a class="dropdown-item" href="#">Facebook</a>
-                        <a class="dropdown-item" href="#">Twitter</a>
-                        <a class="dropdown-item" href="#">LinkedIn</a>
-                        <a class="dropdown-item" href="#">Google+</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+<nav class="navbar navbar-custom">
+    <div class="navbar-container">
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Service</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contract</a></li>
+            <li><a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp">Dashboard</a></li>
+        </ul>
+
     </div>
 </nav>
+
 <!-- Content -->
 <style>
     .content-section {
@@ -229,19 +175,6 @@
 <div class="container content-section">
     <h2>Peace Insurance has over 25 years of experience in the insurance industry.</h2>
 
-    <div class="info-box">
-        <div class="box">
-            <h3>Insurance Products</h3>
-            <p>We offer various solutions tailored to your needs, covering a wide range of insurance products.</p>
-            <button class="btn">View Our Products</button>
-        </div>
-        <div class="box">
-            <h3>Find An Agent</h3>
-            <p>Our experienced agents are ready to assist you in finding the best insurance solutions for your situation.</p>
-            <button class="btn">Find An Agent</button>
-        </div>
-    </div>
-
     <h2>Insurance Coverage That Fits Your Life</h2>
     <p>Insurance coverage tailored to your needs is easier than you think. Sometimes on purpose injected humor and the like, simple dummy.</p>
 
@@ -296,7 +229,7 @@
         <a href="#" class="page-link">2</a>
     </div>
 </div>
-<%@ include file="footer.jsp" %>
+<jsp:include page="/views/includes/footer.jsp"/>
 
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>

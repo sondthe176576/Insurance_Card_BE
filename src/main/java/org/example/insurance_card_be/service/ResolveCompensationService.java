@@ -1,21 +1,20 @@
 package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.ResolveCompensationDAO;
+import org.example.insurance_card_be.model.CompensationHistory;
 import org.example.insurance_card_be.model.CompensationRequests;
 import org.example.insurance_card_be.util.EmailUtil;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 public class ResolveCompensationService {
-    // Khai bao resolveCompensationDAO
     private ResolveCompensationDAO resolveCompensationDAO;
 
-    // Khoi tao resolveCompensationDAO
     public ResolveCompensationService() {
         resolveCompensationDAO = new ResolveCompensationDAO();
     }
 
-    // Ham lay thong tin tat ca cac yeu cau boi thuong
     public CompensationRequests resolveCompensation(int requestID) {
         try {
             return resolveCompensationDAO.getCompensationRequestByID(requestID);
@@ -25,13 +24,21 @@ public class ResolveCompensationService {
         }
     }
 
-    // Cap nhat yeu cau boi thuong
     public void updateCompensationRequestStatus(int requestID, String status) {
         try {
             CompensationRequests request = resolveCompensationDAO.getCompensationRequestByID(requestID);
             if (request != null) {
                 request.setStatus(status);
                 resolveCompensationDAO.updateCompensationRequest(request);
+
+                // Lưu thông tin vào bảng CompensationHistory
+                CompensationHistory compensationHistory = new CompensationHistory(
+                        0, // CompensationID sẽ tự động tăng
+                        request.getCustomerID(),
+                        request.getAmount(),
+                        new Date()
+                );
+                resolveCompensationDAO.saveCompensationHistory(compensationHistory);
 
                 // Tạo nội dung email
                 String email = request.getContract().getCustomer().getUser().getEmail();

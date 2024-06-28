@@ -1,0 +1,75 @@
+body {
+    background-color: #f0f2f5;
+}
+
+.compensation-form-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.compensation-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.compensation-form .form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.compensation-form .search-button {
+    padding: 5px 10px; /* Điều chỉnh kích thước nút tìm kiếm */
+    font-size: 14px; /* Điều chỉnh kích thước chữ trên nút tìm kiếm */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+.table-dark {
+    background-color: #004080;
+    color: #ffffff;
+}
+
+.page-item.active .page-link {
+    background-color: #004080;
+    border-color: #004080;
+}
+
+.page-link {
+    color: #004080;
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển động cho phân trang */
+}
+
+.page-link:hover {
+    color: #0056b3;
+    background-color: #e9ecef;
+}
+
+.btn-primary {
+    background-color: #004080;
+    border: none;
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển động cho nút */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border: none;
+    transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển động cho nút View */
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}

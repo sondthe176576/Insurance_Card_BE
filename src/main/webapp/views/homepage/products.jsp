@@ -214,31 +214,15 @@
                     <div class="row">
                         <div class="col-md-12 section-content" id="coverage">
                             <h2>Get the Right Coverage</h2>
-                            <div class="membership-info">
-                                <p><strong>Basic Motorcycle Insurance</strong> – This option provides the fundamental coverage for your
-                                    motorcycle. After completing your contact information and selecting your insurance package, please
-                                    submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend
-                                    an information session. We aim to provide you with as much information as possible about our insurance
-                                    policies. At the end of the session, you may complete the application for insurance and pay the $100
-                                    insurance fee.</p>
-
-                                <p><strong>Comprehensive Motorcycle Insurance</strong> – This package offers complete protection for your
-                                    motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters
-                                    with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not
-                                    only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire,
-                                    and vandalism. This ensures that you have peace of mind in any situation.</p>
-
-                                <p><strong>Premium Motorcycle Insurance</strong> – Our premium package provides the highest level of
-                                    coverage. This includes all the benefits of comprehensive insurance, plus additional features such as
-                                    roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium
-                                    insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest
-                                    response in case of any incident. Our premium plan also includes a personal advisor who will assist you
-                                    with all your insurance needs.</p>
-
-                                <p>Choosing the right insurance package ensures that your motorcycle is well-protected and that you receive
-                                    the support you need in case of any accidents or incidents. Our team is dedicated to helping you
-                                    understand the different options and choose the one that best suits your needs.</p>
-                            </div>
+                            <p>Nuncnisldiam  dignissim  tincidunt  congue  seddapibus  id erosraesent ricies luctus dolor a euismod  quam lobortis  one egetusce  fermentumnulla  vitae  entum imperdietex sapien volutpat sapien vitae finibus justo odiod teger eget felis on sedodio rutrum ullamcorper a nondiam. </p>
+                            <h3>Find the below point that matter your coverage:</h3>
+                            <ul class="angle-double-right">
+                                <li> Aliquam sed elit tempor blandit massa atmaximus lorem. </li>
+                                <li> Nam et dui sodales nisi aliquam consequat in hendrerit erat. </li>
+                                <li> Praesent iaculis ipsum vel suscipit ornare. </li>
+                                <li> Duis dictum nibh ut fringilla volutpat. </li>
+                                <li> Ut eleifend metus et pulvinar porta. </li>
+                            </ul>
                             <a href="#" class="btn tp-btn tp-btn-orange tp-btn-default">Watch video</a>
                             <hr>
                             <div class="row feature-section">
