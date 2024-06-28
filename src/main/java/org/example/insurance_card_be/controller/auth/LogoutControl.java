@@ -11,6 +11,8 @@ import java.io.IOException;
 
 @WebServlet("/logout")
 public class LogoutControl extends HttpServlet {
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false); // không tạo session mới nếu chưa tồn tại
