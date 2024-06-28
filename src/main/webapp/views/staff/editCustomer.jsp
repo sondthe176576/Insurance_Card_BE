@@ -85,10 +85,10 @@
 <div class="form-container">
     <h2>Edit Customer</h2>
     <form id="editCustomerForm" method="post" action="${pageContext.request.contextPath}/customer-edit">
-        <input type="hidden" name="userId" value="${customer.userId}" />
+        <input type="hidden" name="userID" value="${customer.userID}" />
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="${customer.userName}" required />
+            <input type="text" id="username" name="username" value="${customer.username}" required />
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
@@ -161,7 +161,6 @@
     }
 
     $(document).ready(function () {
-        // Fetch provinces and set selected value
         $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
             if (data_tinh.error == 0) {
                 $.each(data_tinh.data, function (key_tinh, val_tinh) {
@@ -207,7 +206,6 @@
             }
         }
 
-        // Event listener for change events
         $("#tinh").change(function () {
             loadDistricts();
         });

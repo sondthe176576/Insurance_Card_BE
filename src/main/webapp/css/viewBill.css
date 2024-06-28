@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.img-fluid {
+    width: 100%;
+}
+
+.table-responsive {
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 1rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.table .table-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.table .btn {
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.table .btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.table .btn-primary:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.table .bi {
+    font-size: 1.2em;
+    color: white; /* Change icon color to white */
+}
+
+.table .btn-primary .bi:hover {
+    color: #ffffff; /* Ensure the icon color remains white on hover */
+}

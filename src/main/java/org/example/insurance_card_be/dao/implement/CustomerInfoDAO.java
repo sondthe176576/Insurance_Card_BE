@@ -13,14 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerInfoDAO {
+    // SQL query to get customer information based on ID
     String sql = "SELECT c.CustomerID, c.PersonalInfo, " +
-            "u.UserID, u.Username, u.Password, u.Role, u.Email, u.Mobile, u.Address, u.FullName, u.Gender " +
+            "u.UserID, u.Username, u.Password, u.Role, u.Email, u.Mobile, u.Province, " +
+            "u.District, u.Country, u.First_name, u.Last_name, u.Full_name, u.Birth_date, u.Gender " +
             "FROM dbo.Customers c " +
             "JOIN dbo.Users u ON c.UserID = u.UserID " +
             "WHERE c.CustomerID = ?";
     private static final String SELECT_MOTORCYCLES_BY_CUSTOMER_ID = "SELECT * FROM Motorcycles WHERE CustomerID = ?";
 
-    // Load a customer from the database by ID
+    // Get customer information based on ID
     public Customers selectCustomerByID(int customerID) {
         Customers customer = null;
         try (Connection conn = DBContext.getConnection();
@@ -29,10 +31,27 @@ public class CustomerInfoDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Users user = new Users(rs.getInt("UserID"), rs.getString("Username"), rs.getString("Password"),
-                        rs.getString("Role"), rs.getString("Email"), rs.getString("Mobile"), rs.getString("Address"),
-                        rs.getString("FullName"), rs.getString("Gender"));
-                customer = new Customers(rs.getInt("CustomerID"), user, rs.getString("PersonalInfo"));
+                Users user = new Users(
+                        rs.getInt("UserID"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Role"),
+                        rs.getString("Email"),
+                        rs.getString("Mobile"),
+                        rs.getString("Province"),
+                        rs.getString("District"),
+                        rs.getString("Country"),
+                        rs.getString("First_name"),
+                        rs.getString("Last_name"),
+                        rs.getString("Full_name"),
+                        rs.getDate("Birth_date"),
+                        rs.getString("Gender")
+                );
+                customer = new Customers(
+                        rs.getInt("CustomerID"),
+                        user,
+                        rs.getString("PersonalInfo")
+                );
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,7 +59,7 @@ public class CustomerInfoDAO {
         return customer;
     }
 
-    // Load motorcycles of a customer from the database by ID
+    // Get list of motorcycles based on customer ID
     public List<Motorcycle> selectMotorcyclesByCustomerID(int customerID) {
         List<Motorcycle> motorcycles = new ArrayList<>();
         try (Connection conn = DBContext.getConnection();
@@ -50,9 +69,17 @@ public class CustomerInfoDAO {
 
             while (rs.next()) {
                 Customers customer = selectCustomerByID(customerID);
-                Motorcycle motorcycle = new Motorcycle(rs.getInt("MotorcycleID"), customer, rs.getString("LicensePlate"),
-                        rs.getString("Brand"), rs.getString("Model"), rs.getString("FrameNumber"), rs.getString("EngineNumber"),
-                        rs.getInt("YearOfManufacture"), rs.getString("Color"));
+                Motorcycle motorcycle = new Motorcycle(
+                        rs.getInt("MotorcycleID"),
+                        customer,
+                        rs.getString("LicensePlate"),
+                        rs.getString("Brand"),
+                        rs.getString("Model"),
+                        rs.getString("FrameNumber"),
+                        rs.getString("EngineNumber"),
+                        rs.getInt("YearOfManufacture"),
+                        rs.getString("Color")
+                );
                 motorcycles.add(motorcycle);
             }
         } catch (SQLException e) {
@@ -61,31 +88,22 @@ public class CustomerInfoDAO {
         return motorcycles;
     }
 
-    // Load all ID of customers from the database
-    public List<Integer> getAllCustomerIDs() throws SQLException {
-        List<Integer> customerIDs = new ArrayList<>();
-        String sql = "SELECT CustomerID FROM Customers";
+    // Get list of all customer IDs
+    public List<Customers> getAllCustomerIDs() throws SQLException {
+        List<Customers> customers = new ArrayList<>();
+        String sql = "SELECT c.CustomerID, u.Full_name FROM Customers c JOIN Users u ON c.UserID = u.UserID";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                customerIDs.add(rs.getInt("CustomerID"));
+                Customers customer = new Customers();
+                customer.setCustomerID(rs.getInt("CustomerID"));
+                Users user = new Users();
+                user.setFullName(rs.getString("Full_name"));
+                customer.setUser(user);
+                customers.add(customer);
             }
-
         }
-        return customerIDs;
-    }
-
-    // Function main test get all customer IDs
-    public static void main(String[] args) {
-        CustomerInfoDAO customerInfoDAO = new CustomerInfoDAO();
-        try {
-            List<Integer> customerIDs = customerInfoDAO.getAllCustomerIDs();
-            for (Integer customerID : customerIDs) {
-                System.out.println(customerID);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return customers;
     }
 }

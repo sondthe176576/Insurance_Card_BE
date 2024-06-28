@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import org.example.insurance_card_be.dao.implement.CustomerDAO;
 import org.example.insurance_card_be.model.Users;
 
@@ -20,7 +19,7 @@ public class CustomerCreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/views/staff/createCustomer.jsp").forward(req, resp);
     }
-//aa
+
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter out = resp.getWriter();
         CustomerDAO dao = new CustomerDAO();
@@ -46,7 +45,7 @@ public class CustomerCreateServlet extends HttpServlet {
         }
 
         Users customer = new Users();
-        customer.setUserName(username);
+        customer.setUsername(username);
         customer.setPassword(password);
         customer.setEmail(email);
         customer.setMobile(mobile);

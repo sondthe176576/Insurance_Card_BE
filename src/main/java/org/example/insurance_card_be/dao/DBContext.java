@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBContext {
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=Demo";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=DEMO";
     private static final String USER = "sa";
     private static final String PASSWORD = "123";
 
@@ -29,6 +29,7 @@ public class DBContext {
             e.printStackTrace();
         }
     }
+
 
     public static void main(String[] args) {
         Connection conn = DBContext.getConnection();

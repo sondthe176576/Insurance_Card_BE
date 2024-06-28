@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 
 public class ContractService {
-    // Service dung de xu ly logic cua contract
+    // Khai bao contractDAO
     private ContractDAO contractDAO;
 
     // Khoi tao contractDAO
@@ -20,4 +20,11 @@ public class ContractService {
         contractDAO.createContract(contract);
     }
 
+    public Contract getContractByID(int contractID) {
+        return contractDAO.getContractByID(contractID);
+    }
+
+    public Contract getLatestContractByCustomerID(int customerID) {
+        return contractDAO.getLatestContractByCustomerID(customerID);
+    }
 }

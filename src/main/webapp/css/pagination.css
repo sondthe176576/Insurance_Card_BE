@@ -1,0 +1,25 @@
+.pagination {
+    display: flex;
+    justify-content: flex-end; /* Aligns pagination to the right */
+    margin: 20px 0;
+    padding-right: 20px; /* Optional: Add padding to move the pagination away from the edge */
+}
+
+.pagination a {
+    color: #3498db;
+    padding: 10px 15px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 5px;
+    border-radius: 5px;
+}
+
+.pagination a.active {
+    background-color: #3498db;
+    color: white;
+    border: 1px solid #3498db;
+}
+
+.pagination a:hover {
+    background-color: #ecf0f1;
+}

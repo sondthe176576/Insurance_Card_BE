@@ -85,7 +85,7 @@ public class CustomerManageServlet extends HttpServlet {
             case "delete":
                 int id = Integer.parseInt(req.getParameter("id"));
                 Users users = new Users();
-                users.setUserId(id);
+                users.setUserID(id);
                 dao.deleteByID(users);
                 listCustomer = dao.findAll();
                 req.setAttribute("message", "Customer deleted successfully.");

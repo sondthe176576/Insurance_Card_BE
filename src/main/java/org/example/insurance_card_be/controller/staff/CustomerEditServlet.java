@@ -25,7 +25,7 @@ public class CustomerEditServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CustomerDAO customerDAO = new CustomerDAO();
-        int id = Integer.parseInt(req.getParameter("userId"));
+        int id = Integer.parseInt(req.getParameter("userID"));
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
@@ -48,8 +48,8 @@ public class CustomerEditServlet extends HttpServlet {
         }
 
         Users customer = new Users();
-        customer.setUserId(id);
-        customer.setUserName(username);
+        customer.setUserID(id);
+        customer.setUsername(username);
         customer.setPassword(password);
         customer.setEmail(email);
         customer.setMobile(mobile);
