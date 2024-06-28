@@ -30,6 +30,7 @@ public class DBContext {
         }
     }
 
+
     public static void main(String[] args) {
         Connection conn = DBContext.getConnection();
         if (conn != null) {

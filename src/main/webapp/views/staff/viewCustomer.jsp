@@ -82,7 +82,7 @@
     </c:if>
     <div class="detail-item">
         <label>Username:</label>
-        <span>${customer.userName}</span>
+        <span>${customer.username}</span>
     </div>
     <div class="detail-item">
         <label>Email:</label>
@@ -118,7 +118,7 @@
     </div>
     <div class="detail-item">
         <label>Birth Date:</label>
-        <span>${customer.birthDate}</span>
+        <span><fmt:formatDate value="${customer.birthDate}" pattern="yyyy-MM-dd" /></span>
     </div>
     <div class="detail-item">
         <label>Gender:</label>
@@ -126,7 +126,7 @@
     </div>
     <div class="btn-container">
         <a href="${pageContext.request.contextPath}/customer-manage" class="btn-back">Back</a>
-        <a href="${pageContext.request.contextPath}/customer-edit?userID=${customer.userId}" class="btn-update">Update</a>
+        <a href="${pageContext.request.contextPath}/customer-edit?userID=${customer.userID}" class="btn-update">Update</a>
     </div>
 </div>
 <jsp:include page="/views/includes/footer.jsp" />
