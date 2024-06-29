@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.example.insurance_card_be.model.*;
 import org.example.insurance_card_be.service.ContractService;
 import org.example.insurance_card_be.service.CustomerService;
+import org.example.insurance_card_be.service.NotificationService;
 import org.example.insurance_card_be.service.PaymentService;
 
 import java.io.IOException;
@@ -21,27 +22,26 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "ContractController", urlPatterns = "/createContract")
 public class ContractController extends HttpServlet {
-    // Khai bao contractService va customerService
     private ContractService contractService;
     private CustomerService customerService;
     private PaymentService paymentService;
+    private NotificationService notificationService;
 
-    // Khoi tao contractService va customerService
     @Override
     public void init() throws ServletException {
         this.contractService = new ContractService();
         this.customerService = new CustomerService();
         this.paymentService = new PaymentService();
+        this.notificationService = new NotificationService();
     }
 
-    // Ham doGet de hien thi trang tao contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerIDstr = req.getParameter("customerID"); // Lay customerID tu request
+        String customerIDstr = req.getParameter("customerID");
         int customerID = Integer.parseInt(customerIDstr);
 
         try {
-            Customers customer = customerService.getCustomerByID(customerID); // Lay thong tin customer
-            List<Motorcycle> motorcycles = customerService.getMotorcyclesByCustomerID(customerID); // Lay danh sach xe may
+            Customers customer = customerService.getCustomerByID(customerID);
+            List<Motorcycle> motorcycles = customerService.getMotorcyclesByCustomerID(customerID);
             req.setAttribute("customer", customer);
             req.setAttribute("motorcycles", motorcycles);
             req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
@@ -54,9 +54,7 @@ public class ContractController extends HttpServlet {
         }
     }
 
-    // Ham doPost de tao contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lay thong tin contract tu request
         String customerID = req.getParameter("customerID");
         String contractInfo = req.getParameter("contractInfo");
         String status = req.getParameter("status");
@@ -67,7 +65,6 @@ public class ContractController extends HttpServlet {
         String insuranceType = req.getParameter("insuranceType");
         String premiumStr = req.getParameter("premium");
         String paymentMethod = req.getParameter("paymentMethod");
-        String paymentMethodIDStr = req.getParameter("paymentMethodID");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Contract contract = new Contract();
@@ -85,6 +82,17 @@ public class ContractController extends HttpServlet {
             contract.setPremium(Double.parseDouble(premiumStr));
 
             contractService.createContract(contract);
+
+            // Gửi thông báo đến tất cả nhân viên
+            List<Integer> staffUserIDs = notificationService.getAllStaffUserIDs();
+            for (int staffUserID : staffUserIDs) {
+                Notifications notification = new Notifications();
+                notification.setUserID(staffUserID);
+                notification.setMessage("New contract created by customer ID: " + customerID);
+                notification.setCreatedDate(new Date());
+                notification.setRead(false);
+                notificationService.addNotification(notification);
+            }
 
             PaymentMethod paymentMethodObj = new PaymentMethod();
             paymentMethodObj.setCustomerID(Integer.parseInt(customerID));

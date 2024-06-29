@@ -20,14 +20,15 @@
 </head>
 <body>
 <!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 <!-- End of header -->
 <!-- Include navbar -->
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Notification Message -->
 <c:if test="${not empty message}">
-    <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show" role="alert">
+    <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show"
+         role="alert">
         <c:out value="${message}"/>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -44,51 +45,64 @@
                     <!-- Customer Information Fields -->
                     <div class="mb-3">
                         <label for="customerID" class="form-label">Customer ID:</label>
-                        <input type="number" id="customerID" name="customerID" class="form-control" value="${customer.customerID}" readonly>
+                        <input type="number" id="customerID" name="customerID" class="form-control"
+                               value="${customer.customerID}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="customerUsername" class="form-label">Customer Username:</label>
-                        <input type="text" id="customerUsername" name="customerUsername" class="form-control" value="${customer.user.username}" readonly>
+                        <input type="text" id="customerUsername" name="customerUsername" class="form-control"
+                               value="${customer.user.username}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="customerName" class="form-label">Customer Name:</label>
-                        <input type="text" id="customerName" name="customerName" class="form-control" value="${customer.user.fullName}" readonly>
+                        <input type="text" id="customerName" name="customerName" class="form-control"
+                               value="${customer.user.fullName}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="firstName" class="form-label">First Name:</label>
-                        <input type="text" id="firstName" name="firstName" class="form-control" value="${customer.user.firstName}" readonly>
+                        <input type="text" id="firstName" name="firstName" class="form-control"
+                               value="${customer.user.firstName}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Last Name:</label>
-                        <input type="text" id="lastName" name="lastName" class="form-control" value="${customer.user.lastName}" readonly>
+                        <input type="text" id="lastName" name="lastName" class="form-control"
+                               value="${customer.user.lastName}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="customerPhone" class="form-label">Customer Phone:</label>
-                        <input type="text" id="customerPhone" name="customerPhone" class="form-control" value="${customer.user.mobile}" readonly>
+                        <input type="text" id="customerPhone" name="customerPhone" class="form-control"
+                               value="${customer.user.mobile}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="customerEmail" class="form-label">Customer Email:</label>
-                        <input type="email" id="customerEmail" name="customerEmail" class="form-control" value="${customer.user.email}" readonly>
+                        <input type="email" id="customerEmail" name="customerEmail" class="form-control"
+                               value="${customer.user.email}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="customerGender" class="form-label">Gender:</label>
-                        <input type="text" id="customerGender" name="customerGender" class="form-control" value="${customer.user.gender}" readonly>
+                        <input type="text" id="customerGender" name="customerGender" class="form-control"
+                               value="${customer.user.gender}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="province" class="form-label">Province:</label>
-                        <input type="text" id="province" name="province" class="form-control" value="${customer.user.province}" readonly>
+                        <input type="text" id="province" name="province" class="form-control"
+                               value="${customer.user.province}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="district" class="form-label">District:</label>
-                        <input type="text" id="district" name="district" class="form-control" value="${customer.user.district}" readonly>
+                        <input type="text" id="district" name="district" class="form-control"
+                               value="${customer.user.district}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="country" class="form-label">Country:</label>
-                        <input type="text" id="country" name="country" class="form-control" value="${customer.user.country}" readonly>
+                        <input type="text" id="country" name="country" class="form-control"
+                               value="${customer.user.country}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="birthDate" class="form-label">Birth Date:</label>
-                        <input type="date" id="birthDate" name="birthDate" class="form-control" value="<fmt:formatDate value='${customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
+                        <input type="date" id="birthDate" name="birthDate" class="form-control"
+                               value="<fmt:formatDate value='${customer.user.birthDate}' pattern='yyyy-MM-dd'/>"
+                               readonly>
                     </div>
                 </div>
 
@@ -98,35 +112,43 @@
                     <c:forEach var="motorcycle" items="${motorcycles}">
                         <div class="mb-3">
                             <label for="motorcycleID" class="form-label">Motorcycle ID:</label>
-                            <input type="number" id="motorcycleID" name="motorcycleID" class="form-control" value="${motorcycle.motorcycleID}" readonly>
+                            <input type="number" id="motorcycleID" name="motorcycleID" class="form-control"
+                                   value="${motorcycle.motorcycleID}" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="licensePlate" class="form-label">License Plate:</label>
-                            <input type="text" id="licensePlate" name="licensePlate" class="form-control" value="${motorcycle.licensePlate}" readonly>
+                            <input type="text" id="licensePlate" name="licensePlate" class="form-control"
+                                   value="${motorcycle.licensePlate}" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="brand" class="form-label">Brand:</label>
-                            <input type="text" id="brand" name="brand" class="form-control" value="${motorcycle.brand}" readonly>
+                            <input type="text" id="brand" name="brand" class="form-control" value="${motorcycle.brand}"
+                                   readonly>
                         </div>
                         <div class="mb-3">
                             <label for="model" class="form-label">Model:</label>
-                            <input type="text" id="model" name="model" class="form-control" value="${motorcycle.model}" readonly>
+                            <input type="text" id="model" name="model" class="form-control" value="${motorcycle.model}"
+                                   readonly>
                         </div>
                         <div class="mb-3">
                             <label for="yearOfManufacture" class="form-label">Year Of Manufacture:</label>
-                            <input type="number" id="yearOfManufacture" name="yearOfManufacture" class="form-control" value="${motorcycle.yearOfManufacture}" readonly>
+                            <input type="number" id="yearOfManufacture" name="yearOfManufacture" class="form-control"
+                                   value="${motorcycle.yearOfManufacture}" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="color" class="form-label">Color:</label>
-                            <input type="text" id="color" name="color" class="form-control" value="${motorcycle.color}" readonly>
+                            <input type="text" id="color" name="color" class="form-control" value="${motorcycle.color}"
+                                   readonly>
                         </div>
                         <div class="mb-3">
                             <label for="engineNumber" class="form-label">Engine Number:</label>
-                            <input type="text" id="engineNumber" name="engineNumber" class="form-control" value="${motorcycle.engineNumber}" readonly>
+                            <input type="text" id="engineNumber" name="engineNumber" class="form-control"
+                                   value="${motorcycle.engineNumber}" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="frameNumber" class="form-label">Frame Number:</label>
-                            <input type="text" id="frameNumber" name="frameNumber" class="form-control" value="${motorcycle.frameNumber}" readonly>
+                            <input type="text" id="frameNumber" name="frameNumber" class="form-control"
+                                   value="${motorcycle.frameNumber}" readonly>
                         </div>
                     </c:forEach>
                 </div>
@@ -137,7 +159,8 @@
                     <h3 class="mb-3">Contract Information</h3>
                     <div class="mb-3">
                         <label for="contractYears" class="form-label">Contract Years:</label>
-                        <input type="number" id="contractYears" name="contractYears" class="form-control" min="1" required>
+                        <input type="number" id="contractYears" name="contractYears" class="form-control" min="1"
+                               required>
                     </div>
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Start Date:</label>
@@ -174,7 +197,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="premium" class="form-label">Premium:</label>
-                        <input type="number" id="premium" name="premium" class="form-control" step="50" min="50" required readonly>
+                        <input type="number" id="premium" name="premium" class="form-control" step="50" min="50"
+                               required readonly>
                     </div>
                 </div>
 
@@ -219,37 +243,61 @@
                     <div class="accordion" id="insurancePackages">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Basic Motorcycle Insurance
                                 </button>
                             </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#insurancePackages">
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                 data-bs-parent="#insurancePackages">
                                 <div class="accordion-body">
-                                    <p>This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>
+                                    <p>This option provides the fundamental coverage for your motorcycle. After
+                                        completing your contact information and selecting your insurance package, please
+                                        submit the form to the Insurance Advisor at the address below. You will receive
+                                        an invitation to attend an information session. We aim to provide you with as
+                                        much information as possible about our insurance policies. At the end of the
+                                        session, you may complete the application for insurance and pay the $100
+                                        insurance fee.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Comprehensive Motorcycle Insurance
                                 </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#insurancePackages">
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                 data-bs-parent="#insurancePackages">
                                 <div class="accordion-body">
-                                    <p>This package offers complete protection for your motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any situation.</p>
+                                    <p>This package offers complete protection for your motorcycle, including accident
+                                        and theft insurance. Additionally, you will receive monthly newsletters with
+                                        updates on your insurance coverage. The insurance fee is $150 per year.
+                                        Comprehensive insurance not only covers basic liabilities but also includes
+                                        coverage for damage caused by natural disasters, fire, and vandalism. This
+                                        ensures that you have peace of mind in any situation.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
                                     Premium Motorcycle Insurance
                                 </button>
                             </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#insurancePackages">
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                 data-bs-parent="#insurancePackages">
                                 <div class="accordion-body">
-                                    <p>Our premium package provides the highest level of coverage. This includes all the benefits of comprehensive insurance, plus additional features such as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest response in case of any incident. Our premium plan also includes a personal advisor who will assist you with all your insurance needs.</p>
+                                    <p>Our premium package provides the highest level of coverage. This includes all the
+                                        benefits of comprehensive insurance, plus additional features such as roadside
+                                        assistance, rental reimbursement, and coverage for custom parts and equipment.
+                                        The premium insurance fee is $250 per year. With this package, you are
+                                        guaranteed the best support and quickest response in case of any incident. Our
+                                        premium plan also includes a personal advisor who will assist you with all your
+                                        insurance needs.</p>
                                 </div>
                             </div>
                         </div>

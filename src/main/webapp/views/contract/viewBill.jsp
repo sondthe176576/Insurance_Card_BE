@@ -50,7 +50,8 @@
                 <td><c:out value="${contract.premium}"/></td>
                 <td><c:out value="${contract.methodPaymentType}"/></td>
                 <td class="text-center">
-                    <a href="${pageContext.request.contextPath}/viewContract?contractID=${contract.contractID}" class="btn btn-primary" title="View Detail">
+                    <a href="${pageContext.request.contextPath}/viewContract?contractID=${contract.contractID}"
+                       class="btn btn-primary" title="View Detail">
                         <i class="bi bi-eye"></i>
                     </a>
                 </td>
