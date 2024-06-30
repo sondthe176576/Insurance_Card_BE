@@ -57,7 +57,6 @@ public class ContractController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String customerID = req.getParameter("customerID");
         String contractInfo = req.getParameter("contractInfo");
-        String status = req.getParameter("status");
         String endDateStr = req.getParameter("endDate");
         String detail = req.getParameter("detail");
         String valueStr = req.getParameter("value");
@@ -72,7 +71,7 @@ public class ContractController extends HttpServlet {
         try {
             contract.setCustomerID(Integer.parseInt(customerID));
             contract.setContractInfo(contractInfo);
-            contract.setStatus(status);
+            contract.setStatus("Pending");
             contract.setStartDate(new Date());
             contract.setEndDate(sdf.parse(endDateStr));
             contract.setDetail(detail);

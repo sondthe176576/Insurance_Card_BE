@@ -111,4 +111,25 @@ public class ContractDAO {
         }
         return contract;
     }
+
+    // Ham main de test tao contract
+    public static void main(String[] args) {
+        ContractDAO contractDAO = new ContractDAO();
+        Contract contract = new Contract();
+        contract.setCustomerID(1);
+        contract.setContractInfo("Test contract");
+        contract.setStatus("Pending");
+        contract.setStartDate(new java.util.Date());
+        contract.setEndDate(new java.util.Date());
+        contract.setCoverage("Coverage");
+        contract.setInsuranceType("Insurance type");
+        contract.setPremium(1000);
+        contract.setDetail("Detail");
+        contract.setValue(1000);
+        try {
+            contractDAO.createContract(contract);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

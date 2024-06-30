@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/createContract.css">
-    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/createContract.js"></script>
 </head>
 <body>
 <!-- Include header -->
@@ -314,5 +312,7 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
+<script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/createContract.js"></script>
 </body>
 </html>

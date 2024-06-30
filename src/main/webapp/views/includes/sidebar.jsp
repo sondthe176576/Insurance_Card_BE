@@ -3,7 +3,7 @@
     <div class="sidebar-header">
         <i class="bi bi-list"></i> Menu
     </div>
-    <a href="${pageContext.request.contextPath}/listNewContract" class="${page == 'newContract' ? 'active' : ''}">
+    <a href="${pageContext.request.contextPath}/listWaitingContract" class="${page == 'newContract' ? 'active' : ''}">
         <i class="bi bi-file-earmark-plus"></i> New Contracts
     </a>
     <a href="${pageContext.request.contextPath}/listAccident" class="${page == 'accidents' ? 'active' : ''}">
