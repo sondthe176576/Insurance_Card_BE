@@ -25,8 +25,27 @@ public class WaitingContractController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Contract> waitingContracts = waitingContractService.getWaitingContracts();
+            int page = 1;
+            int limit = 10;
+            if (req.getParameter("page") != null) {
+                page = Integer.parseInt(req.getParameter("page"));
+            }
+            String status = "Pending";
+            String customerName = req.getParameter("customerName");
+            String startDate = req.getParameter("startDate");
+            String insuranceType = req.getParameter("insuranceType");
+
+            List<Contract> waitingContracts = waitingContractService.getWaitingContracts(status, customerName, startDate, insuranceType, page, limit);
+            int totalContracts = waitingContractService.getTotalContractsByStatus(status, customerName, startDate, insuranceType);
+            int totalPages = (int) Math.ceil((double) totalContracts / limit);
+
             req.setAttribute("waitingContracts", waitingContracts);
+            req.setAttribute("totalContracts", totalContracts);
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", page);
+            req.setAttribute("customerName", customerName);
+            req.setAttribute("startDate", startDate);
+            req.setAttribute("insuranceType", insuranceType);
             req.getRequestDispatcher("/views/contract/waitingContracts.jsp").forward(req, resp);
         } catch (Exception e) {
             Logger logger = Logger.getLogger(WaitingContractController.class.getName());

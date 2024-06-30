@@ -37,11 +37,33 @@
     <div class="container mt-5">
         <div class="card p-4 shadow-sm">
             <h2 class="text-center mb-4 mt-4">List of Waiting Contracts</h2>
+            <form class="row g-3" method="get" action="${pageContext.request.contextPath}/listWaitingContract">
+                <div class="col-md-4">
+                    <label for="customerName" class="form-label">Search by Customer Name:</label>
+                    <input type="text" id="customerName" name="customerName" value="${param.customerName}" class="form-control" placeholder="Enter customer name"/>
+                </div>
+                <div class="col-md-4">
+                    <label for="startDate" class="form-label">Search by Start Date:</label>
+                    <input type="date" id="startDate" name="startDate" value="${param.startDate}" class="form-control"/>
+                </div>
+                <div class="col-md-4">
+                    <label for="insuranceType" class="form-label">Filter by Insurance Type:</label>
+                    <select id="insuranceType" name="insuranceType" class="form-select">
+                        <option value="">All</option>
+                        <option value="Basic" ${param.insuranceType == 'Basic' ? 'selected' : ''}>Basic</option>
+                        <option value="Comprehensive" ${param.insuranceType == 'Comprehensive' ? 'selected' : ''}>Comprehensive</option>
+                        <option value="Premium" ${param.insuranceType == 'Premium' ? 'selected' : ''}>Premium</option>
+                    </select>
+                </div>
+                <div class="col-md-12 d-flex align-items-end justify-content-end mt-3">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+                </div>
+            </form>
             <table class="table table-hover mt-4">
                 <thead class="table-dark">
                 <tr>
                     <th>No</th>
-                    <th>Contract ID</th>
+                    <th>Customer Name</th>
                     <th>Customer ID</th>
                     <th>Contract Info</th>
                     <th>Status</th>
@@ -56,8 +78,8 @@
                 <tbody>
                 <c:forEach var="contract" items="${waitingContracts}" varStatus="status">
                     <tr>
-                        <td><c:out value="${status.count}"/></td>
-                        <td><c:out value="${contract.contractID}"/></td>
+                        <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
+                        <td><c:out value="${contract.customerName}"/></td>
                         <td><c:out value="${contract.customerID}"/></td>
                         <td><c:out value="${contract.contractInfo}"/></td>
                         <td><c:out value="${contract.status}"/></td>
@@ -73,6 +95,32 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <c:if test="${currentPage > 1}">
+                        <li class="page-item">
+                            <a class="page-link" href="${pageContext.request.contextPath}/listWaitingContract?page=${currentPage - 1}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">
+                                <i class="bi bi-arrow-left"></i>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach var="i" begin="1" end="${totalPages}">
+                        <c:if test="${i >= currentPage - 1 && i <= currentPage + 1}">
+                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                <a class="page-link" href="${pageContext.request.contextPath}/listWaitingContract?page=${i}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">${i}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${currentPage < totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" href="${pageContext.request.contextPath}/listWaitingContract?page=${currentPage + 1}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

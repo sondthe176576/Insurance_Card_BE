@@ -27,4 +27,5 @@ public class Contract {
     private String methodPaymentType;
     private PaymentHistory paymentHistory;
     private PaymentMethod paymentMethod;
+    private String customerName;
 }

@@ -9,7 +9,11 @@ import java.util.List;
 public class WaitingContractService {
     private WaitingContractDAO contractDAO = new WaitingContractDAO();
 
-    public List<Contract> getWaitingContracts() throws SQLException {
-        return contractDAO.getContractsByStatus("Pending");
+    public List<Contract> getWaitingContracts(String status, String customerName, String startDate, String insuranceType, int page, int pageSize) throws SQLException {
+        return contractDAO.getContractsByStatus(status, customerName, startDate, insuranceType, page, pageSize);
+    }
+
+    public int getTotalContractsByStatus(String status, String customerName, String startDate, String insuranceType) throws SQLException {
+        return contractDAO.getTotalContractsByStatus(status, customerName, startDate, insuranceType);
     }
 }
