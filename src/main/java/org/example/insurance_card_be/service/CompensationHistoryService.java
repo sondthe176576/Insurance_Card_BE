@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.CompensationHistoryDAO;
-import org.example.insurance_card_be.model.CompensationHistoryCus;
+import org.example.insurance_card_be.model.CompensationHistory;
 
 import java.util.List;
 
@@ -13,24 +13,24 @@ public class CompensationHistoryService {
         this.compensationHistoryDAO = new CompensationHistoryDAO();
     }
 
-    public List<CompensationHistoryCus> getAllCompensationHistories() {
+    public List<CompensationHistory> getAllCompensationHistories() {
         return compensationHistoryDAO.getAllCompensationHistories();
     }
 
-    public CompensationHistoryCus getCompensationHistoryById(int compensationID) {
+    public CompensationHistory getCompensationHistoryById(int compensationID) {
         return compensationHistoryDAO.getCompensationHistoryById(compensationID);
     }
 
-    public List<CompensationHistoryCus> getCompensationHistoriesByCustomerID(int customerID) {
+    public List<CompensationHistory> getCompensationHistoriesByCustomerID(int customerID) {
         return compensationHistoryDAO.getCompensationHistoriesByCustomerID(customerID);
     }
 
-    public void addCompensationHistory(CompensationHistoryCus compensationHistoryCus) {
-        compensationHistoryDAO.addCompensationHistory(compensationHistoryCus);
+    public void addCompensationHistory(CompensationHistory compensationHistory) {
+        compensationHistoryDAO.addCompensationHistory(compensationHistory);
     }
 
-    public void updateCompensationHistory(CompensationHistoryCus compensationHistoryCus) {
-        compensationHistoryDAO.updateCompensationHistory(compensationHistoryCus);
+    public void updateCompensationHistory(CompensationHistory compensationHistory) {
+        compensationHistoryDAO.updateCompensationHistory(compensationHistory);
     }
 
     public void deleteCompensationHistory(int compensationID) {

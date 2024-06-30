@@ -3,23 +3,25 @@
 
 <html>
 <head>
-    <title>Customer Dashboard</title>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
-
-
         /* Custom Navbar */
         .navbar-custom {
             background-color: #004080;
             border-bottom: 3px solid #ff8000;
+            display: flex;
+            justify-content: center;
         }
         .navbar-custom .navbar-container {
             display: flex;
-            justify-content: center; /* Căn giữa các phần tử trong thanh navbar */
+            justify-content: center;
             align-items: center;
+            width: 100%; /* Ensure the container takes full width */
+            max-width: 1200px; /* Optional: limit the max width */
             padding: 10px 20px;
+            margin: 0 auto; /* Center the container */
         }
         .navbar-custom .nav-links {
             list-style: none;
@@ -28,7 +30,7 @@
             display: flex;
         }
         .navbar-custom .nav-links li {
-            margin: 0 10px; /* Khoảng cách giữa các phần tử */
+            margin: 0 10px;
         }
         .navbar-custom .nav-links li a {
             color: white;
@@ -39,27 +41,6 @@
         }
         .navbar-custom .nav-links li a:hover {
             color: #ff8000;
-        }
-        .navbar-custom .nav-actions {
-            display: flex;
-            align-items: center;
-        }
-        .navbar-custom .search-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            margin-right: 20px;
-        }
-        .navbar-custom .search-btn:hover {
-            color: #ff8000;
-        }
-        .container.content-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
         }
     </style>
 </head>
@@ -75,10 +56,9 @@
             <li><a href="${pageContext.request.contextPath}/contractDetail/1">Contract</a></li>
             <li><a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp">Dashboard</a></li>
         </ul>
-
     </div>
 </nav>
-//
+
 <!-- Content -->
 <style>
     .content-section {

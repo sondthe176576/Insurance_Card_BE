@@ -10,6 +10,8 @@
     <title>Payment History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -37,12 +39,18 @@
                     <td>${paymentHistory.paymentMethodID}</td>
                     <td>${paymentHistory.contractID}</td>
                     <td>
-                        <a href="paymentHistory?action=view&paymentID=${paymentHistory.paymentID}" class="btn btn-info btn-sm">View</a>
-                        <a href="paymentHistory?action=edit&paymentID=${paymentHistory.paymentID}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="paymentHistory?action=view&paymentID=${paymentHistory.paymentID}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="paymentHistory?action=edit&paymentID=${paymentHistory.paymentID}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                         <form action="paymentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="paymentID" value="${paymentHistory.paymentID}">
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -93,48 +101,7 @@
             <button type="submit" class="btn btn-success">Add</button>
         </form>
 
-        <c:if test="${not empty paymentHistoryCus}">
-            <h2 class="mt-4 mb-4">Edit Payment History</h2>
-            <form action="paymentHistory" method="post">
-                <input type="hidden" name="action" value="update">
-                <input type="hidden" name="paymentID" value="${paymentHistoryCus.paymentID}">
-                <div class="mb-3">
-                    <label for="editCustomerID" class="form-label">Customer ID:</label>
-                    <input type="number" class="form-control" id="editCustomerID" name="customerID" value="${paymentHistoryCus.customerID}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="editAmount" class="form-label">Amount:</label>
-                    <input type="number" class="form-control" id="editAmount" name="amount" value="${paymentHistoryCus.amount}" required step="0.01">
-                </div>
-                <div class="mb-3">
-                    <label for="editPaymentDate" class="form-label">Payment Date:</label>
-                    <input type="date" class="form-control" id="editPaymentDate" name="paymentDate" value="${paymentHistoryCus.paymentDate}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="editPaymentMethodID" class="form-label">Payment Method ID:</label>
-                    <input type="number" class="form-control" id="editPaymentMethodID" name="paymentMethodID" value="${paymentHistoryCus.paymentMethodID}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="editContractID" class="form-label">Contract ID:</label>
-                    <input type="number" class="form-control" id="editContractID" name="contractID" value="${paymentHistoryCus.contractID}" required>
-                </div>
-                <button type="submit" class="btn btn-warning">Update</button>
-            </form>
-        </c:if>
 
-        <c:if test="${not empty paymentHistoryCus}">
-            <h2 class="mt-4 mb-4">View Payment History</h2>
-            <div class="card">
-                <div class="card-body">
-                    <p>ID: ${paymentHistoryCus.paymentID}</p>
-                    <p>Customer ID: ${paymentHistoryCus.customerID}</p>
-                    <p>Amount: ${paymentHistoryCus.amount}</p>
-                    <p>Date: ${paymentHistoryCus.paymentDate}</p>
-                    <p>Payment Method ID: ${paymentHistoryCus.paymentMethodID}</p>
-                    <p>Contract ID: ${paymentHistoryCus.contractID}</p>
-                </div>
-            </div>
-        </c:if>
     </div>
 </div>
 

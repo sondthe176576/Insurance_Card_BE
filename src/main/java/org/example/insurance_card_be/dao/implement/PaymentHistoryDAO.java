@@ -1,22 +1,22 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.model.PaymentHistoryCus;
 import org.example.insurance_card_be.dao.DBContext;
+import org.example.insurance_card_be.model.PaymentHistory;
 
 import java.sql.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
 
 public class PaymentHistoryDAO {
 
-    public List<PaymentHistoryCus> getAllPaymentHistories() {
-        List<PaymentHistoryCus> list = new ArrayList<>();
+    public List<PaymentHistory> getAllPaymentHistories() {
+        List<PaymentHistory> list = new ArrayList<>();
         String query = "SELECT * FROM PaymentHistory";
 
         try (Connection connection = DBContext.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 int paymentID = resultSet.getInt("paymentID");
@@ -26,17 +26,18 @@ public class PaymentHistoryDAO {
                 int paymentMethodID = resultSet.getInt("paymentMethodID");
                 int contractID = resultSet.getInt("contractID");
 
-                list.add(new PaymentHistoryCus(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID));
+                PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+                list.add(paymentHistory);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Consider logging instead
         }
 
         return list;
     }
 
-    public PaymentHistoryCus getPaymentHistoryById(int paymentID) {
-        PaymentHistoryCus paymentHistoryCus = null;
+    public PaymentHistory getPaymentHistoryById(int paymentID) {
+        PaymentHistory paymentHistory = null;
         String query = "SELECT * FROM PaymentHistory WHERE paymentID = ?";
 
         try (Connection connection = DBContext.getConnection();
@@ -52,50 +53,50 @@ public class PaymentHistoryDAO {
                     int paymentMethodID = resultSet.getInt("paymentMethodID");
                     int contractID = resultSet.getInt("contractID");
 
-                    paymentHistoryCus = new PaymentHistoryCus(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+                    paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Consider logging instead
         }
 
-        return paymentHistoryCus;
+        return paymentHistory;
     }
 
-    public void addPaymentHistory(PaymentHistoryCus paymentHistoryCus) {
+    public void addPaymentHistory(PaymentHistory paymentHistory) {
         String query = "INSERT INTO PaymentHistory (customerID, amount, paymentDate, paymentMethodID, contractID) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, paymentHistoryCus.getCustomerID());
-            preparedStatement.setBigDecimal(2, paymentHistoryCus.getAmount());
-            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCus.getPaymentDate().getTime()));
-            preparedStatement.setInt(4, paymentHistoryCus.getPaymentMethodID());
-            preparedStatement.setInt(5, paymentHistoryCus.getContractID());
+            preparedStatement.setInt(1, paymentHistory.getCustomerID());
+            preparedStatement.setBigDecimal(2, paymentHistory.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(paymentHistory.getPaymentDate().getTime()));
+            preparedStatement.setInt(4, paymentHistory.getPaymentMethodID());
+            preparedStatement.setInt(5, paymentHistory.getContractID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Consider logging instead
         }
     }
 
-    public void updatePaymentHistory(PaymentHistoryCus paymentHistoryCus) {
+    public void updatePaymentHistory(PaymentHistory paymentHistory) {
         String query = "UPDATE PaymentHistory SET customerID = ?, amount = ?, paymentDate = ?, paymentMethodID = ?, contractID = ? WHERE paymentID = ?";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, paymentHistoryCus.getCustomerID());
-            preparedStatement.setBigDecimal(2, paymentHistoryCus.getAmount());
-            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCus.getPaymentDate().getTime()));
-            preparedStatement.setInt(4, paymentHistoryCus.getPaymentMethodID());
-            preparedStatement.setInt(5, paymentHistoryCus.getContractID());
-            preparedStatement.setInt(6, paymentHistoryCus.getPaymentID());
+            preparedStatement.setInt(1, paymentHistory.getCustomerID());
+            preparedStatement.setBigDecimal(2, paymentHistory.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(paymentHistory.getPaymentDate().getTime()));
+            preparedStatement.setInt(4, paymentHistory.getPaymentMethodID());
+            preparedStatement.setInt(5, paymentHistory.getContractID());
+            preparedStatement.setInt(6, paymentHistory.getPaymentID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Consider logging instead
         }
     }
 
@@ -109,7 +110,7 @@ public class PaymentHistoryDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Consider logging instead
         }
     }
 }

@@ -1,6 +1,6 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.model.CompensationHistoryCus;
+import org.example.insurance_card_be.model.CompensationHistory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ import org.example.insurance_card_be.dao.DBContext;
 
 public class CompensationHistoryDAO {
 
-    public List<CompensationHistoryCus> getAllCompensationHistories() {
-        List<CompensationHistoryCus> list = new ArrayList<>();
+    public List<CompensationHistory> getAllCompensationHistories() {
+        List<CompensationHistory> list = new ArrayList<>();
         String query = "SELECT * FROM CompensationHistory";
 
         try (Connection connection = DBContext.getConnection();
@@ -25,7 +25,7 @@ public class CompensationHistoryDAO {
                 BigDecimal amount = resultSet.getBigDecimal("amount");
                 Date date = resultSet.getDate("date");
 
-                list.add(new CompensationHistoryCus(compensationID, customerID, amount, date));
+                list.add(new CompensationHistory(compensationID, customerID, amount, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,8 +34,8 @@ public class CompensationHistoryDAO {
         return list;
     }
 
-    public List<CompensationHistoryCus> getCompensationHistoriesByCustomerID(int customerID) {
-        List<CompensationHistoryCus> list = new ArrayList<>();
+    public List<CompensationHistory> getCompensationHistoriesByCustomerID(int customerID) {
+        List<CompensationHistory> list = new ArrayList<>();
         String query = "SELECT * FROM CompensationHistory WHERE CustomerID = ?";
 
         try (Connection connection = DBContext.getConnection();
@@ -49,7 +49,7 @@ public class CompensationHistoryDAO {
                     BigDecimal amount = resultSet.getBigDecimal("amount");
                     Date date = resultSet.getDate("date");
 
-                    list.add(new CompensationHistoryCus(compensationID, customerID, amount, date));
+                    list.add(new CompensationHistory(compensationID, customerID, amount, date));
                 }
             }
         } catch (SQLException e) {
@@ -60,8 +60,8 @@ public class CompensationHistoryDAO {
     }
 
 
-    public CompensationHistoryCus getCompensationHistoryById(int compensationID) {
-        CompensationHistoryCus compensationHistoryCus = null;
+    public CompensationHistory getCompensationHistoryById(int compensationID) {
+        CompensationHistory compensationHistoryCus = null;
         String query = "SELECT * FROM CompensationHistory WHERE compensationID = ?";
 
         try (Connection connection = DBContext.getConnection();
@@ -75,7 +75,7 @@ public class CompensationHistoryDAO {
                     BigDecimal amount = resultSet.getBigDecimal("amount");
                     Date date = resultSet.getDate("date");
 
-                    compensationHistoryCus = new CompensationHistoryCus(compensationID, customerID, amount, date);
+                    compensationHistoryCus = new CompensationHistory(compensationID, customerID, amount, date);
                 }
             }
         } catch (SQLException e) {
@@ -86,7 +86,7 @@ public class CompensationHistoryDAO {
     }
 
 
-    public void addCompensationHistory(CompensationHistoryCus compensationHistoryCus) {
+    public void addCompensationHistory(CompensationHistory compensationHistoryCus) {
         String query = "INSERT INTO CompensationHistory (CustomerID, amount, date) VALUES (?, ?, ?)";
 
         try (Connection connection = DBContext.getConnection();
@@ -102,7 +102,7 @@ public class CompensationHistoryDAO {
         }
     }
 
-    public void updateCompensationHistory(CompensationHistoryCus compensationHistoryCus) {
+    public void updateCompensationHistory(CompensationHistory compensationHistoryCus) {
         String query = "UPDATE CompensationHistory SET CustomerID = ?, amount = ?, date = ? WHERE compensationID = ?";
 
         try (Connection connection = DBContext.getConnection();
