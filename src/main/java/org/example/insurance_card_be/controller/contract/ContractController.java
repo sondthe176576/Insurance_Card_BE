@@ -80,33 +80,10 @@ public class ContractController extends HttpServlet {
             contract.setInsuranceType(insuranceType);
             contract.setPremium(Double.parseDouble(premiumStr));
 
-            contractService.createContract(contract);
+            // Tạo contract và cập nhật PaymentMethod, PaymentHistory
+            contractService.createContract(contract, paymentMethod);
 
-            // Gửi thông báo đến tất cả nhân viên
-            List<Integer> staffUserIDs = notificationService.getAllStaffUserIDs();
-            for (int staffUserID : staffUserIDs) {
-                Notifications notification = new Notifications();
-                notification.setUserID(staffUserID);
-                notification.setMessage("New contract created by customer ID: " + customerID);
-                notification.setCreatedDate(new Date());
-                notification.setRead(false);
-                notificationService.addNotification(notification);
-            }
-
-            PaymentMethod paymentMethodObj = new PaymentMethod();
-            paymentMethodObj.setCustomerID(Integer.parseInt(customerID));
-            paymentMethodObj.setMethodType(paymentMethod);
-            paymentMethodObj.setDetails("Payment method details");
-            int paymentMethodID = paymentService.savePaymentMethod(paymentMethodObj);
-
-            PaymentHistory paymentHistory = new PaymentHistory();
-            paymentHistory.setCustomerID(Integer.parseInt(customerID));
-            paymentHistory.setAmount(new BigDecimal(premiumStr));
-            paymentHistory.setPaymentDate(new Date());
-            paymentHistory.setPaymentMethodID(paymentMethodID);
-            paymentHistory.setContractID(contract.getContractID());
-            paymentService.savePaymentHistory(paymentHistory);
-
+            // Kiểm tra phương thức thanh toán
             if ("cash".equals(paymentMethod)) {
                 resp.sendRedirect(req.getContextPath() + "/viewBill?contractID=" + contract.getContractID());
             } else if ("bankTransfer".equals(paymentMethod)) {

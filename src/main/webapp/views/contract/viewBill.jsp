@@ -27,6 +27,7 @@
                 <th>Contract ID</th>
                 <th>Customer ID</th>
                 <th>Contract Info</th>
+                <th>Status</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Value</th>
@@ -34,6 +35,9 @@
                 <th>Coverage</th>
                 <th>Premium</th>
                 <th>Payment Method</th>
+                <th>Payment Amount</th> <!-- Thêm cột số tiền thanh toán -->
+                <th>Payment Date</th> <!-- Thêm cột ngày thanh toán -->
+                <th>Status Payment Detail</th> <!-- Thêm cột chi tiết trạng thái thanh toán -->
                 <th>Action</th>
             </tr>
             </thead>
@@ -42,6 +46,7 @@
                 <td><c:out value="${contract.contractID}"/></td>
                 <td><c:out value="${contract.customerID}"/></td>
                 <td><c:out value="${contract.contractInfo}"/></td>
+                <td><c:out value="${contract.status}"/></td>
                 <td><c:out value="${contract.startDate}"/></td>
                 <td><c:out value="${contract.endDate}"/></td>
                 <td><c:out value="${contract.value}"/></td>
@@ -49,6 +54,9 @@
                 <td><c:out value="${contract.coverage}"/></td>
                 <td><c:out value="${contract.premium}"/></td>
                 <td><c:out value="${contract.methodPaymentType}"/></td>
+                <td><c:out value="${contract.paymentHistory.amount}"/></td> <!-- Hiển thị số tiền thanh toán -->
+                <td><c:out value="${contract.paymentHistory.paymentDate}"/></td> <!-- Hiển thị ngày thanh toán -->
+                <td><c:out value="${contract.paymentHistory.paymentDetails}"/></td> <!-- Hiển thị chi tiết trạng thái thanh toán -->
                 <td class="text-center">
                     <a href="${pageContext.request.contextPath}/viewContract?contractID=${contract.contractID}"
                        class="btn btn-primary" title="View Detail">
