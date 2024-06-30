@@ -15,6 +15,9 @@
     <a href="${pageContext.request.contextPath}/listPunishment" class="${page == 'punishment' ? 'active' : ''}">
         <i class="bi bi-exclamation-triangle"></i> Punishments
     </a>
+    <a href="${pageContext.request.contextPath}/listRenewContract" class="${page == 'renewContract' ? 'active' : ''}">
+        <i class="bi bi-arrow-repeat"></i> Renew Contracts
+    </a>
     <a href="#" class="${page == 'settings' ? 'active' : ''}">
         <i class="bi bi-gear"></i> Settings
     </a>
