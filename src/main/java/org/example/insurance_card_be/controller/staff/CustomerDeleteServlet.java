@@ -16,7 +16,7 @@ public class CustomerDeleteServlet extends HttpServlet {
         CustomerDAO customerDAO = new CustomerDAO();
         int id = Integer.parseInt(req.getParameter("id"));
         Users users = new Users();
-        users.setUserID(id);
+        users.getUserID();
         customerDAO.deleteByID(users);
         List<Users> listCustomer = customerDAO.findAll();
         req.getSession().setAttribute("listCustomer", listCustomer);
