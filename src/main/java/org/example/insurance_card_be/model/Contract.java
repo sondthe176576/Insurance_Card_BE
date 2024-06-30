@@ -26,4 +26,5 @@ public class Contract {
     private Date cancellationDate;
     private String methodPaymentType;
     private PaymentHistory paymentHistory;
+    private PaymentMethod paymentMethod;
 }

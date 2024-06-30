@@ -184,6 +184,25 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <h3>Payment Information</h3>
+                    <div class="mb-3">
+                        <label for="paymentMethodType" class="form-label">Payment Method:</label>
+                        <input type="text" id="paymentMethodType" name="paymentMethodType" class="form-control" value="${contract.paymentMethod.methodType}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paymentDetails" class="form-label">Payment Details:</label>
+                        <textarea id="paymentDetails" name="paymentDetails" class="form-control" rows="3" readonly>${contract.paymentMethod.details}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paymentAmount" class="form-label">Payment Amount:</label>
+                        <input type="text" id="paymentAmount" name="paymentAmount" class="form-control" value="<fmt:formatNumber value='${contract.paymentHistory.amount}' type='currency' currencySymbol='$'/>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="paymentDate" class="form-label">Payment Date:</label>
+                        <input type="text" id="paymentDate" name="paymentDate" class="form-control" value="<fmt:formatDate value='${contract.paymentHistory.paymentDate}' pattern='dd-MM-yyyy'/>" readonly>
+                    </div>
+                </div>
+                <div class="col-md-12">
                     <h3>Insurance Packages</h3>
                     <div class="accordion" id="insurancePackages">
                         <div class="accordion-item">

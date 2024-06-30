@@ -19,6 +19,11 @@
 <img src="${pageContext.request.contextPath}/img/slider.jpg" alt="Slider Image" class="img-fluid mb-4">
 <!-- End of sidebar -->
 <div class="container mt-4">
+    <c:if test="${not empty message}">
+        <div class="alert alert-success text-center" role="alert">
+            <strong>${message}</strong>
+        </div>
+    </c:if>
     <h2 class="text-center">Bill Details</h2>
     <div class="table-responsive mt-4">
         <table class="table table-bordered table-striped">
@@ -35,9 +40,9 @@
                 <th>Coverage</th>
                 <th>Premium</th>
                 <th>Payment Method</th>
-                <th>Payment Amount</th> <!-- Thêm cột số tiền thanh toán -->
-                <th>Payment Date</th> <!-- Thêm cột ngày thanh toán -->
-                <th>Status Payment Detail</th> <!-- Thêm cột chi tiết trạng thái thanh toán -->
+                <th>Payment Amount</th>
+                <th>Payment Date</th>
+                <th>Status Payment Detail</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -54,9 +59,9 @@
                 <td><c:out value="${contract.coverage}"/></td>
                 <td><c:out value="${contract.premium}"/></td>
                 <td><c:out value="${contract.methodPaymentType}"/></td>
-                <td><c:out value="${contract.paymentHistory.amount}"/></td> <!-- Hiển thị số tiền thanh toán -->
-                <td><c:out value="${contract.paymentHistory.paymentDate}"/></td> <!-- Hiển thị ngày thanh toán -->
-                <td><c:out value="${contract.paymentHistory.paymentDetails}"/></td> <!-- Hiển thị chi tiết trạng thái thanh toán -->
+                <td><c:out value="${contract.paymentHistory.amount}"/></td>
+                <td><c:out value="${contract.paymentHistory.paymentDate}"/></td>
+                <td><c:out value="${contract.paymentHistory.paymentDetails}"/></td>
                 <td class="text-center">
                     <a href="${pageContext.request.contextPath}/viewContract?contractID=${contract.contractID}"
                        class="btn btn-primary" title="View Detail">
