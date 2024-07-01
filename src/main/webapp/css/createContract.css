@@ -16,6 +16,17 @@ body {
 .card {
     border: none;
     border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+}
+
+.card-body {
+    padding: 40px;
 }
 
 h2, h3 {
@@ -43,11 +54,12 @@ h3 {
 .btn-primary {
     background-color: #3498db;
     border: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .btn-primary:hover {
     background-color: #2980b9;
+    transform: scale(1.05);
 }
 
 .accordion-button {

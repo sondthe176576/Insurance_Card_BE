@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pagination.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/listAccident.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/listRenewContract.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/listHeader.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
@@ -66,6 +66,7 @@
                     <th>Contract Info</th>
                     <th>Start Date</th>
                     <th>End Date</th>
+                    <th class="overdue">Days Overdue</th> <!-- Chuyển cột mới này ngay sau End Date -->
                     <th>Insurance Type</th>
                     <th>Coverage</th>
                     <th>Premium</th>
@@ -73,7 +74,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="contract" items="${contracts}" varStatus="status">
+                <c:forEach var="entry" items="${contractDaysOverdueMap}" varStatus="status">
+                    <c:set var="contract" value="${entry.key}"/>
+                    <c:set var="daysOverdue" value="${entry.value}"/>
                     <tr>
                         <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
                         <td><c:out value="${contract.customerID}"/></td>
@@ -82,6 +85,9 @@
                         <td><c:out value="${contract.contractInfo}"/></td>
                         <td><fmt:formatDate value="${contract.startDate}" pattern="yyyy-MM-dd"/></td>
                         <td><fmt:formatDate value="${contract.endDate}" pattern="yyyy-MM-dd"/></td>
+                        <td class="overdue">
+                            <c:out value="${daysOverdue}"/> days
+                        </td>
                         <td><c:out value="${contract.insuranceType}"/></td>
                         <td><c:out value="${contract.coverage}"/></td>
                         <td><fmt:formatNumber value="${contract.premium}" type="currency" currencySymbol="$"/></td>

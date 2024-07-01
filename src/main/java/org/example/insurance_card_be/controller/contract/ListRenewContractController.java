@@ -11,6 +11,7 @@ import org.example.insurance_card_be.service.ListRenewContractService;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "ListRenewContractController", urlPatterns = "/listRenewContract")
 public class ListRenewContractController extends HttpServlet {
@@ -38,10 +39,10 @@ public class ListRenewContractController extends HttpServlet {
                 page = Integer.parseInt(req.getParameter("page"));
             }
             String customerName = req.getParameter("customerName");
-            List<Contract> contracts = listRenewContractService.getExpiredContracts(page, limit, customerName);
+            Map<Contract, Integer> contractDaysOverdueMap = listRenewContractService.getExpiredContracts(page, limit, customerName);
             int totalContracts = listRenewContractService.getTotalExpiredContracts(customerName);
             int totalPages = (int) Math.ceil((double) totalContracts / limit);
-            req.setAttribute("contracts", contracts);
+            req.setAttribute("contractDaysOverdueMap", contractDaysOverdueMap);
             req.setAttribute("totalContracts", totalContracts);
             req.setAttribute("totalPages", totalPages);
             req.setAttribute("currentPage", page);
@@ -53,5 +54,6 @@ public class ListRenewContractController extends HttpServlet {
     }
 
     private void renewContract(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        // Implement logic to renew contract here
     }
 }

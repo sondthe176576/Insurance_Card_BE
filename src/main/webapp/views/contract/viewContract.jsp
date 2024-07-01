@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/19/2024
-  Time: 10:18 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,9 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <title>View Contract</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/viewContract.css">
-    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" defer></script>
 </head>
 <body>
 <!-- Include header -->
@@ -25,25 +20,23 @@
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Notification Message -->
-<c:if test="${param.message != null}">
-    <div id="notification" class="alert ${param.status eq 'true' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show" role="alert">
-        <c:out value="${param.message}"/>
+<c:if test="${not empty message}">
+    <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show" role="alert">
+        <c:out value="${message}"/>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </c:if>
 <!-- End of Notification Message -->
 <!-- Form -->
-<div class="container mt-4">
-    <!-- Contract Information -->
-    <div class="card mb-4">
-        <div class="card-header text-center">
-            <h2>Contract Information</h2>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h2><i class="fas fa-file-alt"></i> View Contract</h2>
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
             <div class="row">
-                <!-- Customer Information -->
                 <div class="col-md-6">
-                    <h3>Customer Information</h3>
+                    <h4 class="text-primary"><i class="fas fa-user"></i> Customer Information</h4>
                     <div class="mb-3">
                         <label for="customerID" class="form-label">Customer ID:</label>
                         <input type="number" id="customerID" name="customerID" class="form-control" value="${contract.customer.customerID}" readonly>
@@ -89,9 +82,8 @@
                         <input type="text" id="gender" name="gender" class="form-control" value="${contract.customer.user.gender}" readonly>
                     </div>
                 </div>
-                <!-- Vehicle Information -->
                 <div class="col-md-6">
-                    <h3>Vehicle Information</h3>
+                    <h4 class="text-primary"><i class="fas fa-motorcycle"></i> Vehicle Information</h4>
                     <div class="mb-3">
                         <label for="motorcycleID" class="form-label">Motorcycle ID:</label>
                         <input type="number" id="motorcycleID" name="motorcycleID" class="form-control" value="${contract.motorcycle.motorcycleID}" readonly>
@@ -126,16 +118,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Insurance Information -->
-    <div class="card mb-4">
-        <div class="card-header text-center">
-            <h2>Insurance Information</h2>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h4 class="text-primary"><i class="fas fa-file-contract"></i> Contract Information</h4>
                     <div class="mb-3">
                         <label for="contractID" class="form-label">Contract ID:</label>
                         <input type="number" id="contractID" name="contractID" class="form-control" value="${contract.contractID}" readonly>
@@ -183,8 +168,10 @@
                         <input type="text" id="premium" name="premium" class="form-control" value="<fmt:formatNumber value='${contract.premium}' type='currency' currencySymbol='$'/>" readonly>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <h3>Payment Information</h3>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <h4 class="text-primary"><i class="fas fa-dollar-sign"></i> Payment Information</h4>
                     <div class="mb-3">
                         <label for="paymentMethodType" class="form-label">Payment Method:</label>
                         <input type="text" id="paymentMethodType" name="paymentMethodType" class="form-control" value="${contract.paymentMethod.methodType}" readonly>
@@ -202,13 +189,15 @@
                         <input type="text" id="paymentDate" name="paymentDate" class="form-control" value="<fmt:formatDate value='${contract.paymentHistory.paymentDate}' pattern='dd-MM-yyyy'/>" readonly>
                     </div>
                 </div>
+            </div>
+            <div class="row mt-4">
                 <div class="col-md-12">
-                    <h3>Insurance Packages</h3>
+                    <h4 class="text-primary"><i class="fas fa-box"></i> Insurance Packages</h4>
                     <div class="accordion" id="insurancePackages">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Basic Motorcycle Insurance
+                                    <i class="fas fa-shield-alt"></i> Basic Motorcycle Insurance
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#insurancePackages">
@@ -220,7 +209,7 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Comprehensive Motorcycle Insurance
+                                    <i class="fas fa-shield-alt"></i> Comprehensive Motorcycle Insurance
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#insurancePackages">
@@ -232,7 +221,7 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Premium Motorcycle Insurance
+                                    <i class="fas fa-shield-alt"></i> Premium Motorcycle Insurance
                                 </button>
                             </h2>
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#insurancePackages">
@@ -244,32 +233,20 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-center mt-4">
+                <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}" class="btn btn-primary me-2"><i class="fas fa-edit"></i> Update Contract</a>
+                <a href="${pageContext.request.contextPath}/renewContract?contractID=${contract.contractID}" class="btn btn-secondary"><i class="fas fa-redo"></i> Renew Contract</a>
+            </div>
         </div>
-    </div>
-    <!-- Application Information -->
-    <div class="card mb-4">
-        <div class="card-header text-center">
-            <h3>Application can be dropped off or mailed to:</h3>
+        <div class="card-footer text-center bg-primary text-white">
+            <p>Motorcycle Insurance Company, 123 Hola Street, District Thach That, Ha Noi, Vietnam</p>
+            <p>Phone: 0123-456-789 | <a href="http://www.motorcycleinsurance.vn" class="text-white text-decoration-none">www.motorcycleinsurance.vn</a></p>
         </div>
-        <div class="card-body text-center">
-            <p>Motorcycle Insurance Company,<br>
-                123 Hola Street,<br>
-                District Thach That, Ha Noi,<br>
-                Vietnam</p>
-            <p>Phone: 0123-456-789<br>
-                <a href="http://www.motorcycleinsurance.vn">www.motorcycleinsurance.vn</a></p>
-        </div>
-    </div>
-    <!-- Button Container -->
-    <div class="d-flex justify-content-center">
-        <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}" class="btn btn-primary me-2">Update Contract</a>
-        <a href="${pageContext.request.contextPath}/renewContract?contractID=${contract.contractID}" class="btn btn-secondary">Renew Contract</a>
     </div>
 </div>
 <!-- End of form -->
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
-<script src="${pageContext.request.contextPath}/js/viewContract.js"></script>
 </body>
 </html>
