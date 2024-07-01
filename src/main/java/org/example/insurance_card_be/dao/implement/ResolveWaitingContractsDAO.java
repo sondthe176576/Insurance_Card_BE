@@ -8,16 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ViewContractDAO {
-    // Ket noi den database
+public class ResolveWaitingContractsDAO {
     private Connection connection;
 
-    // Khoi tao connection
-    public ViewContractDAO() {
+    public ResolveWaitingContractsDAO() {
         this.connection = DBContext.getConnection();
     }
 
-    // Ham lay thong tin cua mot contract theo ID
     public Contract getContractDetailById(int contractID) throws SQLException {
         String query = "SELECT u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, " +
                 "u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
@@ -101,4 +98,16 @@ public class ViewContractDAO {
         }
         return contract;
     }
+
+    public void updateContractStatus(int contractID, String status) throws SQLException {
+        String query = "UPDATE dbo.Contracts SET Status = ? WHERE ContractID = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, status);
+            ps.setInt(2, contractID);
+            ps.executeUpdate();
+        }
+    }
+
+    // Add other DAO methods as needed
 }

@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Resolve Compensation</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" defer></script>
@@ -113,7 +114,8 @@
                 </div>
                 <div class="col-md-6">
                     <label class="fw-bold">Birth Date:</label>
-                    <p><fmt:formatDate value="${compensation.contract.customer.user.birthDate}" pattern="dd-MM-yyyy"/></p>
+                    <p><fmt:formatDate value="${compensation.contract.customer.user.birthDate}"
+                                       pattern="dd-MM-yyyy"/></p>
                 </div>
                 <div class="col-md-6">
                     <label class="fw-bold">Personal Info:</label>
@@ -152,7 +154,8 @@
                 </div>
                 <div class="col-md-6">
                     <label class="fw-bold">Premium:</label>
-                    <p><fmt:formatNumber value="${compensation.contract.premium}" type="currency" currencySymbol="$"/></p>
+                    <p><fmt:formatNumber value="${compensation.contract.premium}" type="currency"
+                                         currencySymbol="$"/></p>
                 </div>
                 <div class="col-md-6">
                     <label class="fw-bold">Detail:</label>
@@ -214,7 +217,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

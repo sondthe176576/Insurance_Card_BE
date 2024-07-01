@@ -1,3 +1,4 @@
+/* custom.css */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -26,11 +27,17 @@ body {
     font-size: 1.2rem;
     color: #ffffff;
     display: block;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, padding-left 0.3s;
 }
 
 .sidebar a:hover, .sidebar a.active {
     background-color: #0056b3;
+    padding-left: 30px;
+}
+
+.sidebar a.active {
+    background-color: #007bff;
+    font-weight: bold;
 }
 
 .sidebar i {
@@ -49,6 +56,8 @@ body {
     margin-left: 250px;
     padding: 20px;
     transition: margin-left 0.3s;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
 }
 
 .sidebar:hover ~ .main-content {
@@ -56,7 +65,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 20px;
 }
@@ -71,6 +80,7 @@ body {
 h2 {
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .table {
@@ -102,11 +112,12 @@ h2 {
     background-color: #004080;
     border: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .btn:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .pagination {
@@ -126,11 +137,12 @@ h2 {
     padding: 10px 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .pagination a:hover {
     background-color: #e9ecef;
+    transform: scale(1.05);
 }
 
 .pagination .active a {

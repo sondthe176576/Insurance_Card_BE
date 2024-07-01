@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PunishmentHistoryCus {
-    private int punishmentID;
-    private int customerID;
-    private String description;
-    private Date date;
+public class Staff {
+    private int staffID;
+    private int userID;
+    private String position;
+    private String department;
 }
