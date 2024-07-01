@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>View Bill</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/viewBill.css">

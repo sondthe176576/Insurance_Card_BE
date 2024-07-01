@@ -5,13 +5,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Contract</title>
+    <title>Resolve Waiting Contracts</title>
     <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/viewContract.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" defer></script>
+    <script>
+        var contextPath = "${pageContext.request.contextPath}";
+    </script>
+    <script src="${pageContext.request.contextPath}/js/resolveWaitingContracts.js" defer></script>
 </head>
 <body>
 <!-- Include header -->
@@ -33,7 +37,7 @@
 <div class="container mt-5">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white text-center">
-            <h2><i class="fas fa-file-alt"></i> View Contract</h2>
+            <h2><i class="fas fa-file-alt"></i> Resolve Waiting Contracts</h2>
         </div>
         <div class="card-body p-4">
             <div class="row">
@@ -238,7 +242,7 @@
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <i class="fas fa-check-circle text-success me-2"></i> Basic Motorcycle Insurance
+                                    <i class="fas fa-shield-alt"></i> Basic Motorcycle Insurance
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -258,8 +262,7 @@
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <i class="fas fa-check-circle text-success me-2"></i> Comprehensive Motorcycle
-                                    Insurance
+                                    <i class="fas fa-shield-alt"></i> Comprehensive Motorcycle Insurance
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
@@ -279,7 +282,7 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseThree" aria-expanded="false"
                                         aria-controls="collapseThree">
-                                    <i class="fas fa-check-circle text-success me-2"></i> Premium Motorcycle Insurance
+                                    <i class="fas fa-shield-alt"></i> Premium Motorcycle Insurance
                                 </button>
                             </h2>
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
@@ -299,10 +302,19 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
-                <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}"
-                   class="btn btn-primary me-2"><i class="fas fa-edit"></i> Update Contract</a>
-                <a href="${pageContext.request.contextPath}/renewContract?contractID=${contract.contractID}"
-                   class="btn btn-secondary"><i class="fas fa-redo"></i> Renew Contract</a>
+                <form id="actionForm" method="post">
+                    <input type="hidden" name="contractID" value="${contract.contractID}">
+                    <button type="button" onclick="confirmAction('accept')" class="btn btn-success me-2"><i
+                            class="fas fa-check"></i> Accept
+                    </button>
+                    <button type="button" onclick="confirmAction('reject')" class="btn btn-danger me-2"><i
+                            class="fas fa-times"></i> Reject
+                    </button>
+                    <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}"
+                       class="btn btn-primary me-2"><i class="fas fa-edit"></i> Update</a>
+                    <a href="${pageContext.request.contextPath}/listWaitingContract" class="btn btn-secondary"><i
+                            class="fas fa-arrow-left"></i> Back to List</a>
+                </form>
             </div>
         </div>
         <div class="card-footer text-center bg-primary text-white">

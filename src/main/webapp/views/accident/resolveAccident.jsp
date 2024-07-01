@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Resolve Accident</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/resolveAccident.css">
@@ -84,7 +85,8 @@
                 <label class="details-label">Gender:</label>
                 <p class="details-value"><c:out value="${accident.customer.user.gender}"/></p>
                 <label class="details-label">Birth Date:</label>
-                <p class="details-value"><fmt:formatDate value="${accident.customer.user.birthDate}" pattern="dd-MM-yyyy"/></p>
+                <p class="details-value"><fmt:formatDate value="${accident.customer.user.birthDate}"
+                                                         pattern="dd-MM-yyyy"/></p>
                 <label class="details-label">Personal Info:</label>
                 <p class="details-value"><c:out value="${accident.customer.personalInfo}"/></p>
             </div>
@@ -97,7 +99,8 @@
                 <label class="details-label">Contract Status:</label>
                 <p class="details-value"><c:out value="${accident.contract.status}"/></p>
                 <label class="details-label">Start Date:</label>
-                <p class="details-value"><fmt:formatDate value="${accident.contract.startDate}" pattern="dd-MM-yyyy"/></p>
+                <p class="details-value"><fmt:formatDate value="${accident.contract.startDate}"
+                                                         pattern="dd-MM-yyyy"/></p>
                 <label class="details-label">End Date:</label>
                 <p class="details-value"><fmt:formatDate value="${accident.contract.endDate}" pattern="dd-MM-yyyy"/></p>
                 <label class="details-label">Insurance Type:</label>
@@ -105,11 +108,13 @@
                 <label class="details-label">Coverage:</label>
                 <p class="details-value"><c:out value="${accident.contract.coverage}"/></p>
                 <label class="details-label">Premium:</label>
-                <p class="details-value"><fmt:formatNumber value="${accident.contract.premium}" type="currency" currencySymbol="$"/></p>
+                <p class="details-value"><fmt:formatNumber value="${accident.contract.premium}" type="currency"
+                                                           currencySymbol="$"/></p>
                 <label class="details-label">Detail:</label>
                 <p class="details-value"><c:out value="${accident.contract.detail}"/></p>
                 <label class="details-label">Value:</label>
-                <p class="details-value"><fmt:formatNumber value="${accident.contract.value}" type="currency" currencySymbol="$"/></p>
+                <p class="details-value"><fmt:formatNumber value="${accident.contract.value}" type="currency"
+                                                           currencySymbol="$"/></p>
             </div>
             <h3 class="card-section-title text-primary">Motorcycle Information</h3>
             <div class="details">
@@ -148,7 +153,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade modal-custom" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div class="modal fade modal-custom" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-content-custom">
             <div class="modal-header">

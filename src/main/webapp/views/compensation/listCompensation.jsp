@@ -14,6 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Compensation</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pagination.css">
@@ -51,10 +52,12 @@
                 </div>
                 <div class="col-md-4">
                     <label for="customerNameSearch" class="form-label">Search by Customer Name:</label>
-                    <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" class="form-control" placeholder="Enter customer name"/>
+                    <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
+                           class="form-control" placeholder="Enter customer name"/>
                 </div>
                 <div class="col-md-4 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary search-button"><i class="bi bi-search"></i> Search</button>
+                    <button type="submit" class="btn btn-primary search-button"><i class="bi bi-search"></i> Search
+                    </button>
                 </div>
             </form>
             <table class="table table-hover mt-4">
@@ -85,7 +88,8 @@
                         </td>
                         <td><fmt:formatDate value="${compensation.requestDate}" pattern="dd-MM-yyyy"/></td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}" class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i> View</a>
+                            <a href="${pageContext.request.contextPath}/resolveCompensation?compensationID=${compensation.requestID}"
+                               class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i> View</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -96,7 +100,8 @@
                 <ul class="pagination justify-content-end">
                     <c:if test="${currentPage > 1}">
                         <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}/listCompensation?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}">
+                            <a class="page-link"
+                               href="${pageContext.request.contextPath}/listCompensation?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}">
                                 <i class="bi bi-arrow-left"></i>
                             </a>
                         </li>
@@ -104,13 +109,15 @@
                     <c:forEach var="i" begin="1" end="${totalPages}">
                         <c:if test="${i >= currentPage - 1 && i <= currentPage + 1}">
                             <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                <a class="page-link" href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}/listCompensation?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
                             </li>
                         </c:if>
                     </c:forEach>
                     <c:if test="${currentPage < totalPages}">
                         <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}/listCompensation?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}">
+                            <a class="page-link"
+                               href="${pageContext.request.contextPath}/listCompensation?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}">
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </li>
