@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 6/29/2024
-  Time: 11:47 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -18,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/listHeader.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/waitingContracts.css">
     <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
