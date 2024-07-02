@@ -33,10 +33,9 @@ public class PunishmentHistoryDAO {
     }
 
     public PunishmentHistory getPunishmentHistoryById(int punishmentID) {
-        PunishmentHistory punishmentHistory= null;
+        PunishmentHistory punishmentHistory = null;
         String query = "SELECT * FROM PunishmentHistory WHERE punishmentID = ?";
 
-        PunishmentHistory PunishmentHistory = new PunishmentHistory();
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -48,14 +47,14 @@ public class PunishmentHistoryDAO {
                     String description = resultSet.getString("description");
                     Date date = resultSet.getDate("date");
 
-                    PunishmentHistory = new PunishmentHistory(punishmentID, customerID, description, date);
+                    punishmentHistory = new PunishmentHistory(punishmentID, customerID, description, date);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return PunishmentHistory;
+        return punishmentHistory;
     }
 
     public void addPunishmentHistory(PunishmentHistory punishmentHistory) {
@@ -66,7 +65,11 @@ public class PunishmentHistoryDAO {
 
             preparedStatement.setInt(1, punishmentHistory.getCustomerID());
             preparedStatement.setString(2, punishmentHistory.getDescription());
-            preparedStatement.setDate(3, new Date(punishmentHistory.getDate().getTime()));
+            if (punishmentHistory.getDate() != null) {
+                preparedStatement.setDate(3, new Date(punishmentHistory.getDate().getTime()));
+            } else {
+                preparedStatement.setDate(3, null); // Or use a default value if necessary
+            }
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -74,16 +77,20 @@ public class PunishmentHistoryDAO {
         }
     }
 
-    public void updatePunishmentHistory(PunishmentHistory punishmentHistor) {
+    public void updatePunishmentHistory(PunishmentHistory punishmentHistory) {
         String query = "UPDATE PunishmentHistory SET customerID = ?, description = ?, date = ? WHERE punishmentID = ?";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, punishmentHistor.getCustomerID());
-            preparedStatement.setString(2, punishmentHistor.getDescription());
-            preparedStatement.setDate(3, new Date(punishmentHistor.getDate().getTime()));
-            preparedStatement.setInt(4, punishmentHistor.getPunishmentID());
+            preparedStatement.setInt(1, punishmentHistory.getCustomerID());
+            preparedStatement.setString(2, punishmentHistory.getDescription());
+            if (punishmentHistory.getDate() != null) {
+                preparedStatement.setDate(3, new Date(punishmentHistory.getDate().getTime()));
+            } else {
+                preparedStatement.setDate(3, null); // Or use a default value if necessary
+            }
+            preparedStatement.setInt(4, punishmentHistory.getPunishmentID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

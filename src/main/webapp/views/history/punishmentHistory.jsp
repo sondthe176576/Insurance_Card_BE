@@ -82,7 +82,12 @@
                 <label for="adddescription" class="form-label">Description:</label>
                 <input type="text" class="form-control" id="adddescription" name="description" required>
             </div>
+            <div class="mb-3">
+                <label for="adddate" class="form-label">Date:</label>
+                <input type="date" class="form-control" id="adddate" name="date" required>
+                </div>
             <button type="submit" class="btn btn-success">Add</button>
+
         </form>
 
     </div>

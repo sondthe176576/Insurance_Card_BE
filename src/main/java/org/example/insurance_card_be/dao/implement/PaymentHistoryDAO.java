@@ -2,6 +2,8 @@ package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.PaymentHistory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.math.BigDecimal;
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentHistoryDAO {
+
+    private static final Logger logger = LoggerFactory.getLogger(PaymentHistoryDAO.class);
 
     public List<PaymentHistory> getAllPaymentHistories() {
         List<PaymentHistory> list = new ArrayList<>();
@@ -30,7 +34,7 @@ public class PaymentHistoryDAO {
                 list.add(paymentHistory);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider logging instead
+            logger.error("Error getting all payment histories", e);
         }
 
         return list;
@@ -57,7 +61,7 @@ public class PaymentHistoryDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider logging instead
+            logger.error("Error getting payment history by ID", e);
         }
 
         return paymentHistory;
@@ -77,7 +81,7 @@ public class PaymentHistoryDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider logging instead
+            logger.error("Error adding payment history", e);
         }
     }
 
@@ -96,7 +100,7 @@ public class PaymentHistoryDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider logging instead
+            logger.error("Error updating payment history", e);
         }
     }
 
@@ -110,7 +114,7 @@ public class PaymentHistoryDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Consider logging instead
+            logger.error("Error deleting payment history", e);
         }
     }
 }

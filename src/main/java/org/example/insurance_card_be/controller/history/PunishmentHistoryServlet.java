@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -60,23 +62,22 @@ public class PunishmentHistoryServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         try {
-            PunishmentHistory PunishmentHistory = new PunishmentHistory();
             if ("add".equals(action)) {
                 int customerID = Integer.parseInt(request.getParameter("customerID"));
                 String description = request.getParameter("description");
-                Date date = new Date();  // Assuming the current date
+                Date date = parseDate(request.getParameter("date"));
 
                 PunishmentHistory punishmentHistory = new PunishmentHistory(0, customerID, description, date);
-                punishmentHistoryService.addPunishmentHistory(PunishmentHistory);
+                punishmentHistoryService.addPunishmentHistory(punishmentHistory);
                 response.sendRedirect("punishmentHistory");
             } else if ("update".equals(action)) {
                 int punishmentID = Integer.parseInt(request.getParameter("punishmentID"));
                 int customerID = Integer.parseInt(request.getParameter("customerID"));
                 String description = request.getParameter("description");
-                Date date = new Date();  // Assuming the current date
+                Date date = parseDate(request.getParameter("date"));
 
                 PunishmentHistory punishmentHistoryCus = new PunishmentHistory(punishmentID, customerID, description, date);
-                punishmentHistoryService.updatePunishmentHistory(PunishmentHistory);
+                punishmentHistoryService.updatePunishmentHistory(punishmentHistoryCus);
                 response.sendRedirect("punishmentHistory");
             } else if ("delete".equals(action)) {
                 int punishmentID = Integer.parseInt(request.getParameter("punishmentID"));
@@ -85,6 +86,18 @@ public class PunishmentHistoryServlet extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID format");
+        } catch (ParseException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid date format");
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing your request");
         }
+    }
+
+    private Date parseDate(String dateStr) throws ParseException {
+        if (dateStr == null || dateStr.isEmpty()) {
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        return formatter.parse(dateStr);
     }
 }

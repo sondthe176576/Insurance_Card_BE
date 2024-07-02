@@ -75,33 +75,6 @@
             </ul>
         </nav>
 
-        <h2 class="mt-4 mb-4">Add New Payment</h2>
-        <form action="paymentHistory" method="post">
-            <input type="hidden" name="action" value="add">
-            <div class="mb-3">
-                <label for="addCustomerID" class="form-label">Customer ID:</label>
-                <input type="number" class="form-control" id="addCustomerID" name="customerID" required>
-            </div>
-            <div class="mb-3">
-                <label for="addAmount" class="form-label">Amount:</label>
-                <input type="number" class="form-control" id="addAmount" name="amount" required step="0.01">
-            </div>
-            <div class="mb-3">
-                <label for="addPaymentDate" class="form-label">Payment Date:</label>
-                <input type="date" class="form-control" id="addPaymentDate" name="paymentDate" required>
-            </div>
-            <div class="mb-3">
-                <label for="addPaymentMethodID" class="form-label">Payment Method ID:</label>
-                <input type="number" class="form-control" id="addPaymentMethodID" name="paymentMethodID" required>
-            </div>
-            <div class="mb-3">
-                <label for="addContractID" class="form-label">Contract ID:</label>
-                <input type="number" class="form-control" id="addContractID" name="contractID" required>
-            </div>
-            <button type="submit" class="btn btn-success">Add</button>
-        </form>
-
-
     </div>
 </div>
 
