@@ -71,7 +71,7 @@
             </ul>
         </nav>
 
-        <h2 class="mt-4 mb-4">Add New Compensation History</h2>
+        <h2 class="mt-4 mb-4">Request Compensation</h2>
         <form action="compensationHistory" method="post">
             <input type="hidden" name="action" value="add">
             <div class="mb-3">
@@ -82,7 +82,7 @@
                 <label for="addamount" class="form-label">Amount:</label>
                 <input type="text" class="form-control" id="addamount" name="amount" required>
             </div>
-            <button type="submit" class="btn btn-success">Add</button>
+            <button type="submit" class="btn btn-success">Request</button>
         </form>
     </div>
 </div>
