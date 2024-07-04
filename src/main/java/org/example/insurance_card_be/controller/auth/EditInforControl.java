@@ -38,6 +38,6 @@ public class EditInforControl extends HttpServlet {
         UserDAO dao = new UserDAO();
         dao.updateProfile(username, email_id, mobile, tinh, quan, phuong, first_name, last_name, full_name, birthdate, gender);
 
-        response.sendRedirect("home");
+        request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
     }
 }
