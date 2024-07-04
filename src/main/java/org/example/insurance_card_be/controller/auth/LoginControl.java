@@ -47,7 +47,7 @@ public class LoginControl extends HttpServlet {
             session.setMaxInactiveInterval(7200);
             session.setAttribute("user", user);
             LOGGER.info("Login successful, user: " + user);
-            request.getRequestDispatcher("home").forward(request, response);
+            request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
 
         }
     }
