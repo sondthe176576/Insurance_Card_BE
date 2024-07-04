@@ -8,7 +8,7 @@
     }
 
     UserDAO userDAO = new UserDAO();
-    Users userFromDB = userDAO.getUserByName(loggedInUser.getUsername());
+    Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
     if (userFromDB == null) {
         return;
     }

@@ -218,12 +218,12 @@ public class UserDAO {
         return null;
     }
 
-    public Users getUserByName(String Username) {
-        String query = "SELECT * FROM Users WHERE Username = ?";
+    public Users getUserByID(int id) {
+        String query = "SELECT * FROM Users WHERE UserID = ?";
         try {
             conn = DBContext.getConnection(); // Mở kết nối với SQL
             ps = conn.prepareStatement(query);
-            ps.setString(1, Username);
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
                 return new Users(rs.getInt(1),
@@ -255,6 +255,7 @@ public class UserDAO {
         }
         return null;
     }
+
 
     public Users updateProfile(String username, String email, String mobile, String province, String district, String country, String firstname, String lastname, String fullname, Date birthdate, String gender){
         String query = "UPDATE Users SET Email = ?, Mobile = ?, Province = ?, District = ?, Country = ?, First_name = ?, Last_name = ?, Full_name = ?, Birth_date = ?, Gender = ? WHERE Username = ?";

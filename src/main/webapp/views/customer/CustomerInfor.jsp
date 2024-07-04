@@ -11,7 +11,7 @@
 
     // Kết nối và lấy thông tin người dùng từ cơ sở dữ liệu
     UserDAO userDAO = new UserDAO();
-    Users userFromDB = userDAO.getUserByName(loggedInUser.getUsername());
+    Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
     if (userFromDB == null) {
         // Xử lý khi không lấy được thông tin người dùng từ cơ sở dữ liệu
         return;
