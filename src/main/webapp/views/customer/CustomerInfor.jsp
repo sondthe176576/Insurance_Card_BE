@@ -5,7 +5,7 @@
     Users loggedInUser = (Users) session.getAttribute("user");
     if (loggedInUser == null) {
         // Xử lý khi không có thông tin người dùng trong session
-        response.sendRedirect("login.jsp"); // Chuyển hướng đến trang login nếu không có thông tin người dùng
+        response.sendRedirect("login"); // Chuyển hướng đến trang login nếu không có thông tin người dùng
         return;
     }
 
