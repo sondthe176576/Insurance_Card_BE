@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 
 <html>
 <head>
@@ -72,13 +72,13 @@
             <li><a href="#">Home</a></li>
             <li><a href="#">Service</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#">Contract</a></li>
+            <li><a href="${pageContext.request.contextPath}/contractDetail/1">Contract</a></li>
             <li><a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp">Dashboard</a></li>
         </ul>
 
     </div>
 </nav>
-
+//
 <!-- Content -->
 <style>
     .content-section {

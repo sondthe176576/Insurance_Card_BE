@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
         pageEncoding="UTF-8"%>
-<jsp:include page="/views/includes/header.jsp" />
+<%@ include file="/views/includes/header_logout.jsp" %>
 <div class="main-container" id="main-container">
     <div class="container">
         <div class="row">
