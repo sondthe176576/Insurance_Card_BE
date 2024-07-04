@@ -1,3 +1,18 @@
+<%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
+
+<%
+    Users loggedInUser = (Users) session.getAttribute("user");
+    if (loggedInUser == null) {
+        response.sendRedirect("home");
+        return;
+    }
+
+    UserDAO userDAO = new UserDAO();
+    Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    if (userFromDB == null) {
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -202,7 +217,9 @@
                                 </a>
                             </c:when>
                             <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">Login</a>
+                                <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">
+                                    <i class="fas fa-user"></i> LOGIN
+                                </a>
                             </c:otherwise>
                         </c:choose>
                     </div>

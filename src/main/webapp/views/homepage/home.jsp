@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/views/includes/header_logout.jsp" %>
+<%@ include file="/views/includes/header.jsp" %>
 <html>
 <head>
     <title>Customer Dashboard</title>
