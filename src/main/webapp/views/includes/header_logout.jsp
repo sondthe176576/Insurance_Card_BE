@@ -196,8 +196,10 @@
                     <div class="dropdown-menu">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
-                        <a href="${pageContext.request.contextPath}/customerinfo">Profile</a>
-                        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                        <a href="${pageContext.request.contextPath}/customerinfo"><i class="fas fa-user"></i> PROFILE</a>
+                                <a href="${pageContext.request.contextPath}/login" >
+                                    LOGOUT
+                                </a>
                             </c:when>
                             <c:otherwise>
                                 <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">Login</a>

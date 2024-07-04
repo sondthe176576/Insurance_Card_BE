@@ -47,8 +47,18 @@ public class LoginControl extends HttpServlet {
             session.setMaxInactiveInterval(7200);
             session.setAttribute("user", user);
             LOGGER.info("Login successful, user: " + user);
-            request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
 
+            // Kiểm tra role của user và chuyển hướng dựa trên role
+            String role = user.getRole(); // Giả sử getRole() là phương thức để lấy role của user
+            if ("Customer".equalsIgnoreCase(role)) {
+                request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
+            } else if ("Staff".equalsIgnoreCase(role)) {
+                request.getRequestDispatcher("/views/staff/manageStaff.jsp").forward(request, response);
+            } else {
+                request.setAttribute("mess", "Role not recognized!");
+                LOGGER.info("Login failed: " + request.getAttribute("mess"));
+                request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
+            }
         }
     }
 }
