@@ -54,7 +54,7 @@ public class AccidentHistoryServlet extends HttpServlet {
 
             AccidentHistoryCus accidentHistoryCus = new AccidentHistoryCus(0, customerID, description, accidentDate);
             accidentHistoryService.addAccidentHistory(accidentHistoryCus);
-            response.sendRedirect("accidentHistory");
+            response.sendRedirect(request.getContextPath() + "/views/history/pendingforCustomer.jsp");
         } else if ("update".equals(action)) {
             int accidentID = Integer.parseInt(request.getParameter("accidentID"));
             int customerID = Integer.parseInt(request.getParameter("customerID"));

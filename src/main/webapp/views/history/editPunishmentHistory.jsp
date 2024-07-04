@@ -24,8 +24,12 @@
             <label for="description" class="form-label">Description</label>
             <input type="text" class="form-control" id="description" name="description" value="${punishmentHistory.description}" required>
         </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date" value="${punishmentHistory.date}" required>
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="punishmentHistory" class="btn btn-secondary">Cancel</a>
+            </div>
     </form>
 </div>
 

@@ -10,6 +10,8 @@
     <title>Punishment History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -33,12 +35,18 @@
                     <td>${punishmentHistory.description}</td>
                     <td>${punishmentHistory.date}</td>
                     <td>
-                        <a href="punishmentHistory?action=view&punishmentID=${punishmentHistory.punishmentID}" class="btn btn-primary btn-sm">View</a>
-                        <a href="punishmentHistory?action=edit&punishmentID=${punishmentHistory.punishmentID}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="punishmentHistory?action=view&punishmentID=${punishmentHistory.punishmentID}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="punishmentHistory?action=edit&punishmentID=${punishmentHistory.punishmentID}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                         <form action="punishmentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="punishmentID" value="${punishmentHistory.punishmentID}">
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -74,37 +82,14 @@
                 <label for="adddescription" class="form-label">Description:</label>
                 <input type="text" class="form-control" id="adddescription" name="description" required>
             </div>
+            <div class="mb-3">
+                <label for="adddate" class="form-label">Date:</label>
+                <input type="date" class="form-control" id="adddate" name="date" required>
+                </div>
             <button type="submit" class="btn btn-success">Add</button>
+
         </form>
 
-        <c:if test="${not empty punishmentHistoryCus}">
-            <h2 class="mt-4 mb-4">Edit Punishment History</h2>
-            <form action="punishmentHistory" method="post">
-                <input type="hidden" name="action" value="update">
-                <input type="hidden" name="punishmentID" value="${punishmentHistoryCus.punishmentID}">
-                <div class="mb-3">
-                    <label for="customerID" class="form-label">Customer ID:</label>
-                    <input type="number" class="form-control" id="customerID" name="customerID" value="${punishmentHistoryCus.customerID}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description:</label>
-                    <input type="text" class="form-control" id="description" name="description" value="${punishmentHistoryCus.description}" required>
-                </div>
-                <button type="submit" class="btn btn-warning">Update</button>
-            </form>
-        </c:if>
-
-        <c:if test="${not empty punishmentHistoryCus}">
-            <h2 class="mt-4 mb-4">View Punishment History</h2>
-            <div class="card">
-                <div class="card-body">
-                    <p>ID: ${punishmentHistoryCus.punishmentID}</p>
-                    <p>Customer ID: ${punishmentHistoryCus.customerID}</p>
-                    <p>Description: ${punishmentHistoryCus.description}</p>
-                    <p>Date: ${punishmentHistoryCus.date}</p>
-                </div>
-            </div>
-        </c:if>
     </div>
 </div>
 
