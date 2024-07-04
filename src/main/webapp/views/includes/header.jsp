@@ -106,7 +106,7 @@
                         <i class="fas fa-search search-icon"></i>
                     </div>
                 </form>
-                <a href="login-page.html" class="btn tp-btn tp-btn-blue">
+                <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">
                     <i class="fas fa-user"></i> LOGIN
                 </a>
             </div>
