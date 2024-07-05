@@ -32,19 +32,19 @@
 
         .css_select_div {
             display: flex;
-            gap: 10px; /* Adjust the gap between the selects as needed */
+            gap: 10px;
         }
 
         .css_select {
-            flex: 1; /* Allows the selects to grow and fill the container */
-            min-width: 100px; /* Ensures a minimum width for the selects */
+            flex: 1;
+            min-width: 100px;
         }
     </style>
 </head>
 <body>
 <div class="container-fluid">
     <form action="${pageContext.request.contextPath}/editinfor" method="post">
-    <div class="row justify-content-center">
+        <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-container">
                     <div class="row">
@@ -55,7 +55,7 @@
                                 <span> </span>
                             </div>
                         </div>
-                        <div class="col-md-5 border-right">
+                        <div class="col-md-9 border-right">
                             <p class="text-black-50" name="username"><%= userFromDB.getUsername() %></p>
                             <div class="p-3 py-5">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -152,21 +152,58 @@
                                         </select>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Additional Information</h4>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12">
+                                        <label class="labels">Personal Info</label>
+                                        <input type="text" name="personal_info" class="form-control" placeholder="Personal Info">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="text-right">Motorcycle Information</h4>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12">
+                                        <label class="labels">License Plate</label>
+                                        <input type="text" name="license_plate" class="form-control" placeholder="License Plate">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Brand</label>
+                                        <input type="text" name="brand" class="form-control" placeholder="Brand">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Model</label>
+                                        <input type="text" name="model" class="form-control" placeholder="Model">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Frame Number</label>
+                                        <input type="text" name="frame_number" class="form-control" placeholder="Frame Number">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Engine Number</label>
+                                        <input type="text" name="engine_number" class="form-control" placeholder="Engine Number">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Year of Manufacture</label>
+                                        <input type="number" name="year_of_manufacture" class="form-control" placeholder="Year of Manufacture">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Color</label>
+                                        <input type="text" name="color" class="form-control" placeholder="Color">
+                                    </div>
+                                </div>
                                 <div class="mt-5 text-center">
                                     <button class="btn btn-primary profile-button" type="submit">Save</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="p-3 py-5">
-                                <br>
-                                <br>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     </form>
 </div>
 

@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.model.*;
 import org.example.insurance_card_be.service.ContractService;
 import org.example.insurance_card_be.service.CustomerService;
@@ -36,8 +37,14 @@ public class ContractController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerIDstr = req.getParameter("customerID");
-        int customerID = Integer.parseInt(customerIDstr);
+        HttpSession session = req.getSession();
+        int customerID = (int) session.getAttribute("customerID");
+
+        // Check if customerID is provided in request parameter
+        String customerIDStr = req.getParameter("customerID");
+        if (customerIDStr != null) {
+            customerID = Integer.parseInt(customerIDStr);
+        }
 
         try {
             Customers customer = customerService.getCustomerByID(customerID);
@@ -55,13 +62,17 @@ public class ContractController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerID = req.getParameter("customerID");
-        String contractInfo = req.getParameter("contractInfo");
+        HttpSession session = req.getSession();
+        int customerID = (int) session.getAttribute("customerID");
+
+        String contractYearsStr = req.getParameter("contractYears");
+        String startDateStr = req.getParameter("startDate");
         String endDateStr = req.getParameter("endDate");
-        String detail = req.getParameter("detail");
-        String valueStr = req.getParameter("value");
-        String coverage = req.getParameter("coverage");
         String insuranceType = req.getParameter("insuranceType");
+        String contractInfo = req.getParameter("contractInfo");
+        String valueStr = req.getParameter("value");
+        String detail = req.getParameter("detail");
+        String coverage = req.getParameter("coverage");
         String premiumStr = req.getParameter("premium");
         String paymentMethod = req.getParameter("paymentMethod");
 
@@ -69,7 +80,7 @@ public class ContractController extends HttpServlet {
         Contract contract = new Contract();
 
         try {
-            contract.setCustomerID(Integer.parseInt(customerID));
+            contract.setCustomerID(customerID);
             contract.setContractInfo(contractInfo);
             contract.setStatus("Pending");
             contract.setStartDate(new Date());

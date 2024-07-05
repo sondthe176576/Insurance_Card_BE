@@ -30,7 +30,6 @@ public class LoginControl extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -46,18 +45,21 @@ public class LoginControl extends HttpServlet {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(7200);
             session.setAttribute("user", user);
+
             LOGGER.info("Login successful, user: " + user);
 
-            // Kiểm tra role của user và chuyển hướng dựa trên role
-            String role = user.getRole(); // Giả sử getRole() là phương thức để lấy role của user
-            if ("Customer".equalsIgnoreCase(role)) {
-                request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
-            } else if ("Staff".equalsIgnoreCase(role)) {
-                request.getRequestDispatcher("/views/staff/manageStaff.jsp").forward(request, response);
+            // Kiểm tra vai trò của user và chuyển hướng phù hợp
+            if ("staff".equalsIgnoreCase(user.getRole())) {
+                response.sendRedirect("homepageforstaff");
             } else {
-                request.setAttribute("mess", "Role not recognized!");
-                LOGGER.info("Login failed: " + request.getAttribute("mess"));
-                request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
+                int customerID = dao.getCustomerIDByUserID(user.getUserID());
+                if (customerID == -1) {
+                    request.setAttribute("mess", "CustomerID not found!");
+                    request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
+                    return;
+                }
+                session.setAttribute("customerID", customerID);
+                response.sendRedirect("homepageforcustomer");
             }
         }
     }
