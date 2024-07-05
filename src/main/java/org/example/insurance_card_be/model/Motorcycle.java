@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Motorcycle {
     private int motorcycleID;
-    private Customers customer;
+    private int customerID;
     private String licensePlate;
     private String brand;
     private String model;
