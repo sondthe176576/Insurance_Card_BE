@@ -1,6 +1,6 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.model.PunishmentHistoryCus;
+import org.example.insurance_card_be.model.PunishmentHistory;
 import org.example.insurance_card_be.dao.DBContext;
 
 import java.sql.*;
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class PunishmentHistoryDAO {
 
-    public List<PunishmentHistoryCus> getAllPunishmentHistories() {
-        List<PunishmentHistoryCus> list = new ArrayList<>();
+    public List<PunishmentHistory> getAllPunishmentHistories() {
+        List<PunishmentHistory> list = new ArrayList<>();
         String query = "SELECT * FROM PunishmentHistory";
 
         try (Connection connection = DBContext.getConnection();
@@ -23,7 +23,7 @@ public class PunishmentHistoryDAO {
                 String description = resultSet.getString("description");
                 Date date = resultSet.getDate("date");
 
-                list.add(new PunishmentHistoryCus(punishmentID, customerID, description, date));
+                list.add(new PunishmentHistory(punishmentID, customerID, description, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,8 +32,8 @@ public class PunishmentHistoryDAO {
         return list;
     }
 
-    public PunishmentHistoryCus getPunishmentHistoryById(int punishmentID) {
-        PunishmentHistoryCus punishmentHistoryCus = null;
+    public PunishmentHistory getPunishmentHistoryById(int punishmentID) {
+        PunishmentHistory punishmentHistory = null;
         String query = "SELECT * FROM PunishmentHistory WHERE punishmentID = ?";
 
         try (Connection connection = DBContext.getConnection();
@@ -47,25 +47,29 @@ public class PunishmentHistoryDAO {
                     String description = resultSet.getString("description");
                     Date date = resultSet.getDate("date");
 
-                    punishmentHistoryCus = new PunishmentHistoryCus(punishmentID, customerID, description, date);
+                    punishmentHistory = new PunishmentHistory(punishmentID, customerID, description, date);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return punishmentHistoryCus;
+        return punishmentHistory;
     }
 
-    public void addPunishmentHistory(PunishmentHistoryCus punishmentHistoryCus) {
+    public void addPunishmentHistory(PunishmentHistory punishmentHistory) {
         String query = "INSERT INTO PunishmentHistory (customerID, description, date) VALUES (?, ?, ?)";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, punishmentHistoryCus.getCustomerID());
-            preparedStatement.setString(2, punishmentHistoryCus.getDescription());
-            preparedStatement.setDate(3, new java.sql.Date(punishmentHistoryCus.getDate().getTime()));
+            preparedStatement.setInt(1, punishmentHistory.getCustomerID());
+            preparedStatement.setString(2, punishmentHistory.getDescription());
+            if (punishmentHistory.getDate() != null) {
+                preparedStatement.setDate(3, new Date(punishmentHistory.getDate().getTime()));
+            } else {
+                preparedStatement.setDate(3, null); // Or use a default value if necessary
+            }
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -73,16 +77,20 @@ public class PunishmentHistoryDAO {
         }
     }
 
-    public void updatePunishmentHistory(PunishmentHistoryCus punishmentHistoryCus) {
+    public void updatePunishmentHistory(PunishmentHistory punishmentHistory) {
         String query = "UPDATE PunishmentHistory SET customerID = ?, description = ?, date = ? WHERE punishmentID = ?";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, punishmentHistoryCus.getCustomerID());
-            preparedStatement.setString(2, punishmentHistoryCus.getDescription());
-            preparedStatement.setDate(3, new java.sql.Date(punishmentHistoryCus.getDate().getTime()));
-            preparedStatement.setInt(4, punishmentHistoryCus.getPunishmentID());
+            preparedStatement.setInt(1, punishmentHistory.getCustomerID());
+            preparedStatement.setString(2, punishmentHistory.getDescription());
+            if (punishmentHistory.getDate() != null) {
+                preparedStatement.setDate(3, new Date(punishmentHistory.getDate().getTime()));
+            } else {
+                preparedStatement.setDate(3, null); // Or use a default value if necessary
+            }
+            preparedStatement.setInt(4, punishmentHistory.getPunishmentID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -104,8 +112,8 @@ public class PunishmentHistoryDAO {
         }
     }
 
-    public List<PunishmentHistoryCus> getPunishmentHistoriesByCustomerID(int customerID) {
-        List<PunishmentHistoryCus> list = new ArrayList<>();
+    public List<PunishmentHistory> getPunishmentHistoriesByCustomerID(int customerID) {
+        List<PunishmentHistory> list = new ArrayList<>();
         String query = "SELECT * FROM PunishmentHistory WHERE customerID = ?";
 
         try (Connection connection = DBContext.getConnection();
@@ -119,7 +127,7 @@ public class PunishmentHistoryDAO {
                     String description = resultSet.getString("description");
                     Date date = resultSet.getDate("date");
 
-                    list.add(new PunishmentHistoryCus(punishmentID, customerID, description, date));
+                    list.add(new PunishmentHistory(punishmentID, customerID, description, date));
                 }
             }
         } catch (SQLException e) {
