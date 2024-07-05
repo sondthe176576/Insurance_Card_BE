@@ -154,6 +154,8 @@
         <!-- /.container-fluid -->
     </nav>
 </div>
+
+
 <div class="tp-page-header"><!-- full page header -->
     <div class="container">
         <div class="row">
@@ -187,6 +189,7 @@
         </div>
     </div>
 </div>
+
 <div class="main-container" id="main-container"><!--Main container start-->
     <form action="${pageContext.request.contextPath}/product" method="post" autocomplete="off">
     <div class="tp-insurance" id="tp-insurance"><!-- insurance section -->

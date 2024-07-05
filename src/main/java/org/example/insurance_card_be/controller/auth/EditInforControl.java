@@ -49,6 +49,6 @@ public class EditInforControl extends HttpServlet {
         dao.updateProfile(username, email_id, mobile, tinh, quan, phuong, first_name, last_name, full_name, birthdate, gender);
         dao.addCustomerAndMotorcycle(((Users) session.getAttribute("user")).getUserID(), personal_info, license_plate, brand, model, frame_number, engine_number, year_of_manufacture, color);
 
-        response.sendRedirect("home");
+        request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
     }
 }
