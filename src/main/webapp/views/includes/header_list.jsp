@@ -17,7 +17,14 @@
         </c:choose>
         <div class="notifications">
             <i class="bi bi-bell"></i>
-            <span class="badge">5</span>
+            <c:if test="${not empty sessionScope.unreadNotifications}">
+                <span class="badge">${sessionScope.unreadNotifications.size()}</span>
+            </c:if>
+            <div class="notifications-menu">
+                <c:forEach var="notification" items="${sessionScope.unreadNotifications}">
+                    <a href="#">${notification.message}</a>
+                </c:forEach>
+            </div>
         </div>
     </div>
 </div>

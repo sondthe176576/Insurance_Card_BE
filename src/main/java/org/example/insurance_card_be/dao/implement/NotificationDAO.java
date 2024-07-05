@@ -37,19 +37,21 @@ public class NotificationDAO {
         return staffUserIDs;
     }
 
-    public List<Notifications> getAllUnreadNotifications() throws SQLException {
+    public List<Notifications> getUnreadNotificationsForUser(int userID) throws SQLException {
         List<Notifications> notifications = new ArrayList<>();
-        String sql = "SELECT * FROM Notifications WHERE IsRead = 0";
-        try (PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                Notifications notification = new Notifications();
-                notification.setNotificationID(rs.getInt("NotificationID"));
-                notification.setUserID(rs.getInt("UserID"));
-                notification.setMessage(rs.getString("Message"));
-                notification.setCreatedDate(rs.getTimestamp("CreatedDate"));
-                notification.setRead(rs.getBoolean("IsRead"));
-                notifications.add(notification);
+        String sql = "SELECT * FROM Notifications WHERE UserID = ? AND IsRead = 0";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userID);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Notifications notification = new Notifications();
+                    notification.setNotificationID(rs.getInt("NotificationID"));
+                    notification.setUserID(rs.getInt("UserID"));
+                    notification.setMessage(rs.getString("Message"));
+                    notification.setCreatedDate(rs.getTimestamp("CreatedDate"));
+                    notification.setRead(rs.getBoolean("IsRead"));
+                    notifications.add(notification);
+                }
             }
         }
         return notifications;
