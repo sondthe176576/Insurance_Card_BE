@@ -194,8 +194,25 @@
                         <i class="bi bi-person user-icon"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a href="#">Profile</a>
-                        <a href="#">Logout</a>
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.user}">
+                        <a href="${pageContext.request.contextPath}/customerinfo">Profile</a>
+                        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">Login</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+
+                </div>
+                <div class="notification-icon">
+                    <i class="bi bi-bell"></i>
+                    <span class="badge">3</span>
+                    <div class="notifications-menu">
+                        <a href="#">Notification 1</a>
+                        <a href="#">Notification 2</a>
+                        <a href="#">Notification 3</a>
                     </div>
                 </div>
                 <div class="notification-icon">

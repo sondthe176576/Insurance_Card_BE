@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/21/2024
-  Time: 11:22 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +90,7 @@
         <li><a href="#"><i class="fas fa-concierge-bell"></i> Service</a></li>
         <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
         <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-        <li><a href="${pageContext.request.contextPath}/selectCustomer"><i class="fas fa-file-contract"></i> Create Contract</a></li>
+        <li><a href="${pageContext.request.contextPath}/listWaitingContract"><i class="fas fa-file-contract"></i> Manage Contract</a></li>
     </ul>
 </nav>
 </body>
