@@ -22,6 +22,6 @@ public class LogoutControl extends HttpServlet {
                 System.err.println("Error invalidating session: " + ex.getMessage());
             }
         }
-        response.sendRedirect(request.getContextPath() + "/login"); // chuyển hướng về trang đăng nhập
+        response.sendRedirect(request.getContextPath() + "/"); // chuyển hướng về trang đăng nhập
     }
 }

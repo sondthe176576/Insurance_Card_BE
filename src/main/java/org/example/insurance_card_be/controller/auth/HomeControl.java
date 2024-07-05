@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet("/home")
+@WebServlet("/")
 public class HomeControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -19,6 +19,6 @@ public class HomeControl extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/views/homepage/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
     }
 }
