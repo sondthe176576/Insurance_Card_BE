@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.model.Contract;
+import org.example.insurance_card_be.model.Notifications;
 import org.example.insurance_card_be.model.Users;
+import org.example.insurance_card_be.service.NotificationService;
 import org.example.insurance_card_be.service.WaitingContractService;
 
 import java.io.IOException;
@@ -18,10 +20,12 @@ import java.util.logging.Logger;
 @WebServlet(name = "WaitingContractController", urlPatterns = "/listWaitingContract")
 public class WaitingContractController extends HttpServlet {
     private WaitingContractService waitingContractService;
+    private NotificationService notificationService;
 
     @Override
     public void init() throws ServletException {
         this.waitingContractService = new WaitingContractService();
+        this.notificationService = new NotificationService();
     }
 
     @Override
@@ -60,6 +64,11 @@ public class WaitingContractController extends HttpServlet {
             req.setAttribute("customerName", customerName);
             req.setAttribute("startDate", startDate);
             req.setAttribute("insuranceType", insuranceType);
+
+            // Lấy danh sách thông báo chưa đọc
+            List<Notifications> unreadNotifications = notificationService.getUnreadNotificationsForUser(user.getUserID());
+            req.setAttribute("unreadNotifications", unreadNotifications);
+
             req.getRequestDispatcher("/views/contract/waitingContracts.jsp").forward(req, resp);
         } catch (Exception e) {
             Logger logger = Logger.getLogger(WaitingContractController.class.getName());

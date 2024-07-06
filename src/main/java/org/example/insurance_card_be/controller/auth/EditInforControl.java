@@ -24,6 +24,7 @@ public class EditInforControl extends HttpServlet {
         HttpSession session = request.getSession();
 
         String username = ((Users) session.getAttribute("user")).getUsername();
+        int userID = ((Users) session.getAttribute("user")).getUserID();
         String full_name = request.getParameter("full_name");
         String first_name = request.getParameter("first_name");
         String last_name = request.getParameter("last_name");
@@ -47,8 +48,9 @@ public class EditInforControl extends HttpServlet {
 
         UserDAO dao = new UserDAO();
         dao.updateProfile(username, email_id, mobile, tinh, quan, phuong, first_name, last_name, full_name, birthdate, gender);
-        dao.addCustomerAndMotorcycle(((Users) session.getAttribute("user")).getUserID(), personal_info, license_plate, brand, model, frame_number, engine_number, year_of_manufacture, color);
+        dao.updateCustomerInfo(userID, personal_info);
+        dao.addMotorcycle(userID, license_plate, brand, model, frame_number, engine_number, year_of_manufacture, color);
 
-        response.sendRedirect("home");
+        response.sendRedirect("/homepageforcustomer");
     }
 }

@@ -17,8 +17,8 @@ public class NotificationService {
         return notificationDAO.getAllStaffUserIDs();
     }
 
-    public List<Notifications> getAllUnreadNotifications() throws SQLException {
-        return notificationDAO.getAllUnreadNotifications();
+    public List<Notifications> getUnreadNotificationsForUser(int userID) throws SQLException {
+        return notificationDAO.getUnreadNotificationsForUser(userID);
     }
 
     public void markAsRead(int notificationID) throws SQLException {
