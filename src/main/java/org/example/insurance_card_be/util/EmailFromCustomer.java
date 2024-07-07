@@ -8,11 +8,13 @@ import java.util.Properties;
 public class EmailFromCustomer {
     private static final String COMPANY_EMAIL = "annthe176161@fpt.edu.vn";
     private static final String COMPANY_EMAIL_PASSWORD = "hxhp laiv kjeb sols";
+    private static final String SMTP_SERVER = "smtp.gmail.com";
+    private static final String SMTP_PORT = "587";
 
     public static void sendEmail(String to, String subject, String body) {
         Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", "smtp.gmail.com");
-        properties.setProperty("mail.smtp.port", "587");
+        properties.setProperty("mail.smtp.host", SMTP_SERVER);
+        properties.setProperty("mail.smtp.port", SMTP_PORT);
         properties.setProperty("mail.smtp.auth", "true");
         properties.setProperty("mail.smtp.starttls.enable", "true");
 
