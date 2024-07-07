@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="/views/includes/header_logout.jsp"/>
+<jsp:include page="/views/includes/header.jsp"/>
 <%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
 
 <%
@@ -68,7 +68,7 @@
             <li><a href="#">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}">Buy Insurance</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="${pageContext.request.contextPath}/contractDetail/1">Contract</a></li>
+            <li><a href="${pageContext.request.contextPath}/contractForCustomer">Contract</a></li>
             <li><a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp">Dashboard</a></li>
         </ul>
     </div>

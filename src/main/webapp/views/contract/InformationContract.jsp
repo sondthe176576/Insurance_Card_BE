@@ -69,9 +69,20 @@
                 <p><strong>Status:</strong> ${contract.status}</p>
                 <p><strong>Start Date:</strong> <fmt:formatDate value="${contract.startDate}" pattern="yyyy-MM-dd"/></p>
                 <p><strong>End Date:</strong> <fmt:formatDate value="${contract.endDate}" pattern="yyyy-MM-dd"/></p>
+                <p><strong>Days Remaining:</strong>
+                    <c:choose>
+                        <c:when test="${diffDays < 0}">
+                            Expired ${-diffDays} days ago
+                        </c:when>
+                        <c:otherwise>
+                            ${diffDays} days remaining
+                        </c:otherwise>
+                    </c:choose>
+                </p>
                 <p><strong>Insurance Type:</strong> ${contract.insuranceType}</p>
                 <p><strong>Coverage:</strong> ${contract.coverage}</p>
                 <p><strong>Premium:</strong> ${contract.premium}</p>
+                <p><strong>Cancellation Date:</strong> <fmt:formatDate value="${contract.cancellationDate}" pattern="yyyy-MM-dd"/></p>
                 <p><strong>Detail:</strong> ${contract.detail}</p>
                 <p><strong>Value:</strong> ${contract.value}</p>
             </div>
@@ -93,6 +104,7 @@
             <p><strong>First Name:</strong> ${contract.customer.user.firstName}</p>
             <p><strong>Last Name:</strong> ${contract.customer.user.lastName}</p>
             <p><strong>Birth Date:</strong> <fmt:formatDate value="${contract.customer.user.birthDate}" pattern="yyyy-MM-dd"/></p>
+            <p><strong>Personal Info:</strong> ${contract.customer.personalInfo}</p>
         </div>
 
         <div class="info-card">
@@ -108,15 +120,39 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between mt-4 action-buttons"> <!-- Use Bootstrap classes for flexbox and justify content -->
-        <form action="${pageContext.request.contextPath}/views/history/pending.jsp" method="post">
+    <div class="d-flex justify-content-between mt-4 action-buttons">
+        <button type="button" class="btn btn-primary" onclick="showRenewModal('${contract.contractID}', '${contract.customer.user.email}')">Request Renew Contract</button>
+        <form id="cancelForm" action="${pageContext.request.contextPath}/cancelContract" method="post">
             <input type="hidden" name="contractId" value="${contract.contractID}">
-            <button type="submit" class="btn btn-primary">Request Renew Contract</button>
+            <input type="hidden" name="contractValue" value="${contract.value}">
+            <button type="button" class="btn btn-danger" onclick="showCancelModal()">Cancel Contract</button>
         </form>
-        <form action="${pageContext.request.contextPath}/cancelContract" method="post">
-            <input type="hidden" name="contractId" value="${contract.contractID}">
-            <button type="submit" class="btn btn-danger">Cancel Contract</button>
-        </form>
+    </div>
+</div>
+
+<!-- Renew Confirmation Modal -->
+<div class="modal fade" id="renewModal" tabindex="-1" aria-labelledby="renewModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="renewModalLabel">Request Renew Contract</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="renewForm" action="${pageContext.request.contextPath}/requestRenewContract" method="post">
+                    <div class="mb-3">
+                        <label for="renewYears" class="form-label">Number of years to renew:</label>
+                        <input type="number" class="form-control" id="renewYears" name="renewYears" required>
+                    </div>
+                    <input type="hidden" id="customerEmail" name="customerEmail" value="">
+                    <input type="hidden" id="contractId" name="contractId" value="">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" onclick="submitRenewForm()">Yes, Renew Contract</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -124,5 +160,37 @@
 
 <!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function showCancelModal() {
+        const endDate = new Date("${contract.endDate}");
+        const currentDate = new Date();
+        const contractValue = ${contract.value};
+        const penalty = (contractValue * 0.30).toFixed(2);
+
+        let message = "Are you sure you want to cancel this contract?";
+        if (currentDate < endDate) {
+            message += "<br>You will be penalized 30% of the contract value (Penalty: $" + penalty + ").";
+        }
+
+        document.getElementById('cancelMessage').innerHTML = message;
+        var cancelModal = new bootstrap.Modal(document.getElementById('cancelModal'), {});
+        cancelModal.show();
+    }
+
+    function confirmCancel() {
+        document.getElementById('cancelForm').submit();
+    }
+
+    function showRenewModal(contractId, customerEmail) {
+        document.getElementById('contractId').value = contractId;
+        document.getElementById('customerEmail').value = customerEmail;
+        var renewModal = new bootstrap.Modal(document.getElementById('renewModal'), {});
+        renewModal.show();
+    }
+
+    function submitRenewForm() {
+        document.getElementById('renewForm').submit();
+    }
+</script>
 </body>
 </html>
