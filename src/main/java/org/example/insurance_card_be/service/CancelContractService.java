@@ -16,22 +16,17 @@ public class CancelContractService {
     }
 
     public void cancelContract(int contractID, double contractValue) throws SQLException {
-        try {
-            // Create punishment record
-            Punishments punishment = new Punishments();
-            punishment.setContractID(contractID);
-            punishment.setPunishmentType("Contract Cancellation");
-            punishment.setPunishmentDate(Date.valueOf(LocalDate.now()));
-            punishment.setDescription("Customer canceled the contract before the expiry date. Penalty: " + (contractValue * 0.30));
-            punishment.setStatus("Paid");
+        // Create punishment record
+        Punishments punishment = new Punishments();
+        punishment.setContractID(contractID);
+        punishment.setPunishmentType("Contract Cancellation");
+        punishment.setPunishmentDate(Date.valueOf(LocalDate.now()));
+        punishment.setDescription("Customer canceled the contract before the expiry date. Penalty: " + (contractValue * 0.30));
+        punishment.setStatus("Paid");
 
-            // Insert punishment record and update contract status
-            cancelContractDAO.insertPunishment(punishment);
-            cancelContractDAO.updateContractStatus(contractID, "Canceled");
-            cancelContractDAO.updateCancellationDate(contractID, Date.valueOf(LocalDate.now()));
-        } finally {
-            // Close the DAO connection
-            cancelContractDAO.close();
-        }
+        // Insert punishment record and update contract status
+        cancelContractDAO.insertPunishment(punishment);
+        cancelContractDAO.updateContractStatus(contractID, "Canceled");
+        cancelContractDAO.updateCancellationDate(contractID, Date.valueOf(LocalDate.now()));
     }
 }

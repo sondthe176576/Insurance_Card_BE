@@ -48,8 +48,8 @@ public class CancelContractDAO {
         }
     }
 
-    // Close connection when done
-    public void close() {
-        DBContext.closeConnection(this.connection);
-    }
+    // Remove close method or leave it empty
+    // public void close() {
+    //    // Do nothing
+    // }
 }
