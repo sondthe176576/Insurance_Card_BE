@@ -1,7 +1,6 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.Motorcycle;
 import org.example.insurance_card_be.model.Users;
 
 import java.sql.*;
@@ -56,8 +55,51 @@ public class CustomerDAO extends DBContext {
         }
     }
 
+    public List<Users> findAll(int page) {
+        List<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM [Users] WHERE Role ='Customer' ORDER BY UserID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setInt(1, (page - 1) * CUSTOMERS_PER_PAGE);
+            st.setInt(2, CUSTOMERS_PER_PAGE);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Users user = new Users();
+                user.setUserID(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
+                user.setPassword(rs.getString("Password"));
+                user.setRole(rs.getString("Role"));
+                user.setEmail(rs.getString("Email"));
+                user.setMobile(rs.getString("Mobile"));
+                user.setProvince(rs.getString("Province"));
+                user.setDistrict(rs.getString("District"));
+                user.setCountry(rs.getString("Country"));
+                user.setFirstName(rs.getString("First_name"));
+                user.setLastName(rs.getString("Last_name"));
+                user.setFullName(rs.getString("Full_name"));
+                user.setBirthDate(rs.getDate("Birth_date"));
+                user.setGender(rs.getString("Gender"));
+                list.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
-
+    public int getTotalCustomers() {
+        String sql = "SELECT COUNT(*) FROM [Users] WHERE Role ='Customer'";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     public void insert(Users customer) {
         String sql = "INSERT INTO [Users] " +
@@ -163,34 +205,6 @@ public class CustomerDAO extends DBContext {
         }
         return null;
     }
-
-    // New method to find motorcycles by customer ID
-    public List<Motorcycle> findMotorcyclesByCustomerId(int customerId) {
-        List<Motorcycle> motorcycles = new ArrayList<>();
-        String sql = "SELECT * FROM [Motorcycles] WHERE CustomerID = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, customerId);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                motorcycles.add(new Motorcycle(
-                        rs.getInt("MotorcycleID"),
-                        rs.getInt("CustomerID"),
-                        rs.getString("LicensePlate"),
-                        rs.getString("Brand"),
-                        rs.getString("Model"),
-                        rs.getString("FrameNumber"),
-                        rs.getString("EngineNumber"),
-                        rs.getInt("YearOfManufacture"),
-                        rs.getString("Color")
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return motorcycles;
-    }
-
 
     public List<Users> findByUsernameAndGender(String keyword, String gender, int page) {
         List<Users> list = new ArrayList<>();
@@ -358,12 +372,36 @@ public class CustomerDAO extends DBContext {
         return 0;
     }
 
-    // viet mot ham main de test users
-    public static void main(String[] args) {
-        CustomerDAO dao = new CustomerDAO();
-        List<Users> users = dao.findAll();
-        for (Users user : users) {
-            System.out.println(user);
+    public List<Users> findAllWithAddress(int page, String province, String district, String ward) {
+        List<Users> list = new ArrayList<>();
+        String sql = "SELECT * FROM Users WHERE Role = 'Customer' AND (? = '0' OR Province = ?) AND (? = '0' OR District = ?) AND (? = '0' OR Country = ?) ORDER BY UserID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setString(1, province);
+            st.setString(2, province);
+            st.setString(3, district);
+            st.setString(4, district);
+            st.setString(5, ward);
+            st.setString(6, ward);
+            st.setInt(7, (page - 1) * CUSTOMERS_PER_PAGE);
+            st.setInt(8, CUSTOMERS_PER_PAGE);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Users user = new Users();
+                // Đọc dữ liệu từ rs và thêm vào danh sách
+                list.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return list;
     }
+
+
+
+
+
+
+
+
 }
