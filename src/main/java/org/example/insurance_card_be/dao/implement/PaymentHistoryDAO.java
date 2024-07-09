@@ -29,8 +29,9 @@ public class PaymentHistoryDAO {
                 Date paymentDate = resultSet.getDate("paymentDate");
                 int paymentMethodID = resultSet.getInt("paymentMethodID");
                 int contractID = resultSet.getInt("contractID");
+                String paymentDetails = resultSet.getString("paymentDetails");
 
-                PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+                PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID, paymentDetails);
                 list.add(paymentHistory);
             }
         } catch (SQLException e) {
@@ -56,8 +57,9 @@ public class PaymentHistoryDAO {
                     Date paymentDate = resultSet.getDate("paymentDate");
                     int paymentMethodID = resultSet.getInt("paymentMethodID");
                     int contractID = resultSet.getInt("contractID");
+                    String paymentDetails = resultSet.getString("paymentDetails");
 
-                    paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+                    paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID, paymentDetails);
                 }
             }
         } catch (SQLException e) {

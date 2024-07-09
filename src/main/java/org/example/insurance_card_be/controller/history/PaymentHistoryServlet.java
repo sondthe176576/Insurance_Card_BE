@@ -112,8 +112,9 @@ public class PaymentHistoryServlet extends HttpServlet {
         Date paymentDate = parseDate(request.getParameter("paymentDate"));
         int paymentMethodID = Integer.parseInt(request.getParameter("paymentMethodID"));
         int contractID = Integer.parseInt(request.getParameter("contractID"));
+        String paymentDetails = request.getParameter("paymentDetails");
 
-        PaymentHistory paymentHistory = new PaymentHistory(0, customerID, amount, paymentDate, paymentMethodID, contractID);
+        PaymentHistory paymentHistory = new PaymentHistory(0, customerID, amount, paymentDate, paymentMethodID, contractID, paymentDetails);
         paymentHistoryService.addPaymentHistory(paymentHistory);
         response.sendRedirect("paymentHistory");
     }
@@ -125,8 +126,9 @@ public class PaymentHistoryServlet extends HttpServlet {
         Date paymentDate = parseDate(request.getParameter("paymentDate"));
         int paymentMethodID = Integer.parseInt(request.getParameter("paymentMethodID"));
         int contractID = Integer.parseInt(request.getParameter("contractID"));
+        String paymentDetails = request.getParameter("paymentDetails");
 
-        PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+        PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID, paymentDetails);
         paymentHistoryService.updatePaymentHistory(paymentHistory);
         response.sendRedirect("paymentHistory");
     }
