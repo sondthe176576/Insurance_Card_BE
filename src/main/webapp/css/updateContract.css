@@ -1,3 +1,4 @@
+/* updateContract.css */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f6f8;
@@ -15,11 +16,15 @@ body {
 
 .card {
     margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
     background-color: #3498db;
     color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .card-header h2, .card-header h3 {
@@ -36,33 +41,35 @@ body {
     font-weight: bold;
 }
 
-.form-control {
+.form-control, .form-select {
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.form-control:focus {
-    border-color: #2980b9;
-    box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
-    outline: none;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
 }
 
 .btn-primary {
     background-color: #3498db;
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.3s;
+    transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
     background-color: #2980b9;
-    transform: scale(1.05);
+}
+
+.accordion-button {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e9ecef;
+}
+
+.accordion-body {
+    color: #333;
 }
 
 .alert {
@@ -71,23 +78,55 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    width: 90%;
-    max-width: 500px;
-    transition: opacity 0.3s, transform 0.3s;
 }
 
-.accordion-button:not(.collapsed) {
-    color: #000;
-    background-color: #e7f1ff;
+.section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.accordion-button::after {
-    background-image: none;
-    content: '\002B';
-    font-size: 1.25rem;
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.address-info {
+    background-color: #e9f7fe;
+    border: 1px solid #bce0fd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
     color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.accordion-button:not(.collapsed)::after {
-    content: '\2212';
+.address-info:hover {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.address-info p {
+    margin: 5px 0;
+}
+
+.address-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.address-info a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
 }

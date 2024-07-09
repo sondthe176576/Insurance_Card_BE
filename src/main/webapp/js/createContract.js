@@ -153,21 +153,20 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('detail').value = detail;
         document.getElementById('contractInfo').value = contractInfo;
         updateValue();
-        makeFieldsReadOnly();
+        makeFieldsEditable();
     }
 
-    function makeFieldsReadOnly() {
-        document.getElementById('contractYears').readOnly = true;
-        document.getElementById('insuranceType').disabled = true;
+    function makeFieldsEditable() {
+        document.getElementById('contractYears').readOnly = false;
+        document.getElementById('insuranceType').disabled = false;
     }
 
-    // Xử lý gửi form cho phương thức thanh toán
-    document.getElementById('createContractForm').addEventListener('submit', function (event) {
-        var paymentMethod = document.getElementById('paymentMethod').value;
+    // Bỏ thuộc tính chỉ đọc và vô hiệu hóa khi có thay đổi
+    document.getElementById('contractYears').addEventListener('focus', function () {
+        makeFieldsEditable();
+    });
 
-        if (paymentMethod === "bankTransfer") {
-            event.preventDefault();
-            window.location.href = `${pageContext.request.contextPath}/bankTransferPage`;
-        }
+    document.getElementById('insuranceType').addEventListener('focus', function () {
+        makeFieldsEditable();
     });
 });

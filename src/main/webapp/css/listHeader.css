@@ -1,0 +1,62 @@
+.header {
+    background-color: #004080;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.header .logo {
+    font-size: 1.5rem;
+}
+
+.header .search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.header .search-bar input {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.header .user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.header .user-profile i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.header .user-profile a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.header .user-profile a:hover {
+    text-decoration: underline;
+}
+
+.header .notifications {
+    position: relative;
+}
+
+.header .notifications .badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+}

@@ -2,22 +2,21 @@ package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.Contract;
+import org.example.insurance_card_be.model.PaymentHistory;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ContractDAO {
-    // Khai bao connection
     private Connection connection;
 
-    // Khoi tao connection
     public ContractDAO() {
         this.connection = DBContext.getConnection();
     }
 
-    // Ham tao contract
     public void createContract(Contract contract) throws SQLException {
         String sql = "INSERT INTO Contracts(CustomerID, ContractInfo, Status, StartDate, EndDate, Coverage, InsuranceType, Premium) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -31,13 +30,11 @@ public class ContractDAO {
             ps.setDouble(8, contract.getPremium());
             ps.executeUpdate();
 
-            // Lay contractID vua tao
             try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int contractID = generatedKeys.getInt(1);
                     contract.setContractID(contractID);
 
-                    // Them cac chi tiet cua contract
                     String sqlDetail = "INSERT INTO ContractDetails(ContractID, Detail, Value) VALUES(?, ?, ?)";
                     try (PreparedStatement detailPS = connection.prepareStatement(sqlDetail)) {
                         detailPS.setInt(1, contractID);
@@ -49,18 +46,16 @@ public class ContractDAO {
             }
         } catch (SQLException e) {
             throw new SQLException("Error while creating contract", e);
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
         }
     }
 
     public Contract getContractByID(int contractID) {
         Contract contract = null;
-        String sql = "SELECT c.*, cd.Detail, cd.Value, pm.methodType FROM Contracts c " +
+        String sql = "SELECT c.*, cd.Detail, cd.Value, pm.paymentMethodID, pm.methodType, pm.details, ph.paymentID, ph.amount, ph.paymentDate " +
+                "FROM Contracts c " +
                 "LEFT JOIN ContractDetails cd ON c.ContractID = cd.ContractID " +
-                "LEFT JOIN PaymentMethods pm ON c.CustomerID = pm.customerID " +
+                "LEFT JOIN PaymentHistory ph ON c.ContractID = ph.ContractID " +
+                "LEFT JOIN PaymentMethods pm ON ph.paymentMethodID = pm.paymentMethodID " +
                 "WHERE c.ContractID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, contractID);
@@ -78,7 +73,17 @@ public class ContractDAO {
                     contract.setPremium(rs.getDouble("Premium"));
                     contract.setDetail(rs.getString("Detail"));
                     contract.setValue(rs.getDouble("Value"));
-                    contract.setMethodPaymentType(rs.getString("methodType"));  // Thêm methodType
+
+                    // Thiết lập đối tượng PaymentHistory
+                    PaymentHistory paymentHistory = new PaymentHistory();
+                    paymentHistory.setPaymentMethodID(rs.getInt("paymentMethodID"));
+                    paymentHistory.setPaymentID(rs.getInt("paymentID"));
+                    paymentHistory.setAmount(rs.getBigDecimal("amount"));
+                    paymentHistory.setPaymentDate(rs.getDate("paymentDate"));
+                    paymentHistory.setPaymentDetails(rs.getString("details")); // Lấy giá trị từ cột details
+                    contract.setPaymentHistory(paymentHistory);
+
+                    contract.setMethodPaymentType(rs.getString("methodType"));
                 }
             }
         } catch (SQLException e) {

@@ -36,7 +36,6 @@ public class RenewContractController extends HttpServlet {
 
     // Ham doPost de renew contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lay thong tin contract tu request
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         String newContractInfo = req.getParameter("newContractInfo");
         String renewalDateStr = req.getParameter("renewalDate");
@@ -49,7 +48,6 @@ public class RenewContractController extends HttpServlet {
         contract.setPremium(newPremium);
         contract.setCoverage(newCoverage);
 
-        // Xu ly ngay
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.sql.Date newEndDate = new java.sql.Date(formatter.parse(renewalDateStr).getTime());
@@ -60,9 +58,10 @@ public class RenewContractController extends HttpServlet {
 
         try {
             renewContractService.renewContract(contract);
+            // Redirect with success message
+            resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=Renew+contract+successfully&status=true");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect(req.getContextPath() + "/viewContract?contractID=" + contractID + "&message=Renew+contract+successfully&status=true");
     }
 }
