@@ -75,9 +75,6 @@
                     <a href="${pageContext.request.contextPath}/compensationHistory?action=view&id=${request.requestID}" class="btn btn-primary btn-sm">
                         <i class="fas fa-eye"></i>
                     </a>
-                    <a href="${pageContext.request.contextPath}/compensationHistory?action=edit&id=${request.requestID}" class="btn btn-warning btn-sm">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
                     <form action="${pageContext.request.contextPath}/compensationHistory" method="post" style="display:inline;">
                         <input type="hidden" name="action" value="delete">
                         <input type="hidden" name="requestID" value="${request.requestID}">

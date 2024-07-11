@@ -29,9 +29,8 @@ public class PaymentHistoryDAO {
                 Date paymentDate = resultSet.getDate("paymentDate");
                 int paymentMethodID = resultSet.getInt("paymentMethodID");
                 int contractID = resultSet.getInt("contractID");
-                String paymentDetails = resultSet.getString("paymentDetails");
 
-                PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID, paymentDetails);
+                PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
                 list.add(paymentHistory);
             }
         } catch (SQLException e) {
@@ -57,9 +56,8 @@ public class PaymentHistoryDAO {
                     Date paymentDate = resultSet.getDate("paymentDate");
                     int paymentMethodID = resultSet.getInt("paymentMethodID");
                     int contractID = resultSet.getInt("contractID");
-                    String paymentDetails = resultSet.getString("paymentDetails");
 
-                    paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID, paymentDetails);
+                    paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
                 }
             }
         } catch (SQLException e) {
@@ -117,6 +115,13 @@ public class PaymentHistoryDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Error deleting payment history", e);
+        }
+    }
+    public static void main(String[] args) {
+        PaymentHistoryDAO paymentHistoryDAO = new PaymentHistoryDAO();
+        List<PaymentHistory> paymentHistories = paymentHistoryDAO.getAllPaymentHistories();
+        for (PaymentHistory paymentHistory : paymentHistories) {
+            System.out.println(paymentHistory);
         }
     }
 }

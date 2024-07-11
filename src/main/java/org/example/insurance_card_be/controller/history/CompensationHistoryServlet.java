@@ -36,9 +36,6 @@ public class CompensationHistoryServlet extends HttpServlet {
                 case "view":
                     viewCompensationRequest(request, response);
                     break;
-                case "edit":
-                    showEditForm(request, response);
-                    break;
                 case "addForm":
                     showAddForm(request, response);
                     break;
@@ -62,12 +59,6 @@ public class CompensationHistoryServlet extends HttpServlet {
         request.getRequestDispatcher("/views/history/viewCompensationHistory.jsp").forward(request, response);
     }
 
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        int requestID = Integer.parseInt(request.getParameter("id"));
-        CompensationRequests compensationRequest = compensationHistoryDAO.getCompensationRequestById(requestID);
-        request.setAttribute("compensationRequest", compensationRequest);
-        request.getRequestDispatcher("/views/history/editCompensationHistory.jsp").forward(request, response);
-    }
 
     private void listCompensationRequests(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         List<CompensationRequests> requests = compensationHistoryDAO.getAllCompensationRequests();

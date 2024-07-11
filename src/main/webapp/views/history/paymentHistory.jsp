@@ -27,7 +27,6 @@
                 <th>Payment Method ID</th>
                 <th>Contract ID</th>
                 <th>Actions</th>
-                <th>Payment Details</th>
             </tr>
             </thead>
             <tbody>
@@ -39,7 +38,6 @@
                     <td>${paymentHistory.paymentDate}</td>
                     <td>${paymentHistory.paymentMethodID}</td>
                     <td>${paymentHistory.contractID}</td>
-                    <td>${paymentHistory.paymentDetails}</td>
                     <td>
                         <a href="paymentHistory?action=view&paymentID=${paymentHistory.paymentID}" class="btn btn-primary btn-sm">
                             <i class="fas fa-eye"></i>
