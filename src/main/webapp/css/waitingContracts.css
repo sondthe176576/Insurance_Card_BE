@@ -1,55 +1,7 @@
-/* custom.css */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
-}
-
-.sidebar {
-    height: 100vh;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #004080;
-    padding-top: 20px;
-    transition: width 0.3s;
-    z-index: 1000;
-}
-
-.sidebar:hover {
-    width: 300px;
-}
-
-.sidebar a {
-    padding: 15px;
-    text-decoration: none;
-    font-size: 1.2rem;
-    color: #ffffff;
-    display: block;
-    transition: background-color 0.3s, padding-left 0.3s;
-}
-
-.sidebar a:hover, .sidebar a.active {
-    background-color: #0056b3;
-    padding-left: 30px;
-}
-
-.sidebar a.active {
-    background-color: #007bff;
-    font-weight: bold;
-}
-
-.sidebar i {
-    margin-right: 10px;
-}
-
-.sidebar .sidebar-header {
-    padding: 15px;
-    text-align: center;
-    font-size: 1.5rem;
-    color: #ffffff;
-    border-bottom: 1px solid #0056b3;
 }
 
 .main-content {
@@ -58,10 +10,6 @@ body {
     transition: margin-left 0.3s;
     height: calc(100vh - 70px);
     overflow-y: auto;
-}
-
-.sidebar:hover ~ .main-content {
-    margin-left: 300px;
 }
 
 .container {
@@ -149,67 +97,4 @@ h2 {
     background-color: #004080;
     color: white;
     border-color: #004080;
-}
-
-.header {
-    background-color: #004080;
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-.header .logo {
-    font-size: 1.5rem;
-}
-
-.header .search-bar {
-    display: flex;
-    align-items: center;
-}
-
-.header .search-bar input {
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.header .user-profile {
-    display: flex;
-    align-items: center;
-}
-
-.header .user-profile i {
-    margin-right: 10px;
-    font-size: 1.5rem;
-}
-
-.header .user-profile a {
-    color: white;
-    text-decoration: none;
-    margin-right: 15px;
-}
-
-.header .user-profile a:hover {
-    text-decoration: underline;
-}
-
-.header .notifications {
-    position: relative;
-}
-
-.header .notifications .badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 5px 10px;
 }

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class RenewContractDAO {
     // Khai báo connection
@@ -90,23 +91,55 @@ public class RenewContractDAO {
 
     // Gia han hop dong
     public void renewContract(Contract contract) {
-        // Kiem tra contractID da ton tai hay chua
+        if (contract == null || contract.getCustomer() == null) {
+            throw new IllegalArgumentException("Contract or Customer cannot be null");
+        }
+
         Contract existingContract = getContractByID(contract.getContractID());
         if (existingContract != null) {
-            // Neu contractID da ton tai, thuc hien gia han hop dong
-            String sql = "UPDATE Contracts SET ContractInfo = ?, EndDate = ?, Coverage = ?, Premium = ? WHERE ContractID = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, contract.getContractInfo());
-                preparedStatement.setDate(2, new java.sql.Date(contract.getEndDate().getTime()));
-                preparedStatement.setString(3, contract.getCoverage());
-                preparedStatement.setDouble(4, contract.getPremium());
-                preparedStatement.setInt(5, contract.getContractID());
-                preparedStatement.executeUpdate();
+            String updateContractSQL = "UPDATE Contracts SET StartDate = ?, EndDate = ? WHERE ContractID = ?";
+            String updateContractDetailsSQL = "UPDATE ContractDetails SET Value = ?, Detail = ? WHERE ContractID = ?";
+            String insertPaymentMethodsSQL = "INSERT INTO PaymentMethods (CustomerID, MethodType, Details) VALUES (?, 'cash', 'Not Paid')";
+            String insertPaymentHistorySQL = "INSERT INTO PaymentHistory (CustomerID, Amount, PaymentDate, PaymentMethodID, ContractID) VALUES (?, ?, NULL, ?, ?)";
+
+            try (PreparedStatement updateContractStmt = connection.prepareStatement(updateContractSQL);
+                 PreparedStatement updateContractDetailsStmt = connection.prepareStatement(updateContractDetailsSQL);
+                 PreparedStatement insertPaymentMethodsStmt = connection.prepareStatement(insertPaymentMethodsSQL, PreparedStatement.RETURN_GENERATED_KEYS);
+                 PreparedStatement insertPaymentHistoryStmt = connection.prepareStatement(insertPaymentHistorySQL)) {
+
+                // Cập nhật bảng Contracts
+                updateContractStmt.setDate(1, new java.sql.Date(contract.getStartDate().getTime()));
+                updateContractStmt.setDate(2, new java.sql.Date(contract.getEndDate().getTime()));
+                updateContractStmt.setInt(3, contract.getContractID());
+                updateContractStmt.executeUpdate();
+
+                // Cập nhật bảng ContractDetails
+                updateContractDetailsStmt.setDouble(1, contract.getValue());
+                String detail = "This contract has been renewed as of " + new java.sql.Date(new Date().getTime());
+                updateContractDetailsStmt.setString(2, detail);
+                updateContractDetailsStmt.setInt(3, contract.getContractID());
+                updateContractDetailsStmt.executeUpdate();
+
+                // Thêm vào bảng PaymentMethods
+                insertPaymentMethodsStmt.setInt(1, contract.getCustomer().getCustomerID());
+                insertPaymentMethodsStmt.executeUpdate();
+                ResultSet rs = insertPaymentMethodsStmt.getGeneratedKeys();
+                int paymentMethodID = 0;
+                if (rs.next()) {
+                    paymentMethodID = rs.getInt(1);
+                }
+
+                // Thêm vào bảng PaymentHistory
+                insertPaymentHistoryStmt.setInt(1, contract.getCustomer().getCustomerID());
+                insertPaymentHistoryStmt.setDouble(2, contract.getValue());
+                insertPaymentHistoryStmt.setInt(3, paymentMethodID);
+                insertPaymentHistoryStmt.setInt(4, contract.getContractID());
+                insertPaymentHistoryStmt.executeUpdate();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            // Neu contractID khong ton tai, in ra thong bao
             System.out.println("ContractID not found");
         }
     }

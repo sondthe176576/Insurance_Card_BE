@@ -9,22 +9,22 @@ import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.model.Notifications;
 import org.example.insurance_card_be.model.Users;
+import org.example.insurance_card_be.service.ListAllContractService;
 import org.example.insurance_card_be.service.NotificationService;
-import org.example.insurance_card_be.service.WaitingContractService;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "WaitingContractController", urlPatterns = "/listWaitingContract")
-public class WaitingContractController extends HttpServlet {
-    private WaitingContractService waitingContractService;
+@WebServlet(name = "ListAllContractController", urlPatterns = "/listAllContractForCustomer")
+public class ListAllContractController extends HttpServlet {
+    private ListAllContractService listAllContractService;
     private NotificationService notificationService;
 
     @Override
     public void init() throws ServletException {
-        this.waitingContractService = new WaitingContractService();
+        this.listAllContractService = new ListAllContractService();
         this.notificationService = new NotificationService();
     }
 
@@ -48,19 +48,20 @@ public class WaitingContractController extends HttpServlet {
             if (req.getParameter("page") != null) {
                 page = Integer.parseInt(req.getParameter("page"));
             }
-            String status = "Pending";
+            String status = req.getParameter("status");
             String customerName = req.getParameter("customerName");
             String startDate = req.getParameter("startDate");
             String insuranceType = req.getParameter("insuranceType");
 
-            List<Contract> waitingContracts = waitingContractService.getWaitingContracts(status, customerName, startDate, insuranceType, page, limit);
-            int totalContracts = waitingContractService.getTotalContractsByStatus(status, customerName, startDate, insuranceType);
+            List<Contract> allContracts = listAllContractService.getAllContracts(status, customerName, startDate, insuranceType, page, limit);
+            int totalContracts = listAllContractService.getTotalContracts(status, customerName, startDate, insuranceType);
             int totalPages = (int) Math.ceil((double) totalContracts / limit);
 
-            req.setAttribute("waitingContracts", waitingContracts);
+            req.setAttribute("allContracts", allContracts);
             req.setAttribute("totalContracts", totalContracts);
             req.setAttribute("totalPages", totalPages);
             req.setAttribute("currentPage", page);
+            req.setAttribute("status", status);
             req.setAttribute("customerName", customerName);
             req.setAttribute("startDate", startDate);
             req.setAttribute("insuranceType", insuranceType);
@@ -76,13 +77,13 @@ public class WaitingContractController extends HttpServlet {
                 session.removeAttribute("successMessage");
             }
 
-            req.getRequestDispatcher("/views/contract/waitingContracts.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/contract/listAllContractForCustomer.jsp").forward(req, resp);
         } catch (Exception e) {
-            Logger logger = Logger.getLogger(WaitingContractController.class.getName());
-            logger.log(Level.SEVERE, "Failed to load waiting contracts!", e);
-            req.setAttribute("message", "Failed to load waiting contracts: " + e.getMessage());
+            Logger logger = Logger.getLogger(ListAllContractController.class.getName());
+            logger.log(Level.SEVERE, "Failed to load all contracts!", e);
+            req.setAttribute("message", "Failed to load all contracts: " + e.getMessage());
             req.setAttribute("status", false);
-            req.getRequestDispatcher("/views/contract/waitingContracts.jsp").forward(req, resp);
+            req.getRequestDispatcher("/views/contract/listAllContractForCustomer.jsp").forward(req, resp);
         }
     }
 }

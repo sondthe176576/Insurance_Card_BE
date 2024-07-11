@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.service.ResolveWaitingContractsService;
 import org.example.insurance_card_be.service.ViewContractService;
@@ -26,27 +27,23 @@ public class ResolveWaitingContractController extends HttpServlet {
         int contractID = Integer.parseInt(contractIDStr);
         Contract contract = resolveWaitingContractsService.getContractDetailByID(contractID);
 
-        Date currentDate = new Date();
-        long diff = contract.getEndDate().getTime() - currentDate.getTime();
-        long diffDays = diff / (24 * 60 * 60 * 1000);
-        req.setAttribute("diffDays", diffDays);
-
         req.setAttribute("contract", contract);
         req.getRequestDispatcher("/views/contract/resolveWaitingContracts.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         String action = req.getParameter("action");
         String contractIDStr = req.getParameter("contractID");
         int contractID = Integer.parseInt(contractIDStr);
 
         if ("accept".equals(action)) {
-            resolveWaitingContractsService.updateContractStatus(contractID, "Accepted");
+            resolveWaitingContractsService.updateContractStatus(contractID, "Accepted", session);
         } else if ("reject".equals(action)) {
-            resolveWaitingContractsService.updateContractStatus(contractID, "Rejected");
+            resolveWaitingContractsService.updateContractStatus(contractID, "Rejected", session);
         }
 
-        resp.sendRedirect(req.getContextPath() + "/listContracts");
+        resp.sendRedirect(req.getContextPath() + "/listWaitingContract");
     }
 }

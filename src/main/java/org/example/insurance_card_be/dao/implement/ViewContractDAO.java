@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class ViewContractDAO {
     // Ket noi den database
@@ -100,5 +101,29 @@ public class ViewContractDAO {
             }
         }
         return contract;
+    }
+
+    public boolean updatePaymentDetails(int contractID, String details, Date paymentDate) throws SQLException {
+        String updatePaymentMethodQuery = "UPDATE PaymentMethods SET Details = ? WHERE PaymentMethodID = (SELECT PaymentMethodID FROM PaymentHistory WHERE ContractID = ?)";
+        String updatePaymentHistoryQuery = "UPDATE PaymentHistory SET PaymentDate = ? WHERE ContractID = ?";
+
+        try (PreparedStatement psPaymentMethod = connection.prepareStatement(updatePaymentMethodQuery);
+             PreparedStatement psPaymentHistory = connection.prepareStatement(updatePaymentHistoryQuery)) {
+
+            // Update PaymentMethods
+            psPaymentMethod.setString(1, details);
+            psPaymentMethod.setInt(2, contractID);
+            psPaymentMethod.executeUpdate();
+
+            // Update PaymentHistory
+            psPaymentHistory.setDate(1, new java.sql.Date(paymentDate.getTime()));
+            psPaymentHistory.setInt(2, contractID);
+            psPaymentHistory.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

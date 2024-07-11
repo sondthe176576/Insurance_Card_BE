@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Contract</title>
+    <title>View Contract for Customer</title>
     <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -22,14 +22,12 @@
     <div class="container mx-auto px-4 py-2 flex justify-center">
         <ul class="flex space-x-6">
             <li>
-                <a href="${pageContext.request.contextPath}/homepageforcustomer"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                <a href="${pageContext.request.contextPath}/homepageforcustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
                     <i class="fas fa-home mr-2"></i> Home
                 </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                <a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
                     <i class="fas fa-file-contract mr-2"></i> Buy Insurance
                 </a>
             </li>
@@ -39,14 +37,12 @@
                 </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/contractForCustomer"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                <a href="${pageContext.request.contextPath}/contractForCustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
                     <i class="fas fa-file-alt mr-2"></i> Contract
                 </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                <a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
                     <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
                 </a>
             </li>
@@ -333,10 +329,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
-                <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}"
-                   class="btn btn-primary me-2"><i class="fas fa-edit"></i> Update Contract</a>
-                <a href="${pageContext.request.contextPath}/listAllContractForCustomer" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Back to List</a>
+                <a href="${pageContext.request.contextPath}/homepageforcustomer" class="btn btn-primary me-2"><i class="fas fa-home"></i> Return to Home</a>
             </div>
         </div>
         <div class="card-footer text-center bg-primary text-white">
@@ -350,39 +343,5 @@
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
-
-<!-- Update Contract Modal -->
-<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="paymentModalLabel">Payment Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure the customer has paid the amount of <span id="contractValue"></span> for this contract on <span id="paymentDate"></span>?
-            </div>
-            <div class="modal-footer">
-                <form id="paymentForm" action="${pageContext.request.contextPath}/viewContract" method="post">
-                    <input type="hidden" name="contractID" value="${contract.contractID}">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-primary">Yes</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Add script to show modal -->
-<script>
-    document.querySelector('.btn-primary.me-2').addEventListener('click', function (e) {
-        e.preventDefault();
-        var now = new Date();
-        var formattedDate = now.toLocaleDateString('en-GB');
-        document.getElementById('contractValue').innerText = '${contract.value}';
-        document.getElementById('paymentDate').innerText = formattedDate;
-        new bootstrap.Modal(document.getElementById('paymentModal')).show();
-    });
-</script>
 </body>
 </html>

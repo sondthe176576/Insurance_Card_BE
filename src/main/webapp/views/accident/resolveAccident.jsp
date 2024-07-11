@@ -7,14 +7,14 @@
     <meta charset="UTF-8">
     <title>Resolve Accident</title>
     <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/resolveAccident.css">
-    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.4.2/cdn.min.js" defer></script>
     <script>
         function showModal(status) {
             document.getElementById('modal-status').value = status;
-            new bootstrap.Modal(document.getElementById('confirmationModal')).show();
+            document.getElementById('confirmationModal').classList.remove('hidden');
         }
 
         function confirmAction() {
@@ -24,7 +24,7 @@
         }
     </script>
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
 <!-- Include header -->
 <jsp:include page="/views/includes/header.jsp"/>
 <!-- End of header -->
@@ -33,118 +33,184 @@
 <!-- End of navbar -->
 <!-- Notification Message -->
 <c:if test="${not empty message}">
-    <div class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show" role="alert">
-        <i class="bi ${status ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill'}"></i>
+    <div class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show fixed top-0 right-0 m-4 p-4 rounded-lg shadow-lg" role="alert">
+        <i class="fas ${status ? 'fa-check-circle text-green-500' : 'fa-exclamation-triangle text-red-500'}"></i>
         <c:out value="${message}"/>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </c:if>
 <!-- End of notification message -->
 <!-- Form -->
-<div class="container mt-5">
-    <div class="card card-custom">
-        <div class="card-header card-header-custom">
-            <h2><i class="bi bi-info-circle-fill"></i> Accident Detail</h2>
+<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-3xl font-bold text-gray-800"><i class="fas fa-info-circle"></i> Accident Detail</h2>
         </div>
-        <div class="card-body">
-            <h3 class="card-section-title text-primary">Accident Information</h3>
-            <div class="details">
-                <label class="details-label">Accident ID:</label>
-                <p class="details-value"><c:out value="${accident.accidentID}"/></p>
-                <label class="details-label">Customer Name:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.fullName}"/></p>
-                <label class="details-label">Accident Type:</label>
-                <p class="details-value"><c:out value="${accident.accidentType}"/></p>
-                <label class="details-label">Accident Date:</label>
-                <p class="details-value"><fmt:formatDate value="${accident.accidentDate}" pattern="dd-MM-yyyy"/></p>
-                <label class="details-label">Description:</label>
-                <p class="details-value"><c:out value="${accident.description}"/></p>
-                <label class="details-label">Status:</label>
-                <p class="details-value"><c:out value="${accident.status}"/></p>
+        <div class="card-body mt-6">
+            <h3 class="text-2xl text-blue-600 mb-4">Accident Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Accident ID:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.accidentID}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Customer Name:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.fullName}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Accident Type:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.accidentType}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Accident Date:</label>
+                    <p class="bg-gray-100 p-2 rounded"><fmt:formatDate value="${accident.accidentDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="flex flex-col md:col-span-2">
+                    <label class="font-bold text-gray-700">Description:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.description}"/></p>
+                </div>
+                <div class="flex flex-col md:col-span-2">
+                    <label class="font-bold text-gray-700">Status:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.status}"/></p>
+                </div>
             </div>
-            <h3 class="card-section-title text-primary">Customer Information</h3>
-            <div class="details">
-                <label class="details-label">Customer ID:</label>
-                <p class="details-value"><c:out value="${accident.customerID}"/></p>
-                <label class="details-label">Full Name:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.fullName}"/></p>
-                <label class="details-label">First Name:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.firstName}"/></p>
-                <label class="details-label">Last Name:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.lastName}"/></p>
-                <label class="details-label">Phone Number:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.mobile}"/></p>
-                <label class="details-label">Email:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.email}"/></p>
-                <label class="details-label">Province:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.province}"/></p>
-                <label class="details-label">District:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.district}"/></p>
-                <label class="details-label">Country:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.country}"/></p>
-                <label class="details-label">Gender:</label>
-                <p class="details-value"><c:out value="${accident.customer.user.gender}"/></p>
-                <label class="details-label">Birth Date:</label>
-                <p class="details-value"><fmt:formatDate value="${accident.customer.user.birthDate}"
-                                                         pattern="dd-MM-yyyy"/></p>
-                <label class="details-label">Personal Info:</label>
-                <p class="details-value"><c:out value="${accident.customer.personalInfo}"/></p>
+            <h3 class="text-2xl text-blue-600 mt-6 mb-4">Customer Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Customer ID:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customerID}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Full Name:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.fullName}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">First Name:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.firstName}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Last Name:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.lastName}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Phone Number:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.mobile}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Email:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.email}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Province:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.province}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">District:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.district}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Country:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.country}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Gender:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.user.gender}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Birth Date:</label>
+                    <p class="bg-gray-100 p-2 rounded"><fmt:formatDate value="${accident.customer.user.birthDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="flex flex-col md:col-span-2">
+                    <label class="font-bold text-gray-700">Personal Info:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.customer.personalInfo}"/></p>
+                </div>
             </div>
-            <h3 class="card-section-title text-primary">Contract Information</h3>
-            <div class="details">
-                <label class="details-label">Contract ID:</label>
-                <p class="details-value"><c:out value="${accident.contractID}"/></p>
-                <label class="details-label">Contract Info:</label>
-                <p class="details-value"><c:out value="${accident.contract.contractInfo}"/></p>
-                <label class="details-label">Contract Status:</label>
-                <p class="details-value"><c:out value="${accident.contract.status}"/></p>
-                <label class="details-label">Start Date:</label>
-                <p class="details-value"><fmt:formatDate value="${accident.contract.startDate}"
-                                                         pattern="dd-MM-yyyy"/></p>
-                <label class="details-label">End Date:</label>
-                <p class="details-value"><fmt:formatDate value="${accident.contract.endDate}" pattern="dd-MM-yyyy"/></p>
-                <label class="details-label">Insurance Type:</label>
-                <p class="details-value"><c:out value="${accident.contract.insuranceType}"/></p>
-                <label class="details-label">Coverage:</label>
-                <p class="details-value"><c:out value="${accident.contract.coverage}"/></p>
-                <label class="details-label">Premium:</label>
-                <p class="details-value"><fmt:formatNumber value="${accident.contract.premium}" type="currency"
-                                                           currencySymbol="$"/></p>
-                <label class="details-label">Detail:</label>
-                <p class="details-value"><c:out value="${accident.contract.detail}"/></p>
-                <label class="details-label">Value:</label>
-                <p class="details-value"><fmt:formatNumber value="${accident.contract.value}" type="currency"
-                                                           currencySymbol="$"/></p>
+            <h3 class="text-2xl text-blue-600 mt-6 mb-4">Contract Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Contract ID:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contractID}"/></p>
+                </div>
+                <div class="flex flex-col md:col-span-2">
+                    <label class="font-bold text-gray-700">Contract Info:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.contractInfo}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Contract Status:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.status}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Start Date:</label>
+                    <p class="bg-gray-100 p-2 rounded"><fmt:formatDate value="${accident.contract.startDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">End Date:</label>
+                    <p class="bg-gray-100 p-2 rounded"><fmt:formatDate value="${accident.contract.endDate}" pattern="dd-MM-yyyy"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Insurance Type:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.insuranceType}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Coverage:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.coverage}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Premium:</label>
+                    <p class="bg-gray-100 p-2 rounded"><fmt:formatNumber value="${accident.contract.premium}" type="currency" currencySymbol="$"/></p>
+                </div>
+                <div class="flex flex-col md:col-span-2">
+                    <label class="font-bold text-gray-700">Detail:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.detail}"/></p>
+                </div>
+                <div class="flex flex-col md:col-span-2">
+                    <label class="font-bold text-gray-700">Value:</label>
+                    <p class="bg-gray-100 p-2 rounded"><fmt:formatNumber value="${accident.contract.value}" type="currency" currencySymbol="$"/></p>
+                </div>
             </div>
-            <h3 class="card-section-title text-primary">Motorcycle Information</h3>
-            <div class="details">
-                <label class="details-label">License Plate:</label>
-                <p class="details-value"><c:out value="${accident.contract.motorcycle.licensePlate}"/></p>
-                <label class="details-label">Brand:</label>
-                <p class="details-value"><c:out value="${accident.contract.motorcycle.brand}"/></p>
-                <label class="details-label">Model:</label>
-                <p class="details-value"><c:out value="${accident.contract.motorcycle.model}"/></p>
-                <label class="details-label">Frame Number:</label>
-                <p class="details-value"><c:out value="${accident.contract.motorcycle.frameNumber}"/></p>
-                <label class="details-label">Engine Number:</label>
-                <p class="details-value"><c:out value="${accident.contract.motorcycle.engineNumber}"/></p>
-                <label class="details-label">Year Of Manufacture:</label>
-                <p class="details-value"><c:out value="${accident.contract.motorcycle.yearOfManufacture}"/></p>
-                <label class="details-label">Color:</label>
-                <p class="details-value"><c:out value="${accident.contract.motorcycle.color}"/></p>
+            <h3 class="text-2xl text-blue-600 mt-6 mb-4">Motorcycle Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">License Plate:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.motorcycle.licensePlate}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Brand:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.motorcycle.brand}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Model:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.motorcycle.model}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Frame Number:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.motorcycle.frameNumber}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Engine Number:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.motorcycle.engineNumber}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Year Of Manufacture:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.motorcycle.yearOfManufacture}"/></p>
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Color:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${accident.contract.motorcycle.color}"/></p>
+                </div>
             </div>
             <form id="resolveForm" method="post" action="${pageContext.request.contextPath}/resolveAccident">
                 <input type="hidden" id="status" name="status" value=""/>
                 <input type="hidden" name="accidentID" value="${accident.accidentID}"/>
-                <div class="btn-container">
-                    <button type="button" onclick="showModal('Approved')" class="btn-custom btn-approve">
-                        <i class="bi bi-check-circle-fill"></i> Approve
+                <div class="flex justify-center mt-8">
+                    <button type="button" onclick="showModal('Approved')" class="btn-custom bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
+                        <i class="fas fa-check-circle"></i> Approve
                     </button>
-                    <button type="button" onclick="showModal('Rejected')" class="btn-custom btn-reject">
-                        <i class="bi bi-x-circle-fill"></i> Reject
+                    <button type="button" onclick="showModal('Rejected')" class="btn-custom bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4">
+                        <i class="fas fa-times-circle"></i> Reject
                     </button>
-                    <a href="${pageContext.request.contextPath}/listAccident" class="btn-custom btn-secondary">
-                        <i class="bi bi-arrow-left-circle-fill"></i> Back to List
+                    <a href="${pageContext.request.contextPath}/listAccident" class="btn-custom bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4">
+                        <i class="fas fa-arrow-left"></i> Back to List
                     </a>
                 </div>
             </form>
@@ -153,22 +219,18 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade modal-custom" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content modal-content-custom">
-            <div class="modal-header">
-                <h5 class="modal-title modal-title-custom" id="confirmationModalLabel">Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to proceed?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn modal-btn btn-yes" onclick="confirmAction()">Yes</button>
-                <button type="button" class="btn modal-btn btn-no" data-bs-dismiss="modal">No</button>
-                <input type="hidden" id="modal-status" value=""/>
-            </div>
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" id="confirmationModal">
+    <div class="bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
+        <div class="text-center mb-4">
+            <h5 class="text-2xl font-bold text-gray-800" id="confirmationModalLabel">Confirmation</h5>
+        </div>
+        <div class="text-center mb-4">
+            Are you sure you want to proceed?
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn modal-btn bg-green-500 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105" onclick="confirmAction()">Yes</button>
+            <button type="button" class="btn modal-btn bg-red-500 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4" onclick="document.getElementById('confirmationModal').classList.add('hidden')">No</button>
+            <input type="hidden" id="modal-status" value=""/>
         </div>
     </div>
 </div>

@@ -23,7 +23,7 @@ public class WaitingContractDAO {
                 "FROM Contracts con " +
                 "JOIN Customers cus ON con.CustomerID = cus.CustomerID " +
                 "JOIN Users u ON cus.UserID = u.UserID " +
-                "WHERE con.Status = ? " +
+                (status != null && !status.isEmpty() ? "WHERE con.Status = ? " : "WHERE 1=1 ") +
                 (customerName != null && !customerName.isEmpty() ? "AND u.Full_name LIKE ? " : "") +
                 (startDate != null && !startDate.isEmpty() ? "AND con.StartDate = ? " : "") +
                 (insuranceType != null && !insuranceType.isEmpty() ? "AND con.InsuranceType = ? " : "") +
@@ -32,7 +32,9 @@ public class WaitingContractDAO {
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             int paramIndex = 1;
-            ps.setString(paramIndex++, status);
+            if (status != null && !status.isEmpty()) {
+                ps.setString(paramIndex++, status);
+            }
 
             if (customerName != null && !customerName.isEmpty()) {
                 ps.setString(paramIndex++, "%" + customerName + "%");
@@ -74,14 +76,16 @@ public class WaitingContractDAO {
                 "FROM Contracts con " +
                 "JOIN Customers cus ON con.CustomerID = cus.CustomerID " +
                 "JOIN Users u ON cus.UserID = u.UserID " +
-                "WHERE con.Status = ? " +
+                (status != null && !status.isEmpty() ? "WHERE con.Status = ? " : "WHERE 1=1 ") +
                 (customerName != null && !customerName.isEmpty() ? "AND u.Full_name LIKE ? " : "") +
                 (startDate != null && !startDate.isEmpty() ? "AND con.StartDate = ? " : "") +
                 (insuranceType != null && !insuranceType.isEmpty() ? "AND con.InsuranceType = ? " : "");
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             int paramIndex = 1;
-            ps.setString(paramIndex++, status);
+            if (status != null && !status.isEmpty()) {
+                ps.setString(paramIndex++, status);
+            }
 
             if (customerName != null && !customerName.isEmpty()) {
                 ps.setString(paramIndex++, "%" + customerName + "%");

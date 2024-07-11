@@ -1,5 +1,6 @@
 package org.example.insurance_card_be.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.dao.implement.ResolveWaitingContractsDAO;
 import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.util.EmailUtil;
@@ -22,7 +23,7 @@ public class ResolveWaitingContractsService {
         }
     }
 
-    public void updateContractStatus(int contractID, String status) {
+    public void updateContractStatus(int contractID, String status, HttpSession session) {
         try {
             Contract contract = resolveWaitingContractsDAO.getContractDetailById(contractID);
             if (contract != null) {
@@ -44,6 +45,9 @@ public class ResolveWaitingContractsService {
 
                 // Gửi email thông báo
                 EmailUtil.sendEmail(email, subject, content);
+
+                // Lưu thông báo thành công vào session
+                session.setAttribute("successMessage", "Contract ID " + contractID + " has been " + status.toLowerCase() + " successfully.");
             }
         } catch (SQLException e) {
             e.printStackTrace();

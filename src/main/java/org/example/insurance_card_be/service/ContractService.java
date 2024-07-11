@@ -2,6 +2,7 @@ package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.ContractDAO;
 import org.example.insurance_card_be.dao.implement.NotificationDAO;
+import org.example.insurance_card_be.dao.implement.PaymentDAO;
 import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.model.Notifications;
 import org.example.insurance_card_be.model.PaymentHistory;
@@ -16,7 +17,7 @@ import java.util.List;
 public class ContractService {
     private ContractDAO contractDAO = new ContractDAO();
     private NotificationDAO notificationDAO = new NotificationDAO();
-    private PaymentService paymentService = new PaymentService();
+    private PaymentDAO paymentDAO = new PaymentDAO();
 
     // Phương thức tạo hợp đồng
     public void createContract(Contract contract, String paymentMethod) throws SQLException {
@@ -28,23 +29,22 @@ public class ContractService {
         paymentMethodObj.setMethodType(paymentMethod);
 
         if ("cash".equals(paymentMethod)) {
-            // Nếu phương thức thanh toán là tiền mặt, đặt chi tiết là "Chưa thanh toán"
+            // Nếu phương thức thanh toán là tiền mặt, đặt chi tiết là "Not Paid"
             paymentMethodObj.setDetails("Not Paid");
         } else if ("bankTransfer".equals(paymentMethod)) {
             paymentMethodObj.setDetails("Paid via bank transfer");
         }
 
-        int paymentMethodID = paymentService.savePaymentMethod(paymentMethodObj);
+        int paymentMethodID = paymentDAO.savePaymentMethod(paymentMethodObj);
 
         // Cập nhật PaymentHistory
         PaymentHistory paymentHistory = new PaymentHistory();
         paymentHistory.setCustomerID(contract.getCustomerID());
-        paymentHistory.setAmount(new BigDecimal(contract.getPremium()));
-        paymentHistory.setPaymentDate(new Date());
+        paymentHistory.setAmount(new BigDecimal(contract.getValue())); // Sử dụng giá trị value
         paymentHistory.setPaymentMethodID(paymentMethodID);
         paymentHistory.setContractID(contract.getContractID());
 
-        paymentService.savePaymentHistory(paymentHistory);
+        paymentDAO.savePaymentHistory(paymentHistory);
 
         // Gửi thông báo đến tất cả nhân viên
         sendNotificationToAllStaff(contract);

@@ -23,7 +23,7 @@ public class CancelContractDAO {
             stmt.setString(2, punishment.getPunishmentType());
             stmt.setDate(3, new java.sql.Date(punishment.getPunishmentDate().getTime()));
             stmt.setString(4, punishment.getDescription());
-            stmt.setString(5, "Paid"); // Status is always 'Paid'
+            stmt.setString(5, "Pending");
             stmt.executeUpdate();
         }
     }

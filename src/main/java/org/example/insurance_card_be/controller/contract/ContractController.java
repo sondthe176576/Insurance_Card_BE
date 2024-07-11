@@ -70,7 +70,7 @@ public class ContractController extends HttpServlet {
         String endDateStr = req.getParameter("endDate");
         String insuranceType = req.getParameter("insuranceType");
         String contractInfo = req.getParameter("contractInfo");
-        String valueStr = req.getParameter("value");
+        String valueStr = req.getParameter("value"); // Lấy giá trị value từ biểu mẫu
         String detail = req.getParameter("detail");
         String coverage = req.getParameter("coverage");
         String premiumStr = req.getParameter("premium");
@@ -86,12 +86,13 @@ public class ContractController extends HttpServlet {
             contract.setStartDate(new Date());
             contract.setEndDate(sdf.parse(endDateStr));
             contract.setDetail(detail);
-            contract.setValue(Double.parseDouble(valueStr));
+            contract.setValue(Double.parseDouble(valueStr)); // Chuyển đổi giá trị value thành số thực
             contract.setCoverage(coverage);
             contract.setInsuranceType(insuranceType);
             contract.setPremium(Double.parseDouble(premiumStr));
 
             // Tạo contract và cập nhật PaymentMethod, PaymentHistory
+            ContractService contractService = new ContractService();
             contractService.createContract(contract, paymentMethod);
 
             // Kiểm tra phương thức thanh toán

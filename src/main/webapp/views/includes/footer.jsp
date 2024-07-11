@@ -1,137 +1,30 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/19/2024
-  Time: 9:48 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
+    <title>Peace Insurance</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-dRy7IvjjGvD+XlI3F1RU5MRy9FvD0AXPjFN1RdFup7mytEaxNTWJbxHWB6OjzkpAh9D5Nn9muP1dIgM6bR/wwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
+            margin: 0;
         }
 
-        .tp-footer-two {
-            background-color: #282c34;
-            color: #ffffff;
-            padding: 40px 0;
+        .icon {
+            display: inline-block;
+            margin-right: 8px;
         }
 
-        .tp-footer-two h2 {
-            font-size: 18px;
-            margin-bottom: 20px;
+        .footer-link:hover {
             color: #f39c12;
+            transition: color 0.3s ease;
         }
 
-        .tp-footer-two a {
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .tp-footer-two a:hover {
-            color: #f39c12;
-        }
-
-        .tp-footer-two .ft-logo img {
-            max-width: 150px;
-            margin-bottom: 20px;
-        }
-
-        .tp-footer-two .ft-links ul, .tp-footer-two .ft-aboutus ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .tp-footer-two .ft-links ul li, .tp-footer-two .ft-aboutus ul li {
-            margin-bottom: 10px;
-        }
-
-        .tp-footer-two .ft-links ul li i, .tp-footer-two .ft-aboutus ul li i {
-            margin-right: 10px;
-        }
-
-        .tp-footer-two .cta {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: right;
-            line-height: 1.6;
-        }
-
-        .tp-footer-two .ft-aboutus p {
-            margin-bottom: 10px;
-        }
-
-        .tp-footer-two .ft-aboutus .addrs {
-            font-weight: bold;
-        }
-
-        .tp-footer-two .ft-links-social ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .tp-footer-two .ft-links-social ul li {
-            margin-bottom: 10px;
-        }
-
-        .tp-footer-two .ft-links-social ul li a {
-            display: flex;
-            align-items: center;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .tp-footer-two .ft-links-social ul li a i {
-            font-size: 20px;
-            margin-right: 10px;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.facebook {
-            background-color: #3b5998;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.facebook:hover {
-            background-color: #2d4373;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.twitter {
-            background-color: #1da1f2;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.twitter:hover {
-            background-color: #0d95e8;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.google {
-            background-color: #db4437;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.google:hover {
-            background-color: #c23321;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.linkedin {
-            background-color: #0077b5;
-        }
-
-        .tp-footer-two .ft-links-social ul li a.linkedin:hover {
-            background-color: #005983;
-        }
-
-        .tp-footer-two .btn.tp-btn-orange {
+        .cta-button {
             background-color: #f39c12;
             color: #ffffff;
             padding: 10px 20px;
@@ -142,104 +35,135 @@
             transition: background-color 0.3s ease;
         }
 
-        .tp-footer-two .btn.tp-btn-orange:hover {
+        .cta-button:hover {
             background-color: #e67e22;
         }
 
-        .tp-footer-two .copyright-text, .tp-footer-two .tiny-ft-links ul {
-            margin-top: 20px;
-        }
-
-        .tp-footer-two .tiny-ft-links ul {
-            list-style: none;
-            padding: 0;
-            text-align: right;
-        }
-
-        .tp-footer-two .tiny-ft-links ul li {
-            display: inline;
-            margin-left: 15px;
-        }
-
-        .tp-footer-two .tiny-ft-links ul li a {
+        .social-icon {
             color: #ffffff;
-            text-decoration: none;
+            margin-right: 10px;
         }
 
-        .tp-footer-two .tiny-ft-links ul li a:hover {
+        .social-icon:hover {
             color: #f39c12;
+        }
+
+        .social-box {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-box.facebook {
+            background-color: #3b5998;
+        }
+
+        .social-box.facebook:hover {
+            background-color: #2d4373;
+        }
+
+        .social-box.twitter {
+            background-color: #1da1f2;
+        }
+
+        .social-box.twitter:hover {
+            background-color: #0d95e8;
+        }
+
+        .social-box.google {
+            background-color: #db4437;
+        }
+
+        .social-box.google:hover {
+            background-color: #c23321;
+        }
+
+        .social-box.linkedin {
+            background-color: #0077b5;
+        }
+
+        .social-box.linkedin:hover {
+            background-color: #005983;
+        }
+
+        .social-box.youtube {
+            background-color: #FF0000;
+        }
+
+        .social-box.youtube:hover {
+            background-color: #cc0000;
         }
     </style>
 </head>
-<body>
-<div id="tp-footer-two" class="tp-footer-two"><!-- footer -->
-    <div class="container">
-        <div class="row ft-section">
-            <div class="col-md-4 ft-logo">
-                <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
+<body class="bg-gray-100">
+<div id="footer" class="bg-gray-900 text-white py-10">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center animate__animated animate__fadeIn">
+            <div class="flex items-center">
+                <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo" class="h-12 mr-4">
+                <span class="text-2xl font-bold">Peace Insurance</span>
             </div>
-            <div class="col-md-8 cta">+1 800-PEACE | (1-800-123-4567)</div>
+            <div class="text-right">
+                <span class="text-xl font-bold">+1 800-PEACE | (1-800-123-4567)</span>
+            </div>
         </div>
-        <div class="row ft-section">
-            <!-- ft aboutus -->
-            <div class="col-md-2 ft-links"><!-- footer links -->
-                <h2>Insurance</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-8">
+            <div>
+                <h2 class="text-lg font-bold text-yellow-500 mb-4">Insurance</h2>
                 <ul>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Auto Insurance</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Home Insurance</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Business Insurance</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Life Insurance</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Travel Insurance</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Other Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-car icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Auto Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-home icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Home Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-briefcase icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Business Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-heartbeat icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Life Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-plane icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Travel Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-umbrella icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Other Insurance</a></li>
                 </ul>
             </div>
-            <!-- /.footer links -->
-
-            <div class="col-md-2 ft-links"><!-- footer links -->
-                <h2>Quick Links</h2>
+            <div>
+                <h2 class="text-lg font-bold text-yellow-500 mb-4">Quick Links</h2>
                 <ul>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">About us</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Support</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Careers</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Download App</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Investors</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Find An Agent</a></li>
-                    <li><i class="bi bi-chevron-double-right"></i><a href="#">Claims</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-info-circle icon"></i><a href="#" class="hover:text-yellow-500 footer-link">About us</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-headset icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Support</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-briefcase icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Careers</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-download icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Download App</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-chart-line icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Investors</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-user-friends icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Find An Agent</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-file-alt icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Claims</a></li>
                 </ul>
             </div>
-            <!-- /.footer links -->
-            <div class="col-md-5 ft-aboutus"> <!-- ft aboutus -->
-                <h2>About Peace Insurance</h2>
-                <p>Established in 1990, we are your insurance expert committed to providing peace of mind to all kinds of borrowers by helping them obtain and manage insurance.</p>
-                <p><span class="addrs">Address :</span> 56702, Meeraz Centroz, Near Roxa, Garden, Bangalore</p>
-                <p><span class="addrs">Phone :</span> +1 800-PEACE | (1-800-123-4567)</p>
-                <a href="#" class="btn tp-btn tp-btn-orange">Get A Quote</a>
+            <div>
+                <h2 class="text-lg font-bold text-yellow-500 mb-4">About Peace Insurance</h2>
+                <p class="mb-4">Established in 1990, we are your insurance expert committed to providing peace of mind to all kinds of borrowers by helping them obtain and manage insurance.</p>
+                <p class="font-bold">Address: 56702, Meeraz Centroz, Near Roxa, Garden, Bangalore</p>
+                <p class="font-bold">Phone: +1 800-PEACE | (1-800-123-4567)</p>
+                <a href="#" class="inline-block bg-yellow-500 text-white py-2 px-4 rounded mt-4 hover:bg-yellow-600 animate__animated animate__pulse cta-button">Get A Quote</a>
             </div>
-            <div class="col-md-3 ft-links-social"><!-- footer social links -->
-                <h2>Social</h2>
-                <ul class="social-menu">
-                    <li><a href="#" class="social-box facebook"><i class="bi bi-facebook"></i>Facebook</a></li>
-                    <li><a href="#" class="social-box twitter"><i class="bi bi-twitter"></i>Twitter</a></li>
-                    <li><a href="#" class="social-box google"><i class="bi bi-google"></i>Google</a></li>
-                    <li><a href="#" class="social-box linkedin"><i class="bi bi-linkedin"></i>LinkedIn</a></li>
+            <div>
+                <h2 class="text-lg font-bold text-yellow-500 mb-4">Social</h2>
+                <ul>
+                    <li class="social-box facebook"><i class="fab fa-facebook-f social-icon"></i><a href="#" class="flex items-center text-white footer-link">Facebook</a></li>
+                    <li class="social-box twitter"><i class="fab fa-twitter social-icon"></i><a href="#" class="flex items-center text-white footer-link">Twitter</a></li>
+                    <li class="social-box google"><i class="fab fa-google social-icon"></i><a href="#" class="flex items-center text-white footer-link">Google</a></li>
+                    <li class="social-box linkedin"><i class="fab fa-linkedin-in social-icon"></i><a href="#" class="flex items-center text-white footer-link">LinkedIn</a></li>
+                    <li class="social-box youtube"><i class="fab fa-youtube social-icon"></i><a href="#" class="flex items-center text-white footer-link">YouTube</a></li>
                 </ul>
             </div>
-            <!-- /.footer social links -->
         </div>
-        <div class="row">
-            <div class="col-md-6 copyright-text"><!-- copyright text -->
-                Copyright 2024. Peace Insurance Company. All Rights Reserved.
+        <div class="flex justify-between items-center mt-8 animate__animated animate__fadeIn">
+            <div>
+                <span>Copyright 2024. Peace Insurance Company. All Rights Reserved.</span>
             </div>
-            <!-- /.copyright text -->
-            <div class="col-md-6 tiny-ft-links"><!-- tiny ft links -->
-                <ul>
-                    <li><a href="#">Site Map</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Security</a></li>
+            <div>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="hover:text-yellow-500 footer-link">Site Map</a></li>
+                    <li><a href="#" class="hover:text-yellow-500 footer-link">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-yellow-500 footer-link">Terms of Use</a></li>
+                    <li><a href="#" class="hover:text-yellow-500 footer-link">Security</a></li>
                 </ul>
             </div>
-            <!-- /.tiny ft links -->
         </div>
     </div>
 </div>

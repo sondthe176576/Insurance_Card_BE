@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Waiting Contracts</title>
+    <title>List of All Contracts</title>
     <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -26,13 +26,23 @@
 <div class="main-content flex-grow p-6 bg-gray-100 ml-64">
     <div class="container mx-auto animate__animated animate__fadeIn">
         <div class="card p-6 shadow-md rounded-lg bg-white">
-            <h2 class="text-center text-3xl font-semibold text-gray-700 mb-6">List of Waiting Contracts</h2>
+            <h2 class="text-center text-3xl font-semibold text-gray-700 mb-6">List of All Contracts</h2>
             <c:if test="${not empty successMessage}">
                 <div class="alert alert-success mb-6">
                     <c:out value="${successMessage}" />
                 </div>
             </c:if>
-            <form class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" method="get" action="${pageContext.request.contextPath}/listWaitingContract">
+            <form class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" method="get" action="${pageContext.request.contextPath}/listAllContractForCustomer">
+                <div>
+                    <label for="status" class="block text-gray-600 mb-2">Filter by Status:</label>
+                    <select id="status" name="status" class="form-select mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="">All</option>
+                        <option value="Accepted" ${param.status == 'Accepted' ? 'selected' : ''}>Accepted</option>
+                        <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Canceled" ${param.status == 'Canceled' ? 'selected' : ''}>Canceled</option>
+                        <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+                    </select>
+                </div>
                 <div>
                     <label for="customerName" class="block text-gray-600 mb-2">Search by Customer Name:</label>
                     <input type="text" id="customerName" name="customerName" value="${param.customerName}"
@@ -72,7 +82,7 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                <c:forEach var="contract" items="${waitingContracts}" varStatus="status">
+                <c:forEach var="contract" items="${allContracts}" varStatus="status">
                     <tr class="hover:bg-gray-100 transition duration-150 ease-in-out">
                         <td class="px-6 py-4 text-center"><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
                         <td class="px-6 py-4"><c:out value="${contract.customerName}"/></td>
@@ -85,7 +95,7 @@
                         <td class="px-6 py-4"><c:out value="${contract.coverage}"/></td>
                         <td class="px-6 py-4 text-right"><fmt:formatNumber value="${contract.premium}" type="currency" currencySymbol="$"/></td>
                         <td class="px-6 py-4 text-center">
-                            <a href="${pageContext.request.contextPath}/resolveWaitingContract?contractID=${contract.contractID}"
+                            <a href="${pageContext.request.contextPath}/viewContract?contractID=${contract.contractID}"
                                class="text-indigo-600 hover:text-indigo-900"><i class="fas fa-eye"></i> View</a>
                         </td>
                     </tr>
@@ -98,7 +108,7 @@
                     <c:if test="${currentPage > 1}">
                         <li>
                             <a class="page-link p-2 border border-gray-300 rounded-l-lg shadow-sm hover:bg-gray-200"
-                               href="${pageContext.request.contextPath}/listWaitingContract?page=${currentPage - 1}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">
+                               href="${pageContext.request.contextPath}/listAllContractForCustomer?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">
                                 <i class="fas fa-chevron-left"></i>
                             </a>
                         </li>
@@ -107,14 +117,14 @@
                         <c:if test="${i >= currentPage - 1 && i <= currentPage + 1}">
                             <li class="${i == currentPage ? 'active' : ''} mx-1">
                                 <a class="page-link p-2 border border-gray-300 shadow-sm ${i == currentPage ? 'bg-gray-800 text-white' : ''} hover:bg-gray-200"
-                                   href="${pageContext.request.contextPath}/listWaitingContract?page=${i}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">${i}</a>
+                                   href="${pageContext.request.contextPath}/listAllContractForCustomer?page=${i}&status=${param.status}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">${i}</a>
                             </li>
                         </c:if>
                     </c:forEach>
                     <c:if test="${currentPage < totalPages}">
                         <li>
                             <a class="page-link p-2 border border-gray-300 rounded-r-lg shadow-sm hover:bg-gray-200"
-                               href="${pageContext.request.contextPath}/listWaitingContract?page=${currentPage + 1}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">
+                               href="${pageContext.request.contextPath}/listAllContractForCustomer?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}&startDate=${param.startDate}&insuranceType=${param.insuranceType}">
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         </li>
