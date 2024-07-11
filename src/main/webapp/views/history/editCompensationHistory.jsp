@@ -12,21 +12,42 @@
 </head>
 <body>
 <div class="container">
-    <h1>Edit Compensation History</h1>
+    <h1 class="mt-4 mb-4">Edit Compensation History</h1>
     <div class="form-container">
-        <form action="compensationHistory" method="post">
+        <form action="${pageContext.request.contextPath}/compensationHistory" method="post">
             <input type="hidden" name="action" value="update">
-            <input type="hidden" name="compensationID" value="${compensationHistoryCus.compensationID}">
+            <input type="hidden" name="requestID" value="${compensationRequest.requestID}">
             <div class="mb-3">
                 <label for="customerID" class="form-label">Customer ID:</label>
-                <input type="text" id="customerID" name="customerID" class="form-control" value="${compensationHistoryCus.customerID}" required>
+                <input type="text" id="customerID" name="customerID" class="form-control" value="${compensationRequest.customerID}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="contractID" class="form-label">Contract ID:</label>
+                <input type="text" id="contractID" name="contractID" class="form-control" value="${compensationRequest.contractID}" readonly>
             </div>
             <div class="mb-3">
                 <label for="amount" class="form-label">Amount:</label>
-                <input type="text" id="amount" name="amount" class="form-control" value="${compensationHistoryCus.amount}" required>
+                <input type="text" id="amount" name="amount" class="form-control" value="${compensationRequest.amount}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <textarea id="description" name="description" class="form-control" required>${compensationRequest.description}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="requestDate" class="form-label">Request Date:</label>
+                <input type="date" id="requestDate" name="requestDate" class="form-control" value="${compensationRequest.requestDate}" required>
+            </div>
+            <div class="mb-3">
+                <label for="status" class="form-label">Status:</label>
+                <select id="status" name="status" class="form-control" readonly disabled>
+                    <option value="Pending" ${compensationRequest.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                    <option value="Approved" ${compensationRequest.status == 'Approved' ? 'selected' : ''}>Approved</option>
+                    <option value="Rejected" ${compensationRequest.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+                </select>
+                <input type="hidden" name="status" value="${compensationRequest.status}">
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
-            <a href="compensationHistory" class="btn btn-secondary">Cancel</a>
+            <a href="${pageContext.request.contextPath}/compensationHistory" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </div>

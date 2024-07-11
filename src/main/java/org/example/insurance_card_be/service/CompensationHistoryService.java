@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.CompensationHistoryDAO;
-import org.example.insurance_card_be.model.CompensationHistory;
+import org.example.insurance_card_be.model.CompensationRequests;
 
 import java.util.List;
 
@@ -13,27 +13,54 @@ public class CompensationHistoryService {
         this.compensationHistoryDAO = new CompensationHistoryDAO();
     }
 
-    public List<CompensationHistory> getAllCompensationHistories() {
-        return compensationHistoryDAO.getAllCompensationHistories();
+    public List<CompensationRequests> getAllCompensationRequests() {
+        try {
+            return compensationHistoryDAO.getAllCompensationRequests();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public CompensationHistory getCompensationHistoryById(int compensationID) {
-        return compensationHistoryDAO.getCompensationHistoryById(compensationID);
+    public CompensationRequests getCompensationRequestById(int requestID) {
+        try {
+            return compensationHistoryDAO.getCompensationRequestById(requestID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public List<CompensationHistory> getCompensationHistoriesByCustomerID(int customerID) {
-        return compensationHistoryDAO.getCompensationHistoriesByCustomerID(customerID);
+    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID) {
+        try {
+            return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public void addCompensationHistory(CompensationHistory compensationHistory) {
-        compensationHistoryDAO.addCompensationHistory(compensationHistory);
+    public void addCompensationRequest(CompensationRequests compensationRequest) {
+        try {
+            compensationHistoryDAO.addCompensationRequest(compensationRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updateCompensationHistory(CompensationHistory compensationHistory) {
-        compensationHistoryDAO.updateCompensationHistory(compensationHistory);
+    public void updateCompensationRequest(CompensationRequests compensationRequest) {
+        try {
+            compensationHistoryDAO.updateCompensationRequest(compensationRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void deleteCompensationHistory(int compensationID) {
-        compensationHistoryDAO.deleteCompensationHistory(compensationID);
+    public void deleteCompensationRequest(int requestID) {
+        try {
+            compensationHistoryDAO.deleteCompensationRequest(requestID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

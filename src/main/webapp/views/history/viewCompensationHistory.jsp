@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/views/includes/header.jsp"/>
 
 <!DOCTYPE html>
@@ -14,13 +15,15 @@
 <div class="container mt-5">
     <h1>View Compensation History</h1>
     <div class="card mt-4">
-
         <div class="card-body">
-        <p>ID: ${compensationHistoryCus.compensationID}</p>
-        <p>Customer ID: ${compensationHistoryCus.customerID}</p>
-        <p>Amount: ${compensationHistoryCus.amount}</p>
-        <p>Date: ${compensationHistoryCus.date}</p>
-        <a href="compensationHistory" class="btn btn-primary">Back to List</a>
+            <p><strong>Customer ID:</strong> ${compensationRequest.customerID}</p>
+            <p><strong>Customer Name:</strong> ${compensationRequest.customerName}</p>
+            <p><strong>Contract ID:</strong> ${compensationRequest.contractID}</p>
+            <p><strong>Amount:</strong> ${compensationRequest.amount}</p>
+            <p><strong>Description:</strong> ${compensationRequest.description}</p>
+            <p><strong>Date:</strong> ${compensationRequest.requestDate}</p>
+            <p><strong>Status:</strong> ${compensationRequest.status}</p>
+            <a href="${pageContext.request.contextPath}/compensationHistory" class="btn btn-primary">Back to List</a>
         </div>
     </div>
 </div>
