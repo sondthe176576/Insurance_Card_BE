@@ -15,14 +15,14 @@
         function calculateEndDate() {
             const startDate = new Date(document.getElementById('newStartDate').value);
             const renewalYears = parseInt(document.getElementById('renewalYears').value);
-            const value = parseFloat(document.getElementById('value').dataset.originalValue);
+            const premium = parseFloat(document.getElementById('premium').value);
 
-            if (!isNaN(renewalYears) && renewalYears > 0 && !isNaN(value) && !isNaN(startDate.getTime())) {
+            if (!isNaN(renewalYears) && renewalYears > 0 && !isNaN(premium) && !isNaN(startDate.getTime())) {
                 const endDate = new Date(startDate);
                 endDate.setFullYear(startDate.getFullYear() + renewalYears);
                 document.getElementById('newEndDate').value = endDate.toISOString().split('T')[0];
 
-                const newValue = value * renewalYears;
+                const newValue = premium * renewalYears;
                 document.getElementById('value').value = newValue.toFixed(2);
             }
         }
@@ -33,6 +33,22 @@
 
         function confirmRenewal() {
             document.getElementById('renewContractForm').submit();
+        }
+
+        function showExpirationNotificationModal() {
+            document.getElementById('expirationNotificationModal').classList.remove('hidden');
+        }
+
+        function confirmExpirationNotification() {
+            document.getElementById('expirationNotificationForm').submit();
+        }
+
+        function showExpirationConfirmationModal() {
+            document.getElementById('expirationConfirmationModal').classList.remove('hidden');
+        }
+
+        function confirmExpiration() {
+            document.getElementById('confirmExpirationForm').submit();
         }
 
         document.addEventListener('DOMContentLoaded', (event) => {
@@ -66,6 +82,7 @@
         </div>
         <div class="card-body mt-6">
             <form id="renewContractForm" action="${pageContext.request.contextPath}/renewContract" method="post">
+                <input type="hidden" name="action" value="renew">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h4 class="text-xl text-blue-600 mb-4"><i class="fas fa-user"></i> Customer Information</h4>
@@ -210,8 +227,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-center mt-6">
-                    <button type="button" class="btn-custom bg-blue-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-blue-700 mr-4" onclick="showConfirmationModal()"><i class="fas fa-file-signature"></i> Renew Contract</button>
+                <div class="flex justify-center mt-6 space-x-4">
+                    <button type="button" class="btn-custom bg-blue-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-blue-700" onclick="showConfirmationModal()"><i class="fas fa-file-signature"></i> Renew Contract</button>
+                    <button type="button" class="btn-custom bg-yellow-500 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-yellow-600" onclick="showExpirationNotificationModal()"><i class="fas fa-exclamation-circle"></i> Contract Expiration Notification</button>
+                    <button type="button" class="btn-custom bg-red-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-red-700" onclick="showExpirationConfirmationModal()"><i class="fas fa-times-circle"></i> Confirm Contract Expiration</button>
                     <a href="${pageContext.request.contextPath}/listRenewContract" class="btn-custom bg-gray-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-gray-700"><i class="fas fa-arrow-left"></i> Back to List</a>
                 </div>
             </form>
@@ -227,7 +246,7 @@
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
 
-<!-- Modal -->
+<!-- Renewal Confirmation Modal -->
 <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" id="confirmationModal">
     <div class="bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
         <div class="text-center mb-4">
@@ -242,6 +261,48 @@
         </div>
     </div>
 </div>
-<!-- End of modal -->
+<!-- End of renewal confirmation modal -->
+
+<!-- Expiration Notification Modal -->
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" id="expirationNotificationModal">
+    <div class="bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
+        <div class="text-center mb-4">
+            <h5 class="text-2xl font-bold text-gray-800">Expiration Notification</h5>
+        </div>
+        <div class="text-center mb-4">
+            Do you want to send a notification to the customer that this contract has expired?
+        </div>
+        <div class="text-center">
+            <form id="expirationNotificationForm" action="${pageContext.request.contextPath}/renewContract" method="post">
+                <input type="hidden" name="action" value="expire">
+                <input type="hidden" name="contractID" value="${contract.contractID}">
+                <button type="button" class="btn modal-btn bg-green-500 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105" onclick="confirmExpirationNotification()">Yes</button>
+                <button type="button" class="btn modal-btn bg-red-500 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4" onclick="document.getElementById('expirationNotificationModal').classList.add('hidden')">No</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End of expiration notification modal -->
+
+<!-- Expiration Confirmation Modal -->
+<div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" id="expirationConfirmationModal">
+    <div class="bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
+        <div class="text-center mb-4">
+            <h5 class="text-2xl font-bold text-gray-800" id="expirationConfirmationModalLabel">Expiration Confirmation</h5>
+        </div>
+        <div class="text-center mb-4">
+            This contract will be marked as expired. Do you want to proceed?
+        </div>
+        <div class="text-center">
+            <form id="confirmExpirationForm" action="${pageContext.request.contextPath}/renewContract" method="post">
+                <input type="hidden" name="action" value="confirmExpiration">
+                <input type="hidden" name="contractID" value="${contract.contractID}">
+                <button type="button" class="btn modal-btn bg-green-500 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105" onclick="confirmExpiration()">Yes</button>
+                <button type="button" class="btn modal-btn bg-red-500 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4" onclick="document.getElementById('expirationConfirmationModal').classList.add('hidden')">No</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End of expiration confirmation modal -->
 </body>
 </html>

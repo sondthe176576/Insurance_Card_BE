@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.service.CancelContractService;
 
 import java.io.IOException;
@@ -25,9 +26,10 @@ public class CancelContractController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int contractID = Integer.parseInt(request.getParameter("contractId"));
         double contractValue = Double.parseDouble(request.getParameter("contractValue"));
+        String contractStatus = request.getParameter("contractStatus");
 
         try {
-            cancelContractService.cancelContract(contractID, contractValue);
+            cancelContractService.cancelContract(contractID, contractValue, contractStatus);
             response.sendRedirect(request.getContextPath() + "/views/contract/cancelContract.jsp"); // Chuyển hướng đến trang cancelContract.jsp
         } catch (SQLException e) {
             throw new ServletException(e);

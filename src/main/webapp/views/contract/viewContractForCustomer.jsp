@@ -12,6 +12,21 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/viewContract.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" defer></script>
+    <style>
+        .important {
+            font-weight: bold;
+            color: #d9534f; /* Màu đỏ để làm nổi bật */
+        }
+        h4 {
+            font-size: 1.75rem;
+        }
+        .accordion-header button {
+            margin-bottom: 0.5rem;
+        }
+        .accordion-body {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
 <!-- Include header -->
@@ -63,7 +78,7 @@
 <div class="container mt-5">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white text-center">
-            <h2><i class="fas fa-file-alt"></i> View Contract</h2>
+            <h2 class="display-5"><i class="fas fa-file-alt"></i> View Contract Details</h2>
         </div>
         <div class="card-body p-4">
             <div class="row">
@@ -71,8 +86,13 @@
                     <h4 class="text-primary"><i class="fas fa-user"></i> Customer Information</h4>
                     <div class="mb-3">
                         <label for="customerID" class="form-label">Customer ID:</label>
-                        <input type="number" id="customerID" name="customerID" class="form-control"
+                        <input type="number" id="customerID" name="customerID" class="form-control important"
                                value="${contract.customer.customerID}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" id="username" name="username" class="form-control important"
+                               value="${contract.customer.user.username}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="fullName" class="form-label">Full Name:</label>
@@ -125,17 +145,22 @@
                         <input type="text" id="gender" name="gender" class="form-control"
                                value="${contract.customer.user.gender}" readonly>
                     </div>
+                    <div class="mb-3">
+                        <label for="personalInfo" class="form-label">Personal Info:</label>
+                        <input type="text" id="personalInfo" name="personalInfo" class="form-control"
+                               value="${contract.customer.personalInfo}" readonly>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <h4 class="text-primary"><i class="fas fa-motorcycle"></i> Vehicle Information</h4>
                     <div class="mb-3">
                         <label for="motorcycleID" class="form-label">Motorcycle ID:</label>
-                        <input type="number" id="motorcycleID" name="motorcycleID" class="form-control"
+                        <input type="number" id="motorcycleID" name="motorcycleID" class="form-control important"
                                value="${contract.motorcycle.motorcycleID}" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="licensePlate" class="form-label">License Plate:</label>
-                        <input type="text" id="licensePlate" name="licensePlate" class="form-control"
+                        <input type="text" id="licensePlate" name="licensePlate" class="form-control important"
                                value="${contract.motorcycle.licensePlate}" readonly>
                     </div>
                     <div class="mb-3">
@@ -175,7 +200,7 @@
                     <h4 class="text-primary"><i class="fas fa-file-contract"></i> Contract Information</h4>
                     <div class="mb-3">
                         <label for="contractID" class="form-label">Contract ID:</label>
-                        <input type="number" id="contractID" name="contractID" class="form-control"
+                        <input type="number" id="contractID" name="contractID" class="form-control important"
                                value="${contract.contractID}" readonly>
                     </div>
                     <div class="mb-3">
@@ -190,12 +215,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="startDate" class="form-label">Start Date:</label>
-                        <input type="text" id="startDate" name="startDate" class="form-control"
+                        <input type="text" id="startDate" name="startDate" class="form-control important"
                                value="<fmt:formatDate value='${contract.startDate}' pattern='dd-MM-yyyy'/>" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="endDate" class="form-label">End Date:</label>
-                        <input type="text" id="endDate" name="endDate" class="form-control"
+                        <input type="text" id="endDate" name="endDate" class="form-control important"
                                value="<fmt:formatDate value='${contract.endDate}' pattern='dd-MM-yyyy'/>" readonly>
                     </div>
                     <div class="mb-3">
@@ -206,7 +231,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="value" class="form-label">Value:</label>
-                        <input type="text" id="value" name="value" class="form-control"
+                        <input type="text" id="value" name="value" class="form-control important"
                                value="<fmt:formatNumber value='${contract.value}' type='currency' currencySymbol='$'/>"
                                readonly>
                     </div>
@@ -227,7 +252,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="premium" class="form-label">Premium:</label>
-                        <input type="text" id="premium" name="premium" class="form-control"
+                        <input type="text" id="premium" name="premium" class="form-control important"
                                value="<fmt:formatNumber value='${contract.premium}' type='currency' currencySymbol='$'/>"
                                readonly>
                     </div>
@@ -248,23 +273,29 @@
                     </div>
                     <div class="mb-3">
                         <label for="paymentAmount" class="form-label">Payment Amount:</label>
-                        <input type="text" id="paymentAmount" name="paymentAmount" class="form-control"
+                        <input type="text" id="paymentAmount" name="paymentAmount" class="form-control important"
                                value="<fmt:formatNumber value='${contract.paymentHistory.amount}' type='currency' currencySymbol='$'/>"
                                readonly>
                     </div>
                     <div class="mb-3">
                         <label for="paymentDate" class="form-label">Payment Date:</label>
-                        <input type="text" id="paymentDate" name="paymentDate" class="form-control"
-                               value="<fmt:formatDate value='${contract.paymentHistory.paymentDate}' pattern='dd-MM-yyyy'/>"
-                               readonly>
+                        <c:choose>
+                            <c:when test="${contract.paymentHistory.paymentDate == null}">
+                                <input type="text" id="paymentDate" name="paymentDate" class="form-control text-danger" value="Not Paid" readonly>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="text" id="paymentDate" name="paymentDate" class="form-control"
+                                       value="<fmt:formatDate value='${contract.paymentHistory.paymentDate}' pattern='dd-MM-yyyy'/>" readonly>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-5">
                 <div class="col-md-12">
                     <h4 class="text-primary"><i class="fas fa-box"></i> Insurance Packages</h4>
                     <div class="accordion" id="insurancePackages">
-                        <div class="accordion-item">
+                        <div class="accordion-item mb-3">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -284,7 +315,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item">
+                        <div class="accordion-item mb-3">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -304,7 +335,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item">
+                        <div class="accordion-item mb-3">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseThree" aria-expanded="false"

@@ -1,10 +1,12 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
+import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.model.Punishments;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -38,18 +40,14 @@ public class CancelContractDAO {
         }
     }
 
-    // Method to update contract cancellation date
-    public void updateCancellationDate(int contractID, Date cancellationDate) throws SQLException {
-        String query = "UPDATE Contracts SET CancellationDate = ? WHERE ContractID = ?";
+    // Method to update contract info and cancellation date
+    public void updateContractInfo(int contractID, String contractInfo, Date cancellationDate) throws SQLException {
+        String query = "UPDATE Contracts SET ContractInfo = ?, CancellationDate = ? WHERE ContractID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setDate(1, new java.sql.Date(cancellationDate.getTime()));
-            stmt.setInt(2, contractID);
+            stmt.setString(1, contractInfo);
+            stmt.setDate(2, new java.sql.Date(cancellationDate.getTime()));
+            stmt.setInt(3, contractID);
             stmt.executeUpdate();
         }
     }
-
-    // Remove close method or leave it empty
-    // public void close() {
-    //    // Do nothing
-    // }
 }

@@ -18,6 +18,29 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.4.2/cdn.min.js" defer></script>
+    <style>
+        .btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom i {
+            margin-right: 0.5rem;
+        }
+
+        .modal-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn i {
+            margin-right: 0.5rem;
+        }
+    </style>
     <script>
         function showModal(status) {
             document.getElementById('modal-status').value = status;
@@ -38,11 +61,20 @@
 <!-- Include navbar -->
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
+<!-- Notification Message -->
+<c:if test="${not empty message}">
+    <div class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show fixed top-0 right-0 m-4 p-4 rounded-lg shadow-lg" role="alert">
+        <i class="fas ${status ? 'fa-check-circle text-green-500' : 'fa-exclamation-triangle text-red-500'}"></i>
+        <c:out value="${message}"/>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</c:if>
+<!-- End of notification message -->
 <!-- Form -->
-<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg animate__animated animate__fadeIn">
     <div class="card">
-        <div class="card-header text-center">
-            <h2 class="text-3xl font-bold text-gray-800"><i class="fas fa-info-circle"></i> Punishment Detail</h2>
+        <div class="card-header text-center bg-blue-600 text-white p-4 rounded-t-lg">
+            <h2 class="text-3xl font-bold"><i class="fas fa-info-circle"></i> Punishment Detail</h2>
         </div>
         <div class="card-body mt-6">
             <h3 class="text-2xl text-blue-600 mb-4">Punishment Information</h3>
@@ -63,11 +95,11 @@
                     <label class="font-bold text-gray-700">Punishment Date:</label>
                     <p class="bg-gray-100 p-2 rounded"><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></p>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col md:col-span-2">
                     <label class="font-bold text-gray-700">Description:</label>
                     <p class="bg-gray-100 p-2 rounded"><c:out value="${punishment.description}"/></p>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col md:col-span-2">
                     <label class="font-bold text-gray-700">Status:</label>
                     <p class="bg-gray-100 p-2 rounded"><c:out value="${punishment.status}"/></p>
                 </div>
@@ -200,14 +232,14 @@
             <form id="resolveForm" method="post" action="${pageContext.request.contextPath}/resolvePunishment">
                 <input type="hidden" id="status" name="status" value=""/>
                 <input type="hidden" name="punishmentID" value="${punishment.punishmentID}"/>
-                <div class="text-center">
+                <div class="flex justify-center mt-8 space-x-4">
                     <button type="button" onclick="showModal('Approved')" class="btn-custom bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
                         <i class="fas fa-check-circle"></i> Approve
                     </button>
-                    <button type="button" onclick="showModal('Rejected')" class="btn-custom bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4">
+                    <button type="button" onclick="showModal('Rejected')" class="btn-custom bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
                         <i class="fas fa-times-circle"></i> Reject
                     </button>
-                    <a href="${pageContext.request.contextPath}/listPunishment" class="btn-custom bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4">
+                    <a href="${pageContext.request.contextPath}/listPunishment" class="btn-custom bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
                         <i class="fas fa-arrow-left"></i> Back to List
                     </a>
                 </div>

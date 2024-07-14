@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/19/2024
-  Time: 10:10 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,6 +12,67 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.4.2/cdn.min.js" defer></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/resolveCompensation.css">
+    <style>
+        .btn-custom {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .modal-btn {
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .form-input {
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            text-align: center;
+        }
+        .card-footer {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+            text-align: center;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 600px;
+            width: 100%;
+        }
+        .notification-success {
+            background-color: #38a169;
+            color: white;
+        }
+        .notification-error {
+            background-color: #e53e3e;
+            color: white;
+        }
+        .notification .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: white;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
     <script>
         function showModal(status) {
             document.getElementById('modal-status').value = status;
@@ -39,11 +93,22 @@
 <!-- Include navbar -->
 <jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
+
+<!-- Notification Message -->
+<c:if test="${not empty message}">
+    <div class="alert ${status ? 'notification notification-success' : 'notification notification-error'} alert-dismissible fade show fixed top-0 right-0 m-4 p-4 rounded-lg shadow-lg animate__animated animate__fadeInDown" role="alert">
+        <i class="fas ${status ? 'fa-check-circle text-green-500' : 'fa-exclamation-triangle text-red-500'}"></i>
+        <c:out value="${message}"/>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+    </div>
+</c:if>
+<!-- End of notification message -->
+
 <!-- Form -->
-<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg animate__animated animate__fadeIn">
     <div class="card">
-        <div class="card-header text-center">
-            <h2 class="text-3xl font-bold text-gray-800"><i class="fas fa-info-circle"></i> Compensation Detail</h2>
+        <div class="card-header">
+            <h2 class="text-3xl font-bold"><i class="fas fa-info-circle"></i> Compensation Detail</h2>
         </div>
         <div class="card-body mt-6">
             <h3 class="text-2xl text-blue-600 mb-4">Request Information</h3>
@@ -201,7 +266,7 @@
             <form id="resolveForm" method="post" action="${pageContext.request.contextPath}/resolveCompensation">
                 <input type="hidden" id="status" name="status" value=""/>
                 <input type="hidden" name="requestID" value="${compensation.requestID}"/>
-                <div class="text-center">
+                <div class="text-center mt-8">
                     <button type="button" onclick="showModal('Approved')" class="btn-custom bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
                         <i class="fas fa-check-circle"></i> Approve
                     </button>
@@ -234,6 +299,7 @@
     </div>
 </div>
 <!-- End of modal -->
+
 <!-- End of form -->
 <!-- Include footer -->
 <jsp:include page="/views/includes/footer.jsp"/>

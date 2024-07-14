@@ -244,7 +244,7 @@
                     <input type="hidden" name="contractID" value="${contract.contractID}">
                     <button type="button" onclick="showModal('accept')" class="btn-custom bg-green-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-green-700 mr-4"><i class="fas fa-check"></i> Accept</button>
                     <button type="button" onclick="showModal('reject')" class="btn-custom bg-red-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-red-700 mr-4"><i class="fas fa-times"></i> Reject</button>
-                    <a href="${pageContext.request.contextPath}/listWaitingContracts" class="btn-custom bg-gray-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-gray-700"><i class="fas fa-arrow-left"></i> Back to List</a>
+                    <a href="${pageContext.request.contextPath}/listWaitingContract" class="btn-custom bg-gray-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-gray-700"><i class="fas fa-arrow-left"></i> Back to List</a>
                 </div>
             </form>
         </div>
