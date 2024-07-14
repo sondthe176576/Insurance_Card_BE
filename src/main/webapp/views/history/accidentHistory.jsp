@@ -16,21 +16,81 @@
         .form-container {
             margin-top: 20px;
         }
+        .status-pending {
+            background-color: yellow;
+            color: black;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .status-rejected {
+            background-color: red;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .status-approved {
+            background-color: green;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1 class="mt-4 mb-4">Accident History</h1>
-    <div class="form-container">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
+    <a href="${pageContext.request.contextPath}/accidentHistory?action=addForm" class="btn btn-primary mb-4">Request Accident</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Customer ID</th>
+            <th>Customer Name</th>
+            <th>Accident ID</th>
+            <th>Contract ID</th>
+            <th>Accident Type</th>
+            <th>Accident Date</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${accidents}" var="accident">
             <tr>
-                <th>Accident ID</th>
-                <th>Customer ID</th>
-                <th>Description</th>
-                <th>Accident Date</th>
-                <th>Actions</th>
+                <td>${accident.customerID}</td>
+                <td>${accident.customerName}</td>
+                <td>${accident.accidentID}</td>
+                <td>${accident.contractID}</td>
+                <td>${accident.accidentType}</td>
+                <td>${accident.accidentDate}</td>
+                <td>${accident.description}</td>
+                <td class="<c:choose>
+                    <c:when test="${accident.status == 'Pending'}">status-pending</c:when>
+                    <c:when test="${accident.status == 'Rejected'}">status-rejected</c:when>
+                    <c:when test="${accident.status == 'Approved'}">status-approved</c:when>
+                </c:choose>">
+                        ${accident.status}
+                </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${accident.accidentID}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${accident.accidentID}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <form action="${pageContext.request.contextPath}/accidentHistory" method="post" style="display:inline;">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="accidentID" value="${accident.accidentID}">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
             </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
             </thead>
             <tbody>
             <c:forEach var="history" items="${accidentHistories}">
@@ -94,6 +154,7 @@
             <button type="submit" class="btn btn-success">Request</button>
         </form>
     </div>
+
 </div>
 
 <jsp:include page="/views/includes/footer.jsp"/>

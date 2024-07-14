@@ -73,6 +73,7 @@
         </ul>
     </div>
 </nav>
+
 <!-- Content -->
 <style>
     .content-section {

@@ -139,5 +139,17 @@ public class AccidentDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
+
+    public static void main(String[] args) throws SQLException {
+        AccidentDAO accidentDAO = new AccidentDAO(DBContext.getConnection());
+        List<Accident> accidents = accidentDAO.getAllAccidents(1, 10, null, null);
+        for (Accident accident : accidents) {
+            System.out.println(accident);
+        }
+    }
+
+
+
 }
