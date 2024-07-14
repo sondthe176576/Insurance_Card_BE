@@ -282,6 +282,7 @@
                         <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
                         <option value="Canceled" ${param.status == 'Canceled' ? 'selected' : ''}>Canceled</option>
                         <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+                        <option value="Expired" ${param.status == 'Expired' ? 'selected' : ''}>Expired</option>
                     </select>
                 </div>
                 <div>
