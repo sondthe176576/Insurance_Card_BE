@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.controller.history;
 
-import org.example.insurance_card_be.service.CompensationHistoryService;
 import org.example.insurance_card_be.model.CompensationRequests;
+import org.example.insurance_card_be.service.CompensationHistoryService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +17,7 @@ import java.util.List;
 @WebServlet("/compensationHistory")
 public class CompensationHistoryServlet extends HttpServlet {
     private CompensationHistoryService compensationHistoryService;
+    private static final int RECORDS_PER_PAGE = 10;
 
     @Override
     public void init() {
@@ -38,6 +39,9 @@ public class CompensationHistoryServlet extends HttpServlet {
                 case "addForm":
                     showAddForm(request, response);
                     break;
+                case "edit":
+                    showEditForm(request, response);
+                    break;
                 default:
                     listCompensationRequests(request, response);
                     break;
@@ -51,6 +55,13 @@ public class CompensationHistoryServlet extends HttpServlet {
         request.getRequestDispatcher("/views/history/addCompensationForm.jsp").forward(request, response);
     }
 
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        int requestID = Integer.parseInt(request.getParameter("id"));
+        CompensationRequests requestDetail = compensationHistoryService.getCompensationRequestById(requestID);
+        request.setAttribute("compensationRequest", requestDetail);
+        request.getRequestDispatcher("/views/history/editCompensationHistory.jsp").forward(request, response);
+    }
+
     private void viewCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int requestID = Integer.parseInt(request.getParameter("id"));
         CompensationRequests requestDetail = compensationHistoryService.getCompensationRequestById(requestID);
@@ -60,18 +71,22 @@ public class CompensationHistoryServlet extends HttpServlet {
 
     private void listCompensationRequests(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int customerID = (int) request.getSession().getAttribute("customerID");
-        int currentPage = 1;
-        int recordsPerPage = 10;
-        if (request.getParameter("page") != null) {
-            currentPage = Integer.parseInt(request.getParameter("page"));
-        }
-        int offset = (currentPage - 1) * recordsPerPage;
-        int totalRecords = compensationHistoryService.getTotalCompensationRequestsByCustomerID(customerID);
-        int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
 
-        List<CompensationRequests> requests = compensationHistoryService.getCompensationRequestsByCustomerID(customerID, offset, recordsPerPage);
+        // Get page number from request
+        String pageStr = request.getParameter("page");
+        int page = (pageStr == null || pageStr.isEmpty()) ? 1 : Integer.parseInt(pageStr);
+
+        // Calculate offset
+        int offset = (page - 1) * RECORDS_PER_PAGE;
+
+        // Fetch compensation requests
+        List<CompensationRequests> requests = compensationHistoryService.getCompensationRequestsByCustomerID(customerID, offset, RECORDS_PER_PAGE);
+        int totalRecords = compensationHistoryService.getTotalCompensationRequestsByCustomerID(customerID);
+        int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
+
+        // Set attributes
         request.setAttribute("compensationRequests", requests);
-        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
         request.getRequestDispatcher("/views/history/compensationHistory.jsp").forward(request, response);
     }

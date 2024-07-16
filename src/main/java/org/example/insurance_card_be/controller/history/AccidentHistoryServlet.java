@@ -38,6 +38,9 @@ public class AccidentHistoryServlet extends HttpServlet {
                 case "addForm":
                     showAddForm(request, response);
                     break;
+                case "edit":
+                    showEditForm(request, response);
+                    break;
                 default:
                     listAccidents(request, response);
                     break;
@@ -49,6 +52,13 @@ public class AccidentHistoryServlet extends HttpServlet {
 
     private void showAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/views/history/addAccidentForm.jsp").forward(request, response);
+    }
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        int accidentID = Integer.parseInt(request.getParameter("id"));
+        Accident accident = accidentHistoryDAO.getAccidentById(accidentID);
+        request.setAttribute("accident", accident);
+        request.getRequestDispatcher("/views/history/editAccidentHistory.jsp").forward(request, response);
     }
 
     private void viewAccident(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
