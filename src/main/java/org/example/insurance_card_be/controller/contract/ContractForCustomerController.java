@@ -31,13 +31,13 @@ public class ContractForCustomerController extends HttpServlet {
         Users user = (Users) session.getAttribute("user");
         int customerID = (int) session.getAttribute("customerID");
 
-        try {
-            List<Contract> contracts = contractDetailDAO.getContractsByCustomerID(customerID);
-            request.setAttribute("contracts", contracts);
-            request.getRequestDispatcher("/views/contract/contractForCustomer.jsp").forward(request, response);
-        } catch (SQLException e) {
-            LOGGER.severe("Failed to retrieve contract details: " + e.getMessage());
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve contract details");
-        }
+//        try {
+////            List<Contract> contracts = contractDetailDAO.getContractsByCustomerID(customerID);
+////            request.setAttribute("contracts", contracts);
+//            request.getRequestDispatcher("/views/contract/contractForCustomer.jsp").forward(request, response);
+////        } catch (SQLException e) {
+//            LOGGER.severe("Failed to retrieve contract details: " + e.getMessage());
+//            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve contract details");
+//        }
     }
 }

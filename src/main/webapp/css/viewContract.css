@@ -14,7 +14,8 @@ body {
 }
 
 .card {
-    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
 }
 
 .card-header {
@@ -22,29 +23,29 @@ body {
     color: #fff;
 }
 
-.card-header h2, .card-header h3 {
+.card-header h2 {
     margin: 0;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.card-body h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #2c3e50;
 }
 
 .form-label {
-    margin-bottom: 5px;
-    color: #2980b9;
     font-weight: bold;
+    color: #2980b9;
 }
 
-.form-control {
+.form-control, .form-select {
     padding: 10px;
-    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
     border-color: #2980b9;
     box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
     outline: none;
@@ -87,4 +88,31 @@ body {
     width: 90%;
     max-width: 500px;
     transition: opacity 0.3s, transform 0.3s;
+}
+
+.accordion-button {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e9ecef;
+}
+
+.accordion-body {
+    color: #333;
+}
+
+.card-footer p {
+    margin: 5px 0;
+}
+
+.card-footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.card-footer a:hover {
+    text-decoration: underline;
 }

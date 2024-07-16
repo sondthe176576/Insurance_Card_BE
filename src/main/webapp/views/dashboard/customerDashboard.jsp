@@ -1,24 +1,28 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/views/includes/header.jsp"/>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Dashboard</title>
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Font Awesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         /* Custom styles */
         .dashboard-container {
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
         }
         .sidebar {
             background-color: #f7f7f7;
             width: 250px;
             padding: 20px;
+            border-right: 1px solid #ddd;
         }
         .sidebar .nav-item {
             margin: 10px 0;
@@ -33,6 +37,7 @@
             border-radius: 5px;
             text-align: center;
             margin-bottom: 10px;
+            text-decoration: none;
         }
         .sidebar .nav-link:hover {
             background-color: #ff8000;
@@ -50,23 +55,16 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 1200px;
+            max-width: 800px;
             background-color: #fff;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .info-section {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             margin-bottom: 20px;
-        }
-        .info-section > div {
-            width: 48%;
-            padding: 20px;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            border-radius: 5px;
         }
         .info-section h2 {
             font-size: 24px;
@@ -85,7 +83,39 @@
     </style>
 </head>
 <body>
-
+<!-- Navbar -->
+<nav class="bg-blue-900 border-b-4 border-orange-600">
+    <div class="container mx-auto px-4 py-2 flex justify-center">
+        <ul class="flex space-x-6">
+            <li>
+                <a href="${pageContext.request.contextPath}/homepageforcustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-contract mr-2"></i> Buy Insurance
+                </a>
+            </li>
+            <li>
+                <a href="#" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> About
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/contractForCustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-alt mr-2"></i> Contract
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- End of navbar -->
 <div class="dashboard-container">
     <!-- Sidebar -->
     <div class="sidebar">
@@ -104,7 +134,7 @@
             <form id="customerInfoForm" method="post">
                 <div class="info-section">
                     <!-- Personal Information -->
-                    <div class="AccidentHistory-info">
+                    <div class="personal-info">
                         <h2>Personal Information</h2>
                         <div class="form-group">
                             <label for="email">Email:</label>
@@ -119,18 +149,16 @@
                             <input type="date" class="form-control" id="dob" name="dob" value="">
                         </div>
                         <div class="form-group">
-                            <div>
-                                <input type="radio" id="genderMale" name="gender" value="Male">
-                                <label for="genderMale">Male</label>
-                                <input type="radio" id="genderFemale" name="gender" value="Female" checked>
-                                <label for="genderFemale">Female</label>
-                            </div>
+                            <%--@declare id="gender"--%><label for="gender">Gender:</label><br>
+                            <input type="radio" id="genderMale" name="gender" value="Male">
+                            <label for="genderMale">Male</label>
+                            <input type="radio" id="genderFemale" name="gender" value="Female" checked>
+                            <label for="genderFemale">Female</label>
                         </div>
                         <div class="form-group">
                             <label for="address">Address:</label>
                             <input type="text" class="form-control" id="address" name="address" value="">
                         </div>
-
                     </div>
 
                     <!-- Insurance Card Information -->
@@ -204,19 +232,17 @@
                         <p>Date of Birth: ${response.data.dob}</p>
                         <p>Gender: ${response.data.gender}</p>
                         <p>Address: ${response.data.address}</p>
-                        <p>Job: ${response.data.job}</p>
-                        <p>Company: ${response.data.company}</p>
                         <p>Card Number: ${response.data.cardNumber}</p>
                         <p>Issue Date: ${response.data.issueDate}</p>
                         <p>Expiry Date: ${response.data.expiryDate}</p>
                     `);
                 } else {
-                    alert('Failed to save AccidentHistory information.');
+                    alert('Failed to save information.');
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Error saving AccidentHistory information:', status, error);
-                alert('Error saving AccidentHistory information: ' + error);
+                console.error('Error saving information:', status, error);
+                alert('Error saving information: ' + error);
             }
         });
     });

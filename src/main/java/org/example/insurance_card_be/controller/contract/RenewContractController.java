@@ -9,24 +9,23 @@ import org.example.insurance_card_be.model.Contract;
 import org.example.insurance_card_be.service.RenewContractService;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @WebServlet(name = "RenewContractController", urlPatterns = "/renewContract")
 public class RenewContractController extends HttpServlet {
-    // Khai bao renewContractService
     private RenewContractService renewContractService;
 
-    // Khoi tao renewContractService
     public RenewContractController() {
         this.renewContractService = new RenewContractService();
     }
 
-    // Ham doGet de hien thi trang renew contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         try {
-            Contract contract = renewContractService.geContractDetailByID(contractID);
+            Contract contract = renewContractService.getContractDetailByID(contractID);
             req.setAttribute("contract", contract);
             req.getRequestDispatcher("/views/contract/renewContract.jsp").forward(req, resp);
         } catch (Exception e) {
@@ -34,35 +33,93 @@ public class RenewContractController extends HttpServlet {
         }
     }
 
-    // Ham doPost de renew contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lay thong tin contract tu request
+        String action = req.getParameter("action");
+        if ("renew".equals(action)) {
+            renewContract(req, resp);
+        } else if ("expire".equals(action)) {
+            sendExpirationNotification(req, resp);
+        } else if ("confirmExpiration".equals(action)) {
+            confirmContractExpiration(req, resp);
+        }
+    }
+
+    private void renewContract(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int contractID = Integer.parseInt(req.getParameter("contractID"));
-        String newContractInfo = req.getParameter("newContractInfo");
-        String renewalDateStr = req.getParameter("renewalDate");
-        double newPremium = Double.parseDouble(req.getParameter("newPremium"));
-        String newCoverage = req.getParameter("newCoverage");
+        int renewalYears = Integer.parseInt(req.getParameter("renewalYears"));
+        double premium = Double.parseDouble(req.getParameter("premium"));
 
         Contract contract = new Contract();
         contract.setContractID(contractID);
-        contract.setContractInfo(newContractInfo);
-        contract.setPremium(newPremium);
-        contract.setCoverage(newCoverage);
+        contract.setPremium(premium);
 
-        // Xu ly ngay
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            java.sql.Date newEndDate = new java.sql.Date(formatter.parse(renewalDateStr).getTime());
+            java.sql.Date newStartDate = new java.sql.Date(formatter.parse(req.getParameter("newStartDate")).getTime());
+            contract.setStartDate(newStartDate);
+
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            cal.setTime(newStartDate);
+            cal.add(java.util.Calendar.YEAR, renewalYears);
+            java.sql.Date newEndDate = new java.sql.Date(cal.getTime().getTime());
             contract.setEndDate(newEndDate);
+
+            double value = premium * renewalYears;
+            contract.setValue(value);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         try {
-            renewContractService.renewContract(contract);
+            Contract existingContract = renewContractService.getContractDetailByID(contractID);
+            if (existingContract != null) {
+                contract.setCustomer(existingContract.getCustomer());
+                renewContractService.renewContract(contract);
+                // Redirect with success message
+                String customerName = contract.getCustomer().getUser().getFullName();
+                String message = "The contract for customer " + customerName + " has been successfully renewed";
+                String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8.toString());
+                resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=" + encodedMessage + "&status=true");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=Contract+not+found&status=false");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect(req.getContextPath() + "/viewContract?contractID=" + contractID + "&message=Renew+contract+successfully&status=true");
+    }
+
+    private void sendExpirationNotification(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int contractID = Integer.parseInt(req.getParameter("contractID"));
+        try {
+            Contract contract = renewContractService.getContractDetailByID(contractID);
+            if (contract != null) {
+                renewContractService.sendExpirationNotification(contract);
+                String message = "Expiration notification has been sent to the customer.";
+                String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8.toString());
+                resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=" + encodedMessage + "&status=true");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=Contract+not+found&status=false");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void confirmContractExpiration(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int contractID = Integer.parseInt(req.getParameter("contractID"));
+        try {
+            Contract contract = renewContractService.getContractDetailByID(contractID);
+            if (contract != null) {
+                renewContractService.confirmContractExpiration(contract);
+                renewContractService.sendExpirationConfirmationEmail(contract);
+                String message = "The contract has been marked as expired.";
+                String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8.toString());
+                resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=" + encodedMessage + "&status=true");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=Contract+not+found&status=false");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

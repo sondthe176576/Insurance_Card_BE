@@ -34,9 +34,6 @@ public class AccidentHistoryServlet extends HttpServlet {
                 case "view":
                     viewAccident(request, response);
                     break;
-                case "edit":
-                    showEditForm(request, response);
-                    break;
                 case "addForm":
                     showAddForm(request, response);
                     break;
@@ -60,15 +57,9 @@ public class AccidentHistoryServlet extends HttpServlet {
         request.getRequestDispatcher("/views/history/viewAccidentHistory.jsp").forward(request, response);
     }
 
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        int accidentID = Integer.parseInt(request.getParameter("id"));
-        Accident existingAccident = accidentHistoryDAO.getAccidentById(accidentID);
-        request.setAttribute("accident", existingAccident);
-        request.getRequestDispatcher("/views/history/editAccidentHistory.jsp").forward(request, response);
-    }
-
     private void listAccidents(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        List<Accident> accidents = accidentHistoryDAO.getAllAccidents();
+        int customerID = (int) request.getSession().getAttribute("customerID");
+        List<Accident> accidents = accidentHistoryDAO.getAccidentsByCustomerID(customerID);
         request.setAttribute("accidents", accidents);
         request.getRequestDispatcher("/views/history/accidentHistory.jsp").forward(request, response);
     }
@@ -97,16 +88,13 @@ public class AccidentHistoryServlet extends HttpServlet {
     }
 
     private void addAccident(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        String customerIDStr = request.getParameter("customerID");
+        int customerID = (int) request.getSession().getAttribute("customerID");
         String contractIDStr = request.getParameter("contractID");
-        String customerName = request.getParameter("customerName");
         String accidentType = request.getParameter("accidentType");
         String description = request.getParameter("description");
         String accidentDateStr = request.getParameter("accidentDate");
 
-        if (customerIDStr == null || customerIDStr.isEmpty() ||
-                contractIDStr == null || contractIDStr.isEmpty() ||
-                customerName == null || customerName.isEmpty() ||
+        if (contractIDStr == null || contractIDStr.isEmpty() ||
                 accidentType == null || accidentType.isEmpty() ||
                 description == null || description.isEmpty() ||
                 accidentDateStr == null || accidentDateStr.isEmpty()) {
@@ -117,7 +105,6 @@ public class AccidentHistoryServlet extends HttpServlet {
         }
 
         try {
-            int customerID = Integer.parseInt(customerIDStr);
             int contractID = Integer.parseInt(contractIDStr);
             java.sql.Date accidentDate = java.sql.Date.valueOf(accidentDateStr);
             String status = "Pending";
@@ -130,7 +117,6 @@ public class AccidentHistoryServlet extends HttpServlet {
 
             Accident newAccident = new Accident();
             newAccident.setCustomerID(customerID);
-            newAccident.setCustomerName(customerName);
             newAccident.setContractID(contractID);
             newAccident.setAccidentType(accidentType);
             newAccident.setAccidentDate(accidentDate);
@@ -142,6 +128,9 @@ public class AccidentHistoryServlet extends HttpServlet {
 
         } catch (NumberFormatException e) {
             request.setAttribute("errorMessage", "Invalid number format.");
+            showAddForm(request, response);
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("errorMessage", "Invalid date format. Please use yyyy-MM-dd.");
             showAddForm(request, response);
         }
     }

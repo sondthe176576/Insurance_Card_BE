@@ -30,7 +30,6 @@ public class LoginControl extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -46,9 +45,22 @@ public class LoginControl extends HttpServlet {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(7200);
             session.setAttribute("user", user);
-            LOGGER.info("Login successful, user: " + user);
-            request.getRequestDispatcher("home").forward(request, response);
 
+            LOGGER.info("Login successful, user: " + user);
+
+            // Kiểm tra vai trò của user và chuyển hướng phù hợp
+            if ("staff".equalsIgnoreCase(user.getRole())) {
+                response.sendRedirect("homepageforstaff");
+            } else {
+                int customerID = dao.getCustomerIDByUserID(user.getUserID());
+                if (customerID == -1) {
+                    request.setAttribute("mess", "CustomerID not found!");
+                    request.getRequestDispatcher("/views/homepage/Login.jsp").forward(request, response);
+                    return;
+                }
+                session.setAttribute("customerID", customerID);
+                response.sendRedirect("homepageforcustomer");
+            }
         }
     }
 }

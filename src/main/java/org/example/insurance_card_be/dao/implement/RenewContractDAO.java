@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class RenewContractDAO {
     // Khai báo connection
@@ -90,23 +91,60 @@ public class RenewContractDAO {
 
     // Gia han hop dong
     public void renewContract(Contract contract) {
-        // Kiem tra contractID da ton tai hay chua
+        if (contract == null || contract.getCustomer() == null) {
+            throw new IllegalArgumentException("Contract or Customer cannot be null");
+        }
+
         Contract existingContract = getContractByID(contract.getContractID());
         if (existingContract != null) {
-            // Neu contractID da ton tai, thuc hien gia han hop dong
-            String sql = "UPDATE Contracts SET ContractInfo = ?, EndDate = ?, Coverage = ?, Premium = ? WHERE ContractID = ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, contract.getContractInfo());
-                preparedStatement.setDate(2, new java.sql.Date(contract.getEndDate().getTime()));
-                preparedStatement.setString(3, contract.getCoverage());
-                preparedStatement.setDouble(4, contract.getPremium());
-                preparedStatement.setInt(5, contract.getContractID());
-                preparedStatement.executeUpdate();
+            String updateContractSQL = "UPDATE Contracts SET StartDate = ?, EndDate = ? WHERE ContractID = ?";
+            String updateContractDetailsSQL = "UPDATE ContractDetails SET Value = ?, Detail = ? WHERE ContractID = ?";
+            String updatePaymentMethodsSQL = "UPDATE PaymentMethods SET Details = 'Not Paid' WHERE PaymentMethodID = ?";
+            String updatePaymentHistorySQL = "UPDATE PaymentHistory SET Amount = ?, PaymentDate = NULL WHERE ContractID = ?";
+
+            try (PreparedStatement updateContractStmt = connection.prepareStatement(updateContractSQL);
+                 PreparedStatement updateContractDetailsStmt = connection.prepareStatement(updateContractDetailsSQL);
+                 PreparedStatement updatePaymentMethodsStmt = connection.prepareStatement(updatePaymentMethodsSQL);
+                 PreparedStatement updatePaymentHistoryStmt = connection.prepareStatement(updatePaymentHistorySQL)) {
+
+                // Cập nhật bảng Contracts
+                updateContractStmt.setDate(1, new java.sql.Date(contract.getStartDate().getTime()));
+                updateContractStmt.setDate(2, new java.sql.Date(contract.getEndDate().getTime()));
+                updateContractStmt.setInt(3, contract.getContractID());
+                updateContractStmt.executeUpdate();
+
+                // Cập nhật bảng ContractDetails
+                updateContractDetailsStmt.setDouble(1, contract.getValue());
+                String detail = "This contract has been renewed as of " + new java.sql.Date(new java.util.Date().getTime());
+                updateContractDetailsStmt.setString(2, detail);
+                updateContractDetailsStmt.setInt(3, contract.getContractID());
+                updateContractDetailsStmt.executeUpdate();
+
+                // Lấy PaymentMethodID từ bảng PaymentHistory
+                String getPaymentMethodIDSQL = "SELECT PaymentMethodID FROM PaymentHistory WHERE ContractID = ?";
+                int paymentMethodID = 0;
+                try (PreparedStatement getPaymentMethodIDStmt = connection.prepareStatement(getPaymentMethodIDSQL)) {
+                    getPaymentMethodIDStmt.setInt(1, contract.getContractID());
+                    try (ResultSet rs = getPaymentMethodIDStmt.executeQuery()) {
+                        if (rs.next()) {
+                            paymentMethodID = rs.getInt("PaymentMethodID");
+                        }
+                    }
+                }
+
+                // Cập nhật bảng PaymentMethods
+                updatePaymentMethodsStmt.setInt(1, paymentMethodID);
+                updatePaymentMethodsStmt.executeUpdate();
+
+                // Cập nhật bảng PaymentHistory
+                updatePaymentHistoryStmt.setDouble(1, contract.getValue());
+                updatePaymentHistoryStmt.setInt(2, contract.getContractID());
+                updatePaymentHistoryStmt.executeUpdate();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            // Neu contractID khong ton tai, in ra thong bao
             System.out.println("ContractID not found");
         }
     }
@@ -134,5 +172,22 @@ public class RenewContractDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    // Xác nhận hết hạn hợp đồng
+    public void updateContractStatusAndDetail(Contract contract) throws SQLException {
+        String updateContractSQL = "UPDATE Contracts SET Status = ? WHERE ContractID = ?";
+        String updateContractDetailSQL = "UPDATE ContractDetails SET Detail = ? WHERE ContractID = ?";
+
+        try (PreparedStatement updateContractStmt = connection.prepareStatement(updateContractSQL);
+             PreparedStatement updateContractDetailStmt = connection.prepareStatement(updateContractDetailSQL)) {
+            updateContractStmt.setString(1, contract.getStatus());
+            updateContractStmt.setInt(2, contract.getContractID());
+            updateContractStmt.executeUpdate();
+
+            updateContractDetailStmt.setString(1, contract.getDetail());
+            updateContractDetailStmt.setInt(2, contract.getContractID());
+            updateContractDetailStmt.executeUpdate();
+        }
     }
 }

@@ -203,4 +203,15 @@ public class AccidentHistoryDAO {
         return contracts;
     }
 
+    public static void main(String[] args) {
+        AccidentHistoryDAO dao = new AccidentHistoryDAO();
+        try {
+            List<Accident> accidents = dao.getAllAccidents();
+            for (Accident accident : accidents) {
+                System.out.println(accident);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

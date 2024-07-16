@@ -10,13 +10,20 @@ public class AccidentHistoryService {
     private AccidentHistoryDAO accidentHistoryDAO;
 
     public AccidentHistoryService() {
-        accidentHistoryDAO = new AccidentHistoryDAO();
+        this.accidentHistoryDAO = new AccidentHistoryDAO();
     }
 
     public List<Accident> getAccidentsByCustomerID(int customerID) throws SQLException {
         return accidentHistoryDAO.getAccidentsByCustomerID(customerID);
     }
 
+    public Accident getAccidentById(int accidentID) throws SQLException {
+        return accidentHistoryDAO.getAccidentById(accidentID);
+    }
+
+    public boolean isContractValidForCustomer(int contractID, int customerID) throws SQLException {
+        return accidentHistoryDAO.isContractValidForCustomer(contractID, customerID);
+    }
 
     public void addAccident(Accident accident) throws SQLException {
         accidentHistoryDAO.addAccident(accident);

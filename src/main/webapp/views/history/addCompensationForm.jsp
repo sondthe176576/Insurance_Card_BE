@@ -10,10 +10,59 @@
     <title>Request Compensation</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .form-title {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
+<!-- Navbar -->
+<nav class="bg-blue-900 border-b-4 border-orange-600">
+    <div class="container mx-auto px-4 py-2 flex justify-center">
+        <ul class="flex space-x-6">
+            <li>
+                <a href="${pageContext.request.contextPath}/homepageforcustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-contract mr-2"></i> Buy Insurance
+                </a>
+            </li>
+            <li>
+                <a href="#" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> About
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/contractForCustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-alt mr-2"></i> Contract
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <body>
-<div class="container">
-    <h2 class="mt-4 mb-4">Request Compensation</h2>
+<div class="container form-container">
+    <h2 class="form-title">Request Compensation</h2>
     <c:if test="${not empty errorMessage}">
         <div class="alert alert-danger">${errorMessage}</div>
     </c:if>
@@ -33,13 +82,15 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description:</label>
-            <textarea class="form-control" id="description" name="description" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
         </div>
         <div class="mb-3">
             <label for="requestDate" class="form-label">Date:</label>
             <input type="date" class="form-control" id="requestDate" name="requestDate" required>
         </div>
-        <button type="submit" class="btn btn-success">Submit Request</button>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-block">Submit</button>
+        </div>
     </form>
 </div>
 

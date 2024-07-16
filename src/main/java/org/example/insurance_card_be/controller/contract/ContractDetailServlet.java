@@ -10,6 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 @WebServlet(name = "ContractDetailServlet", urlPatterns = {"/contractDetail/*"})
 public class ContractDetailServlet extends HttpServlet {
@@ -37,30 +41,17 @@ public class ContractDetailServlet extends HttpServlet {
                 return;
             }
 
+            // Tinh so ngay con lai cua hop dong
+            Date currentDate = new Date();
+            long diff = contract.getEndDate().getTime() - currentDate.getTime();
+            long diffDays = diff / (24 * 60 * 60 * 1000);
+
             request.setAttribute("contract", contract);
+            request.setAttribute("diffDays", diffDays);
             request.getRequestDispatcher("/views/contract/InformationContract.jsp").forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to retrieve contract details");
-        }
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("renew".equals(action)) {
-            // Logic to handle renewing the contract
-            int contractId = Integer.parseInt(request.getParameter("contractId"));
-            // Implement your logic here
-
-            // Redirect to pending.jsp after processing
-            response.sendRedirect(request.getContextPath() + "/views/history/pending.jsp");
-        } else if ("cancel".equals(action)) {
-            // Logic to handle cancelling the contract
-            int contractId = Integer.parseInt(request.getParameter("contractId"));
-            // Implement your logic here
-            response.sendRedirect(request.getContextPath() + "/contractDetail/" + contractId);
-        } else {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
         }
     }
 }

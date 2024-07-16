@@ -1,15 +1,13 @@
 package org.example.insurance_card_be.dao.implement;
 
 import org.example.insurance_card_be.dao.DBContext;
-import org.example.insurance_card_be.model.Contract;
-import org.example.insurance_card_be.model.Customers;
-import org.example.insurance_card_be.model.Motorcycle;
-import org.example.insurance_card_be.model.Users;
+import org.example.insurance_card_be.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class ViewContractDAO {
     // Ket noi den database
@@ -26,12 +24,16 @@ public class ViewContractDAO {
                 "u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
                 "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status, con.StartDate, con.EndDate, " +
                 "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
-                "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
+                "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color, " +
+                "ph.PaymentID, ph.Amount AS PaymentAmount, ph.PaymentDate, ph.PaymentMethodID, " +
+                "pm.PaymentMethodID, pm.MethodType, pm.Details " +
                 "FROM dbo.Users u " +
                 "JOIN dbo.Customers c ON u.UserID = c.UserID " +
                 "JOIN dbo.Contracts con ON c.CustomerID = con.CustomerID " +
                 "JOIN dbo.ContractDetails cd ON con.ContractID = cd.ContractID " +
                 "JOIN dbo.Motorcycles m ON c.CustomerID = m.CustomerID " +
+                "LEFT JOIN dbo.PaymentHistory ph ON con.ContractID = ph.ContractID " +
+                "LEFT JOIN dbo.PaymentMethods pm ON ph.PaymentMethodID = pm.PaymentMethodID " +
                 "WHERE con.ContractID = ?";
 
         Contract contract = null;
@@ -69,6 +71,17 @@ public class ViewContractDAO {
                     customer.setPersonalInfo(rs.getString("PersonalInfo"));
                     customer.setUser(user);
 
+                    PaymentHistory paymentHistory = new PaymentHistory();
+                    paymentHistory.setPaymentID(rs.getInt("PaymentID"));
+                    paymentHistory.setAmount(rs.getBigDecimal("PaymentAmount"));
+                    paymentHistory.setPaymentDate(rs.getDate("PaymentDate"));
+                    paymentHistory.setPaymentMethodID(rs.getInt("PaymentMethodID"));
+
+                    PaymentMethod paymentMethod = new PaymentMethod();
+                    paymentMethod.setPaymentMethodID(rs.getInt("PaymentMethodID"));
+                    paymentMethod.setMethodType(rs.getString("MethodType"));
+                    paymentMethod.setDetails(rs.getString("Details"));
+
                     contract = new Contract();
                     contract.setContractID(rs.getInt("ContractID"));
                     contract.setContractInfo(rs.getString("ContractInfo"));
@@ -82,9 +95,35 @@ public class ViewContractDAO {
                     contract.setValue(rs.getDouble("Value"));
                     contract.setCustomer(customer);
                     contract.setMotorcycle(motorcycle);
+                    contract.setPaymentHistory(paymentHistory);
+                    contract.setPaymentMethod(paymentMethod);
                 }
             }
         }
         return contract;
+    }
+
+    public boolean updatePaymentDetails(int contractID, String details, Date paymentDate) throws SQLException {
+        String updatePaymentMethodQuery = "UPDATE PaymentMethods SET Details = ? WHERE PaymentMethodID = (SELECT PaymentMethodID FROM PaymentHistory WHERE ContractID = ?)";
+        String updatePaymentHistoryQuery = "UPDATE PaymentHistory SET PaymentDate = ? WHERE ContractID = ?";
+
+        try (PreparedStatement psPaymentMethod = connection.prepareStatement(updatePaymentMethodQuery);
+             PreparedStatement psPaymentHistory = connection.prepareStatement(updatePaymentHistoryQuery)) {
+
+            // Update PaymentMethods
+            psPaymentMethod.setString(1, details);
+            psPaymentMethod.setInt(2, contractID);
+            psPaymentMethod.executeUpdate();
+
+            // Update PaymentHistory
+            psPaymentHistory.setDate(1, new java.sql.Date(paymentDate.getTime()));
+            psPaymentHistory.setInt(2, contractID);
+            psPaymentHistory.executeUpdate();
+
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

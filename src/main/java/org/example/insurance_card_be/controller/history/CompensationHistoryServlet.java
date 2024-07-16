@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 @WebServlet("/compensationHistory")
@@ -59,9 +58,9 @@ public class CompensationHistoryServlet extends HttpServlet {
         request.getRequestDispatcher("/views/history/viewCompensationHistory.jsp").forward(request, response);
     }
 
-
     private void listCompensationRequests(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        List<CompensationRequests> requests = compensationHistoryDAO.getAllCompensationRequests();
+        int customerID = (int) request.getSession().getAttribute("customerID");
+        List<CompensationRequests> requests = compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID);
         request.setAttribute("compensationRequests", requests);
         request.getRequestDispatcher("/views/history/compensationHistory.jsp").forward(request, response);
     }
@@ -90,14 +89,13 @@ public class CompensationHistoryServlet extends HttpServlet {
     }
 
     private void addCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        String customerIDStr = request.getParameter("customerID");
+        int customerID = (int) request.getSession().getAttribute("customerID");
         String contractIDStr = request.getParameter("contractID");
         String amountStr = request.getParameter("amount");
         String description = request.getParameter("description");
         String requestDateStr = request.getParameter("requestDate");
 
-        if (customerIDStr == null || customerIDStr.isEmpty() ||
-                contractIDStr == null || contractIDStr.isEmpty() ||
+        if (contractIDStr == null || contractIDStr.isEmpty() ||
                 amountStr == null || amountStr.isEmpty() ||
                 description == null || description.isEmpty() ||
                 requestDateStr == null || requestDateStr.isEmpty()) {
@@ -108,7 +106,6 @@ public class CompensationHistoryServlet extends HttpServlet {
         }
 
         try {
-            int customerID = Integer.parseInt(customerIDStr);
             int contractID = Integer.parseInt(contractIDStr);
             BigDecimal amount = new BigDecimal(amountStr);
             java.sql.Date requestDate = java.sql.Date.valueOf(requestDateStr);
