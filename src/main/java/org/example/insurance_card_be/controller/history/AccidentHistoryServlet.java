@@ -16,6 +16,7 @@ import java.util.List;
 @WebServlet("/accidentHistory")
 public class AccidentHistoryServlet extends HttpServlet {
     private AccidentHistoryDAO accidentHistoryDAO;
+    private static final int RECORDS_PER_PAGE = 10;
 
     @Override
     public void init() {
@@ -59,8 +60,23 @@ public class AccidentHistoryServlet extends HttpServlet {
 
     private void listAccidents(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int customerID = (int) request.getSession().getAttribute("customerID");
-        List<Accident> accidents = accidentHistoryDAO.getAccidentsByCustomerID(customerID);
+
+        // Get page number from request
+        String pageStr = request.getParameter("page");
+        int page = (pageStr == null || pageStr.isEmpty()) ? 1 : Integer.parseInt(pageStr);
+
+        // Calculate offset
+        int offset = (page - 1) * RECORDS_PER_PAGE;
+
+        // Fetch accidents
+        List<Accident> accidents = accidentHistoryDAO.getAccidentsByCustomerID(customerID, offset, RECORDS_PER_PAGE);
+        int totalRecords = accidentHistoryDAO.getAccidentCountByCustomerID(customerID);
+        int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
+
+        // Set attributes
         request.setAttribute("accidents", accidents);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
         request.getRequestDispatcher("/views/history/accidentHistory.jsp").forward(request, response);
     }
 

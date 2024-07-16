@@ -40,6 +40,33 @@ public class CompensationHistoryService {
         }
     }
 
+    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID, int offset, int limit) {
+        try {
+            return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID, offset, limit);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int getTotalCompensationRequestsByCustomerID(int customerID) {
+        try {
+            return compensationHistoryDAO.getTotalCompensationRequestsByCustomerID(customerID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public boolean isContractValidForCustomer(int contractID, int customerID) {
+        try {
+            return compensationHistoryDAO.isContractValidForCustomer(contractID, customerID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void addCompensationRequest(CompensationRequests compensationRequest) {
         try {
             compensationHistoryDAO.addCompensationRequest(compensationRequest);

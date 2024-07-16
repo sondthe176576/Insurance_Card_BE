@@ -1,6 +1,6 @@
 package org.example.insurance_card_be.controller.history;
 
-import org.example.insurance_card_be.dao.implement.CompensationHistoryDAO;
+import org.example.insurance_card_be.service.CompensationHistoryService;
 import org.example.insurance_card_be.model.CompensationRequests;
 
 import jakarta.servlet.ServletException;
@@ -16,11 +16,11 @@ import java.util.List;
 
 @WebServlet("/compensationHistory")
 public class CompensationHistoryServlet extends HttpServlet {
-    private CompensationHistoryDAO compensationHistoryDAO;
+    private CompensationHistoryService compensationHistoryService;
 
     @Override
     public void init() {
-        compensationHistoryDAO = new CompensationHistoryDAO();
+        compensationHistoryService = new CompensationHistoryService();
     }
 
     @Override
@@ -53,15 +53,26 @@ public class CompensationHistoryServlet extends HttpServlet {
 
     private void viewCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int requestID = Integer.parseInt(request.getParameter("id"));
-        CompensationRequests requestDetail = compensationHistoryDAO.getCompensationRequestById(requestID);
+        CompensationRequests requestDetail = compensationHistoryService.getCompensationRequestById(requestID);
         request.setAttribute("compensationRequest", requestDetail);
         request.getRequestDispatcher("/views/history/viewCompensationHistory.jsp").forward(request, response);
     }
 
     private void listCompensationRequests(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int customerID = (int) request.getSession().getAttribute("customerID");
-        List<CompensationRequests> requests = compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID);
+        int currentPage = 1;
+        int recordsPerPage = 10;
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+        int offset = (currentPage - 1) * recordsPerPage;
+        int totalRecords = compensationHistoryService.getTotalCompensationRequestsByCustomerID(customerID);
+        int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+
+        List<CompensationRequests> requests = compensationHistoryService.getCompensationRequestsByCustomerID(customerID, offset, recordsPerPage);
         request.setAttribute("compensationRequests", requests);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
         request.getRequestDispatcher("/views/history/compensationHistory.jsp").forward(request, response);
     }
 
@@ -111,7 +122,7 @@ public class CompensationHistoryServlet extends HttpServlet {
             java.sql.Date requestDate = java.sql.Date.valueOf(requestDateStr);
             String status = "Pending";
 
-            if (!compensationHistoryDAO.isContractValidForCustomer(contractID, customerID)) {
+            if (!compensationHistoryService.isContractValidForCustomer(contractID, customerID)) {
                 request.setAttribute("errorMessage", "The provided Contract ID does not belong to the provided Customer ID.");
                 showAddForm(request, response);
                 return;
@@ -125,7 +136,7 @@ public class CompensationHistoryServlet extends HttpServlet {
             newRequest.setAmount(amount);
             newRequest.setStatus(status);
 
-            compensationHistoryDAO.addCompensationRequest(newRequest);
+            compensationHistoryService.addCompensationRequest(newRequest);
             response.sendRedirect("compensationHistory");
 
         } catch (NumberFormatException e) {
@@ -159,13 +170,13 @@ public class CompensationHistoryServlet extends HttpServlet {
         updatedRequest.setRequestDate(requestDate);
         updatedRequest.setStatus(status);
 
-        compensationHistoryDAO.updateCompensationRequest(updatedRequest);
+        compensationHistoryService.updateCompensationRequest(updatedRequest);
         response.sendRedirect("compensationHistory");
     }
 
     private void deleteCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int requestID = Integer.parseInt(request.getParameter("requestID"));
-        compensationHistoryDAO.deleteCompensationRequest(requestID);
+        compensationHistoryService.deleteCompensationRequest(requestID);
         response.sendRedirect("compensationHistory");
     }
 }

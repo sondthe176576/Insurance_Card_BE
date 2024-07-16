@@ -14,20 +14,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         .status-pending {
-            background-color: yellow;
-            color: black;
+            color: #ffcc00;
             padding: 5px;
             border-radius: 5px;
         }
         .status-rejected {
-            background-color: red;
-            color: white;
+            color: #ed1616;
             padding: 5px;
             border-radius: 5px;
         }
         .status-approved {
-            background-color: green;
-            color: white;
+            color: #048304;
             padding: 5px;
             border-radius: 5px;
         }
@@ -47,6 +44,14 @@
             text-align: center;
             color: #333;
             margin-bottom: 20px;
+        }
+        .pagination .page-link {
+            color: black !important;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #343a40;
+            border-color: #343a40;
+            color: white !important;
         }
     </style>
 </head>
@@ -92,6 +97,7 @@
     <table class="table table-hover table-bordered">
         <thead>
         <tr>
+            <th>No</th>
             <th>Customer ID</th>
             <th>Customer Name</th>
             <th>Accident ID</th>
@@ -104,8 +110,9 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${accidents}" var="accident">
+        <c:forEach items="${accidents}" var="accident" varStatus="status">
             <tr>
+                <td>${(currentPage - 1) * 10 + status.index + 1}</td>
                 <td>${accident.customerID}</td>
                 <td>${accident.customerName}</td>
                 <td>${accident.accidentID}</td>
@@ -113,14 +120,18 @@
                 <td>${accident.accidentType}</td>
                 <td>${accident.accidentDate}</td>
                 <td>${accident.description}</td>
-                <td class="
+                <td>
                     <c:choose>
-                        <c:when test="${accident.status == 'Pending'}">status-pending</c:when>
-                        <c:when test="${accident.status == 'Rejected'}">status-rejected</c:when>
-                        <c:when test="${accident.status == 'Approved'}">status-approved</c:when>
+                        <c:when test="${accident.status == 'Pending'}">
+                            <span class="status-pending">${accident.status}</span>
+                        </c:when>
+                        <c:when test="${accident.status == 'Rejected'}">
+                            <span class="status-rejected">${accident.status}</span>
+                        </c:when>
+                        <c:when test="${accident.status == 'Approved'}">
+                            <span class="status-approved">${accident.status}</span>
+                        </c:when>
                     </c:choose>
-                ">
-                        ${accident.status}
                 </td>
                 <td>
                     <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${accident.accidentID}" class="btn btn-primary btn-sm btn-action">
@@ -141,6 +152,24 @@
         </c:forEach>
         </tbody>
     </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <c:if test="${currentPage > 1}">
+                <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                <li class="page-item"><a class="page-link" href="?page=${currentPage - 1}">Previous</a></li>
+            </c:if>
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <li class="page-item ${currentPage == i ? 'active' : ''}"><a class="page-link" href="?page=${i}">${i}</a></li>
+            </c:forEach>
+            <c:if test="${currentPage < totalPages}">
+                <li class="page-item"><a class="page-link" href="?page=${currentPage + 1}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page=${totalPages}">Last</a></li>
+            </c:if>
+        </ul>
+    </nav>
+
 </div>
 
 <jsp:include page="/views/includes/footer.jsp"/>

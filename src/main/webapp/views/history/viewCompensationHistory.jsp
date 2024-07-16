@@ -10,10 +10,31 @@
     <title>View Compensation History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+        .card {
+            margin-top: 20px;
+        }
+        .card-body p {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+        .btn-back {
+            display: block;
+            margin: 20px auto 0;
+            width: fit-content;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
-    <h1>View Compensation History</h1>
+    <h1 class="page-title">View Compensation Request</h1>
     <div class="card mt-4">
         <div class="card-body">
             <p><strong>Customer ID:</strong> ${compensationRequest.customerID}</p>
@@ -22,8 +43,20 @@
             <p><strong>Amount:</strong> ${compensationRequest.amount}</p>
             <p><strong>Description:</strong> ${compensationRequest.description}</p>
             <p><strong>Date:</strong> ${compensationRequest.requestDate}</p>
-            <p><strong>Status:</strong> ${compensationRequest.status}</p>
-            <a href="${pageContext.request.contextPath}/compensationHistory" class="btn btn-primary">Back to List</a>
+            <p><strong>Status:</strong>
+                <c:choose>
+                    <c:when test="${compensationRequest.status == 'Pending'}">
+                        <span class="badge bg-warning text-dark">${compensationRequest.status}</span>
+                    </c:when>
+                    <c:when test="${compensationRequest.status == 'Rejected'}">
+                        <span class="badge bg-danger">${compensationRequest.status}</span>
+                    </c:when>
+                    <c:when test="${compensationRequest.status == 'Approved'}">
+                        <span class="badge bg-success">${compensationRequest.status}</span>
+                    </c:when>
+                </c:choose>
+            </p>
+            <a href="${pageContext.request.contextPath}/compensationHistory" class="btn btn-primary btn-back">Back to List</a>
         </div>
     </div>
 </div>
