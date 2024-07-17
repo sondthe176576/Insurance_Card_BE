@@ -91,6 +91,10 @@
                             <input type="number" id="customerID" name="customerID" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.customer.customerID}" readonly>
                         </div>
                         <div class="mb-4">
+                            <label for="username" class="form-label font-bold text-gray-700">Username:</label>
+                            <input type="text" id="username" name="username" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.customer.user.username}" readonly>
+                        </div>
+                        <div class="mb-4">
                             <label for="fullName" class="form-label font-bold text-gray-700">Full Name:</label>
                             <input type="text" id="fullName" name="fullName" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.customer.user.fullName}" readonly>
                         </div>
@@ -129,6 +133,10 @@
                         <div class="mb-4">
                             <label for="gender" class="form-label font-bold text-gray-700">Gender:</label>
                             <input type="text" id="gender" name="gender" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.customer.user.gender}" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label for="personalInfo" class="form-label font-bold text-gray-700">Personal Info:</label>
+                            <input type="text" id="personalInfo" name="personalInfo" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.customer.personalInfo}" readonly>
                         </div>
                     </div>
                     <div>

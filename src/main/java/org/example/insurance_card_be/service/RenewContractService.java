@@ -47,7 +47,7 @@ public class RenewContractService {
         contract.setStatus("Expired");
         contract.setDetail(detail);
 
-//        renewContractDAO.updateContractStatusAndDetail(contract);
+        renewContractDAO.updateContractStatusAndDetail(contract);
     }
 
     public void sendExpirationConfirmationEmail(Contract contract) {

@@ -79,6 +79,11 @@
                                value="${contract.customer.customerID}" readonly>
                     </div>
                     <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" id="username" name="username" class="form-control"
+                               value="${contract.customer.user.username}" readonly>
+                    </div>
+                    <div class="mb-3">
                         <label for="fullName" class="form-label">Full Name:</label>
                         <input type="text" id="fullName" name="fullName" class="form-control"
                                value="${contract.customer.user.fullName}" readonly>
@@ -128,6 +133,11 @@
                         <label for="gender" class="form-label">Gender:</label>
                         <input type="text" id="gender" name="gender" class="form-control"
                                value="${contract.customer.user.gender}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="personalInfo" class="form-label">Personal Info:</label>
+                        <input type="text" id="personalInfo" name="personalInfo" class="form-control"
+                               value="${contract.customer.personalInfo}" readonly>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -333,8 +343,17 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-4">
-                <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}"
-                   class="btn btn-primary me-2"><i class="fas fa-edit"></i> Update Contract</a>
+                <c:choose>
+                    <c:when test="${contract.status == 'Accepted' && diffDays > 0}">
+                        <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}"
+                           class="btn btn-primary me-2"><i class="fas fa-edit"></i> Update Contract</a>
+                    </c:when>
+                    <c:otherwise>
+                        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#statusModal">
+                            <i class="fas fa-info-circle"></i> Update Contract
+                        </button>
+                    </c:otherwise>
+                </c:choose>
                 <a href="${pageContext.request.contextPath}/listAllContractForCustomer" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Back to List</a>
             </div>
@@ -368,6 +387,43 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button type="submit" class="btn btn-primary">Yes</button>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Status Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusModalLabel">Cannot Update Contract</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <c:choose>
+                    <c:when test="${contract.status == 'Pending'}">
+                        <p>The contract is currently pending and cannot be updated.</p>
+                    </c:when>
+                    <c:when test="${contract.status == 'Canceled'}">
+                        <p>The contract has been canceled and cannot be updated.</p>
+                    </c:when>
+                    <c:when test="${contract.status == 'Rejected'}">
+                        <p>The contract has been rejected and cannot be updated.</p>
+                    </c:when>
+                    <c:when test="${contract.status == 'Expired'}">
+                        <p>The contract has expired and cannot be updated.</p>
+                    </c:when>
+                    <c:when test="${contract.status == 'Accepted' && diffDays <= 0}">
+                        <p>The contract has been accepted but has reached its end date and cannot be updated.</p>
+                    </c:when>
+                    <c:otherwise>
+                        <p>The contract cannot be updated due to an unknown status.</p>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

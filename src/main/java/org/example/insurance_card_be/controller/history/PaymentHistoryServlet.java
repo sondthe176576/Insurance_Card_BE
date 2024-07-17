@@ -1,6 +1,6 @@
 package org.example.insurance_card_be.controller.history;
 
-import org.example.insurance_card_be.model.PaymentHistory;
+import org.example.insurance_card_be.model.PaymentHistoryCustomer;
 import org.example.insurance_card_be.service.PaymentHistoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,21 +87,21 @@ public class PaymentHistoryServlet extends HttpServlet {
     }
 
     private void handleListPaymentHistories(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<PaymentHistory> paymentHistories = paymentHistoryService.getAllPaymentHistories();
+        List<PaymentHistoryCustomer> paymentHistories = paymentHistoryService.getAllPaymentHistories();
         request.setAttribute("paymentHistories", paymentHistories);
         request.getRequestDispatcher("/views/history/paymentHistory.jsp").forward(request, response);
     }
 
     private void handleViewPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int paymentID = Integer.parseInt(request.getParameter("paymentID"));
-        PaymentHistory paymentHistory = paymentHistoryService.getPaymentHistoryById(paymentID);
+        PaymentHistoryCustomer paymentHistory = paymentHistoryService.getPaymentHistoryById(paymentID);
         request.setAttribute("paymentHistory", paymentHistory);
         request.getRequestDispatcher("/views/history/viewPaymentHistory.jsp").forward(request, response);
     }
 
     private void handleEditPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int paymentID = Integer.parseInt(request.getParameter("paymentID"));
-        PaymentHistory paymentHistory = paymentHistoryService.getPaymentHistoryById(paymentID);
+        PaymentHistoryCustomer paymentHistory = paymentHistoryService.getPaymentHistoryById(paymentID);
         request.setAttribute("paymentHistory", paymentHistory);
         request.getRequestDispatcher("/views/history/editPaymentHistory.jsp").forward(request, response);
     }
@@ -114,7 +114,7 @@ public class PaymentHistoryServlet extends HttpServlet {
         int contractID = Integer.parseInt(request.getParameter("contractID"));
         String paymentDetails = request.getParameter("paymentDetails");
 
-        PaymentHistory paymentHistory = new PaymentHistory(0, customerID, amount, paymentDate, paymentMethodID, contractID);
+        PaymentHistoryCustomer paymentHistory = new PaymentHistoryCustomer(0, customerID, amount, paymentDate, paymentMethodID, contractID);
         paymentHistoryService.addPaymentHistory(paymentHistory);
         response.sendRedirect("paymentHistory");
     }
@@ -128,7 +128,7 @@ public class PaymentHistoryServlet extends HttpServlet {
         int contractID = Integer.parseInt(request.getParameter("contractID"));
         String paymentDetails = request.getParameter("paymentDetails");
 
-        PaymentHistory paymentHistory = new PaymentHistory(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+        PaymentHistoryCustomer paymentHistory = new PaymentHistoryCustomer(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
         paymentHistoryService.updatePaymentHistory(paymentHistory);
         response.sendRedirect("paymentHistory");
     }

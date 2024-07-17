@@ -166,9 +166,9 @@
     </div>
 </div>
 <!-- Include footer -->
-<footer>
-    <jsp:include page="/views/includes/footer.jsp"/>
-</footer>
+<%--<footer>--%>
+<%--    <jsp:include page="/views/includes/footer.jsp"/>--%>
+<%--</footer>--%>
 <!-- End of footer -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.min.js" defer></script>
 <script>

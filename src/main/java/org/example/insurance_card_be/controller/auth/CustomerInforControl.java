@@ -25,21 +25,21 @@ public class CustomerInforControl extends HttpServlet {
         }
 
         UserDAO userDAO = new UserDAO();
-//        Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
-//        if (userFromDB != null) {
-////            Customers customer = userDAO.getCustomerByUserId(userFromDB.getUserID());
-//            if (customer != null) {
-//                Motorcycle motorcycle = userDAO.getMotorcycleByCustomerId(customer.getCustomerID());
-//                request.setAttribute("user", userFromDB);
-//                request.setAttribute("customer", customer);
-//                request.setAttribute("motorcycle", motorcycle);
+        Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+        if (userFromDB != null) {
+            Customers customer = userDAO.getCustomerByUserId(userFromDB.getUserID());
+            if (customer != null) {
+                Motorcycle motorcycle = userDAO.getMotorcycleByCustomerId(customer.getCustomerID());
+                request.setAttribute("user", userFromDB);
+                request.setAttribute("customer", customer);
+                request.setAttribute("motorcycle", motorcycle);
             }
         }
-//        request.getRequestDispatcher("/views/customer/CustomerInfor.jsp").forward(request, response);
-//    }
+        request.getRequestDispatcher("/views/customer/CustomerInfor.jsp").forward(request, response);
+    }
 
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        // Here you can retrieve the data from the request, process it and redirect to another page
-//        response.sendRedirect("editinfor");
-//    }
-//}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Here you can retrieve the data from the request, process it and redirect to another page
+        response.sendRedirect("editinfor");
+    }
+}

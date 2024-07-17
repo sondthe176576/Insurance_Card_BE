@@ -1,8 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:include page="/views/includes/header.jsp"/>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,6 +106,9 @@
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
+<!-- Include header -->
+<jsp:include page="/views/includes/header.jsp"/>
+<!-- End of header -->
 <!-- Include navbar -->
 <nav class="bg-blue-900 border-b-4 border-orange-600">
     <div class="container mx-auto px-4 py-2 flex justify-center">
@@ -304,7 +305,7 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <button type="button" class="btn btn-primary" onclick="requestRenewal('${contract.contractID}', '${contract.customer.user.email}')">
+                <button type="button" class="btn btn-primary" onclick="requestRenewal('${contract.contractID}', '${contract.customer.user.email}', '${contract.status}')">
                     <i class="fas fa-sync-alt mr-2"></i>Request Renew Contract
                 </button>
                 <form id="cancelForm" action="${pageContext.request.contextPath}/cancelContract" method="post" class="inline">
@@ -400,13 +401,25 @@
 
 <script>
     function showCancelModal(status) {
+        const endDate = new Date("${contract.endDate}");
+        const currentDate = new Date();
+        const daysRemaining = ${diffDays}; // Assuming diffDays is passed from the server side
+
         if (status === "Canceled") {
             showAlertModal("Your contract has already been canceled.");
             return;
         }
 
-        const endDate = new Date("${contract.endDate}");
-        const currentDate = new Date();
+        if (status === "Expired") {
+            showAlertModal("Your contract has expired and is no longer valid.");
+            return;
+        }
+
+        if (status === "Accepted" && daysRemaining <= 0) {
+            showAlertModal("Your contract has expired, and you do not need to cancel it. If you want to renew the contract, please send a request to our motorcycle insurance company.");
+            return;
+        }
+
         const contractValue = ${contract.value};
         const penalty = (contractValue * 0.30).toFixed(2);
         const formattedPenalty = parseFloat(penalty).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -431,7 +444,17 @@
         document.getElementById('cancelForm').submit();
     }
 
-    function requestRenewal(contractId, customerEmail) {
+    function requestRenewal(contractId, customerEmail, status) {
+        if (status === "Canceled") {
+            showAlertModal("You cannot request a renewal because your contract has been canceled.");
+            return;
+        }
+
+        if (status === "Expired") {
+            showAlertModal("Your contract has expired and is no longer valid.");
+            return;
+        }
+
         const daysRemainingText = document.querySelector('input[value="${diffDays} days remaining"]').value;
         const daysRemaining = parseInt(daysRemainingText.split(' ')[0]);
 

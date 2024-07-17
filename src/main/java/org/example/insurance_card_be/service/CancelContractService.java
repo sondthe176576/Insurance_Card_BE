@@ -23,7 +23,7 @@ public class CancelContractService {
         if ("Pending".equals(status)) {
             contractInfo = "Customer canceled the contract while it was in Pending status.";
             cancelContractDAO.updateContractStatus(contractID, "Canceled");
-//            cancelContractDAO.updateContractInfo(contractID, contractInfo, Date.valueOf(LocalDate.now()));
+            cancelContractDAO.updateContractInfo(contractID, contractInfo, Date.valueOf(LocalDate.now()));
         } else if ("Accepted".equals(status)) {
             contractInfo = "Customer canceled the contract while it was in Accepted status.";
             // Create punishment record
@@ -37,7 +37,7 @@ public class CancelContractService {
             // Insert punishment record
             cancelContractDAO.insertPunishment(punishment);
             cancelContractDAO.updateContractStatus(contractID, "Canceled");
-//            cancelContractDAO.updateContractInfo(contractID, contractInfo, Date.valueOf(LocalDate.now()));
+            cancelContractDAO.updateContractInfo(contractID, contractInfo, Date.valueOf(LocalDate.now()));
         }
     }
 }

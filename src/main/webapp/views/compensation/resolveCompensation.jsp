@@ -141,6 +141,10 @@
                     <p class="bg-gray-100 p-2 rounded"><c:out value="${compensation.customerID}"/></p>
                 </div>
                 <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Username:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${compensation.contract.customer.user.username}"/></p>
+                </div>
+                <div class="flex flex-col">
                     <label class="font-bold text-gray-700">Customer Name:</label>
                     <p class="bg-gray-100 p-2 rounded"><c:out value="${compensation.customerName}"/></p>
                 </div>
@@ -234,6 +238,10 @@
             </div>
             <h3 class="text-2xl text-blue-600 mt-6 mb-4">Motorcycle Information</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col">
+                    <label class="font-bold text-gray-700">Motorcycle ID:</label>
+                    <p class="bg-gray-100 p-2 rounded"><c:out value="${compensation.contract.motorcycle.motorcycleID}"/></p>
+                </div>
                 <div class="flex flex-col">
                     <label class="font-bold text-gray-700">License Plate:</label>
                     <p class="bg-gray-100 p-2 rounded"><c:out value="${compensation.contract.motorcycle.licensePlate}"/></p>

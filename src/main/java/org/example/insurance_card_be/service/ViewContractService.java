@@ -22,14 +22,14 @@ public class ViewContractService {
         }
     }
 
-//    public boolean updatePaymentDetails(int contractID, String details, Date paymentDate) {
-//        try {
-////            return viewContractDAO.updatePaymentDetails(contractID, details, paymentDate);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
+    public boolean updatePaymentDetails(int contractID, String details, Date paymentDate) {
+        try {
+            return viewContractDAO.updatePaymentDetails(contractID, details, paymentDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public void sendPaymentConfirmationEmail(Contract contract) {
         String email = contract.getCustomer().getUser().getEmail();

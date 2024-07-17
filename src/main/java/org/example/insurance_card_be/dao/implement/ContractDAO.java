@@ -80,8 +80,8 @@ public class ContractDAO {
                     paymentHistory.setPaymentID(rs.getInt("paymentID"));
                     paymentHistory.setAmount(rs.getBigDecimal("amount"));
                     paymentHistory.setPaymentDate(rs.getDate("paymentDate"));
-//                    paymentHistory.setPaymentDetails(rs.getString("details")); // Lấy giá trị từ cột details
-//                    contract.setPaymentHistory(paymentHistory);
+                    paymentHistory.setPaymentDetails(rs.getString("details")); // Lấy giá trị từ cột details
+                    contract.setPaymentHistory(paymentHistory);
 
                     contract.setMethodPaymentType(rs.getString("methodType"));
                 }
