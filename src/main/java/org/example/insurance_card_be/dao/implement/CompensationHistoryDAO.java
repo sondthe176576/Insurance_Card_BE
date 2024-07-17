@@ -5,10 +5,10 @@ import org.example.insurance_card_be.model.CompensationRequests;
 import org.example.insurance_card_be.model.Contract;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +25,6 @@ public class CompensationHistoryDAO {
                 "u.Full_name AS CustomerName " +
                 "FROM CompensationRequests cr " +
                 "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
-                "JOIN Contracts c ON cr.ContractID = c.ContractID " +
                 "JOIN Users u ON cu.UserID = u.UserID";
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -45,43 +44,10 @@ public class CompensationHistoryDAO {
         return requests;
     }
 
-    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID, int offset, int limit) throws SQLException {
-        List<CompensationRequests> requests = new ArrayList<>();
-        String query = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
-                "u.Full_name AS CustomerName " +
-                "FROM CompensationRequests cr " +
-                "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
-                "JOIN Contracts c ON cr.ContractID = c.ContractID " +
-                "JOIN Users u ON cu.UserID = u.UserID " +
-                "WHERE cu.CustomerID = ? ORDER BY cr.RequestDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, customerID);
-            stmt.setInt(2, offset);
-            stmt.setInt(3, limit);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    CompensationRequests request = new CompensationRequests();
-                    request.setRequestID(rs.getInt("RequestID"));
-                    request.setCustomerID(rs.getInt("CustomerID"));
-                    request.setContractID(rs.getInt("ContractID"));
-                    request.setRequestDate(rs.getDate("RequestDate"));
-                    request.setStatus(rs.getString("Status"));
-                    request.setDescription(rs.getString("Description"));
-                    request.setAmount(rs.getBigDecimal("Amount"));
-                    request.setCustomerName(rs.getString("CustomerName"));
-                    requests.add(request);
-                }
-            }
-        }
-        return requests;
-    }
-
     public int getTotalCompensationRequestsByCustomerID(int customerID) throws SQLException {
         String query = "SELECT COUNT(cr.RequestID) AS Total " +
                 "FROM CompensationRequests cr " +
                 "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
-                "JOIN Contracts c ON cr.ContractID = c.ContractID " +
-                "JOIN Users u ON cu.UserID = u.UserID " +
                 "WHERE cu.CustomerID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, customerID);
@@ -136,16 +102,15 @@ public class CompensationHistoryDAO {
     }
 
     public void updateCompensationRequest(CompensationRequests request) throws SQLException {
-        String query = "UPDATE CompensationRequests SET CustomerID = ?, ContractID = ?, RequestDate = ?, Status = ?, Description = ?, Amount = ? " +
+        String query = "UPDATE CompensationRequests SET  ContractID = ?, RequestDate = ?, Status = ?, Description = ?, Amount = ? " +
                 "WHERE RequestID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, request.getCustomerID());
-            stmt.setInt(2, request.getContractID());
-            stmt.setDate(3, new Date(request.getRequestDate().getTime()));
-            stmt.setString(4, request.getStatus());
-            stmt.setString(5, request.getDescription());
-            stmt.setBigDecimal(6, request.getAmount());
-            stmt.setInt(7, request.getRequestID());
+            stmt.setInt(1, request.getContractID());
+            stmt.setDate(2, new Date(request.getRequestDate().getTime()));
+            stmt.setString(3, request.getStatus());
+            stmt.setString(4, request.getDescription());
+            stmt.setBigDecimal(5, request.getAmount());
+            stmt.setInt(6, request.getRequestID());
             stmt.executeUpdate();
         }
     }
@@ -156,6 +121,64 @@ public class CompensationHistoryDAO {
             stmt.setInt(1, requestID);
             stmt.executeUpdate();
         }
+    }
+
+    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID) throws SQLException {
+        List<CompensationRequests> requests = new ArrayList<>();
+        String query = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
+                "u.Full_name AS CustomerName " +
+                "FROM CompensationRequests cr " +
+                "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
+                "JOIN Users u ON cu.UserID = u.UserID " +
+                "WHERE cu.CustomerID = ? ORDER BY cr.RequestDate DESC";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    CompensationRequests request = new CompensationRequests();
+                    request.setRequestID(rs.getInt("RequestID"));
+                    request.setCustomerID(rs.getInt("CustomerID"));
+                    request.setContractID(rs.getInt("ContractID"));
+                    request.setRequestDate(rs.getDate("RequestDate"));
+                    request.setStatus(rs.getString("Status"));
+                    request.setDescription(rs.getString("Description"));
+                    request.setAmount(rs.getBigDecimal("Amount"));
+                    request.setCustomerName(rs.getString("CustomerName"));
+                    requests.add(request);
+                }
+            }
+        }
+        return requests;
+    }
+
+    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID, int offset, int limit) throws SQLException {
+        List<CompensationRequests> requests = new ArrayList<>();
+        String query = "SELECT cr.RequestID, cr.CustomerID, cr.ContractID, cr.RequestDate, cr.Status, cr.Description, cr.Amount, " +
+                "u.Full_name AS CustomerName " +
+                "FROM CompensationRequests cr " +
+                "JOIN Customers cu ON cr.CustomerID = cu.CustomerID " +
+                "JOIN Users u ON cu.UserID = u.UserID " +
+                "WHERE cu.CustomerID = ? ORDER BY cr.RequestDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, customerID);
+            stmt.setInt(2, offset);
+            stmt.setInt(3, limit);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    CompensationRequests request = new CompensationRequests();
+                    request.setRequestID(rs.getInt("RequestID"));
+                    request.setCustomerID(rs.getInt("CustomerID"));
+                    request.setContractID(rs.getInt("ContractID"));
+                    request.setRequestDate(rs.getDate("RequestDate"));
+                    request.setStatus(rs.getString("Status"));
+                    request.setDescription(rs.getString("Description"));
+                    request.setAmount(rs.getBigDecimal("Amount"));
+                    request.setCustomerName(rs.getString("CustomerName"));
+                    requests.add(request);
+                }
+            }
+        }
+        return requests;
     }
 
     public boolean isContractValidForCustomer(int contractID, int customerID) throws SQLException {
