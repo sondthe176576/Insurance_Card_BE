@@ -140,6 +140,7 @@
                                             });
                                         });
                                     </script>
+
                                     <div class="col-md-12">
                                         <label class="labels">Email ID</label>
                                         <input type="text" name="email_id" class="form-control" placeholder="Email ID" value="<%= userFromDB.getEmail() %>">
@@ -152,6 +153,47 @@
                                         </select>
                                     </div>
                                 </div>
+                                <hr class="my-6">
+                                <h2 class="text-2xl font-bold mb-6">Additional Information</h2>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <label class="labels">Personal Info</label>
+                                        <input type="text" name="personal_info" class="form-control" placeholder="Name for your motorbike information" required>
+                                    </div>
+                                </div>
+                                <hr class="my-6">
+                                <h2 class="text-2xl font-bold mb-6">Motorcycle Information</h2>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <label class="labels">License Plate</label>
+                                        <input type="text" name="license_plate" class="form-control" placeholder="License Plate" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Brand</label>
+                                        <input type="text" name="brand" class="form-control" placeholder="Brand" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Model</label>
+                                        <input type="text" name="model" class="form-control" placeholder="Model" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Frame Number</label>
+                                        <input type="text" name="frame_number" class="form-control" placeholder="Frame Number" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Engine Number</label>
+                                        <input type="text" name="engine_number" class="form-control" placeholder="Engine Number" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Year of Manufacture</label>
+                                        <input type="number" name="year_of_manufacture" class="form-control" placeholder="Year of Manufacture" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Color</label>
+                                        <input type="text" name="color" class="form-control" placeholder="Color" required>
+                                    </div>
+                                </div>
+
                                 <div class="mt-5 text-center">
                                     <button class="btn btn-primary profile-button" type="submit">Save</button>
                                 </div>

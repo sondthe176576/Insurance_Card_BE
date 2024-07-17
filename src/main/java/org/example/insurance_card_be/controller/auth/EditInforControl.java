@@ -24,6 +24,7 @@ public class EditInforControl extends HttpServlet {
         HttpSession session = request.getSession();
 
         String username = ((Users) session.getAttribute("user")).getUsername();
+        int userID = ((Users) session.getAttribute("user")).getUserID();
         String full_name = request.getParameter("full_name");
         String first_name = request.getParameter("first_name");
         String last_name = request.getParameter("last_name");
@@ -35,8 +36,20 @@ public class EditInforControl extends HttpServlet {
         String quan = request.getParameter("quan");
         String phuong = request.getParameter("phuong");
 
+        // Additional fields
+        String personal_info = request.getParameter("personal_info");
+        String license_plate = request.getParameter("license_plate");
+        String brand = request.getParameter("brand");
+        String model = request.getParameter("model");
+        String frame_number = request.getParameter("frame_number");
+        String engine_number = request.getParameter("engine_number");
+        int year_of_manufacture = Integer.parseInt(request.getParameter("year_of_manufacture"));
+        String color = request.getParameter("color");
+
         UserDAO dao = new UserDAO();
         dao.updateProfile(username, email_id, mobile, tinh, quan, phuong, first_name, last_name, full_name, birthdate, gender);
+        dao.updateCustomerInfo(userID, personal_info);
+        dao.addMotorcycle(userID, license_plate, brand, model, frame_number, engine_number, year_of_manufacture, color);
 
         request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
     }

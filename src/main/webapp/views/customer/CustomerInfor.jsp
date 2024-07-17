@@ -1,4 +1,6 @@
 <%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
+<%@ page import="org.example.insurance_card_be.model.Customers" %>
+<%@ page import="org.example.insurance_card_be.model.Motorcycle" %>
 
 <%
     // Lấy thông tin người dùng từ session (giả sử bạn đã set session từ trước)
@@ -16,6 +18,9 @@
         // Xử lý khi không lấy được thông tin người dùng từ cơ sở dữ liệu
         return;
     }
+
+    Customers customerFromDB = (Customers) request.getAttribute("customer");
+    Motorcycle motorcycleFromDB = (Motorcycle) request.getAttribute("motorcycle");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,11 +104,11 @@
                             <div class="row mt-2">
                                 <div class="col-md-6">
                                     <label class="labels">First Name</label>
-                                    <input type="text" class="form-control" placeholder="First Name" value="<%= userFromDB.getFirstName() %>" readonly>
+                                    <input type="text" class="form-control" placeholder="First Name" value="<%=userFromDB.getFirstName()%>" readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="labels">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last Name" value="<%= userFromDB.getLastName() %>" readonly>
+                                    <input type="text" class="form-control" placeholder="Last Name" value="<%=userFromDB.getLastName()%>" readonly>
                                 </div>
 
                                 <div class="col-md-6">
@@ -133,6 +138,46 @@
                                 <div class="col-md-12">
                                     <label class="labels">Gender</label>
                                     <input type="text" class="form-control" placeholder="Last Name" value="<%= userFromDB.getGender() %>" readonly>
+                                </div>
+                            </div>
+                            <hr class="my-6">
+                            <h2 class="text-2xl font-bold mb-6">Additional Information</h2>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">Personal Info</label>
+                                    <input type="text" class="form-control" value="<%= customerFromDB != null ? customerFromDB.getPersonalInfo() : "" %>" readonly>
+                                </div>
+                            </div>
+                            <hr class="my-6">
+                            <h2 class="text-2xl font-bold mb-6">Motorcycle Information</h2>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">License Plate</label>
+                                    <input type="text" class="form-control" value="" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Brand</label>
+                                    <input type="text" class="form-control" value="" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Model</label>
+                                    <input type="text" class="form-control" value="" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Frame Number</label>
+                                    <input type="text" class="form-control" value="" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Engine Number</label>
+                                    <input type="text" class="form-control" value="" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Year of Manufacture</label>
+                                    <input type="text" class="form-control" value="" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Color</label>
+                                    <input type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="mt-5 text-center">
