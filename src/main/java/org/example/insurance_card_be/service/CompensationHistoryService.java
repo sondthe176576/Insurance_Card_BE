@@ -33,7 +33,7 @@ public class CompensationHistoryService {
 
     public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID) {
         try {
-            return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID);
+            return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID, 0, Integer.MAX_VALUE); // Assuming default pagination
         } catch (Exception e) {
             e.printStackTrace();
             return null;

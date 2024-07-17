@@ -70,7 +70,11 @@ public class CompensationHistoryServlet extends HttpServlet {
     }
 
     private void listCompensationRequests(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        int customerID = (int) request.getSession().getAttribute("customerID");
+        Integer customerID = (Integer) request.getSession().getAttribute("customerID");
+        if (customerID == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Customer ID is missing. Please log in again.");
+            return;
+        }
 
         // Get page number from request
         String pageStr = request.getParameter("page");
@@ -115,7 +119,13 @@ public class CompensationHistoryServlet extends HttpServlet {
     }
 
     private void addCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        int customerID = (int) request.getSession().getAttribute("customerID");
+        Integer customerID = (Integer) request.getSession().getAttribute("customerID");
+        if (customerID == null) {
+            request.setAttribute("errorMessage", "Customer ID is missing. Please log in again.");
+            showAddForm(request, response);
+            return;
+        }
+
         String contractIDStr = request.getParameter("contractID");
         String amountStr = request.getParameter("amount");
         String description = request.getParameter("description");
