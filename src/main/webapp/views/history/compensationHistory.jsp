@@ -10,6 +10,8 @@
     <title>Compensation History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -33,12 +35,18 @@
                     <td>${history.amount}</td>
                     <td>${history.date}</td>
                     <td>
-                        <a href="compensationHistory?action=view&id=${history.compensationID}" class="btn btn-primary btn-sm">View</a>
-                        <a href="compensationHistory?action=edit&id=${history.compensationID}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="compensationHistory?action=view&id=${history.compensationID}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="compensationHistory?action=edit&id=${history.compensationID}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
                         <form action="compensationHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="compensationID" value="${history.compensationID}">
-                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -63,7 +71,7 @@
             </ul>
         </nav>
 
-        <h2 class="mt-4 mb-4">Add New Compensation History</h2>
+        <h2 class="mt-4 mb-4">Request Compensation</h2>
         <form action="compensationHistory" method="post">
             <input type="hidden" name="action" value="add">
             <div class="mb-3">
@@ -74,37 +82,8 @@
                 <label for="addamount" class="form-label">Amount:</label>
                 <input type="text" class="form-control" id="addamount" name="amount" required>
             </div>
-            <button type="submit" class="btn btn-success">Add</button>
+            <button type="submit" class="btn btn-success">Request</button>
         </form>
-
-        <c:if test="${not empty compensationHistoryCus}">
-            <h2 class="mt-4 mb-4">Edit Compensation History</h2>
-            <form action="compensationHistory" method="post">
-                <input type="hidden" name="action" value="update">
-                <input type="hidden" name="compensationID" value="${compensationHistoryCus.compensationID}">
-                <div class="mb-3">
-                    <label for="customerID" class="form-label">Customer ID:</label>
-                    <input type="text" class="form-control" id="customerID" name="customerID" value="${compensationHistoryCus.customerID}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="amount" class="form-label">Amount:</label>
-                    <input type="text" class="form-control" id="amount" name="amount" value="${compensationHistoryCus.amount}" required>
-                </div>
-                <button type="submit" class="btn btn-warning">Update</button>
-            </form>
-        </c:if>
-
-        <c:if test="${not empty compensationHistoryCus}">
-            <h2 class="mt-4 mb-4">View Compensation History</h2>
-            <div class="card">
-                <div class="card-body">
-                    <p>ID: ${compensationHistoryCus.compensationID}</p>
-                    <p>Customer ID: ${compensationHistoryCus.customerID}</p>
-                    <p>Amount: ${compensationHistoryCus.amount}</p>
-                    <p>Date: ${compensationHistoryCus.date}</p>
-                </div>
-            </div>
-        </c:if>
     </div>
 </div>
 

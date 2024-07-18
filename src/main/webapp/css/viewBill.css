@@ -9,12 +9,21 @@ body {
     width: 100%;
 }
 
-.table-responsive {
+.container {
     margin: 20px auto;
     background: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.alert {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.table-responsive {
+    margin: 20px 0;
 }
 
 .table {
@@ -25,14 +34,15 @@ body {
 }
 
 .table th, .table td {
-    padding: 1rem;
-    vertical-align: top;
+    padding: 1.5rem;
+    vertical-align: middle;
     border-top: 1px solid #dee2e6;
 }
 
 .table thead th {
-    vertical-align: bottom;
+    vertical-align: middle;
     border-bottom: 2px solid #dee2e6;
+    font-size: 1.1rem;
 }
 
 .table tbody + tbody {
@@ -45,10 +55,10 @@ body {
 }
 
 .table .btn {
-    padding: 6px 12px;
+    padding: 10px 20px;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -72,4 +82,22 @@ body {
 
 .table .btn-primary .bi:hover {
     color: #ffffff; /* Ensure the icon color remains white on hover */
+}
+
+.table {
+    font-size: 1.05rem; /* Increase table font size for better readability */
+}
+
+h2.text-center {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.alert-dismissible .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 2;
+    padding: 1rem;
 }

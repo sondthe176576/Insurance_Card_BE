@@ -4,6 +4,8 @@
 <html>
 <head>
     <title>Manage Customer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -47,22 +49,39 @@
 
         .filter-form .form-group {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             margin-bottom: 15px;
+            width: 100%;
         }
 
         .filter-form label {
-            margin-right: 10px;
+            margin-bottom: 5px;
             color: #2980b9;
             font-weight: bold;
         }
 
         .filter-form input, .filter-form select {
             padding: 10px;
-            margin-right: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
+            width: 100%;
+        }
+
+        .filter-form .form-group-lg {
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .filter-form .form-group-sm {
+            flex: 0.5;
+            margin-right: 15px;
+        }
+
+        .filter-form .form-group-btn {
+            flex: 0.2;
+            display: flex;
+            align-items: flex-end;
         }
 
         .filter-form button {
@@ -73,6 +92,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            width: 100%;
         }
 
         .filter-form button:hover {
@@ -101,19 +121,41 @@
             background-color: #f4f7f6;
         }
 
-        .btn-submit, .btn-view {
-            background-color: #3498db;
-            color: white;
+        .btn-group .btn {
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             text-decoration: none;
+            margin: 2px;
         }
 
-        .btn-submit:hover, .btn-view:hover {
+        .btn-view {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-view:hover {
             background-color: #2980b9;
+        }
+
+        .btn-edit {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background-color: #e67e22;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c0392b;
         }
 
         .pagination {
@@ -154,124 +196,10 @@
             top: 20px;
             right: 20px;
             z-index: 1000;
-            display: none; /* Ẩn thông báo mặc định */
+            display: none;
         }
     </style>
     <script src="https://esgoo.net/scripts/jquery.js"></script>
-    <style type="text/css">
-        .css_select_div{ text-align: center;}
-        .css_select{ display: inline-table; width: 25%; padding: 5px; margin: 5px 2%; border: solid 1px #686868; border-radius: 5px;}
-    </style>
-    <script>
-        function validateForm() {
-            const searchType = document.getElementById("searchType").value;
-            const keyword = document.getElementById("searchKeyword").value;
-            if (searchType === "phone" && !/^\d+$/.test(keyword)) {
-                alert("Please enter a valid phone number (digits only).");
-                return false;
-            }
-            return true;
-        }
-
-        function deleteCustomer(e){
-            if (confirm('Are you sure you want to delete this customer?')) {
-                e.closest('form').submit();
-            }
-        }
-
-        window.onload = function() {
-            var messageElement = document.getElementById("message");
-            if (messageElement) {
-                messageElement.style.display = "block";
-                setTimeout(function() {
-                    messageElement.style.display = "none";
-                }, 5000);
-            }
-        };
-
-        function populateEditForm(button) {
-            var tr = button.closest('tr');
-
-            var form = document.getElementById('editCustomerForm');
-
-            form.querySelector('input[name="userId"]').value = tr.getAttribute('data-id');
-            form.querySelector('input[name="username"]').value = tr.getAttribute('data-username');
-            form.querySelector('input[name="password"]').value = tr.getAttribute('data-password');
-            form.querySelector('input[name="firstName"]').value = tr.getAttribute('data-firstname');
-            form.querySelector('input[name="lastName"]').value = tr.getAttribute('data-lastname');
-            form.querySelector('input[name="fullName"]').value = tr.getAttribute('data-fullname');
-            form.querySelector('input[name="birthDate"]').value = tr.getAttribute('data-birthdate');
-            form.querySelector('input[name="mobile"]').value = tr.getAttribute('data-mobile');
-            form.querySelector('input[name="email"]').value = tr.getAttribute('data-email');
-            form.querySelector('select[name="gender"]').value = tr.getAttribute('data-gender');
-
-            // Set hidden fields for address
-            form.querySelector('input[name="hidden_tinh"]').value = tr.getAttribute('data-province');
-            form.querySelector('input[name="hidden_quan"]').value = tr.getAttribute('data-district');
-            form.querySelector('input[name="hidden_phuong"]').value = tr.getAttribute('data-country');
-
-            // Load the provinces, districts, and wards if not already loaded
-            loadProvinces().then(() => {
-                $("#tinh").val(tr.getAttribute('data-province')).trigger('change');
-            });
-
-            // Show the form
-            form.style.display = 'block';
-        }
-
-        // Function to load provinces
-        function loadProvinces() {
-            return $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
-                if (data_tinh.error == 0) {
-                    $.each(data_tinh.data, function (key_tinh, val_tinh) {
-                        $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
-                    });
-                }
-            });
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-            // Fetch provinces
-            $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
-                if (data_tinh.error == 0) {
-                    $.each(data_tinh.data, function (key_tinh, val_tinh) {
-                        $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
-                    });
-                    $("#tinh").change(function (e) {
-                        var idtinh = $(this).val();
-                        $("#hidden_tinh").val($("#tinh option:selected").text());
-                        // Fetch districts
-                        $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
-                            if (data_quan.error == 0) {
-                                $("#quan").html('<option value="0">Quận Huyện</option>');
-                                $("#phuong").html('<option value="0">Phường Xã</option>');
-                                $.each(data_quan.data, function (key_quan, val_quan) {
-                                    $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
-                                });
-                                // Fetch wards
-                                $("#quan").change(function (e) {
-                                    var idquan = $(this).val();
-                                    $("#hidden_quan").val($("#quan option:selected").text());
-                                    $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
-                                        if (data_phuong.error == 0) {
-                                            $("#phuong").html('<option value="0">Phường Xã</option>');
-                                            $.each(data_phuong.data, function (key_phuong, val_phuong) {
-                                                $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
-                                            });
-                                            $("#phuong").change(function (e) {
-                                                $("#hidden_phuong").val($("#phuong option:selected").text());
-                                            });
-                                        }
-                                    });
-                                });
-                            }
-                        });
-                    });
-                }
-            });
-        });
-    </script>
 </head>
 <body>
 <!-- Include header -->
@@ -282,62 +210,46 @@
 <!-- End of navbar -->
 
 <!-- Form -->
-<div class="form-container">
+<div class="form-container container mt-5">
     <h2>Customer Management</h2>
     <h3>List of Customers</h3>
 
-    <!-- Hiển thị thông báo nếu có -->
+    <!-- Display message if exists -->
     <c:if test="${not empty message}">
-        <div class="message" id="message">
+        <div class="alert alert-success" id="message">
                 ${message}
         </div>
     </c:if>
 
-    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/customer-manage" onsubmit="return validateForm()">
-        <div class="form-group">
-            <label for="searchType">Search by:</label>
-            <select id="searchType" name="searchType">
+    <form method="get" class="filter-form row g-3" action="${pageContext.request.contextPath}/customer-manage" onsubmit="return validateForm()">
+        <div class="col-md-4 form-group form-group-lg">
+            <label for="searchType" class="form-label">Search by:</label>
+            <select id="searchType" name="searchType" class="form-select">
                 <option value="name" ${param.searchType == 'name' ? 'selected' : ''}>Name</option>
                 <option value="email" ${param.searchType == 'email' ? 'selected' : ''}>Email</option>
                 <option value="phone" ${param.searchType == 'phone' ? 'selected' : ''}>Phone</option>
             </select>
-            <input type="text" id="searchKeyword" name="keyword" value="${param.keyword}" placeholder="Enter search keyword"/>
         </div>
-        <div class="form-group">
-            <label for="genderFilter">Gender:</label>
-            <select id="genderFilter" name="genderFilter">
+        <div class="col-md-4 form-group form-group-lg">
+            <label for="searchKeyword" class="form-label">Keyword:</label>
+            <input type="text" id="searchKeyword" name="keyword" value="${param.keyword}" placeholder="Enter search keyword" class="form-control"/>
+        </div>
+        <div class="col-md-4 form-group form-group-sm">
+            <label for="genderFilter" class="form-label">Gender:</label>
+            <select id="genderFilter" name="genderFilter" class="form-select">
                 <option value="" ${param.genderFilter == '' ? 'selected' : ''}>All</option>
                 <option value="Male" ${param.genderFilter == 'Male' ? 'selected' : ''}>Male</option>
                 <option value="Female" ${param.genderFilter == 'Female' ? 'selected' : ''}>Female</option>
             </select>
         </div>
-        <button type="submit" class="btn-submit">Filter</button>
-    </form>
-    <!-- Form riêng để tìm kiếm theo địa chỉ -->
-    <form method="get" class="filter-form" action="${pageContext.request.contextPath}/customer-manage">
-        <div class="form-group">
-            <label for="hidden_tinh">Search by Address:</label>
-            <div class="css_select_div">
-                <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
-                    <option value="0">Tỉnh Thành</option>
-                </select>
-                <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
-                    <option value="0">Quận Huyện</option>
-                </select>
-                <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
-                    <option value="0">Phường Xã</option>
-                </select>
-            </div>
-            <input type="hidden" name="hidden_tinh" id="hidden_tinh">
-            <input type="hidden" name="hidden_quan" id="hidden_quan">
-            <input type="hidden" name="hidden_phuong" id="hidden_phuong">
+        <div class="col-md-12 form-group form-group-btn">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Filter</button>
         </div>
-        <button type="submit" class="btn-submit">Search by Address</button>
     </form>
 
-    <button class="btn-submit" onclick="window.location.href='${pageContext.request.contextPath}/customer-create'">Create Customer</button>
-    <table class="customer-table">
-        <thead>
+    <button class="btn btn-success mt-4" onclick="window.location.href='${pageContext.request.contextPath}/customer-create'"><i class="bi bi-plus-circle"></i> Create Customer</button>
+    <table class="table table-bordered mt-4">
+        <thead class="table-dark">
         <tr>
             <th>No</th>
             <th style="display: none">Username</th>
@@ -345,32 +257,32 @@
             <th>Full Name</th>
             <th>Phone</th>
             <th>Email</th>
-            <th>Adress</th>
-            <th >Gender</th>
+            <th>Address</th>
+            <th>Gender</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${sessionScope.listCustomer}" var="c" varStatus="status">
-            <tr data-id="${c.userId}" data-username="${c.userName}" data-password="${c.password}"
+            <tr data-id="${c.userID}" data-username="${c.username}" data-password="${c.password}"
                 data-fullname="${c.fullName}" data-mobile="${c.mobile}" data-email="${c.email}"
                 data-gender="${c.gender}" data-birthdate="<fmt:formatDate value='${c.birthDate}' pattern='yyyy-MM-dd'/>"
                 data-province="${c.province}" data-district="${c.district}" data-country="${c.country}">
                 <td>${status.index + 1}</td>
-                <td name="username" style="display: none">${c.userName}</td>
+                <td name="username" style="display: none">${c.username}</td>
                 <td name="password" style="display: none">${c.password}</td>
                 <td name="fullName">${c.fullName}</td>
                 <td name="mobile">${c.mobile}</td>
                 <td name="email">${c.email}</td>
                 <td name="address">${c.province}, ${c.district}, ${c.country}</td>
-                <td name="gender" >${c.gender}</td>
+                <td name="gender">${c.gender}</td>
                 <td>
-                    <div class="button-container">
-                        <a href="${pageContext.request.contextPath}/customer-view?userID=${c.userId}" class="btn btn-info">View</a>
-                        <a href="${pageContext.request.contextPath}/customer-edit?userID=${c.userId}" class="btn btn-warning">Edit</a>
+                    <div class="btn-group" role="group">
+                        <a href="${pageContext.request.contextPath}/customer-view?userID=${c.userID}" class="btn btn-view"><i class="bi bi-eye"></i></a>
+                        <a href="${pageContext.request.contextPath}/customer-edit?userID=${c.userID}" class="btn btn-edit"><i class="bi bi-pencil"></i></a>
                         <form action="${pageContext.request.contextPath}/customer-delete" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="${c.userId}" />
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <input type="hidden" name="id" value="${c.userID}" />
+                            <button type="submit" class="btn btn-delete"><i class="bi bi-trash"></i></button>
                         </form>
                     </div>
                 </td>
@@ -402,6 +314,6 @@
 <jsp:include page="/views/includes/footer.jsp"/>
 <!-- End of footer -->
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

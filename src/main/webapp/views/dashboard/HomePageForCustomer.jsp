@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="/views/includes/header_logout.jsp"/>
+<jsp:include page="/views/includes/header.jsp"/>
 <%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
 
 <%
@@ -26,6 +27,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        request.getRequestDispatcher("/views/homepage/home.jsp").forward(request, response);
+        return;
+    }
+
+    UserDAO userDAO = new UserDAO();
+    Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    if (userFromDB == null) {
+        return;
+    }
+%>
+
+<html>
+<head>
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom Navbar */
+        .navbar-custom {
+            background-color: #004080;
+            border-bottom: 3px solid #ff8000;
+            display: flex;
+            justify-content: center;
+        }
+        .navbar-custom .navbar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Ensure the container takes full width */
+            max-width: 1200px; /* Optional: limit the max width */
+            padding: 10px 20px;
+            margin: 0 auto; /* Center the container */
+        }
+        .navbar-custom .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .navbar-custom .nav-links li {
+            margin: 0 10px;
+        }
+        .navbar-custom .nav-links li a {
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 10px 15px;
+            text-decoration: none;
+        }
+        .navbar-custom .nav-links li a:hover {
+            color: #ff8000;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
 
@@ -58,6 +112,14 @@
                     <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
                 </a>
             </li>
+<nav class="navbar navbar-custom">
+    <div class="navbar-container">
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}">Buy Insurance</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="${pageContext.request.contextPath}/contractDetail/1">Contract</a></li>
+            <li><a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp">Dashboard</a></li>
         </ul>
     </div>
 </nav>

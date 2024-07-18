@@ -49,6 +49,9 @@ public class LoginControl extends HttpServlet {
 
             LOGGER.info("Login successful, user: " + user);
             System.out.println("CustomerID: "+ customerid);
+
+            LOGGER.info("Login successful, user: " + user);
+
             // Kiểm tra vai trò của user và chuyển hướng phù hợp
             if ("staff".equalsIgnoreCase(user.getRole())) {
                 response.sendRedirect("homepageforstaff");

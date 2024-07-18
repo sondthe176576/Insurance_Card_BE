@@ -1,52 +1,36 @@
 package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.PaymentHistoryDAO;
-import org.example.insurance_card_be.model.PaymentHistoryCus;
+import org.example.insurance_card_be.model.PaymentHistory;
 
 import java.util.List;
 
 public class PaymentHistoryService {
 
-    private PaymentHistoryDAO paymentHistoryDAO = new PaymentHistoryDAO();
+    private final PaymentHistoryDAO paymentHistoryDAO;
 
-    /**
-     * Lấy danh sách tất cả các lịch sử thanh toán
-     * @return Danh sách các lịch sử thanh toán
-     */
-    public List<PaymentHistoryCus> getAllPaymentHistories() {
+    public PaymentHistoryService() {
+        this.paymentHistoryDAO = new PaymentHistoryDAO();
+    }
+
+    public List<PaymentHistory> getAllPaymentHistories() {
         return paymentHistoryDAO.getAllPaymentHistories();
     }
 
-    /**
-     * Lấy thông tin lịch sử thanh toán bằng ID
-     * @param paymentID ID của lịch sử thanh toán cần lấy
-     * @return Đối tượng PaymentHistoryCus tương ứng với ID hoặc null nếu không tìm thấy
-     */
-    public PaymentHistoryCus getPaymentHistoryById(int paymentID) {
+    public PaymentHistory getPaymentHistoryById(int paymentID) {
         return paymentHistoryDAO.getPaymentHistoryById(paymentID);
     }
 
-    /**
-     * Thêm một lịch sử thanh toán mới
-     * @param paymentHistoryCus Đối tượng PaymentHistoryCus cần thêm
-     */
-    public void addPaymentHistory(PaymentHistoryCus paymentHistoryCus) {
-        paymentHistoryDAO.addPaymentHistory(paymentHistoryCus);
+    public void addPaymentHistory(PaymentHistory paymentHistory) {
+        paymentHistoryDAO.addPaymentHistory(paymentHistory);
     }
 
-    /**
-     * Cập nhật thông tin lịch sử thanh toán
-     * @param paymentHistoryCus Đối tượng PaymentHistoryCus cần cập nhật
-     */
-    public void updatePaymentHistory(PaymentHistoryCus paymentHistoryCus) {
-        paymentHistoryDAO.updatePaymentHistory(paymentHistoryCus);
+    public void updatePaymentHistory(PaymentHistory paymentHistory) {
+        paymentHistoryDAO.updatePaymentHistory(paymentHistory);
     }
 
-    /**
-     * Xóa lịch sử thanh toán bằng ID
-     * @param paymentID ID của lịch sử thanh toán cần xóa
-     */
     public void deletePaymentHistory(int paymentID) {
         paymentHistoryDAO.deletePaymentHistory(paymentID);
     }
 }
+

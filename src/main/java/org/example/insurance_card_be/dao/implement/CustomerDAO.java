@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO extends DBContext {
-    private static final int CUSTOMERS_PER_PAGE = 5;
+    private static final int CUSTOMERS_PER_PAGE = 8;
+
     public List<Users> findAll() {
         List<Users> list = new ArrayList<>();
         String sql = "Select * from [Users] where Role = 'Customer'";
@@ -31,37 +32,28 @@ public class CustomerDAO extends DBContext {
                 user.setFullName(rs.getString("Full_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
                 user.setGender(rs.getString("Gender"));
-                // set other fields as necessary
                 list.add(user);
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return list;
-        // viet ham main lay tat ca customer
-
-    }
-    public static void main(String[] args) {
-            CustomerDAO dao = new CustomerDAO();
-            List<Users> list = dao.findAll();
-            for (Users user : list) {
-                System.out.println(user);
-            }
-
     }
 
     public void deleteByID(Users users) {
         Connection connection = getConnection();
-        String sql = "delete from [Users] where UserID = ?";
+        String sql = "DELETE FROM [Users] WHERE UserID = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setObject(1, users.getUserID());
+
+            st.setInt(1, users.getUserID());
+
+         
             st.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
-
 
     public List<Users> findAll(int page) {
         List<Users> list = new ArrayList<>();
@@ -87,11 +79,10 @@ public class CustomerDAO extends DBContext {
                 user.setFullName(rs.getString("Full_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
                 user.setGender(rs.getString("Gender"));
-                // set other fields as necessary
                 list.add(user);
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return list;
     }
@@ -104,16 +95,14 @@ public class CustomerDAO extends DBContext {
             if (rs.next()) {
                 return rs.getInt(1);
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return 0;
     }
 
-
-
     public void insert(Users customer) {
-        String sql = "INSERT INTO [dbo].[Users] " +
+        String sql = "INSERT INTO [Users] " +
                 "([Username], [Password], [Role], [Email], [Mobile], [Province], [District], [Country], " +
                 "[First_name], [Last_name], [Full_name], [Birth_date], [Gender]) " +
                 "VALUES (?, ?, 'Customer', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -125,7 +114,7 @@ public class CustomerDAO extends DBContext {
             statement.setString(4, customer.getMobile());
             statement.setString(5, customer.getProvince());
             statement.setString(6, customer.getDistrict());
-            statement.setString(7, customer.getCountry());  // Ensure this parameter is set
+            statement.setString(7, customer.getCountry());
             statement.setString(8, customer.getFirstName());
             statement.setString(9, customer.getLastName());
             statement.setString(10, customer.getFullName());
@@ -148,9 +137,8 @@ public class CustomerDAO extends DBContext {
         }
     }
 
-
     public void update(Users customer) {
-        String sql = "UPDATE [dbo].[Users] SET " +
+        String sql = "UPDATE [Users] SET " +
                 "[Username] = ?, " +
                 "[Password] = ?, " +
                 "[Role] = ?, " +
@@ -168,7 +156,7 @@ public class CustomerDAO extends DBContext {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, customer.getUsername());
             statement.setString(2, customer.getPassword());
-            statement.setString(3, "Customer");  // Ensure the role is set
+            statement.setString(3, "Customer");
             statement.setString(4, customer.getEmail());
             statement.setString(5, customer.getMobile());
             statement.setString(6, customer.getProvince());
@@ -180,15 +168,14 @@ public class CustomerDAO extends DBContext {
             statement.setDate(12, new java.sql.Date(customer.getBirthDate().getTime()));
             statement.setString(13, customer.getGender());
             statement.setInt(14, customer.getUserID());
-
             // Debugging statement
             System.out.println("Executing SQL: " + statement.toString());
-
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public Users findById(int userID) {
         String sql = "SELECT * FROM [Users] WHERE UserID = ?";
         try (Connection connection = getConnection();
@@ -215,9 +202,8 @@ public class CustomerDAO extends DBContext {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Xử lý lỗi nếu cần thiết
         }
-        return null; // Trả về null nếu không tìm thấy người dùng
+        return null;
     }
 
     public List<Users> findByUsernameAndGender(String keyword, String gender, int page) {
@@ -247,7 +233,6 @@ public class CustomerDAO extends DBContext {
                 user.setFullName(rs.getString("Full_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
                 user.setGender(rs.getString("Gender"));
-                // set other fields as necessary
                 list.add(user);
             }
         } catch (SQLException e) {
@@ -283,7 +268,6 @@ public class CustomerDAO extends DBContext {
                 user.setFullName(rs.getString("Full_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
                 user.setGender(rs.getString("Gender"));
-                // set other fields as necessary
                 list.add(user);
             }
         } catch (SQLException e) {
@@ -319,7 +303,6 @@ public class CustomerDAO extends DBContext {
                 user.setFullName(rs.getString("Full_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
                 user.setGender(rs.getString("Gender"));
-                // set other fields as necessary
                 list.add(user);
             }
         } catch (SQLException e) {
@@ -354,7 +337,6 @@ public class CustomerDAO extends DBContext {
                 user.setFullName(rs.getString("Full_name"));
                 user.setBirthDate(rs.getDate("Birth_date"));
                 user.setGender(rs.getString("Gender"));
-                // set other fields as necessary
                 list.add(user);
             }
         } catch (SQLException e) {
@@ -389,6 +371,7 @@ public class CustomerDAO extends DBContext {
         }
         return 0;
     }
+
     public List<Users> findAllWithAddress(int page, String province, String district, String ward) {
         List<Users> list = new ArrayList<>();
         String sql = "SELECT * FROM Users WHERE Role = 'Customer' AND (? = '0' OR Province = ?) AND (? = '0' OR District = ?) AND (? = '0' OR Country = ?) ORDER BY UserID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
@@ -422,5 +405,3 @@ public class CustomerDAO extends DBContext {
 
 
 }
-
-

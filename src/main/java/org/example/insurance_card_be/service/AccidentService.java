@@ -31,4 +31,5 @@ public class AccidentService {
     public void updateAccidentStatus(int accidentID, String status) throws SQLException {
         accidentDAO.updateAccidentStatus(accidentID, status);
     }
+
 }

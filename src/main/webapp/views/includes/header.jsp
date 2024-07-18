@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insurance Card</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -18,6 +19,7 @@
         .tp-header {
             background-color: #0056b3;
             padding: 20px 40px;
+            padding: 10px 40px;
             color: #fff;
             display: flex;
             align-items: center;
@@ -64,6 +66,34 @@
             margin-left: 20px;
         }
 
+            max-width: 400px;
+            position: relative;
+        }
+
+        .tp-header .form-control {
+            border-radius: 20px;
+            padding-right: 40px;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .tp-header .form-inline .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #007bff;
+            font-size: 1.5rem;
+        }
+
+        .tp-header .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            position: relative;
+            margin-left: 20px;
+        }
+
         .tp-header .user-info .user-icon-btn {
             background-color: #007bff;
             color: #fff;
@@ -83,6 +113,7 @@
             text-decoration: none;
             color: white;
             margin-right: 10px;
+            margin-top: 5px;
         }
 
         .tp-header .user-info .profile-link i {
@@ -112,6 +143,22 @@
             font-size: 1.2rem;
             font-weight: bold;
             margin-top: 10px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .tp-header .welcome-message {
+            margin-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+        }
+
+        .tp-header .phone {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 5px;
             text-align: right;
         }
 
@@ -161,6 +208,7 @@
                 margin-left: 0;
                 margin-top: 10px;
             }
+
         }
     </style>
 </head>
@@ -172,6 +220,14 @@
     <div class="search-container">
         <form class="form-inline my-2 my-lg-0" onsubmit="return handleSearch(event)">
             <input class="form-control" type="search" placeholder="Search..." aria-label="Search" id="searchInput">
+        <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo">
+    </a>
+    <div class="search-container">
+        <form class="form-inline my-2 my-lg-0" onsubmit="return handleSearch(event)">
+            <div class="input-group">
+                <input class="form-control" type="search" placeholder="Search..." aria-label="Search" id="searchInput">
+                <i class="bi bi-search search-icon"></i>
+            </div>
         </form>
     </div>
     <c:choose>
@@ -185,6 +241,11 @@
                     <button type="submit" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </button>
+                    <i class="bi bi-person user-icon"></i>
+                    <span class="welcome-message">Welcome, ${sessionScope.user.username}</span>
+                </a>
+                <form action="${pageContext.request.contextPath}/logout" method="get">
+                    <button type="submit" class="logout-btn">Logout</button>
                 </form>
                 <span class="phone">PHONE: 0123 456 789</span>
             </div>
@@ -193,6 +254,8 @@
             <div class="user-info">
                 <a href="${pageContext.request.contextPath}/login" class="login-btn">
                     <i class="fas fa-sign-in-alt"></i> LOGIN
+
+                    <i class="bi bi-person"></i> LOGIN
                 </a>
                 <span class="phone">PHONE: 0123 456 789</span>
             </div>

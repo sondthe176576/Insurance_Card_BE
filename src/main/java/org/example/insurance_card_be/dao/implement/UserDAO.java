@@ -3,7 +3,9 @@ package org.example.insurance_card_be.dao.implement;
 import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.Customers;
 import org.example.insurance_card_be.model.Motorcycle;
+
 import org.example.insurance_card_be.model.Motorcycles;
+
 import org.example.insurance_card_be.model.Users;
 
 import java.sql.*;
@@ -411,6 +413,43 @@ public class UserDAO {
         Motorcycles motorcycles = dao.getMotorcycleByCustomerID(9);
         System.out.println(motorcycles);
     }
+    // Thêm phương thức để lấy đối tượng Users từ userId
+    public Users getUserById(int userId) {
+        String query = "SELECT * FROM Users WHERE UserID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, customerId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Customers customer = getCustomerById(customerId); // Tạo đối tượng Customers từ customerId
+                return new Motorcycle(rs.getInt(1),
+                        customer,
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getString(9));
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     // Thêm phương thức để lấy đối tượng Users từ userId
     public Users getUserById(int userId) {
         String query = "SELECT * FROM Users WHERE UserID = ?";

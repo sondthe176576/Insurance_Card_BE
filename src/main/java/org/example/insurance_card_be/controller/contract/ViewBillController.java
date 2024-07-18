@@ -29,6 +29,7 @@ public class ViewBillController extends HttpServlet {
             Contract contract = contractService.getContractByID(contractID);
 
             req.setAttribute("contract", contract);
+            req.setAttribute("message", "Your contract has been created and is pending processing. You will be notified once it is approved.");
             req.getRequestDispatcher("/views/contract/viewBill.jsp").forward(req, resp);
         } catch (Exception e) {
             Logger logger = Logger.getLogger(ViewBillController.class.getName());
