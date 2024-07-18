@@ -65,8 +65,12 @@ public class CompensationHistoryServlet extends HttpServlet {
     private void viewCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int requestID = Integer.parseInt(request.getParameter("id"));
         CompensationRequests requestDetail = compensationHistoryService.getCompensationRequestById(requestID);
-        request.setAttribute("compensationRequest", requestDetail);
-        request.getRequestDispatcher("/views/history/viewCompensationHistory.jsp").forward(request, response);
+        if (requestDetail != null) {
+            request.setAttribute("compensationRequest", requestDetail);
+            request.getRequestDispatcher("/views/history/viewCompensationHistory.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("errorPage.jsp");
+        }
     }
 
     private void listCompensationRequests(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
@@ -76,19 +80,14 @@ public class CompensationHistoryServlet extends HttpServlet {
             return;
         }
 
-        // Get page number from request
         String pageStr = request.getParameter("page");
         int page = (pageStr == null || pageStr.isEmpty()) ? 1 : Integer.parseInt(pageStr);
-
-        // Calculate offset
         int offset = (page - 1) * RECORDS_PER_PAGE;
 
-        // Fetch compensation requests
         List<CompensationRequests> requests = compensationHistoryService.getCompensationRequestsByCustomerID(customerID, offset, RECORDS_PER_PAGE);
         int totalRecords = compensationHistoryService.getTotalCompensationRequestsByCustomerID(customerID);
         int totalPages = (int) Math.ceil((double) totalRecords / RECORDS_PER_PAGE);
 
-        // Set attributes
         request.setAttribute("compensationRequests", requests);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);

@@ -80,7 +80,7 @@
                 <th>Customer ID</th>
                 <th>Amount</th>
                 <th>Date</th>
-                <th>Payment Method ID</th>
+                <th>Payment Method</th>
                 <th>Contract ID</th>
                 <th>Actions</th>
             </tr>
@@ -93,7 +93,16 @@
                     <td>${paymentHistory.customerID}</td>
                     <td>${paymentHistory.amount}</td>
                     <td>${paymentHistory.paymentDate}</td>
-                    <td>${paymentHistory.paymentMethodID}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${paymentHistory.paymentMethodID == 1}">
+                                Cash
+                            </c:when>
+                            <c:when test="${paymentHistory.paymentMethodID == 2}">
+                                Bank Transfer
+                            </c:when>
+                        </c:choose>
+                    </td>
                     <td>${paymentHistory.contractID}</td>
                     <td>
                         <a href="paymentHistory?action=view&paymentID=${paymentHistory.paymentID}" class="btn btn-primary btn-sm btn-action">

@@ -13,8 +13,12 @@ public class AccidentHistoryService {
         this.accidentHistoryDAO = new AccidentHistoryDAO();
     }
 
-    public List<Accident> getAccidentsByCustomerID(int customerID) throws SQLException {
-        return accidentHistoryDAO.getAccidentsByCustomerID(customerID);
+    public List<Accident> getAllAccidents() throws SQLException {
+        return accidentHistoryDAO.getAllAccidents();
+    }
+
+    public List<Accident> getAccidentsByCustomerID(int customerID, int offset, int limit) throws SQLException {
+        return accidentHistoryDAO.getAccidentsByCustomerID(customerID, offset, limit);
     }
 
     public Accident getAccidentById(int accidentID) throws SQLException {
@@ -35,5 +39,9 @@ public class AccidentHistoryService {
 
     public void deleteAccidentHistory(int accidentID) throws SQLException {
         accidentHistoryDAO.deleteAccidentHistory(accidentID);
+    }
+
+    public int getAccidentCountByCustomerID(int customerID) throws SQLException {
+        return accidentHistoryDAO.getAccidentCountByCustomerID(customerID);
     }
 }

@@ -41,7 +41,16 @@
             <p><strong>Customer ID:</strong> ${paymentHistory.customerID}</p>
             <p><strong>Amount:</strong> ${paymentHistory.amount}</p>
             <p><strong>Payment Date:</strong> ${paymentHistory.paymentDate}</p>
-            <p><strong>Payment Method ID:</strong> ${paymentHistory.paymentMethodID}</p>
+            <p><strong>Payment Method:</strong>
+                <c:choose>
+                    <c:when test="${paymentHistory.paymentMethodID == 1}">
+                        Cash
+                    </c:when>
+                    <c:when test="${paymentHistory.paymentMethodID == 2}">
+                        Bank Transfer
+                    </c:when>
+                </c:choose>
+            </p>
             <p><strong>Contract ID:</strong> ${paymentHistory.contractID}</p>
             <a href="${pageContext.request.contextPath}/paymentHistory" class="btn btn-secondary btn-back">Back to List</a>
         </div>

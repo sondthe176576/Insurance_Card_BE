@@ -3,91 +3,41 @@ package org.example.insurance_card_be.service;
 import org.example.insurance_card_be.dao.implement.CompensationHistoryDAO;
 import org.example.insurance_card_be.model.CompensationRequests;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class CompensationHistoryService {
-
     private CompensationHistoryDAO compensationHistoryDAO;
 
     public CompensationHistoryService() {
-        this.compensationHistoryDAO = new CompensationHistoryDAO();
+        compensationHistoryDAO = new CompensationHistoryDAO();
     }
 
-    public List<CompensationRequests> getAllCompensationRequests() {
-        try {
-            return compensationHistoryDAO.getAllCompensationRequests();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public CompensationRequests getCompensationRequestById(int requestId) throws SQLException {
+        return compensationHistoryDAO.getCompensationRequestById(requestId);
     }
 
-    public CompensationRequests getCompensationRequestById(int requestID) {
-        try {
-            return compensationHistoryDAO.getCompensationRequestById(requestID);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerId, int offset, int limit) throws SQLException {
+        return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerId, offset, limit);
     }
 
-    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID) {
-        try {
-            return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID, 0, Integer.MAX_VALUE); // Assuming default pagination
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public int getTotalCompensationRequestsByCustomerID(int customerId) throws SQLException {
+        return compensationHistoryDAO.getTotalCompensationRequestsByCustomerID(customerId);
     }
 
-    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID, int offset, int limit) {
-        try {
-            return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID, offset, limit);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public void addCompensationRequest(CompensationRequests request) throws SQLException {
+        compensationHistoryDAO.addCompensationRequest(request);
     }
 
-    public int getTotalCompensationRequestsByCustomerID(int customerID) {
-        try {
-            return compensationHistoryDAO.getTotalCompensationRequestsByCustomerID(customerID);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
+    public void updateCompensationRequest(CompensationRequests request) throws SQLException {
+        compensationHistoryDAO.updateCompensationRequest(request);
     }
 
-    public boolean isContractValidForCustomer(int contractID, int customerID) {
-        try {
-            return compensationHistoryDAO.isContractValidForCustomer(contractID, customerID);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public void deleteCompensationRequest(int requestId) throws SQLException {
+        compensationHistoryDAO.deleteCompensationRequest(requestId);
     }
 
-    public void addCompensationRequest(CompensationRequests compensationRequest) {
-        try {
-            compensationHistoryDAO.addCompensationRequest(compensationRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateCompensationRequest(CompensationRequests compensationRequest) {
-        try {
-            compensationHistoryDAO.updateCompensationRequest(compensationRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteCompensationRequest(int requestID) {
-        try {
-            compensationHistoryDAO.deleteCompensationRequest(requestID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public boolean isContractValidForCustomer(int contractID, int customerID) throws SQLException {
+        return compensationHistoryDAO.isContractValidForCustomer(contractID, customerID);
     }
 }
