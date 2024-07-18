@@ -1,6 +1,6 @@
 <%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
-<%@ page import="org.example.insurance_card_be.model.Customers" %>
-<%@ page import="org.example.insurance_card_be.model.Motorcycle" %>
+<%@ page import="org.example.insurance_card_be.model.Motorcycles" %>
+<%@ page import="java.util.List" %>
 
 <%
     // Lấy thông tin người dùng từ session (giả sử bạn đã set session từ trước)
@@ -14,13 +14,14 @@
     // Kết nối và lấy thông tin người dùng từ cơ sở dữ liệu
     UserDAO userDAO = new UserDAO();
     Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    int customerID = userDAO.getCustomerIDByUserID(loggedInUser.getUserID());
+    Motorcycles motorcycle = userDAO.getMotorcycleByCustomerID(customerID);
+    String personalinfor = userDAO.getNameofPersonalInfor(loggedInUser.getUserID());
     if (userFromDB == null) {
         // Xử lý khi không lấy được thông tin người dùng từ cơ sở dữ liệu
         return;
     }
 
-    Customers customerFromDB = (Customers) request.getAttribute("customer");
-    Motorcycle motorcycleFromDB = (Motorcycle) request.getAttribute("motorcycle");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +56,11 @@
             background: rgb(99, 39, 120);
             box-shadow: none;
             border: none;
+
+        }
+        .profile-button a {
+            color: white; /* Màu chữ trắng */
+            text-decoration: none; /* Xóa gạch chân */
         }
 
         .profile-button:hover,
@@ -128,7 +134,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Address</label>
-                                    <input type="text" id="address" class="form-control" placeholder="Address" readonly>
+                                    <input type="text" id="address" class="form-control" placeholder="Address" value="<%=userFromDB.getProvince()%>, <%=userFromDB.getDistrict()%>, <%=userFromDB.getCountry()%>" readonly>
                                 </div>
 
                                 <div class="col-md-12">
@@ -145,7 +151,7 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <label class="labels">Personal Info</label>
-                                    <input type="text" class="form-control" value="<%= customerFromDB != null ? customerFromDB.getPersonalInfo() : "" %>" readonly>
+                                    <input type="text" class="form-control" value="<%=personalinfor%>" readonly>
                                 </div>
                             </div>
                             <hr class="my-6">
@@ -153,38 +159,41 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <label class="labels">License Plate</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getLicensePlate()%>" readonly>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Brand</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getBrand()%>" readonly>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Model</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getModel()%>" readonly>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Frame Number</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getFrameNumber()%>" readonly>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Engine Number</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getEngineNumber()%>" readonly>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Year of Manufacture</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getYearOfManufacture()%>" readonly>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Color</label>
-                                    <input type="text" class="form-control" value="" readonly>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getColor()%>" readonly>
                                 </div>
                             </div>
                             <div class="mt-5 text-center">
 
                                 <button class="btn btn-primary profile-button" type="submit">Edit Profile</button>
-
+                                <button class="btn btn-primary profile-button">
+                                <a href="${pageContext.request.contextPath}/motorcycle">Add Motorcycles</a>
+                                </button>
                             </div>
+                            <p class="error">${requestScope.messforadd}</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -203,23 +212,5 @@
 <!-- Bootstrap JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://esgoo.net/scripts/jquery.js"></script>
-<script>
-$(document).ready(function() {
-var provinceId = "<%= userFromDB.getProvince() %>";
-var districtId = "<%= userFromDB.getDistrict() %>";
-var wardId = "<%= userFromDB.getCountry() %>"; // Giả sử bạn đã lưu trữ ID phường trong đối tượng userFromDB
-
-// Fetch ward name
-console.log('Fetching ward with ID:', wardId);
-$.getJSON('https://esgoo.net/api-tinhthanh/5/' + wardId + '.htm', function(data) {
-console.log('Ward API response:', data);
-if (data.error == 0) {
-$('#address').val(data.data.full_name); // Giả sử bạn có một trường input với ID 'address' để hiển thị địa chỉ
-} else {
-console.error('Error fetching ward:', data.error_text);
-}
-});
-});
-</script>
 </body>
 </html>
