@@ -10,17 +10,23 @@
     <title>View Accident History</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-4 mb-4">View Accident History</h1>
+    <h1 class="mt-4 mb-4">View Accident</h1>
     <div class="card">
         <div class="card-body">
-            <p><strong>Accident ID:</strong> ${accidentHistoryCus.accidentID}</p>
-            <p><strong>Customer ID:</strong> ${accidentHistoryCus.customerID}</p>
-            <p><strong>Description:</strong> ${accidentHistoryCus.description}</p>
-            <p><strong>Accident Date:</strong> ${accidentHistoryCus.accidentDate}</p>
-            <a href="${pageContext.request.contextPath}/accidentHistory" class="btn btn-secondary">Back to List</a>
+            <h5 class="card-title"></h5>
+            <p><strong>Accident ID:</strong> ${accident.accidentID}</p>
+            <p><strong>Customer ID:</strong> ${accident.customerID}</p>
+            <p><strong>Contract ID:</strong> ${accident.contractID}</p>
+            <p><strong>Accident Type:</strong> ${accident.accidentType}</p>
+            <p><strong>Accident Date:</strong> ${accident.accidentDate}</p>
+            <p><strong>Description:</strong> ${accident.description}</p>
+            <p><strong>Status:</strong> ${accident.status}</p>
+            <a href="${pageContext.request.contextPath}/accidentHistory" class="btn btn-primary">Back to Accident History</a>
         </div>
     </div>
 </div>

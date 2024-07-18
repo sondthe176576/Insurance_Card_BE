@@ -110,6 +110,12 @@
     </div>
     <div class="user-profile">
         <i class="fas fa-user-circle"></i>
+<div class="header">
+    <div class="logo">
+        <i class="bi bi-shield-lock-fill"></i> My Insurance
+    </div>
+    <div class="user-profile">
+        <i class="bi bi-person-circle"></i>
         <c:choose>
             <c:when test="${not empty sessionScope.user}">
                 <a href="${pageContext.request.contextPath}/customerinfo">Profile</a>
@@ -121,6 +127,7 @@
         </c:choose>
         <div class="notifications">
             <i class="fas fa-bell"></i>
+            <i class="bi bi-bell"></i>
             <c:if test="${not empty sessionScope.unreadNotifications}">
                 <span class="badge">${sessionScope.unreadNotifications.size()}</span>
             </c:if>
@@ -134,3 +141,4 @@
 </div>
 </body>
 </html>
+</div>
