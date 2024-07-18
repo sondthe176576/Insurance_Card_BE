@@ -52,16 +52,18 @@
                     </ul>
                 </div>
                 <!-- User Information Icon and Login/Logout Button -->
+
                 <c:choose>
                     <c:when test="${not empty sessionScope.user}">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/customerinfo">
-                            <i class="fas fa-user-circle fa-6x"></i>
+                        <a href="${pageContext.request.contextPath}/customerinfo"><i class="fas fa-user"></i> PROFILE</a>
+                        <a href="${pageContext.request.contextPath}/login" >
+                            LOGOUT
                         </a>
-                        <span class="user-name">Hello, ${sessionScope.user.username}</span>
-                        <a href="${pageContext.request.contextPath}/logout" class="btn tp-btn tp-btn-blue">Logout</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">Login</a>
+                        <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">
+                            <i class="fas fa-user"></i> LOGIN
+                        </a>
                     </c:otherwise>
                 </c:choose>
                 <form class="form-inline my-2 my-lg-0 ml-3" onsubmit="return handleSearch(event)">
