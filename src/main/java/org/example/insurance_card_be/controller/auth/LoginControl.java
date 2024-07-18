@@ -37,6 +37,7 @@ public class LoginControl extends HttpServlet {
         LOGGER.info("Password: " + password);
 
         Users user = dao.login(username, password);
+        int customerid = dao.getCustomerIDByUserID(user.getUserID());
         if (user == null) {
             request.setAttribute("mess", "Wrong username or password!");
             LOGGER.info("Login failed: " + request.getAttribute("mess"));
@@ -45,6 +46,9 @@ public class LoginControl extends HttpServlet {
             HttpSession session = request.getSession();
             session.setMaxInactiveInterval(7200);
             session.setAttribute("user", user);
+
+            LOGGER.info("Login successful, user: " + user);
+            System.out.println("CustomerID: "+ customerid);
 
             LOGGER.info("Login successful, user: " + user);
 

@@ -1,4 +1,7 @@
 <%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
+<%@ page import="org.example.insurance_card_be.model.Motorcycles" %>
+<%@ page import="java.util.List" %>
+=======
 <%@ page import="org.example.insurance_card_be.model.Customers" %>
 <%@ page import="org.example.insurance_card_be.model.Motorcycle" %>
 
@@ -14,6 +17,9 @@
     // Kết nối và lấy thông tin người dùng từ cơ sở dữ liệu
     UserDAO userDAO = new UserDAO();
     Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    int customerID = userDAO.getCustomerIDByUserID(loggedInUser.getUserID());
+    Motorcycles motorcycle = userDAO.getMotorcycleByCustomerID(customerID);
+    String personalinfor = userDAO.getNameofPersonalInfor(loggedInUser.getUserID());
     if (userFromDB == null) {
         // Xử lý khi không lấy được thông tin người dùng từ cơ sở dữ liệu
         return;
@@ -48,6 +54,11 @@
             background: rgb(99, 39, 120);
             box-shadow: none;
             border: none;
+
+        }
+        .profile-button a {
+            color: white; /* Màu chữ trắng */
+            text-decoration: none; /* Xóa gạch chân */
         }
         .profile-button:hover,
         .profile-button:focus,
@@ -83,6 +94,14 @@
                                 <span class="font-weight-bold"><%= userFromDB.getFullName() %></span>
                                 <span> </span>
                             </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6">
+                                    <label class="labels">First Name</label>
+                                    <input type="text" class="form-control" placeholder="First Name" value="<%=userFromDB.getFirstName()%>" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="labels">Last Name</label>
+                                    <input type="text" class="form-control" placeholder="Last Name" value="<%=userFromDB.getLastName()%>" readonly>
                         </div>
                         <div class="col-md-5 border-right">
                             <span class="text-black-50"><%= userFromDB.getEmail() %></span>
@@ -136,6 +155,9 @@
                                         <input type="text" class="form-control" placeholder="Personal Info" value="<%= customerFromDB != null ? customerFromDB.getPersonalInfo() : "" %>" readonly>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Address</label>
+                                    <input type="text" id="address" class="form-control" placeholder="Address" value="<%=userFromDB.getProvince()%>, <%=userFromDB.getDistrict()%>, <%=userFromDB.getCountry()%>" readonly>
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h4 class="text-right">Motorcycle Information</h4>
                                 </div>
@@ -173,6 +195,54 @@
                                     <button class="btn btn-primary profile-button" type="submit">Edit Profile</button>
                                 </div>
                             </div>
+                            <hr class="my-6">
+                            <h2 class="text-2xl font-bold mb-6">Additional Information</h2>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">Personal Info</label>
+                                    <input type="text" class="form-control" value="<%=personalinfor%>" readonly>
+                                </div>
+                            </div>
+                            <hr class="my-6">
+                            <h2 class="text-2xl font-bold mb-6">Motorcycle Information</h2>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label class="labels">License Plate</label>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getLicensePlate()%>" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Brand</label>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getBrand()%>" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Model</label>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getModel()%>" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Frame Number</label>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getFrameNumber()%>" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Engine Number</label>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getEngineNumber()%>" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Year of Manufacture</label>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getYearOfManufacture()%>" readonly>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="labels">Color</label>
+                                    <input type="text" class="form-control" value="<%=motorcycle.getColor()%>" readonly>
+                                </div>
+                            </div>
+                            <div class="mt-5 text-center">
+
+                                <button class="btn btn-primary profile-button" type="submit">Edit Profile</button>
+                                <button class="btn btn-primary profile-button">
+                                <a href="${pageContext.request.contextPath}/motorcycle">Add Motorcycles</a>
+                                </button>
+                            </div>
+                            <p class="error">${requestScope.messforadd}</p>
                         </div>
                         <div class="col-md-4">
                             <div class="p-3 py-5">

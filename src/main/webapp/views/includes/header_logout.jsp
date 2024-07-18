@@ -3,6 +3,7 @@
 <%
     Users loggedInUser = (Users) session.getAttribute("user");
     if (loggedInUser == null) {
+        request.getRequestDispatcher("/views/dashboard/header.jsp").forward(request, response);
         response.sendRedirect("home");
         return;
     }
@@ -211,6 +212,17 @@
                     <div class="dropdown-menu">
                         <c:choose>
                             <c:when test="${not empty sessionScope.user}">
+                                <a href="${pageContext.request.contextPath}/customerinfo"><i class="fas fa-user"></i> PROFILE</a>
+                                <a href="${pageContext.request.contextPath}/logout" >
+                                    LOGOUT
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${pageContext.request.contextPath}/login" class="btn tp-btn tp-btn-blue">
+                                    <i class="fas fa-user"></i> LOGIN
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                         <a href="${pageContext.request.contextPath}/customerinfo">Profile</a>
                         <a href="${pageContext.request.contextPath}/logout">Logout</a>
                             </c:when>

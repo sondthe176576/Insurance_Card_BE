@@ -69,9 +69,9 @@
                                 </select>
                             </div>
 
-                            <input type="hidden" name="tinh" id="hidden_tinh">
-                            <input type="hidden" name="quan" id="hidden_quan">
-                            <input type="hidden" name="phuong" id="hidden_phuong">
+                            <input type="hidden" name="hidden_tinh" id="hidden_tinh">
+                            <input type="hidden" name="hidden_quan" id="hidden_quan">
+                            <input type="hidden" name="hidden_phuong" id="hidden_phuong">
 
                             <script src="https://esgoo.net/scripts/jquery.js"></script>
                             <script>
@@ -113,10 +113,11 @@
                                     });
                                 });
                             </script>
+
                             <input class="form-control" type="text" name="firstname" placeholder="First Name" required>
                             <input class="form-control" type="text" name="lastname" placeholder="Last Name" required>
                             <input class="form-control" type="text" name="fullname" placeholder="Full Name" required>
-                            <input class="form-control" type="date" name="birthdate" placeholder="Birth Date" required>
+                            <input class="form-control" type="date" name="birthdate" placeholder="Birth Date" required max="2009-12-31">
                             <select class="form-control" name="gender" required>
                                 <option value="" disabled selected>Gender</option>
                                 <option value="male">Male</option>

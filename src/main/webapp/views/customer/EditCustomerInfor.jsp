@@ -1,4 +1,5 @@
 <%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
+<%@ page import="org.example.insurance_card_be.model.Motorcycles" %>
 
 <%
     Users loggedInUser = (Users) session.getAttribute("user");
@@ -9,6 +10,9 @@
 
     UserDAO userDAO = new UserDAO();
     Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    int customerID = userDAO.getCustomerIDByUserID(loggedInUser.getUserID());
+    Motorcycles motorcycle = userDAO.getMotorcycleByCustomerID(customerID);
+    String personalinfor = userDAO.getNameofPersonalInfor(loggedInUser.getUserID());
     if (userFromDB == null) {
         return;
     }
@@ -96,9 +100,9 @@
                                         </select>
                                     </div>
 
-                                    <input type="hidden" name="tinh" id="hidden_tinh">
-                                    <input type="hidden" name="quan" id="hidden_quan">
-                                    <input type="hidden" name="phuong" id="hidden_phuong">
+                                    <input type="hidden" name="hidden_tinh" id="hidden_tinh">
+                                    <input type="hidden" name="hidden_quan" id="hidden_quan">
+                                    <input type="hidden" name="hidden_phuong" id="hidden_phuong">
 
                                     <script src="https://esgoo.net/scripts/jquery.js"></script>
                                     <script>
@@ -140,6 +144,7 @@
                                             });
                                         });
                                     </script>
+
                                     <div class="col-md-12">
                                         <label class="labels">Email ID</label>
                                         <input type="text" name="email_id" class="form-control" placeholder="Email ID" value="<%= userFromDB.getEmail() %>">
@@ -152,6 +157,44 @@
                                         </select>
                                     </div>
                                 </div>
+                                <hr class="my-6">
+                                <h2 class="text-2xl font-bold mb-6">Additional Information</h2>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <label class="labels">Personal Info</label>
+                                        <input type="text" class="form-control" name="personal_info" value="<%=personalinfor%>">
+                                    </div>
+                                </div>
+                                <hr class="my-6">
+                                <h2 class="text-2xl font-bold mb-6">Motorcycle Information</h2>
+                                <div class="row mt-3">
+                                    <div class="col-md-12">
+                                        <label class="labels">License Plate</label>
+                                        <input type="text" class="form-control" name="license_plate" value="<%=motorcycle.getLicensePlate()%>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Brand</label>
+                                        <input type="text" class="form-control" name="brand" value="<%=motorcycle.getBrand()%>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Model</label>
+                                        <input type="text" class="form-control" name="model" value="<%=motorcycle.getModel()%>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Frame Number</label>
+                                        <input type="text" class="form-control" name="frame_number" value="<%=motorcycle.getFrameNumber()%>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Engine Number</label>
+                                        <input type="text" class="form-control" name="engine_number" value="<%=motorcycle.getEngineNumber()%>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Year of Manufacture</label>
+                                        <input type="text" class="form-control" name="year_of_manufacture" value="<%=motorcycle.getYearOfManufacture()%>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labels">Color</label>
+                                        <input type="text" class="form-control" name="color" value="<%=motorcycle.getColor()%>">
                                 <hr>
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h4 class="text-right">Additional Information</h4>
