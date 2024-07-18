@@ -44,6 +44,9 @@ public class PaymentHistoryServlet extends HttpServlet {
                     case ACTION_EDIT:
                         handleEditPaymentHistory(request, response);
                         break;
+                    case "addForm":
+                        showAddForm(request, response);
+                        break;
                     default:
                         response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
                         break;
@@ -87,7 +90,13 @@ public class PaymentHistoryServlet extends HttpServlet {
     }
 
     private void handleListPaymentHistories(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<PaymentHistoryCustomer> paymentHistories = paymentHistoryService.getAllPaymentHistories();
+        Integer customerID = (Integer) request.getSession().getAttribute("customerID");
+        if (customerID == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Customer ID is missing. Please log in again.");
+            return;
+        }
+
+        List<PaymentHistoryCustomer> paymentHistories = paymentHistoryService.getPaymentHistoriesByCustomerID(customerID);
         request.setAttribute("paymentHistories", paymentHistories);
         request.getRequestDispatcher("/views/history/paymentHistory.jsp").forward(request, response);
     }
@@ -107,30 +116,48 @@ public class PaymentHistoryServlet extends HttpServlet {
     }
 
     private void handleAddPaymentHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int customerID = Integer.parseInt(request.getParameter("customerID"));
-        BigDecimal amount = new BigDecimal(request.getParameter("amount"));
-        Date paymentDate = parseDate(request.getParameter("paymentDate"));
-        int paymentMethodID = Integer.parseInt(request.getParameter("paymentMethodID"));
-        int contractID = Integer.parseInt(request.getParameter("contractID"));
-        String paymentDetails = request.getParameter("paymentDetails");
+        try {
+            int customerID = Integer.parseInt(request.getParameter("customerID"));
+            BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+            Date paymentDate = parseDate(request.getParameter("paymentDate"));
+            int paymentMethodID = Integer.parseInt(request.getParameter("paymentMethodID"));
+            int contractID = Integer.parseInt(request.getParameter("contractID"));
 
-        PaymentHistoryCustomer paymentHistory = new PaymentHistoryCustomer(0, customerID, amount, paymentDate, paymentMethodID, contractID);
-        paymentHistoryService.addPaymentHistory(paymentHistory);
-        response.sendRedirect("paymentHistory");
+            PaymentHistoryCustomer paymentHistory = new PaymentHistoryCustomer(0, customerID, amount, paymentDate, paymentMethodID, contractID);
+            paymentHistoryService.addPaymentHistory(paymentHistory);
+            response.sendRedirect("paymentHistory");
+        } catch (NumberFormatException e) {
+            logger.error("Invalid number format", e);
+            request.setAttribute("errorMessage", "Invalid number format. Please ensure all numeric fields are filled correctly.");
+            showAddForm(request, response);
+        } catch (IllegalArgumentException e) {
+            logger.error("Invalid date format", e);
+            request.setAttribute("errorMessage", "Invalid date format. Please use yyyy-MM-dd.");
+            showAddForm(request, response);
+        }
     }
 
     private void handleUpdatePaymentHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int paymentID = Integer.parseInt(request.getParameter("paymentID"));
-        int customerID = Integer.parseInt(request.getParameter("customerID"));
-        BigDecimal amount = new BigDecimal(request.getParameter("amount"));
-        Date paymentDate = parseDate(request.getParameter("paymentDate"));
-        int paymentMethodID = Integer.parseInt(request.getParameter("paymentMethodID"));
-        int contractID = Integer.parseInt(request.getParameter("contractID"));
-        String paymentDetails = request.getParameter("paymentDetails");
+        try {
+            int paymentID = Integer.parseInt(request.getParameter("paymentID"));
+            int customerID = Integer.parseInt(request.getParameter("customerID"));
+            BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+            Date paymentDate = parseDate(request.getParameter("paymentDate"));
+            int paymentMethodID = Integer.parseInt(request.getParameter("paymentMethodID"));
+            int contractID = Integer.parseInt(request.getParameter("contractID"));
 
-        PaymentHistoryCustomer paymentHistory = new PaymentHistoryCustomer(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
-        paymentHistoryService.updatePaymentHistory(paymentHistory);
-        response.sendRedirect("paymentHistory");
+            PaymentHistoryCustomer paymentHistory = new PaymentHistoryCustomer(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+            paymentHistoryService.updatePaymentHistory(paymentHistory);
+            response.sendRedirect("paymentHistory");
+        } catch (NumberFormatException e) {
+            logger.error("Invalid number format", e);
+            request.setAttribute("errorMessage", "Invalid number format. Please ensure all numeric fields are filled correctly.");
+            handleEditPaymentHistory(request, response);
+        } catch (IllegalArgumentException e) {
+            logger.error("Invalid date format", e);
+            request.setAttribute("errorMessage", "Invalid date format. Please use yyyy-MM-dd.");
+            handleEditPaymentHistory(request, response);
+        }
     }
 
     private void handleDeletePaymentHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,5 +174,9 @@ public class PaymentHistoryServlet extends HttpServlet {
             logger.error("Invalid date format", e);
             throw new IllegalArgumentException("Invalid date format", e);
         }
+    }
+
+    private void showAddForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/views/history/addPaymentForm.jsp").forward(request, response);
     }
 }

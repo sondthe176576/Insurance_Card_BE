@@ -68,6 +68,9 @@
 <body>
 <div class="container">
     <h1 class="page-title">Payment History</h1>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="${pageContext.request.contextPath}/paymentHistory?action=addForm" class="btn btn-success"><i class="fas fa-plus"></i> Add Payment</a>
+    </div>
     <div class="table-container">
         <table class="table table-hover table-bordered">
             <thead class="thead-dark">

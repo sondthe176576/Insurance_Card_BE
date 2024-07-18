@@ -42,6 +42,37 @@ public class PaymentHistoryDAO {
         return list;
     }
 
+    public List<PaymentHistoryCustomer> getPaymentHistoriesByCustomerID(int customerID) {
+        List<PaymentHistoryCustomer> list = new ArrayList<>();
+        String query = "SELECT ph.*, u.Full_name AS CustomerName " +
+                "FROM PaymentHistory ph " +
+                "JOIN Customers c ON ph.customerID = c.customerID " +
+                "JOIN Users u ON c.userID = u.userID " +
+                "WHERE ph.customerID = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, customerID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int paymentID = resultSet.getInt("paymentID");
+                    BigDecimal amount = resultSet.getBigDecimal("amount");
+                    Date paymentDate = resultSet.getDate("paymentDate");
+                    int paymentMethodID = resultSet.getInt("paymentMethodID");
+                    int contractID = resultSet.getInt("contractID");
+                    PaymentHistoryCustomer paymentHistoryCustomer = new PaymentHistoryCustomer(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID );
+                    list.add(paymentHistoryCustomer);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error getting payment histories by customer ID", e);
+        }
+
+        return list;
+    }
+
     public PaymentHistoryCustomer getPaymentHistoryById(int paymentID) {
         PaymentHistoryCustomer paymentHistoryCustomer = null;
         String query = "SELECT ph.*, u.Full_name AS CustomerName " +
@@ -74,7 +105,7 @@ public class PaymentHistoryDAO {
     }
 
     public void addPaymentHistory(PaymentHistoryCustomer paymentHistoryCustomer) {
-        String query = "INSERT INTO PaymentHistory (customerID, amount, paymentDate, paymentMethodID, contractID) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO PaymentHistory (customerID, amount, paymentDate, paymentMethodID, contractID) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {

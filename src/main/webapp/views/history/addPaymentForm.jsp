@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Punishment History</title>
+    <title>Add Payment</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -60,24 +60,30 @@
 </nav>
 <body>
 <div class="container mt-4">
-    <h1 class="form-title">Edit Punishment History</h1>
-    <form action="punishmentHistory" method="post" class="mt-3">
-        <input type="hidden" name="action" value="update">
-        <input type="hidden" name="punishmentID" value="${punishmentHistory.punishmentID}">
+    <h1 class="form-title">Add Payment</h1>
+    <form action="${pageContext.request.contextPath}/paymentHistory" method="post">
+        <input type="hidden" name="action" value="add">
         <div class="mb-3">
             <label for="customerID" class="form-label">Customer ID</label>
-            <input type="text" class="form-control" id="customerID" name="customerID" value="${punishmentHistory.customerID}" required>
+            <input type="text" class="form-control" id="customerID" name="customerID" required>
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" name="description" value="${punishmentHistory.description}" required>
+            <label for="amount" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="amount" name="amount" required>
         </div>
         <div class="mb-3">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" class="form-control" id="date" name="date" value="${punishmentHistory.date}" required>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="punishmentHistory" class="btn btn-secondary">Cancel</a>
-            </div>
+            <label for="paymentDate" class="form-label">Payment Date</label>
+            <input type="date" class="form-control" id="paymentDate" name="paymentDate" required>
+        </div>
+        <div class="mb-3">
+            <label for="paymentMethodID" class="form-label">Payment Method ID</label>
+            <input type="text" class="form-control" id="paymentMethodID" name="paymentMethodID" required>
+        </div>
+        <div class="mb-3">
+            <label for="contractID" class="form-label">Contract ID</label>
+            <input type="text" class="form-control" id="contractID" name="contractID" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Payment</button>
     </form>
 </div>
 
