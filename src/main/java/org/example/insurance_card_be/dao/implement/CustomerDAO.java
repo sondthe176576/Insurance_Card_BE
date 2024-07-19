@@ -58,41 +58,64 @@ public class CustomerDAO extends DBContext {
 
     // Method to insert a new customer
     public void insert(Users customer) {
-        String sql = "INSERT INTO [Users] " +
+        String userInsertSQL = "INSERT INTO [Users] " +
                 "([Username], [Password], [Role], [Email], [Mobile], [Province], [District], [Country], " +
                 "[First_name], [Last_name], [Full_name], [Birth_date], [Gender]) " +
                 "VALUES (?, ?, 'Customer', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, customer.getUsername());
-            statement.setString(2, customer.getPassword());
-            statement.setString(3, customer.getEmail());
-            statement.setString(4, customer.getMobile());
-            statement.setString(5, customer.getProvince());
-            statement.setString(6, customer.getDistrict());
-            statement.setString(7, customer.getCountry());
-            statement.setString(8, customer.getFirstName());
-            statement.setString(9, customer.getLastName());
-            statement.setString(10, customer.getFullName());
-            statement.setDate(11, new java.sql.Date(customer.getBirthDate().getTime()));
-            statement.setString(12, customer.getGender());
 
-            int rowsAffected = statement.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Insert successful!");
-                ResultSet resultSet = statement.getGeneratedKeys();
-                if (resultSet.next()) {
-                    int generatedId = resultSet.getInt(1);
-                    System.out.println("Inserted user ID: " + generatedId);
+        String customerInsertSQL = "INSERT INTO [Customers] " +
+                "([UserID], [PersonalInfo]) VALUES (?, ?)";
+
+        try (Connection connection = DBContext.getConnection()) {
+            connection.setAutoCommit(false); // Start transaction
+
+            // Insert into Users table
+            try (PreparedStatement userStmt = connection.prepareStatement(userInsertSQL, Statement.RETURN_GENERATED_KEYS)) {
+                userStmt.setString(1, customer.getUsername());
+                userStmt.setString(2, customer.getPassword());
+                userStmt.setString(3, customer.getEmail());
+                userStmt.setString(4, customer.getMobile());
+                userStmt.setString(5, customer.getProvince());
+                userStmt.setString(6, customer.getDistrict());
+                userStmt.setString(7, customer.getCountry());
+                userStmt.setString(8, customer.getFirstName());
+                userStmt.setString(9, customer.getLastName());
+                userStmt.setString(10, customer.getFullName());
+                userStmt.setDate(11, new java.sql.Date(customer.getBirthDate().getTime()));
+                userStmt.setString(12, customer.getGender());
+
+                int rowsAffected = userStmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    ResultSet resultSet = userStmt.getGeneratedKeys();
+                    if (resultSet.next()) {
+                        int userId = resultSet.getInt(1);
+
+                        // Insert into Customers table
+                        try (PreparedStatement customerStmt = connection.prepareStatement(customerInsertSQL)) {
+                            customerStmt.setInt(1, userId);
+                            customerStmt.setString(2, ""); // PersonalInfo can be updated later
+
+                            customerStmt.executeUpdate();
+                        }
+
+                        connection.commit(); // Commit transaction
+                        System.out.println("Insert successful! Inserted user ID: " + userId);
+                    } else {
+                        connection.rollback(); // Rollback transaction if user insertion failed
+                        System.out.println("Insert failed! No User ID obtained.");
+                    }
+                } else {
+                    connection.rollback(); // Rollback transaction if user insertion failed
+                    System.out.println("Insert failed!");
                 }
-            } else {
-                System.out.println("Insert failed!");
+            } catch (SQLException e) {
+                connection.rollback(); // Rollback transaction in case of error
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
     // Method to update a customer
     public void update(Users customer) {
         String sql = "UPDATE [Users] SET " +
