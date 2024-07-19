@@ -5,9 +5,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import org.example.insurance_card_be.dao.implement.CustomerDAO;
 import org.example.insurance_card_be.model.Users;
+import org.example.insurance_card_be.model.Motorcycle;
+
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "CustomerViewServlet", urlPatterns = "/customer-view")
 public class CustomerViewServlet extends HttpServlet {
@@ -30,7 +33,10 @@ public class CustomerViewServlet extends HttpServlet {
                 return;
             }
 
+            List<Motorcycle> motorcycles = dao.findMotorcyclesByCustomerId(customer.getUserID());
+
             req.setAttribute("customer", customer);
+            req.setAttribute("motorcycles", motorcycles);
             req.getRequestDispatcher("/views/staff/viewCustomer.jsp").forward(req, resp);
         } catch (NumberFormatException e) {
             req.setAttribute("error", "Invalid User ID format.");
