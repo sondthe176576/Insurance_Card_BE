@@ -10,8 +10,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccidentHistory {
+    private String fullName;
     private int accidentID;
-    private int customerID;
     private String description;
     private Date date;
+    private String accidentType;
+    private String status;
+    private int customerID;
 }
