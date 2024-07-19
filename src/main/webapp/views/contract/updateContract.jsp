@@ -23,7 +23,37 @@
 <jsp:include page="/views/includes/header.jsp"/>
 <!-- End of header -->
 <!-- Include navbar -->
-<jsp:include page="/views/includes/navbar.jsp"/>
+<nav class="bg-blue-900 border-b-4 border-orange-600">
+    <div class="container mx-auto px-4 py-2 flex justify-center">
+        <ul class="flex space-x-6">
+            <li>
+                <a href="${pageContext.request.contextPath}/homepageforcustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-contract mr-2"></i> Buy Insurance
+                </a>
+            </li>
+            <li>
+                <a href="#" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> About
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/contractForCustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-alt mr-2"></i> Contract
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <!-- End of navbar -->
 <!-- Notification Message -->
 <c:if test="${param.message != null}">

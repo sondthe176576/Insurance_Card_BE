@@ -40,6 +40,6 @@ public class CustomerInforControl extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Here you can retrieve the data from the request, process it and redirect to another page
-        response.sendRedirect("editinfor");
+        request.getRequestDispatcher("views/customer/EditCustomerInfor.jsp").forward(request, response);
     }
 }

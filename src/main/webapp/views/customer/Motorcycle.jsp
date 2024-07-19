@@ -12,7 +12,6 @@
     Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
     int customerID = userDAO.getCustomerIDByUserID(loggedInUser.getUserID());
     Motorcycles motorcycle = userDAO.getMotorcycleByCustomerID(customerID);
-    String personalinfor = userDAO.getNameofPersonalInfor(loggedInUser.getUserID());
     if (userFromDB == null) {
         return;
     }
@@ -47,7 +46,7 @@
 </head>
 <body>
 <div class="container-fluid">
-    <form action="${pageContext.request.contextPath}/customerinfo" method="post">
+    <form action="${pageContext.request.contextPath}/motorcycle" method="post">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="form-container">
@@ -66,50 +65,12 @@
                                     <h4 class="text-right">Profile Settings</h4>
                                 </div>
                                 <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <label class="labels">First Name</label>
-                                        <input type="text" name="first_name" class="form-control" placeholder="First Name" value="<%= userFromDB.getFirstName() %>" readonly>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="labels">Last Name</label>
-                                        <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="<%= userFromDB.getLastName() %>" readonly>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="labels">Full Name</label>
-                                        <input type="text" name="full_name" class="form-control" placeholder="Full Name" value="<%= userFromDB.getFullName() %>" readonly>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-12">
-                                        <label class="labels">Mobile Number</label>
-                                        <input type="text" name="mobile" class="form-control" placeholder="Mobile Number" value="<%= userFromDB.getMobile() %>" readonly>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="labels">BirthDate</label>
-                                        <input type="date" name="birthdate" class="form-control" placeholder="BirthDate" value="<%= userFromDB.getBirthDate() %>" readonly>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="labels">Address</label>
-                                        <input type="text" name="address" class="form-control" placeholder="Address" value="<%= userFromDB.getProvince() %>" readonly>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="labels">Email ID</label>
-                                        <input type="text" name="email_id" class="form-control" placeholder="Email ID" value="<%= userFromDB.getEmail() %>" readonly>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="labels">Gender</label>
-                                        <select name="gender" class="form-control" readonly>
-                                            <option value="Male" <%= "Male".equals(userFromDB.getGender()) ? "selected" : "" %>>Male</option>
-                                            <option value="Female" <%= "Female".equals(userFromDB.getGender()) ? "selected" : "" %>>Female</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <hr class="my-6">
                                 <h2 class="text-2xl font-bold mb-6">Additional Information</h2>
                                 <div class="row mt-3">
                                     <div class="col-md-12">
                                         <label class="labels">Personal Info</label>
-                                        <input type="text" name="personal_info" class="form-control" value="<%= personalinfor %>" readonly>
+                                        <input type="text" name="personal_info" class="form-control" placeholder="Name for your motorbike information" required>
                                     </div>
                                 </div>
                                 <hr class="my-6">
@@ -117,37 +78,36 @@
                                 <div class="row mt-3">
                                     <div class="col-md-12">
                                         <label class="labels">License Plate</label>
-                                        <input type="text" name="license_plate" class="form-control" value="<%= motorcycle != null && motorcycle.getLicensePlate() != null ? motorcycle.getLicensePlate() : "" %>" readonly>
+                                        <input type="text" name="license_plate" class="form-control" placeholder="License Plate" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Brand</label>
-                                        <input type="text" name="brand" class="form-control" value="<%= motorcycle != null && motorcycle.getBrand() != null ? motorcycle.getBrand() : "" %>" readonly>
+                                        <input type="text" name="brand" class="form-control" placeholder="Brand" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Model</label>
-                                        <input type="text" name="model" class="form-control" value="<%= motorcycle != null && motorcycle.getModel() != null ? motorcycle.getModel() : "" %>" readonly>
+                                        <input type="text" name="model" class="form-control" placeholder="Model" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Frame Number</label>
-                                        <input type="text" name="frame_number" class="form-control" value="<%= motorcycle != null && motorcycle.getFrameNumber() != null ? motorcycle.getFrameNumber() : "" %>" readonly>
+                                        <input type="text" name="frame_number" class="form-control" placeholder="Frame Number"  required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Engine Number</label>
-                                        <input type="text" name="engine_number" class="form-control" value="<%= motorcycle != null && motorcycle.getEngineNumber() != null ? motorcycle.getEngineNumber() : "" %>" readonly>
+                                        <input type="text" name="engine_number" class="form-control" placeholder="Engine Number" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Year of Manufacture</label>
-                                        <input type="number" name="year_of_manufacture" class="form-control" value="<%= motorcycle != null && motorcycle.getYearOfManufacture()!= 0 ? motorcycle.getYearOfManufacture() : 0 %>" readonly>
+                                        <input type="number" name="year_of_manufacture" class="form-control" placeholder="Year of Manufacture" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Color</label>
-                                        <input type="text" name="color" class="form-control" value="<%= motorcycle != null && motorcycle.getColor() != null ? motorcycle.getColor() : "" %>" readonly>
+                                        <input type="text" name="color" class="form-control" placeholder="Color" required>
                                     </div>
                                 </div>
 
                                 <div class="mt-5 text-center">
-                                    <button class="btn btn-primary profile-button" type="submit">Edit</button>
-                                    <button class="btn btn-primary profile-button"><a href="${pageContext.request.contextPath}/motorcycle">Add Motorcycle Information</a></button>
+                                    <button class="btn btn-primary profile-button" type="submit">Save</button>
                                 </div>
                             </div>
                         </div>

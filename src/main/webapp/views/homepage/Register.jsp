@@ -69,9 +69,9 @@
                                 </select>
                             </div>
 
-                            <input type="hidden" name="tinh" id="hidden_tinh">
-                            <input type="hidden" name="quan" id="hidden_quan">
-                            <input type="hidden" name="phuong" id="hidden_phuong">
+                            <input type="hidden" name="hidden_tinh" id="hidden_tinh">
+                            <input type="hidden" name="hidden_quan" id="hidden_quan">
+                            <input type="hidden" name="hidden_phuong" id="hidden_phuong">
 
                             <script src="https://esgoo.net/scripts/jquery.js"></script>
                             <script>

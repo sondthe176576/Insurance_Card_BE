@@ -30,9 +30,9 @@ public class RegisterControl extends HttpServlet {
         String phone = request.getParameter("phone");
         String username = request.getParameter("email");
         String password = request.getParameter("password");
-        String tinhtp = request.getParameter("tinh");
-        String quan = request.getParameter("quan");
-        String phuong = request.getParameter("phuong");
+        String tinhtp = request.getParameter("hidden_tinh");
+        String quan = request.getParameter("hidden_quan");
+        String phuong = request.getParameter("hidden_phuong");
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String fullname = request.getParameter("fullname");
