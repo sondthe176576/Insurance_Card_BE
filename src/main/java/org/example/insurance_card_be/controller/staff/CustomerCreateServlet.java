@@ -44,21 +44,21 @@ public class CustomerCreateServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Users customer = new Users();
-        customer.setUsername(username);
-        customer.setPassword(password);
-        customer.setEmail(email);
-        customer.setMobile(mobile);
-        customer.setProvince(province);
-        customer.setDistrict(district);
-        customer.setCountry(country);
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setFullName(fullName);
-        customer.setBirthDate(birthDate);
-        customer.setGender(gender);
+        Users users = new Users();
+        users.setUsername(username);
+        users.setPassword(password);
+        users.setEmail(email);
+        users.setMobile(mobile);
+        users.setProvince(province);
+        users.setDistrict(district);
+        users.setCountry(country);
+        users.setFirstName(firstName);
+        users.setLastName(lastName);
+        users.setFullName(fullName);
+        users.setBirthDate(birthDate);
+        users.setGender(gender);
 
-        dao.insert(customer);
+        dao.insert(users);
         List<Users> listCustomer = dao.findAll();
         req.getSession().setAttribute("listCustomer", listCustomer);
         req.setAttribute("message", "Customer created successfully.");
