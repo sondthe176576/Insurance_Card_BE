@@ -1,5 +1,6 @@
 package org.example.insurance_card_be.dao.implement;
 
+import org.example.insurance_card_be.model.AccidentHistory;
 import org.example.insurance_card_be.model.AccidentHistoryCus;
 import org.example.insurance_card_be.dao.DBContext;
 
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccidentHistoryDAO {
+
+
 
     public List<AccidentHistoryCus> getAllAccidentHistories() {
         List<AccidentHistoryCus> list = new ArrayList<>();
@@ -127,6 +130,10 @@ public class AccidentHistoryDAO {
         }
 
         return list;
+
+        //HUy
+
     }
+
 
 }
