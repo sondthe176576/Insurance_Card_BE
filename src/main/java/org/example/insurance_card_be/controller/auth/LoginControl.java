@@ -54,6 +54,7 @@ public class LoginControl extends HttpServlet {
             if ("Customer".equalsIgnoreCase(role)) {
                 request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
                 session.setAttribute("customerID", customerID);
+                System.out.println("CustomerID: " + customerID);
             } else if ("Staff".equalsIgnoreCase(role)) {
                 request.getRequestDispatcher("/views/staff/manageStaff.jsp").forward(request, response);
             } else {

@@ -151,7 +151,7 @@
         </form>
         <p class="error animated">${requestScope.messforgot}</p>
         <div class="back-link">
-            <a href="login.jsp"><i class="fas fa-arrow-left"></i> Back to Login</a>
+            <a href="${pageContext.request.contextPath}/login"><i class="fas fa-arrow-left"></i> Back to Login</a>
         </div>
     </div>
 </div>

@@ -58,27 +58,33 @@ public class RegisterControl extends HttpServlet {
 
             System.out.println("Username: " + username);
             if (test) {
-                request.setAttribute("message", "Registered successfully! Please check your email to verify your account!");
-                System.out.println("Mess attribute: " + request.getAttribute("message"));
+                if (!phone.matches("\\d{1,11}") || phone.length() < 1 || phone.length() > 11){
+                    request.setAttribute("message", "Phone number must be between 8 and 11 digits.");
+                    request.getRequestDispatcher("/register.jsp").forward(request, response);
+                    return;
+                }
+                else {
+                    request.setAttribute("message", "Registered successfully! Please check your email to verify your account!");
+                    System.out.println("Mess attribute: " + request.getAttribute("message"));
 
-                HttpSession session = request.getSession();
-                session.setAttribute("code", user);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("code", user);
 
-                // Set additional attributes to be used in other pages
-                session.setAttribute("full_name", full_name);
-                session.setAttribute("email", email);
-                session.setAttribute("phone", phone);
-                session.setAttribute("username", username);
-                session.setAttribute("password", password);
-                session.setAttribute("tinh", tinhtp);
-                session.setAttribute("huyen", quan);
-                session.setAttribute("xa", phuong);
-                session.setAttribute("firstname", firstname);
-                session.setAttribute("lastname", lastname);
-                session.setAttribute("full_name", fullname);
-                session.setAttribute("birthdate", date);
-                session.setAttribute("gender", gender);
-
+                    // Set additional attributes to be used in other pages
+                    session.setAttribute("full_name", full_name);
+                    session.setAttribute("email", email);
+                    session.setAttribute("phone", phone);
+                    session.setAttribute("username", username);
+                    session.setAttribute("password", password);
+                    session.setAttribute("tinh", tinhtp);
+                    session.setAttribute("huyen", quan);
+                    session.setAttribute("xa", phuong);
+                    session.setAttribute("firstname", firstname);
+                    session.setAttribute("lastname", lastname);
+                    session.setAttribute("full_name", fullname);
+                    session.setAttribute("birthdate", date);
+                    session.setAttribute("gender", gender);
+                }
                 request.getRequestDispatcher("/views/homepage/Verify Email.jsp").forward(request, response);
             } else {
                 request.setAttribute("message", "Failed to send email!");
