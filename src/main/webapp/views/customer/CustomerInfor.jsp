@@ -43,6 +43,15 @@
             flex: 1; /* Allows the selects to grow and fill the container */
             min-width: 100px; /* Ensures a minimum width for the selects */
         }
+
+        .profile-button a {
+            color: white; /* Màu chữ trắng */
+            text-decoration: none; /* Xóa gạch chân */
+        }
+
+        .error{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -90,7 +99,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Address</label>
-                                        <input type="text" name="address" class="form-control" placeholder="Address" value="<%= userFromDB.getProvince() %>" readonly>
+                                        <input type="text" name="address" class="form-control" placeholder="Address" value="<%= userFromDB.getProvince() %>, <%=userFromDB.getDistrict()%>, <%=userFromDB.getCountry()%>" readonly>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Email ID</label>
@@ -149,6 +158,7 @@
                                     <button class="btn btn-primary profile-button" type="submit">Edit</button>
                                     <button class="btn btn-primary profile-button"><a href="${pageContext.request.contextPath}/motorcycle">Add Motorcycle Information</a></button>
                                 </div>
+                                <p class="error">${requestScope.mess}</p>
                             </div>
                         </div>
                         <div class="col-md-4">

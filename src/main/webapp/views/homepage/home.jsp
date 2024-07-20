@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <style>
         :root {
             --primary-color: #004080;
@@ -24,6 +25,7 @@
         }
 
         body {
+            padding-top: 60px; /* Adjust this value based on your header's height */
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
@@ -42,6 +44,8 @@
             color: white;
             padding: 1rem 0;
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -286,19 +290,9 @@
             <h2 class="section-title" data-aos="fade-up">Our Services</h2>
             <div class="services-grid">
                 <div class="service-card" data-aos="fade-up">
-                    <i class="fas fa-car service-icon"></i>
-                    <h3>Auto Insurance</h3>
+                    <i class="fas fa-motorcycle service-icon"></i>
+                    <h3>Motorbike Insurance</h3>
                     <p>Comprehensive coverage for your vehicles.</p>
-                </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-home service-icon"></i>
-                    <h3>Home Insurance</h3>
-                    <p>Protect your home and belongings.</p>
-                </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-                    <i class="fas fa-heartbeat service-icon"></i>
-                    <h3>Life Insurance</h3>
-                    <p>Secure your family's future.</p>
                 </div>
             </div>
         </div>
@@ -332,6 +326,45 @@
                         <p class="news-date">Posted on Jan 15, 2024</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="insurance-packages" class="insurance-packages">
+        <div class="container">
+            <div class="grid grid-cols-1 mt-6">
+                <div class="col-span-1">
+                    <h3 class="text-2xl text-blue-600 mb-4"><i class="fas fa-box"></i> Insurance Packages</h3>
+                    <div x-data="{ openPackage: null }" class="accordion">
+                        <div class="border border-gray-300 rounded-md mb-4">
+                            <div class="border-b border-gray-300 p-4 cursor-pointer" @click="openPackage = openPackage === 1 ? null : 1">
+                                <h2 class="font-bold text-gray-700"><i class="fas fa-check-circle text-green-500 mr-2"></i> Basic Motorcycle Insurance</h2>
+                            </div>
+                            <div x-show="openPackage === 1" class="p-4">
+                                <p>This option provides the fundamental coverage for your motorcycle. After completing your contact information and selecting your insurance package, please submit the form to the Insurance Advisor at the address below. You will receive an invitation to attend an information session. We aim to provide you with as much information as possible about our insurance policies. At the end of the session, you may complete the application for insurance and pay the $100 insurance fee.</p>
+                            </div>
+                        </div>
+                        <div class="border border-gray-300 rounded-md mb-4">
+                            <div class="border-b border-gray-300 p-4 cursor-pointer" @click="openPackage = openPackage === 2 ? null : 2">
+                                <h2 class="font-bold text-gray-700"><i class="fas fa-check-circle text-green-500 mr-2"></i> Comprehensive Motorcycle Insurance</h2>
+                            </div>
+                            <div x-show="openPackage === 2" class="p-4">
+                                <p>This package offers complete protection for your motorcycle, including accident and theft insurance. Additionally, you will receive monthly newsletters with updates on your insurance coverage. The insurance fee is $150 per year. Comprehensive insurance not only covers basic liabilities but also includes coverage for damage caused by natural disasters, fire, and vandalism. This ensures that you have peace of mind in any situation.</p>
+                            </div>
+                        </div>
+                        <div class="border border-gray-300 rounded-md mb-4">
+                            <div class="border-b border-gray-300 p-4 cursor-pointer" @click="openPackage = openPackage === 3 ? null : 3">
+                                <h2 class="font-bold text-gray-700"><i class="fas fa-check-circle text-green-500 mr-2"></i> Premium Motorcycle Insurance</h2>
+                            </div>
+                            <div x-show="openPackage === 3" class="p-4">
+                                <p>Our premium package provides the highest level of coverage. This includes all the benefits of comprehensive insurance, plus additional features such as roadside assistance, rental reimbursement, and coverage for custom parts and equipment. The premium insurance fee is $250 per year. With this package, you are guaranteed the best support and quickest response in case of any incident. Our premium plan also includes a personal advisor who will assist you with all your insurance needs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <a href="${pageContext.request.contextPath}/login" class="btn">Buy Insurance</a>
             </div>
         </div>
     </section>

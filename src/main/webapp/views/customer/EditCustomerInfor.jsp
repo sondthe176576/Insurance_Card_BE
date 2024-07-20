@@ -16,6 +16,15 @@
     if (userFromDB == null) {
         return;
     }
+
+    String province = userFromDB.getProvince();
+    String district = userFromDB.getDistrict();
+    String county = userFromDB.getCountry();
+
+// Chuyển giá trị vào request attribute
+    request.setAttribute("province", province);
+    request.setAttribute("district", district);
+    request.setAttribute("county", county);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,15 +99,16 @@
                                     </div>
                                     <div class="css_select_div">
                                         <select class="css_select" id="tinh" name="tinh" title="Choose Province" required>
-                                            <option value="0">Province</option>
+                                            <option value="">Province</option>
                                         </select>
                                         <select class="css_select" id="quan" name="quan" title="Choose District" required>
-                                            <option value="0">District</option>
+                                            <option value="">District</option>
                                         </select>
                                         <select class="css_select" id="phuong" name="phuong" title="Choose County" required>
-                                            <option value="0">Country</option>
+                                            <option value="">County</option>
                                         </select>
                                     </div>
+
 
                                     <input type="hidden" name="hidden_tinh" id="hidden_tinh">
                                     <input type="hidden" name="hidden_quan" id="hidden_quan">
@@ -107,40 +117,69 @@
                                     <script src="https://esgoo.net/scripts/jquery.js"></script>
                                     <script>
                                         $(document).ready(function () {
+                                            var selectedProvince = "${province}";
+                                            var selectedDistrict = "${district}";
+                                            var selectedCounty = "${county}";
+
                                             $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
                                                 if (data_tinh.error == 0) {
                                                     $.each(data_tinh.data, function (key_tinh, val_tinh) {
-                                                        $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                                                        var selected = (val_tinh.full_name === selectedProvince) ? 'selected' : '';
+                                                        $("#tinh").append('<option value="' + val_tinh.id + '" ' + selected + '>' + val_tinh.full_name + '</option>');
                                                     });
-                                                    $("#tinh").change(function (e) {
-                                                        var idtinh = $(this).val();
-                                                        $("#hidden_tinh").val($("#tinh option:selected").text());
-                                                        $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
-                                                            if (data_quan.error == 0) {
-                                                                $("#quan").html('<option value="0">District</option>');
-                                                                $("#phuong").html('<option value="0">Country</option>');
-                                                                $.each(data_quan.data, function (key_quan, val_quan) {
-                                                                    $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
-                                                                });
-                                                                $("#quan").change(function (e) {
-                                                                    var idquan = $(this).val();
-                                                                    $("#hidden_quan").val($("#quan option:selected").text());
-                                                                    $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
-                                                                        if (data_phuong.error == 0) {
-                                                                            $("#phuong").html('<option value="0">Country</option>');
-                                                                            $.each(data_phuong.data, function (key_phuong, val_phuong) {
-                                                                                $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
-                                                                            });
-                                                                            $("#phuong").change(function (e) {
-                                                                                $("#hidden_phuong").val($("#phuong option:selected").text());
-                                                                            });
-                                                                        }
-                                                                    });
-                                                                });
-                                                            }
-                                                        });
-                                                    });
+
+                                                    // Trigger change event to load districts
+                                                    $("#tinh").trigger('change');
                                                 }
+                                            });
+
+                                            $("#tinh").change(function (e) {
+                                                var idtinh = $(this).val();
+                                                $("#hidden_tinh").val($("#tinh option:selected").text());
+                                                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                                                    if (data_quan.error == 0) {
+                                                        $("#quan").html('<option value="">District</option>');
+                                                        $("#phuong").html('<option value="">County</option>');
+                                                        $.each(data_quan.data, function (key_quan, val_quan) {
+                                                            var selected = (val_quan.full_name === selectedDistrict) ? 'selected' : '';
+                                                            $("#quan").append('<option value="' + val_quan.id + '" ' + selected + '>' + val_quan.full_name + '</option>');
+                                                        });
+
+                                                        // Trigger change event to load counties
+                                                        $("#quan").trigger('change');
+                                                    }
+                                                });
+                                            });
+
+                                            $("#quan").change(function (e) {
+                                                var idquan = $(this).val();
+                                                $("#hidden_quan").val($("#quan option:selected").text());
+                                                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                                                    if (data_phuong.error == 0) {
+                                                        $("#phuong").html('<option value="">County</option>');
+                                                        var selectedFound = false;
+                                                        $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                                                            var selected = (val_phuong.full_name === selectedCounty) ? 'selected' : '';
+                                                            if (selected) {
+                                                                selectedFound = true;
+                                                            }
+                                                            $("#phuong").append('<option value="' + val_phuong.id + '" ' + selected + '>' + val_phuong.full_name + '</option>');
+                                                        });
+
+                                                        // Nếu không tìm thấy giá trị đã chọn, tự động chọn giá trị đầu tiên
+                                                        if (!selectedFound && data_phuong.data.length > 0) {
+                                                            $("#phuong").val(data_phuong.data[0].id);
+                                                        }
+
+                                                        // Trigger change event để cập nhật hidden field
+                                                        $("#phuong").trigger('change');
+                                                    }
+                                                });
+                                            });
+
+// Thêm sự kiện change cho #phuong
+                                            $("#phuong").change(function (e) {
+                                                $("#hidden_phuong").val($("#phuong option:selected").text());
                                             });
                                         });
                                     </script>

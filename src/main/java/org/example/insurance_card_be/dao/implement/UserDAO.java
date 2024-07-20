@@ -1,4 +1,5 @@
 package org.example.insurance_card_be.dao.implement;
+
 import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.Customers;
 import org.example.insurance_card_be.model.Motorcycle;
@@ -23,23 +24,21 @@ public class UserDAO {
             ps.setString(2, password);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new Users(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getDate(13),
-                        rs.getString(14)
-                        );
+                return new Users(rs.getInt("UserID"),
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Role"),  // Lấy thông tin về vai trò
+                        rs.getString("Email"),
+                        rs.getString("Mobile"),
+                        rs.getString("Province"),
+                        rs.getString("District"),
+                        rs.getString("Country"),
+                        rs.getString("First_name"),
+                        rs.getString("Last_name"),
+                        rs.getString("Full_name"),
+                        rs.getDate("Birth_date"),
+                        rs.getString("Gender"));
             }
-            // Test commit
         } catch (Exception e) {
             e.printStackTrace(); // In ra lỗi để debug
         } finally {
@@ -60,6 +59,10 @@ public class UserDAO {
 
         String INSERT_USER_ROLE_SQL =
                 "INSERT INTO UserRoles (UserID, RoleID) VALUES (?, ?)";
+
+        String INSERT_CUSTOMER_SQL =
+                "INSERT INTO Customers (UserID, PersonalInfo) VALUES (?, ?)";
+
         try {
             conn = DBContext.getConnection(); // Mở kết nối với SQL
             conn.setAutoCommit(false); // Bắt đầu giao dịch
@@ -98,6 +101,15 @@ public class UserDAO {
             ps.setInt(2, 2); // RoleID cho Customer là 2
             ps.executeUpdate();
 
+            // Đóng PreparedStatement hiện tại
+            ps.close();
+
+            // Chèn dữ liệu vào bảng Customers với UserID
+            ps = conn.prepareStatement(INSERT_CUSTOMER_SQL);
+            ps.setInt(1, userID);
+            ps.setString(2, ""); // PersonalInfo có thể được để trống hoặc cập nhật sau
+            ps.executeUpdate();
+
             // Cam kết giao dịch
             conn.commit();
 
@@ -120,8 +132,56 @@ public class UserDAO {
         }
     }
 
+    public void updateCustomerInfo(int userID, String personalInfo) {
+        String UPDATE_CUSTOMER_SQL =
+                "UPDATE Customers SET PersonalInfo = ? WHERE UserID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(UPDATE_CUSTOMER_SQL);
+            ps.setString(1, personalInfo);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    public void addMotorcycle(int userID, String licensePlate, String brand, String model, String frameNumber, String engineNumber, int yearOfManufacture, String color) {
+        String INSERT_MOTORCYCLE_SQL =
+                "INSERT INTO Motorcycles (CustomerID, LicensePlate, Brand, Model, FrameNumber, EngineNumber, YearOfManufacture, Color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            // Get CustomerID from UserID
+            int customerID = getCustomerIDByUserID(userID);
 
+            ps = conn.prepareStatement(INSERT_MOTORCYCLE_SQL);
+            ps.setInt(1, customerID);
+            ps.setString(2, licensePlate);
+            ps.setString(3, brand);
+            ps.setString(4, model);
+            ps.setString(5, frameNumber);
+            ps.setString(6, engineNumber);
+            ps.setInt(7, yearOfManufacture);
+            ps.setString(8, color);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public Users checkUserExist(String user) {
         String query = "select * from Users where Username = ?";
@@ -161,24 +221,51 @@ public class UserDAO {
         return null;
     }
 
-
-    public void addMotorcycle(int userID, String licensePlate, String brand, String model, String frameNumber, String engineNumber, int yearOfManufacture, String color) {
-        String INSERT_MOTORCYCLE_SQL =
-                "INSERT INTO Motorcycles (CustomerID, LicensePlate, Brand, Model, FrameNumber, EngineNumber, YearOfManufacture, Color) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public Users checkPhoneExist(String Mobile) {
+        String query = "select * from Users where Mobile = ?";
         try {
             conn = DBContext.getConnection(); // Mở kết nối với SQL
-            // Get CustomerID from UserID
-            int customerID = getCustomerIDByUserID(userID);
+            ps = conn.prepareStatement(query);
+            ps.setString(1, Mobile); // Thiết lập tham số cho cột user
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getDate(13),
+                        rs.getString(14)
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
-            ps = conn.prepareStatement(INSERT_MOTORCYCLE_SQL);
-            ps.setInt(1, customerID);
-            ps.setString(2, licensePlate);
-            ps.setString(3, brand);
-            ps.setString(4, model);
-            ps.setString(5, frameNumber);
-            ps.setString(6, engineNumber);
-            ps.setInt(7, yearOfManufacture);
-            ps.setString(8, color);
+    public Users ResetPass(String username, String password) {
+        String query = "UPDATE Users SET Password = ? WHERE Username = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setString(1, password);
+            ps.setString(2, username);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace(); // In ra lỗi để debug
@@ -190,7 +277,47 @@ public class UserDAO {
                 e.printStackTrace();
             }
         }
+        return null;
     }
+
+    public Users getUserByID(int id) {
+        String query = "SELECT * FROM Users WHERE UserID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Users(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getDate(13),
+                        rs.getString(14)
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     // Thêm phương thức để lấy đối tượng Customers từ userId
     public Customers getCustomerByUserId(int userId) {
         String query = "SELECT * FROM Customers WHERE UserID = ?";
@@ -252,128 +379,7 @@ public class UserDAO {
         return null;
     }
 
-    public Motorcycles getMotorcycleByCustomerID(int customerID) {
-        String query = "SELECT * FROM Motorcycles WHERE CustomerID = ?";
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, customerID);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new Motorcycles(
-                            rs.getInt("motorcycleID"),
-                            rs.getInt("customerID"),
-                            rs.getString("licensePlate"),
-                            rs.getString("brand"),
-                            rs.getString("model"),
-                            rs.getString("frameNumber"),
-                            rs.getString("engineNumber"),
-                            rs.getInt("yearOfManufacture"),
-                            rs.getString("color")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null; // Trả về null nếu không tìm thấy Motorcycles
-    }
-
-    public Users checkPhoneExist(String Mobile) {
-        String query = "select * from Users where Mobile = ?";
-        try {
-            conn = DBContext.getConnection(); // Mở kết nối với SQL
-            ps = conn.prepareStatement(query);
-            ps.setString(1, Mobile); // Thiết lập tham số cho cột user
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Users(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getDate(13),
-                        rs.getString(14)
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // In ra lỗi để debug
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public Users ResetPass(String username, String password){
-        String query = "UPDATE Users SET Password = ? WHERE Username = ?";
-        try {
-            conn = DBContext.getConnection(); // Mở kết nối với SQL
-            ps = conn.prepareStatement(query);
-            ps.setString(1, password);
-            ps.setString(2, username);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace(); // In ra lỗi để debug
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public Users getUserByID(int id) {
-        String query = "SELECT * FROM Users WHERE UserID = ?";
-        try {
-            conn = DBContext.getConnection(); // Mở kết nối với SQL
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Users(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getDate(13),
-                        rs.getString(14)
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // In ra lỗi để debug
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+    // Thêm phương thức để lấy đối tượng Users từ userId
     public Users getUserById(int userId) {
         String query = "SELECT * FROM Users WHERE UserID = ?";
         try {
@@ -412,6 +418,33 @@ public class UserDAO {
         return null;
     }
 
+    // Thêm phương thức để lấy đối tượng Customers từ customerId
+    public Customers getCustomerById(int customerId) {
+        String query = "SELECT * FROM Customers WHERE CustomerID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, customerId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Users user = getUserById(rs.getInt(2)); // Tạo đối tượng Users từ userId
+                return new Customers(rs.getInt(1),
+                        user,
+                        rs.getString(3));
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
     public Users updateProfile(String username, String email, String mobile, String province, String district, String country, String firstname, String lastname, String fullname, Date birthdate, String gender){
         String query = "UPDATE Users SET Email = ?, Mobile = ?, Province = ?, District = ?, Country = ?, First_name = ?, Last_name = ?, Full_name = ?, Birth_date = ?, Gender = ? WHERE Username = ?";
@@ -441,83 +474,33 @@ public class UserDAO {
             }
         }
         return null;
-
     }
-    public Customers getCustomerById(int customerId) {
-        String query = "SELECT * FROM Customers WHERE CustomerID = ?";
-        try {
-            conn = DBContext.getConnection(); // Mở kết nối với SQL
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, customerId);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                Users user = getUserById(rs.getInt(2)); // Tạo đối tượng Users từ userId
-                return new Customers(rs.getInt(1),
-                        user,
-                        rs.getString(3));
+
+    public Motorcycles getMotorcycleByCustomerID(int customerID) {
+        String query = "SELECT * FROM Motorcycles WHERE CustomerID = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, customerID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Motorcycles(
+                            rs.getInt("motorcycleID"),
+                            rs.getInt("customerID"),
+                            rs.getString("licensePlate"),
+                            rs.getString("brand"),
+                            rs.getString("model"),
+                            rs.getString("frameNumber"),
+                            rs.getString("engineNumber"),
+                            rs.getInt("yearOfManufacture"),
+                            rs.getString("color")
+                    );
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace(); // In ra lỗi để debug
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        return null; // Trả về null nếu không tìm thấy Motorcycles
     }
-
-    public Motorcycles updateMotorcycles(int userID, String licensePlate, String brand, String model, String frameNumber, String engineNumber, int yearOfManufacture, String color){
-        String query = "UPDATE Motorcycles SET LicensePlate = ?, Brand = ?, Model = ?, FrameNumber = ?, EngineNumber = ?, YearOfManufacture = ?, Color = ? WHERE CustomerID = ?";
-        try {
-            conn = DBContext.getConnection(); // Mở kết nối với SQL
-            ps = conn.prepareStatement(query);
-            ps.setString(1, licensePlate);
-            ps.setString(2, brand);
-            ps.setString(3, model);
-            ps.setString(4, frameNumber);
-            ps.setString(5, engineNumber);
-            ps.setInt(6, yearOfManufacture);
-            ps.setString(7, color);
-            ps.setInt(8, userID);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace(); // In ra lỗi để debug
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public void updateCustomerInfo(int userID, String personalInfo) {
-        String UPDATE_CUSTOMER_SQL =
-                "UPDATE Customers SET PersonalInfo = ? WHERE UserID = ?";
-        try {
-            conn = DBContext.getConnection(); // Mở kết nối với SQL
-            ps = conn.prepareStatement(UPDATE_CUSTOMER_SQL);
-            ps.setString(1, personalInfo);
-            ps.setInt(2, userID);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace(); // In ra lỗi để debug
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     public String getNameofPersonalInfor(int userID) {
         String query = "SELECT PersonalInfo FROM Customers WHERE UserID = ?";
@@ -542,6 +525,33 @@ public class UserDAO {
         }
         return null;
     }
+
+    public void updateMotorcycles(int userID, String licensePlate, String brand, String model, String frameNumber, String engineNumber, int yearOfManufacture, String color){
+        String query = "UPDATE Motorcycles SET LicensePlate = ?, Brand = ?, Model = ?, FrameNumber = ?, EngineNumber = ?, YearOfManufacture = ?, Color = ? WHERE CustomerID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setString(1, licensePlate);
+            ps.setString(2, brand);
+            ps.setString(3, model);
+            ps.setString(4, frameNumber);
+            ps.setString(5, engineNumber);
+            ps.setInt(6, yearOfManufacture);
+            ps.setString(7, color);
+            ps.setInt(8, userID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public int getCustomerIDByUserID(int userID) {
         String query = "SELECT CustomerID FROM Customers WHERE UserID = ?";
         try (Connection conn = DBContext.getConnection();
@@ -557,47 +567,5 @@ public class UserDAO {
         }
         return -1; // Trả về -1 nếu không tìm thấy CustomerID
     }
-
 }
-
-//    public Users checkPhoneExist(String Mobile) {
-//        String query = "select * from Users where Mobile = ?";
-//        try {
-//            conn = DBContext.getConnection(); // Mở kết nối với SQL
-//            ps = conn.prepareStatement(query);
-//            ps.setString(1, Mobile); // Thiết lập tham số cho cột user
-//            rs = ps.executeQuery();
-//            if (rs.next()) {
-//                return new Users(rs.getInt(1),
-//                        rs.getString(2),
-//                        rs.getString(3),
-//                        rs.getInt(4),
-//                        rs.getString(5),
-//                        rs.getString(6),
-//                        rs.getString(7),
-//                        rs.getString(8),
-//                        rs.getString(9));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace(); // In ra lỗi để debug
-//        } finally {
-//            try {
-//                if (rs != null) rs.close();
-//                if (ps != null) ps.close();
-//                if (conn != null) conn.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return null;
-//    }
-
-
-    //vvvvvvv
-
-
-
-
-
-
 
