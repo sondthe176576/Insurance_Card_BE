@@ -552,6 +552,30 @@ public class UserDAO {
         }
     }
 
+    public int getMotorcycleIDbyCustomerID(int id){
+        String query = "SELECT MotorcycleID FROM Motorcycles WHERE CustomerID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
+    }
+
     public int getCustomerIDByUserID(int userID) {
         String query = "SELECT CustomerID FROM Customers WHERE UserID = ?";
         try (Connection conn = DBContext.getConnection();

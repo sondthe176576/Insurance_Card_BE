@@ -43,8 +43,10 @@ public class MotorcycleControl extends HttpServlet {
 
         UserDAO dao = new UserDAO();
         int customerID = dao.getCustomerIDByUserID(userID);
-        if(customerID > 0){
-            request.setAttribute("messforadd", "Motorcycle already add, you can only edit!");
+        int motorcycleID = dao.getMotorcycleIDbyCustomerID(customerID);
+        System.out.println(customerID);
+        if(motorcycleID > 0){
+            request.setAttribute("mess", "Motorcycle is already add, you can only edit!");
             request.getRequestDispatcher("/views/customer/CustomerInfor.jsp").forward(request, response);
        }
         else {
