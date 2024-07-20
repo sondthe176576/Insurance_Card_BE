@@ -48,10 +48,15 @@ public class EditInforControl extends HttpServlet {
 
         UserDAO dao = new UserDAO();
         int customerID = dao.getCustomerIDByUserID(userID);
-        dao.updateProfile(username, email_id, mobile, tinh, quan, phuong, first_name, last_name, full_name, birthdate, gender);
-        dao.updateCustomerInfo(userID, personal_info);
-        dao.updateMotorcycles(customerID, license_plate, brand, model, frame_number, engine_number, year_of_manufacture, color);
-
+        int motorcycleID = dao.getMotorcycleIDbyCustomerID(customerID);
+        if(motorcycleID > 0) {
+            dao.updateProfile(username, email_id, mobile, tinh, quan, phuong, first_name, last_name, full_name, birthdate, gender);
+            dao.updateCustomerInfo(userID, personal_info);
+            dao.updateMotorcycles(customerID, license_plate, brand, model, frame_number, engine_number, year_of_manufacture, color);
+        }
+        else{
+            dao.addMotorcycle(userID, license_plate, brand, model, frame_number, engine_number, year_of_manufacture, color);
+        }
         request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
     }
 }

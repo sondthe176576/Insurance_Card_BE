@@ -229,14 +229,15 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Year of Manufacture</label>
-                                        <input type="number" name="year_of_manufacture" class="form-control" value="<%= motorcycle != null && motorcycle.getYearOfManufacture()!= 0 ? motorcycle.getYearOfManufacture() : 0 %>" required>
+                                        <input type="number" name="year_of_manufacture" class="form-control" value="<%= motorcycle != null && motorcycle.getYearOfManufacture()!= 0 ? motorcycle.getYearOfManufacture() : 0 %>" min="1900" max="<%= java.time.Year.now().getValue() %>" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Color</label>
-                                        <input type="text" name="color" class="form-control" value="<%= motorcycle != null && motorcycle.getColor() != null ? motorcycle.getColor() : "" %>" required>
+                                        <input type="color" name="color" class="form-control" value="<%= motorcycle != null && motorcycle.getColor() != null ? motorcycle.getColor() : "#000000" %>" required>
                                     </div>
                                 </div>
-                                    <div class="mt-5 text-center">
+
+                                <div class="mt-5 text-center">
                                         <button class="btn btn-primary profile-button" type="submit">Save</button>
                                     </div>
                                 </div> <!-- Đóng div .row -->

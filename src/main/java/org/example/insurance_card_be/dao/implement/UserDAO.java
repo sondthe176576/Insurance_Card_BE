@@ -551,7 +551,7 @@ public class UserDAO {
             }
         }
     }
-
+///
     public int getMotorcycleIDbyCustomerID(int id){
         String query = "SELECT MotorcycleID FROM Motorcycles WHERE CustomerID = ?";
         try {
