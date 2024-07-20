@@ -48,10 +48,12 @@ public class LoginControl extends HttpServlet {
             session.setAttribute("user", user);
             LOGGER.info("Login successful, user: " + user);
 
+            int customerID = dao.getCustomerIDByUserID(user.getUserID());
             // Kiểm tra role của user và chuyển hướng dựa trên role
             String role = user.getRole(); // Giả sử getRole() là phương thức để lấy role của user
             if ("Customer".equalsIgnoreCase(role)) {
                 request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
+                session.setAttribute("customerID", customerID);
             } else if ("Staff".equalsIgnoreCase(role)) {
                 request.getRequestDispatcher("/views/staff/manageStaff.jsp").forward(request, response);
             } else {
