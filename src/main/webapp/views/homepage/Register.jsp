@@ -77,7 +77,7 @@
         .form .inputBox input,
         .form .inputBox select {
             width: 100%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             border: none;
             outline: none;
             padding: 10px 20px;
@@ -91,9 +91,14 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
 
+        .form .inputBox select option {
+            background: #405e8c; /* Solid background color for options */
+            color: #fff;
+        }
+
         .form .inputBox input::placeholder,
         .form .inputBox select::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .form .inputBox input[type="submit"] {
@@ -116,10 +121,16 @@
             width: 32%;
             padding: 10px;
             border-radius: 35px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.3); /* Increased opacity */
+            border: 1px solid rgba(255, 255, 255, 0.7); /* Increased border opacity */
             color: #fff;
             font-size: 16px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .css_select option {
+            background: #405e8c; /* Solid background color for options */
+            color: #fff;
         }
 
         .error {
