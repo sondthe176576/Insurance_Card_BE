@@ -97,7 +97,7 @@ public class RenewContractDAO {
 
         Contract existingContract = getContractByID(contract.getContractID());
         if (existingContract != null) {
-            String updateContractSQL = "UPDATE Contracts SET StartDate = ?, EndDate = ? WHERE ContractID = ?";
+            String updateContractSQL = "UPDATE Contracts SET StartDate = ?, EndDate = ?, Coverage = ? WHERE ContractID = ?";
             String updateContractDetailsSQL = "UPDATE ContractDetails SET Value = ?, Detail = ? WHERE ContractID = ?";
             String updatePaymentMethodsSQL = "UPDATE PaymentMethods SET Details = 'Not Paid' WHERE PaymentMethodID = ?";
             String updatePaymentHistorySQL = "UPDATE PaymentHistory SET Amount = ?, PaymentDate = NULL WHERE ContractID = ?";
@@ -110,7 +110,8 @@ public class RenewContractDAO {
                 // Cập nhật bảng Contracts
                 updateContractStmt.setDate(1, new java.sql.Date(contract.getStartDate().getTime()));
                 updateContractStmt.setDate(2, new java.sql.Date(contract.getEndDate().getTime()));
-                updateContractStmt.setInt(3, contract.getContractID());
+                updateContractStmt.setString(3, contract.getCoverage());
+                updateContractStmt.setInt(4, contract.getContractID());
                 updateContractStmt.executeUpdate();
 
                 // Cập nhật bảng ContractDetails

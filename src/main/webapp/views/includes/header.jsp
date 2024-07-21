@@ -1,243 +1,202 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insurance Card</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Modern Header Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
-        body {
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --text-color: #333;
+            --bg-color: #ecf0f1;
+        }
+
+        * {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
 
         .tp-header {
-            background-color: #0056b3;
-            padding: 20px 40px;
-            color: #fff;
+            background-color: var(--primary-color); /* Màu nền xanh dương */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .tp-header .navbar-brand {
-            display: flex;
             align-items: center;
         }
 
-        .tp-header .navbar-brand img {
-            height: 50px;
-        }
-
-        .tp-header .search-container {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            margin: 0 40px;
-        }
-
-        .tp-header .form-inline {
-            display: flex;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .tp-header .form-control {
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            width: 100%;
-            border: none;
-            outline: none;
-        }
-
-        .tp-header .user-info {
-            display: flex;
-            align-items: flex-end;
-            flex-direction: column;
-            position: relative;
-            margin-left: 20px;
-        }
-
-        .tp-header .user-info .user-icon-btn {
-            background-color: #007bff;
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
             color: #fff;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .tp-header .user-info .profile-link {
-            display: flex;
-            align-items: center;
             text-decoration: none;
-            color: white;
-            margin-right: 10px;
+            transition: transform 0.3s ease;
         }
 
-        .tp-header .user-info .profile-link i {
-            margin-right: 10px;
+        .navbar-brand:hover {
+            transform: scale(1.05);
         }
 
-        .tp-header .user-info .logout-btn {
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .tp-header .welcome-message {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 200px;
-            margin-left: 10px;
-        }
-
-        .tp-header .phone {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 10px;
-            text-align: right;
-        }
-
-        .tp-header .login-btn {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.2rem;
+        .right-section {
             display: flex;
             align-items: center;
-            cursor: pointer;
-            margin-top: 10px;
         }
 
-        .tp-header .login-btn i {
+        .search-form {
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .search-input {
+            padding: 10px 40px 10px 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: var(--bg-color);
+            font-size: 16px;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary-color);
+            width: 300px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .login-btn {
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-btn:hover {
+            background-color: #fff;
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-btn i {
             margin-right: 10px;
+        }
+
+        .phone {
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+        }
+
+        .phone i {
+            margin-right: 10px;
+            color: #fff;
         }
 
         @media (max-width: 768px) {
-            .tp-header {
+            .container {
                 flex-direction: column;
-                align-items: flex-start;
-                padding: 10px 20px;
+                align-items: center;
             }
 
-            .tp-header .search-container {
-                width: 100%;
-                margin: 10px 0;
-            }
-
-            .tp-header .form-inline {
-                max-width: none;
-            }
-
-            .tp-header .welcome-message {
-                max-width: 100%;
-            }
-
-            .tp-header .user-info {
+            .right-section {
+                margin-top: 20px;
                 flex-direction: column;
-                align-items: flex-start;
             }
 
-            .tp-header .phone {
+            .search-form {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .phone {
+                margin-top: 20px;
                 margin-left: 0;
-                margin-top: 10px;
             }
         }
     </style>
 </head>
 <body>
-<div class="tp-header" id="tp-header">
-    <a class="navbar-brand" href="index.html">
-        <img src="${pageContext.request.contextPath}/img/logo.png" alt="Insurance Card">
-    </a>
-    <div class="search-container">
-        <form class="form-inline my-2 my-lg-0" onsubmit="return handleSearch(event)">
-            <input class="form-control" type="search" placeholder="Search..." aria-label="Search" id="searchInput">
-        </form>
+<header class="tp-header" id="tp-header" data-aos="fade-down">
+    <div class="container">
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/">
+            Peace Insurance
+        </a>
+        <div class="right-section">
+            <form class="search-form" onsubmit="return handleSearch(event)">
+                <input type="search" class="search-input" placeholder="Search..." aria-label="Search" id="searchInput">
+                <i class="fas fa-search search-icon"></i>
+            </form>
+            <button class="login-btn" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-user"></i> LOGIN
+            </button>
+            <div class="phone" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-phone-alt"></i>
+                <span>0123 456 789</span>
+            </div>
+        </div>
     </div>
-    <c:choose>
-        <c:when test="${not empty sessionScope.user}">
-            <div class="user-info">
-                <a href="${pageContext.request.contextPath}/customerinfo" class="profile-link">
-                    <i class="fas fa-user"></i>
-                    <span class="welcome-message">Welcome, ${sessionScope.user.username}</span>
-                </a>
-                <form action="${pageContext.request.contextPath}/logout" method="get">
-                    <button type="submit" class="logout-btn">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </form>
-                <span class="phone">PHONE: 0123 456 789</span>
-            </div>
-        </c:when>
-        <c:otherwise>
-            <div class="user-info">
-                <a href="${pageContext.request.contextPath}/login" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> LOGIN
-                </a>
-                <span class="phone">PHONE: 0123 456 789</span>
-            </div>
-        </c:otherwise>
-    </c:choose>
-</div>
+</header>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const notificationIcon = document.querySelector(".notification-icon");
-        const notificationsMenu = document.querySelector(".notifications-menu");
-
-        notificationIcon.addEventListener("click", function() {
-            notificationsMenu.style.display = notificationsMenu.style.display === "block" ? "none" : "block";
-        });
-
-        document.addEventListener("click", function(event) {
-            if (!notificationIcon.contains(event.target)) {
-                notificationsMenu.style.display = "none";
-            }
-        });
-
-        fetchNotifications();
+    AOS.init({
+        duration: 1000,
+        once: true
     });
 
-    function fetchNotifications() {
-        fetch('${pageContext.request.contextPath}/notifications')
-            .then(response => response.json())
-            .then(data => {
-                const notificationsMenu = document.querySelector('.notifications-menu');
-                notificationsMenu.innerHTML = '';
-                data.forEach(notification => {
-                    const notificationLink = document.createElement('a');
-                    notificationLink.href = '#';
-                    notificationLink.textContent = notification.message;
-                    notificationsMenu.appendChild(notificationLink);
-                });
-            })
-            .catch(error => console.error('Error fetching notifications:', error));
-    }
+    window.addEventListener('scroll', function() {
+        var header = document.getElementById('tp-header');
+        if (window.scrollY > 50) {
+            header.style.padding = '10px 0';
+        } else {
+            header.style.padding = '20px 0';
+        }
+    });
 
     function handleSearch(event) {
         event.preventDefault();
-        const searchInput = document.getElementById('searchInput').value;
-        console.log(`Searching for: ${searchInput}`);
-        // Add your search handling logic here
+        // Implement search functionality here
+        console.log('Search for:', document.getElementById('searchInput').value);
     }
 </script>
 </body>

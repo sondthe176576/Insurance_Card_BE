@@ -76,7 +76,7 @@
 <body>
 <nav class="navbar">
     <ul class="nav-links">
-        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/homepageforstaff"><i class="fas fa-home"></i> Home</a></li>
         <li><a href="#"><i class="fas fa-concierge-bell"></i> Service</a></li>
         <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
         <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>

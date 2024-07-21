@@ -107,7 +107,7 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
 <!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 <!-- End of header -->
 <!-- Include navbar -->
 <nav class="bg-blue-900 border-b-4 border-orange-600">

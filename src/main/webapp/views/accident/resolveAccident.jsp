@@ -87,7 +87,7 @@
 </head>
 <body class="bg-gray-100 font-sans">
 <!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 <!-- End of header -->
 <!-- Include navbar -->
 <jsp:include page="/views/includes/navbar.jsp"/>

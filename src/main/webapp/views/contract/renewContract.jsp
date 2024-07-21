@@ -5,87 +5,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Renew Contract</title>
+    <!-- Favicon -->
     <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.4.2/cdn.min.js" defer></script>
-    <script>
-        function calculateEndDate() {
-            const startDate = new Date(document.getElementById('newStartDate').value);
-            const renewalYears = parseInt(document.getElementById('renewalYears').value);
-            const premium = parseFloat(document.getElementById('premium').value);
-
-            if (!isNaN(renewalYears) && renewalYears > 0 && !isNaN(premium) && !isNaN(startDate.getTime())) {
-                const endDate = new Date(startDate);
-                endDate.setFullYear(startDate.getFullYear() + renewalYears);
-                document.getElementById('newEndDate').value = endDate.toISOString().split('T')[0];
-
-                const newValue = premium * renewalYears;
-                document.getElementById('value').value = newValue.toFixed(2);
-            }
+    <!-- Thư viện CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tippy.js@6.3.1/dist/tippy.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
-
-        function showConfirmationModal() {
-            document.getElementById('confirmationModal').classList.remove('hidden');
+        .hover-scale {
+            transition: transform 0.3s ease-in-out;
         }
-
-        function confirmRenewal() {
-            document.getElementById('renewContractForm').submit();
+        .hover-scale:hover {
+            transform: scale(1.05);
         }
-
-        function showExpirationNotificationModal() {
-            document.getElementById('expirationNotificationModal').classList.remove('hidden');
-        }
-
-        function confirmExpirationNotification() {
-            document.getElementById('expirationNotificationForm').submit();
-        }
-
-        function showExpirationConfirmationModal() {
-            document.getElementById('expirationConfirmationModal').classList.remove('hidden');
-        }
-
-        function confirmExpiration() {
-            document.getElementById('confirmExpirationForm').submit();
-        }
-
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('newStartDate').value = today;
-            calculateEndDate();
-        });
-    </script>
+    </style>
 </head>
-<body class="bg-gray-100 font-sans">
-<!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
-<!-- End of header -->
-<!-- Include navbar -->
+<body class="bg-gradient-to-r from-blue-400 to-purple-500 font-sans">
+<!-- Header và Navbar-->
+<jsp:include page="/views/includes/header_logout.jsp"/>
 <jsp:include page="/views/includes/navbar.jsp"/>
-<!-- End of navbar -->
-<!-- Notification Message -->
-<c:if test="${not empty message}">
-    <div id="notification" class="alert ${status ? 'alert-success' : 'alert-danger'} alert-dismissible fade show fixed top-0 left-1/2 transform -translate-x-1/2 z-50"
-         role="alert">
-        <c:out value="${message}"/>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-</c:if>
-<!-- End of Notification Message -->
-<!-- Form -->
-<div class="container mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+
+<!-- Form gia hạn hợp đồng -->
+<div class="container mx-auto mt-10 p-6 glassmorphism animate__animated animate__fadeIn">
     <div class="card">
-        <div class="card-header text-center bg-blue-600 text-white">
-            <h2 class="text-3xl font-bold"><i class="fas fa-file-signature"></i> Renew Contract</h2>
+        <div class="card-header text-center bg-blue-600 text-white p-4 rounded-t-lg">
+            <h2 class="text-4xl font-bold"><i class="mdi mdi-file-document-edit"></i> Renew Contract</h2>
         </div>
         <div class="card-body mt-6">
-            <form id="renewContractForm" action="${pageContext.request.contextPath}/renewContract" method="post">
+            <form id="renewContractForm" action="${pageContext.request.contextPath}/renewContract" method="post" class="space-y-6">
                 <input type="hidden" name="action" value="renew">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="text-xl text-blue-600 mb-4"><i class="fas fa-user"></i> Customer Information</h4>
+
+                <!-- Thông tin khách hàng -->
+                <div class="glassmorphism p-6 hover-scale">
+                    <h4 class="text-2xl text-blue-600 mb-4"><i class="mdi mdi-account"></i> Customer Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="mb-4">
                             <label for="customerID" class="form-label font-bold text-gray-700">Customer ID:</label>
                             <input type="number" id="customerID" name="customerID" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.customer.customerID}" readonly>
@@ -120,7 +86,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="birthDate" class="form-label font-bold text-gray-700">Birth Date:</label>
-                            <input type="date" id="birthDate" name="birthDate" class="form-input bg-gray-100 p-2 rounded w-full" value="<fmt:formatDate value='${contract.customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
+                            <input type="text" id="birthDate" name="birthDate" class="form-input bg-gray-100 p-2 rounded w-full" value="<fmt:formatDate value='${contract.customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
                         </div>
                         <div class="mb-4">
                             <label for="mobile" class="form-label font-bold text-gray-700">Mobile:</label>
@@ -139,8 +105,12 @@
                             <input type="text" id="personalInfo" name="personalInfo" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.customer.personalInfo}" readonly>
                         </div>
                     </div>
-                    <div>
-                        <h4 class="text-xl text-blue-600 mb-4"><i class="fas fa-motorcycle"></i> Vehicle Information</h4>
+                </div>
+
+                <!-- Thông tin phương tiện -->
+                <div class="glassmorphism p-6 hover-scale">
+                    <h4 class="text-2xl text-blue-600 mb-4"><i class="mdi mdi-motorbike"></i> Vehicle Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="mb-4">
                             <label for="motorcycleID" class="form-label font-bold text-gray-700">Motorcycle ID:</label>
                             <input type="number" id="motorcycleID" name="motorcycleID" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.motorcycle.motorcycleID}" readonly>
@@ -175,9 +145,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                    <div>
-                        <h4 class="text-xl text-blue-600 mb-4"><i class="fas fa-file-contract"></i> Contract Information</h4>
+
+                <!-- Thông tin hợp đồng -->
+                <div class="glassmorphism p-6 hover-scale">
+                    <h4 class="text-2xl text-blue-600 mb-4"><i class="mdi mdi-file-document"></i> Contract Information</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="mb-4">
                             <label for="contractID" class="form-label font-bold text-gray-700">Contract ID:</label>
                             <input type="number" id="contractID" name="contractID" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.contractID}" readonly>
@@ -192,11 +164,11 @@
                         </div>
                         <div class="mb-4">
                             <label for="startDate" class="form-label font-bold text-gray-700">Start Date:</label>
-                            <input type="date" id="startDate" name="startDate" class="form-input bg-gray-100 p-2 rounded w-full" value="<fmt:formatDate value='${contract.startDate}' pattern='yyyy-MM-dd'/>" readonly>
+                            <input type="text" id="startDate" name="startDate" class="form-input bg-gray-100 p-2 rounded w-full" value="<fmt:formatDate value='${contract.startDate}' pattern='yyyy-MM-dd'/>" readonly>
                         </div>
                         <div class="mb-4">
                             <label for="endDate" class="form-label font-bold text-gray-700">End Date:</label>
-                            <input type="date" id="endDate" name="endDate" class="form-input bg-gray-100 p-2 rounded w-full" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" readonly>
+                            <input type="text" id="endDate" name="endDate" class="form-input bg-gray-100 p-2 rounded w-full" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" readonly>
                         </div>
                         <div class="mb-4">
                             <label for="premium" class="form-label font-bold text-gray-700">Premium:</label>
@@ -215,8 +187,12 @@
                             <input type="text" id="coverage" name="coverage" class="form-input bg-gray-100 p-2 rounded w-full" value="${contract.coverage}" readonly>
                         </div>
                     </div>
-                    <div>
-                        <h4 class="text-xl text-blue-600 mb-4"><i class="fas fa-pen"></i> Renew Contract</h4>
+                </div>
+
+                <!-- Gia hạn hợp đồng -->
+                <div class="glassmorphism p-6 hover-scale">
+                    <h4 class="text-2xl text-blue-600 mb-4"><i class="mdi mdi-pencil"></i> Renew Contract</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="mb-4">
                             <label for="renewalYears" class="form-label font-bold text-gray-700">Renewal Years:</label>
                             <input type="number" id="renewalYears" name="renewalYears" class="form-input bg-gray-100 p-2 rounded w-full" min="1" required oninput="calculateEndDate()">
@@ -231,30 +207,45 @@
                         </div>
                         <div class="mb-4">
                             <label for="value" class="form-label font-bold text-gray-700">Value:</label>
-                            <input type="number" id="value" name="value" class="form-input bg-gray-100 p-2 rounded w-full" data-original-value="${contract.value}" readonly>
+                            <input type="text" id="value" name="value" class="form-input bg-gray-100 p-2 rounded w-full" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label for="newCoverage" class="form-label font-bold text-gray-700">New Coverage:</label>
+                            <input type="text" id="newCoverage" name="newCoverage" class="form-input bg-gray-100 p-2 rounded w-full" readonly>
                         </div>
                     </div>
                 </div>
+
+                <!-- Nút thực hiện -->
                 <div class="flex justify-center mt-6 space-x-4">
-                    <button type="button" class="btn-custom bg-blue-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-blue-700" onclick="showConfirmationModal()"><i class="fas fa-file-signature"></i> Renew Contract</button>
-                    <button type="button" class="btn-custom bg-yellow-500 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-yellow-600" onclick="showExpirationNotificationModal()"><i class="fas fa-exclamation-circle"></i> Contract Expiration Notification</button>
-                    <button type="button" class="btn-custom bg-red-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-red-700" onclick="showExpirationConfirmationModal()"><i class="fas fa-times-circle"></i> Confirm Contract Expiration</button>
-                    <a href="${pageContext.request.contextPath}/listRenewContract" class="btn-custom bg-gray-600 text-white py-2 px-4 rounded shadow-md transition transform hover:scale-105 hover:bg-gray-700"><i class="fas fa-arrow-left"></i> Back to List</a>
+                    <button type="button" id="renewButton" class="btn-custom bg-blue-600 text-white py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" onclick="showConfirmationModal()">
+                        <i class="mdi mdi-file-document-edit-outline mr-2"></i> Renew Contract
+                    </button>
+                    <button type="button" id="notifyButton" class="btn-custom bg-yellow-500 text-white py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50" onclick="showExpirationNotificationModal()">
+                        <i class="mdi mdi-bell-ring-outline mr-2"></i> Expiration Notification
+                    </button>
+                    <button type="button" id="confirmExpireButton" class="btn-custom bg-red-600 text-white py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" onclick="showExpirationConfirmationModal()">
+                        <i class="mdi mdi-close-circle-outline mr-2"></i> Confirm Expiration
+                    </button>
+                    <a href="${pageContext.request.contextPath}/listRenewContract" class="btn-custom bg-gray-600 text-white py-3 px-6 rounded-full shadow-lg transition transform hover:scale-105 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                        <i class="mdi mdi-arrow-left mr-2"></i> Back to List
+                    </a>
                 </div>
+                <c:if test="${contract.status == 'Expired' || contract.status == 'Pending' || contract.status == 'Canceled' || contract.status == 'Rejected'}">
+                    <div class="text-center mt-4 text-red-600 font-bold">
+                        This contract is in ${contract.status} status and cannot be renewed.
+                    </div>
+                </c:if>
             </form>
-        </div>
-        <div class="card-footer text-center bg-blue-600 text-white mt-6 py-4">
-            <p>Motorcycle Insurance Company, 123 Hola Street, District Thach That, Ha Noi, Vietnam</p>
-            <p>Phone: 0123-456-789 | <a href="http://www.motorcycleinsurance.vn" class="text-white">www.motorcycleinsurance.vn</a></p>
         </div>
     </div>
 </div>
-<!-- End of form -->
-<!-- Include footer -->
-<jsp:include page="/views/includes/footer.jsp"/>
-<!-- End of footer -->
 
-<!-- Renewal Confirmation Modal -->
+<!-- Footer -->
+<jsp:include page="/views/includes/footer.jsp"/>
+
+<!-- Modals -->
+<!-- Modal xác nhận gia hạn hợp đồng -->
 <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" id="confirmationModal">
     <div class="bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
         <div class="text-center mb-4">
@@ -269,9 +260,6 @@
         </div>
     </div>
 </div>
-<!-- End of renewal confirmation modal -->
-
-<!-- Expiration Notification Modal -->
 <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" id="expirationNotificationModal">
     <div class="bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
         <div class="text-center mb-4">
@@ -290,9 +278,6 @@
         </div>
     </div>
 </div>
-<!-- End of expiration notification modal -->
-
-<!-- Expiration Confirmation Modal -->
 <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" id="expirationConfirmationModal">
     <div class="bg-white p-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
         <div class="text-center mb-4">
@@ -311,6 +296,132 @@
         </div>
     </div>
 </div>
-<!-- End of expiration confirmation modal -->
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tippy.js@6.3.1/dist/tippy-bundle.umd.min.js"></script>
+<script>
+    // Khởi tạo tooltips
+    tippy('[data-tippy-content]');
+
+    // Hiển thị thông báo sử dụng SweetAlert2
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Đặt giá trị ngày bắt đầu mới là ngày hiện tại
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('newStartDate').value = today;
+        calculateEndDate();
+
+        // Vô hiệu hóa các nút nếu hợp đồng đã hết hạn hoặc ở trạng thái Pending, Canceled, Rejected
+        const status = document.getElementById('status').value;
+        if (status === 'Expired' || status === 'Pending' || status === 'Canceled' || status === 'Rejected') {
+            document.getElementById('renewButton').disabled = true;
+            document.getElementById('notifyButton').disabled = true;
+            document.getElementById('confirmExpireButton').disabled = true;
+        }
+    });
+
+    // Hàm tính toán ngày kết thúc và giá trị hợp đồng mới
+    function calculateEndDate() {
+        const startDate = new Date(document.getElementById('newStartDate').value);
+        const renewalYears = parseInt(document.getElementById('renewalYears').value);
+        const premium = parseFloat(document.getElementById('premium').value);
+
+        // Kiểm tra tính hợp lệ của dữ liệu đầu vào
+        if (!isNaN(renewalYears) && renewalYears > 0 && !isNaN(premium) && !isNaN(startDate.getTime())) {
+            const endDate = new Date(startDate);
+            endDate.setFullYear(startDate.getFullYear() + renewalYears);
+            document.getElementById('newEndDate').value = endDate.toISOString().split('T')[0];
+
+            const newValue = premium * renewalYears;
+            document.getElementById('value').value = newValue.toFixed(2);
+
+            const newCoverage = "This contract will be valid for " + renewalYears + " years.";
+            document.getElementById('newCoverage').value = newCoverage;
+        }
+    }
+
+    // Hàm kiểm tra các trường bắt buộc và hiển thị modal xác nhận gia hạn hợp đồng
+    function showConfirmationModal() {
+        if (validateForm()) {
+            Swal.fire({
+                title: 'Confirm Renewal',
+                text: 'Are you sure you want to renew this contract?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, renew it!',
+                cancelButtonText: 'No, cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    confirmRenewal();
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Incomplete Information',
+                text: 'Please fill in all required fields before proceeding.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    // Hàm kiểm tra các trường bắt buộc đã được điền đủ hay chưa
+    function validateForm() {
+        const renewalYears = document.getElementById('renewalYears').value;
+        const newStartDate = document.getElementById('newStartDate').value;
+        return renewalYears && newStartDate;
+    }
+
+    // Hàm xác nhận gia hạn hợp đồng
+    function confirmRenewal() {
+        document.getElementById('renewContractForm').submit();
+    }
+
+    // Hàm hiển thị modal thông báo hợp đồng hết hạn sử dụng SweetAlert2
+    function showExpirationNotificationModal() {
+        Swal.fire({
+            title: 'Expiration Notification',
+            text: 'Do you want to send a notification to the customer that this contract has expired?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, send it!',
+            cancelButtonText: 'No, cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                confirmExpirationNotification();
+            }
+        });
+    }
+
+    // Hàm xác nhận thông báo hết hạn hợp đồng
+    function confirmExpirationNotification() {
+        document.getElementById('expirationNotificationForm').submit();
+    }
+
+    // Hàm hiển thị modal xác nhận hết hạn hợp đồng sử dụng SweetAlert2
+    function showExpirationConfirmationModal() {
+        Swal.fire({
+            title: 'Confirm Expiration',
+            text: 'This contract will be marked as expired. Do you want to proceed?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, proceed!',
+            cancelButtonText: 'No, cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                confirmExpiration();
+            }
+        });
+    }
+
+    // Hàm xác nhận hết hạn hợp đồng
+    function confirmExpiration() {
+        document.getElementById('confirmExpirationForm').submit();
+    }
+</script>
 </body>
 </html>

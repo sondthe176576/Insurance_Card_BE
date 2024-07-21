@@ -3,6 +3,7 @@ package org.example.insurance_card_be.dao.implement;
 import org.example.insurance_card_be.dao.DBContext;
 import org.example.insurance_card_be.model.Customers;
 import org.example.insurance_card_be.model.Motorcycle;
+import org.example.insurance_card_be.model.Motorcycles;
 import org.example.insurance_card_be.model.Users;
 
 import java.sql.*;
@@ -473,6 +474,106 @@ public class UserDAO {
             }
         }
         return null;
+    }
+
+    public Motorcycles getMotorcycleByCustomerID(int customerID) {
+        String query = "SELECT * FROM Motorcycles WHERE CustomerID = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, customerID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Motorcycles(
+                            rs.getInt("motorcycleID"),
+                            rs.getInt("customerID"),
+                            rs.getString("licensePlate"),
+                            rs.getString("brand"),
+                            rs.getString("model"),
+                            rs.getString("frameNumber"),
+                            rs.getString("engineNumber"),
+                            rs.getInt("yearOfManufacture"),
+                            rs.getString("color")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy Motorcycles
+    }
+
+    public String getNameofPersonalInfor(int userID) {
+        String query = "SELECT PersonalInfo FROM Customers WHERE UserID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public void updateMotorcycles(int userID, String licensePlate, String brand, String model, String frameNumber, String engineNumber, int yearOfManufacture, String color){
+        String query = "UPDATE Motorcycles SET LicensePlate = ?, Brand = ?, Model = ?, FrameNumber = ?, EngineNumber = ?, YearOfManufacture = ?, Color = ? WHERE CustomerID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setString(1, licensePlate);
+            ps.setString(2, brand);
+            ps.setString(3, model);
+            ps.setString(4, frameNumber);
+            ps.setString(5, engineNumber);
+            ps.setInt(6, yearOfManufacture);
+            ps.setString(7, color);
+            ps.setInt(8, userID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+///
+    public int getMotorcycleIDbyCustomerID(int id){
+        String query = "SELECT MotorcycleID FROM Motorcycles WHERE CustomerID = ?";
+        try {
+            conn = DBContext.getConnection(); // Mở kết nối với SQL
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra lỗi để debug
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
     }
 
     public int getCustomerIDByUserID(int userID) {

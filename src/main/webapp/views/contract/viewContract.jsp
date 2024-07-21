@@ -15,44 +15,10 @@
 </head>
 <body>
 <!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 <!-- End of header -->
 <!-- Include navbar -->
-<nav class="bg-blue-900 border-b-4 border-orange-600">
-    <div class="container mx-auto px-4 py-2 flex justify-center">
-        <ul class="flex space-x-6">
-            <li>
-                <a href="${pageContext.request.contextPath}/homepageforcustomer"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
-                    <i class="fas fa-home mr-2"></i> Home
-                </a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
-                    <i class="fas fa-file-contract mr-2"></i> Buy Insurance
-                </a>
-            </li>
-            <li>
-                <a href="#" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
-                    <i class="fas fa-info-circle mr-2"></i> About
-                </a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/contractForCustomer"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
-                    <i class="fas fa-file-alt mr-2"></i> Contract
-                </a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp"
-                   class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
-                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<jsp:include page="/views/includes/navbar.jsp"/>
 <!-- End of navbar -->
 <!-- Notification Message -->
 <c:if test="${not empty message}">
@@ -344,7 +310,7 @@
             </div>
             <div class="d-flex justify-content-center mt-4">
                 <c:choose>
-                    <c:when test="${contract.status == 'Accepted' && diffDays > 0}">
+                    <c:when test="${contract.status == 'Accepted' && diffDays > 0 && contract.paymentMethod.details != 'Paid'}">
                         <a href="${pageContext.request.contextPath}/updateContract?contractID=${contract.contractID}"
                            class="btn btn-primary me-2"><i class="fas fa-edit"></i> Update Contract</a>
                     </c:when>
@@ -416,6 +382,9 @@
                     </c:when>
                     <c:when test="${contract.status == 'Accepted' && diffDays <= 0}">
                         <p>The contract has been accepted but has reached its end date and cannot be updated.</p>
+                    </c:when>
+                    <c:when test="${contract.paymentMethod.details == 'Paid'}">
+                        <p>The contract has already been paid and cannot be updated.</p>
                     </c:when>
                     <c:otherwise>
                         <p>The contract cannot be updated due to an unknown status.</p>
