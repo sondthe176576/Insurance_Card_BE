@@ -36,13 +36,12 @@ public class PaymentDAO {
     }
 
     public void savePaymentHistory(PaymentHistory paymentHistory) throws SQLException {
-        String sql = "INSERT INTO PaymentHistory(CustomerID, Amount, PaymentDate, PaymentMethodID, ContractID) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PaymentHistory(CustomerID, Amount, PaymentMethodID, ContractID) VALUES(?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, paymentHistory.getCustomerID());
             ps.setBigDecimal(2, paymentHistory.getAmount());
-            ps.setDate(3, new java.sql.Date(paymentHistory.getPaymentDate().getTime()));
-            ps.setInt(4, paymentHistory.getPaymentMethodID());
-            ps.setInt(5, paymentHistory.getContractID());
+            ps.setInt(3, paymentHistory.getPaymentMethodID());
+            ps.setInt(4, paymentHistory.getContractID());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Error while saving payment history", e);

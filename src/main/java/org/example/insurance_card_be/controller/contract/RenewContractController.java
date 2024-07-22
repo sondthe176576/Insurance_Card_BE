@@ -48,34 +48,38 @@ public class RenewContractController extends HttpServlet {
         int contractID = Integer.parseInt(req.getParameter("contractID"));
         int renewalYears = Integer.parseInt(req.getParameter("renewalYears"));
         double premium = Double.parseDouble(req.getParameter("premium"));
-
-        Contract contract = new Contract();
-        contract.setContractID(contractID);
-        contract.setPremium(premium);
+        String newCoverage = req.getParameter("newCoverage");
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.sql.Date newStartDate = new java.sql.Date(formatter.parse(req.getParameter("newStartDate")).getTime());
-            contract.setStartDate(newStartDate);
 
-            java.util.Calendar cal = java.util.Calendar.getInstance();
-            cal.setTime(newStartDate);
-            cal.add(java.util.Calendar.YEAR, renewalYears);
-            java.sql.Date newEndDate = new java.sql.Date(cal.getTime().getTime());
-            contract.setEndDate(newEndDate);
-
-            double value = premium * renewalYears;
-            contract.setValue(value);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        try {
             Contract existingContract = renewContractService.getContractDetailByID(contractID);
             if (existingContract != null) {
+                Contract contract = new Contract();
+                contract.setContractID(contractID);
+                contract.setCustomerID(existingContract.getCustomerID());
+                contract.setContractInfo(existingContract.getContractInfo());
+                contract.setStatus(existingContract.getStatus());
+                contract.setStartDate(newStartDate);
+
+                java.util.Calendar cal = java.util.Calendar.getInstance();
+                cal.setTime(newStartDate);
+                cal.add(java.util.Calendar.YEAR, renewalYears);
+                java.sql.Date newEndDate = new java.sql.Date(cal.getTime().getTime());
+                contract.setEndDate(newEndDate);
+
+                double value = premium * renewalYears;
+                contract.setValue(value);
+
+                contract.setCoverage(newCoverage);
+                contract.setInsuranceType(existingContract.getInsuranceType());
+                contract.setPremium(premium);
+                contract.setDetail(existingContract.getDetail());
                 contract.setCustomer(existingContract.getCustomer());
+                contract.setMotorcycle(existingContract.getMotorcycle());
+
                 renewContractService.renewContract(contract);
-                // Redirect with success message
                 String customerName = contract.getCustomer().getUser().getFullName();
                 String message = "The contract for customer " + customerName + " has been successfully renewed";
                 String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8.toString());
@@ -83,6 +87,8 @@ public class RenewContractController extends HttpServlet {
             } else {
                 resp.sendRedirect(req.getContextPath() + "/listRenewContract?message=Contract+not+found&status=false");
             }
+        } catch (ParseException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }

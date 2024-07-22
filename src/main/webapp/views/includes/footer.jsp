@@ -103,7 +103,6 @@
     <div class="container mx-auto px-4">
         <div class="flex justify-between items-center animate__animated animate__fadeIn">
             <div class="flex items-center">
-                <img src="${pageContext.request.contextPath}/img/logo.png" alt="logo" class="h-12 mr-4">
                 <span class="text-2xl font-bold">Peace Insurance</span>
             </div>
             <div class="text-right">
@@ -112,20 +111,20 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mt-8">
             <div>
-                <h2 class="text-lg font-bold text-yellow-500 mb-4">Insurance</h2>
+                <h2 class="text-lg font-bold text-yellow-500 mb-4">Motorcycle Insurance</h2>
                 <ul>
-                    <li class="mb-2 flex items-center"><i class="fas fa-car icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Auto Insurance</a></li>
-                    <li class="mb-2 flex items-center"><i class="fas fa-home icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Home Insurance</a></li>
-                    <li class="mb-2 flex items-center"><i class="fas fa-briefcase icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Business Insurance</a></li>
-                    <li class="mb-2 flex items-center"><i class="fas fa-heartbeat icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Life Insurance</a></li>
-                    <li class="mb-2 flex items-center"><i class="fas fa-plane icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Travel Insurance</a></li>
-                    <li class="mb-2 flex items-center"><i class="fas fa-umbrella icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Other Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-motorcycle icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Comprehensive Coverage</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-shield-alt icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Liability Insurance</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-tools icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Collision Coverage</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-fire icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Fire and Theft</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-user-shield icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Personal Injury Protection</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-map-marker-alt icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Roadside Assistance</a></li>
                 </ul>
             </div>
             <div>
                 <h2 class="text-lg font-bold text-yellow-500 mb-4">Quick Links</h2>
                 <ul>
-                    <li class="mb-2 flex items-center"><i class="fas fa-info-circle icon"></i><a href="#" class="hover:text-yellow-500 footer-link">About us</a></li>
+                    <li class="mb-2 flex items-center"><i class="fas fa-info-circle icon"></i><a href="#" class="hover:text-yellow-500 footer-link">About Us</a></li>
                     <li class="mb-2 flex items-center"><i class="fas fa-headset icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Support</a></li>
                     <li class="mb-2 flex items-center"><i class="fas fa-briefcase icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Careers</a></li>
                     <li class="mb-2 flex items-center"><i class="fas fa-download icon"></i><a href="#" class="hover:text-yellow-500 footer-link">Download App</a></li>
@@ -136,7 +135,7 @@
             </div>
             <div>
                 <h2 class="text-lg font-bold text-yellow-500 mb-4">About Peace Insurance</h2>
-                <p class="mb-4">Established in 1990, we are your insurance expert committed to providing peace of mind to all kinds of borrowers by helping them obtain and manage insurance.</p>
+                <p class="mb-4">Established in 1990, we are your motorcycle insurance expert committed to providing peace of mind to all riders by helping them obtain and manage their insurance needs.</p>
                 <p class="font-bold">Address: 56702, Meeraz Centroz, Near Roxa, Garden, Bangalore</p>
                 <p class="font-bold">Phone: +1 800-PEACE | (1-800-123-4567)</p>
                 <a href="#" class="inline-block bg-yellow-500 text-white py-2 px-4 rounded mt-4 hover:bg-yellow-600 animate__animated animate__pulse cta-button">Get A Quote</a>

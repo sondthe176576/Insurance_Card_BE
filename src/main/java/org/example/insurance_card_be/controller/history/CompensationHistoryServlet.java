@@ -56,11 +56,18 @@ public class CompensationHistoryServlet extends HttpServlet {
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        int requestID = Integer.parseInt(request.getParameter("id"));
+        String idParam = request.getParameter("id");
+        if (idParam == null || idParam.isEmpty()) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID is missing.");
+            return;
+        }
+
+        int requestID = Integer.parseInt(idParam);
         CompensationRequests requestDetail = compensationHistoryService.getCompensationRequestById(requestID);
         request.setAttribute("compensationRequest", requestDetail);
         request.getRequestDispatcher("/views/history/editCompensationHistory.jsp").forward(request, response);
     }
+
 
     private void viewCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int requestID = Integer.parseInt(request.getParameter("id"));
@@ -144,6 +151,15 @@ public class CompensationHistoryServlet extends HttpServlet {
             int contractID = Integer.parseInt(contractIDStr);
             BigDecimal amount = new BigDecimal(amountStr);
             java.sql.Date requestDate = java.sql.Date.valueOf(requestDateStr);
+            java.time.LocalDate today = java.time.LocalDate.now();
+
+            // Check if requestDate is in the future
+            if (requestDate.toLocalDate().isAfter(today)) {
+                request.setAttribute("errorMessage", "Request date cannot be in the future.");
+                showAddForm(request, response);
+                return;
+            }
+
             String status = "Pending";
 
             if (!compensationHistoryService.isContractValidForCustomer(contractID, customerID)) {
@@ -169,34 +185,67 @@ public class CompensationHistoryServlet extends HttpServlet {
         }
     }
 
+
     private void updateCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         String requestIDParam = request.getParameter("requestID");
         String contractIDParam = request.getParameter("contractID");
 
+        // Kiểm tra các tham số cần thiết
         if (requestIDParam == null || requestIDParam.isEmpty() ||
                 contractIDParam == null || contractIDParam.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Request ID or Contract ID is missing.");
             return;
         }
 
-        int requestID = Integer.parseInt(requestIDParam);
-        int contractID = Integer.parseInt(contractIDParam);
-        String description = request.getParameter("description");
-        BigDecimal amount = new BigDecimal(request.getParameter("amount"));
-        java.sql.Date requestDate = java.sql.Date.valueOf(request.getParameter("requestDate"));
-        String status = request.getParameter("status");
+        try {
+            int requestID = Integer.parseInt(requestIDParam);
+            int contractID = Integer.parseInt(contractIDParam);
+            String description = request.getParameter("description");
+            BigDecimal amount = new BigDecimal(request.getParameter("amount"));
+            java.sql.Date requestDate = java.sql.Date.valueOf(request.getParameter("requestDate"));
+            String status = request.getParameter("status");
 
-        CompensationRequests updatedRequest = new CompensationRequests();
-        updatedRequest.setRequestID(requestID);
-        updatedRequest.setContractID(contractID);
-        updatedRequest.setDescription(description);
-        updatedRequest.setAmount(amount);
-        updatedRequest.setRequestDate(requestDate);
-        updatedRequest.setStatus(status);
+            // Kiểm tra xem requestDate có phải là ngày trong tương lai không
+            java.time.LocalDate today = java.time.LocalDate.now();
+            if (requestDate.toLocalDate().isAfter(today)) {
+                request.setAttribute("errorMessage", "Request date cannot be in the future.");
+                // Đặt lại các thuộc tính của yêu cầu để hiển thị lại form với các giá trị đã nhập
+                CompensationRequests updatedRequest = new CompensationRequests();
+                updatedRequest.setRequestID(requestID);
+                updatedRequest.setContractID(contractID);
+                updatedRequest.setDescription(description);
+                updatedRequest.setAmount(amount);
+                updatedRequest.setRequestDate(requestDate);
+                updatedRequest.setStatus(status);
+                request.setAttribute("compensationRequest", updatedRequest);
+                request.getRequestDispatcher("/views/history/editCompensationHistory.jsp").forward(request, response);
+                return;
+            }
 
-        compensationHistoryService.updateCompensationRequest(updatedRequest);
-        response.sendRedirect("compensationHistory");
+            // Tạo đối tượng CompensationRequests với các thông tin đã cập nhật
+            CompensationRequests updatedRequest = new CompensationRequests();
+            updatedRequest.setRequestID(requestID);
+            updatedRequest.setContractID(contractID);
+            updatedRequest.setDescription(description);
+            updatedRequest.setAmount(amount);
+            updatedRequest.setRequestDate(requestDate);
+            updatedRequest.setStatus(status);
+
+            // Gọi dịch vụ để cập nhật yêu cầu bồi thường
+            compensationHistoryService.updateCompensationRequest(updatedRequest);
+            response.sendRedirect("compensationHistory");
+
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid number format.");
+            request.getRequestDispatcher("/views/history/editCompensationHistory.jsp").forward(request, response);
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("errorMessage", "Invalid date format.");
+            request.getRequestDispatcher("/views/history/editCompensationHistory.jsp").forward(request, response);
+        }
     }
+
+
+
 
     private void deleteCompensationRequest(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int requestID = Integer.parseInt(request.getParameter("requestID"));

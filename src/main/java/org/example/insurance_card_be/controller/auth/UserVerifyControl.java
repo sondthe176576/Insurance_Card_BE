@@ -24,7 +24,7 @@ public class UserVerifyControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("email");
+        String email = (String) session.getAttribute("username");
         String phone = (String) session.getAttribute("phone");
         String username = (String) session.getAttribute("username");
         String password = (String) session.getAttribute("password");
@@ -43,8 +43,10 @@ public class UserVerifyControl extends HttpServlet {
 
         if (code.equals(user.getCode())) {
             UserDAO dao = new UserDAO();
+            System.out.println(user.getCode());
             System.out.println("Username: " + username);
             System.out.println("Email: " + email);
+            System.out.println("Phone: " + phone);
                 dao.register(username, password, email, phone, tinh, quan, phuong, firstname, lastname, full_name, sqlDate, gender);
                 response.sendRedirect("login");
         } else {

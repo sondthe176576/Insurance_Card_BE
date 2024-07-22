@@ -55,6 +55,7 @@
         }
     </style>
 </head>
+<body>
 <!-- Navbar -->
 <nav class="bg-blue-900 border-b-4 border-orange-600">
     <div class="container mx-auto px-4 py-2 flex justify-center">
@@ -88,12 +89,8 @@
     </div>
 </nav>
 
-<body>
 <div class="container mt-4">
     <h1 class="page-title">Accident History</h1>
-    <div class="d-flex justify-content-center mb-4">
-        <a href="${pageContext.request.contextPath}/accidentHistory?action=addForm" class="btn btn-primary"><i class="fas fa-plus"></i> Report Accident</a>
-    </div>
     <table class="table table-hover table-bordered">
         <thead>
         <tr>
@@ -110,13 +107,13 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${accidents}" var="accident" varStatus="status">
+        <c:forEach items="${listAccidents}" var="accident" varStatus="status">
             <tr>
                 <td>${(currentPage - 1) * 10 + status.index + 1}</td>
-                <td>${accident.customerID}</td>
-                <td>${accident.customerName}</td>
+                <td>${accident.customer.customerID}</td>
+                <td>${accident.customer.user.fullName}</td>
                 <td>${accident.accidentID}</td>
-                <td>${accident.contractID}</td>
+                <td>${accident.contract.contractID}</td>
                 <td>${accident.accidentType}</td>
                 <td>${accident.accidentDate}</td>
                 <td>${accident.description}</td>
@@ -140,13 +137,15 @@
                     <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${accident.accidentID}" class="btn btn-warning btn-sm btn-action">
                         <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <form action="${pageContext.request.contextPath}/accidentHistory" method="post" style="display:inline;">
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="accidentID" value="${accident.accidentID}">
-                        <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to delete this record?');">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
+                    <c:if test="${accident.status == 'Pending'}">
+                        <form action="${pageContext.request.contextPath}/accidentHistory" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="accidentID" value="${accident.accidentID}">
+                            <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to cancel this record?');">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

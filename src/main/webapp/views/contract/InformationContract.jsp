@@ -107,7 +107,7 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
 <!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 <!-- End of header -->
 <!-- Include navbar -->
 <nav class="bg-blue-900 border-b-4 border-orange-600">
@@ -316,12 +316,15 @@
                         <i class="fas fa-times mr-2"></i>Cancel Contract
                     </button>
                 </form>
+                <!-- Add Accident Form Button -->
+                <a href="${pageContext.request.contextPath}/accidentHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-secondary">
+                    <i class="fas fa-plus mr-2"></i>Add Accident
+                </a>
             </c:otherwise>
         </c:choose>
     </div>
-</div>
 
-<!-- Renew Confirmation Modal -->
+    <!-- Renew Confirmation Modal -->
 <div class="fixed z-10 inset-0 overflow-y-auto modal" id="renewModal">
     <div class="flex items-center justify-center min-h-screen">
         <div class="modal-content w-full max-w-md">

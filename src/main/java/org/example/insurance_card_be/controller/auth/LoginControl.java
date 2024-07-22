@@ -50,7 +50,7 @@ public class LoginControl extends HttpServlet {
 
             // Kiểm tra vai trò của user và chuyển hướng phù hợp
             if ("staff".equalsIgnoreCase(user.getRole())) {
-                response.sendRedirect("homepageforstaff");
+                request.getRequestDispatcher("/views/staff/manageStaff.jsp").forward(request, response);
             } else {
                 int customerID = dao.getCustomerIDByUserID(user.getUserID());
                 if (customerID == -1) {
@@ -59,7 +59,7 @@ public class LoginControl extends HttpServlet {
                     return;
                 }
                 session.setAttribute("customerID", customerID);
-                response.sendRedirect("homepageforcustomer");
+                request.getRequestDispatcher("/views/dashboard/HomePageForCustomer.jsp").forward(request, response);
             }
         }
     }

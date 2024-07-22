@@ -136,11 +136,4 @@ public class PunishmentHistoryDAO {
 
         return list;
     }
-    public static void main(String[] args) throws SQLException {
-        PunishmentHistoryDAO punishmentHistoryDAO = new PunishmentHistoryDAO();
-        List<PunishmentHistory> list = punishmentHistoryDAO.getAllPunishmentHistories();
-        for (PunishmentHistory punishmentHistory : list) {
-            System.out.println(punishmentHistory);
-        }
-    }
 }

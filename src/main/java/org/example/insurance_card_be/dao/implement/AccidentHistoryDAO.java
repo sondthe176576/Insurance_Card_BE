@@ -6,6 +6,8 @@ import org.example.insurance_card_be.model.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AccidentHistoryDAO {
     private Connection connection;
@@ -15,10 +17,9 @@ public class AccidentHistoryDAO {
     }
 
     public List<Accident> getAllAccidents() throws SQLException {
-        List<Accident> accidents = new ArrayList<>();
-        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, a.Status, " +
+        String sql = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, a.Status, " +
                 "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
-                "c.CustomerID, c.PersonalInfo, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
+                "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
                 "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
                 "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
                 "FROM Accidents a " +
@@ -27,9 +28,19 @@ public class AccidentHistoryDAO {
                 "JOIN Customers c ON con.CustomerID = c.CustomerID " +
                 "JOIN Users u ON c.UserID = u.UserID " +
                 "JOIN Motorcycles m ON c.CustomerID = m.CustomerID";
-        try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+
+        List<Accident> accidents = new ArrayList<>();
+        Set<Integer> seenAccidents = new HashSet<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                int accidentID = rs.getInt("AccidentID");
+                if (seenAccidents.contains(accidentID)) {
+                    continue; // Skip duplicate accident
+                }
+                seenAccidents.add(accidentID);
+
                 Users user = new Users();
                 user.setUserID(rs.getInt("UserID"));
                 user.setUsername(rs.getString("Username"));
@@ -73,184 +84,35 @@ public class AccidentHistoryDAO {
                 contract.setCustomer(customer);
                 contract.setMotorcycle(motorcycle);
 
-                Accident accident = new Accident();
-                accident.setAccidentID(rs.getInt("AccidentID"));
-                accident.setContractID(rs.getInt("ContractID"));
-                accident.setAccidentType(rs.getString("AccidentType"));
-                accident.setAccidentDate(rs.getDate("AccidentDate"));
-                accident.setDescription(rs.getString("Description"));
-                accident.setCustomerID(rs.getInt("CustomerID"));
-                accident.setCustomerName(user.getFullName());  // Use the full name from the Users table
-                accident.setStatus(rs.getString("Status"));
-                accident.setContract(contract);
-                accident.setCustomer(customer);
-
+                Accident accident = new Accident(
+                        accidentID,
+                        rs.getInt("ContractID"),
+                        rs.getInt("CustomerID"),
+                        rs.getString("AccidentType"),
+                        rs.getDate("AccidentDate"),
+                        rs.getString("Description"),
+                        user.getFullName(),
+                        rs.getString("Status"),
+                        contract,
+                        customer
+                );
                 accidents.add(accident);
             }
         }
         return accidents;
     }
 
-    public List<Accident> getAccidentsByCustomerID(int customerID, int offset, int limit) throws SQLException {
-        List<Accident> accidents = new ArrayList<>();
-        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, a.Status, " +
-                "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
-                "c.CustomerID, c.PersonalInfo, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
-                "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
-                "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
-                "FROM Accidents a " +
-                "JOIN Contracts con ON a.ContractID = con.ContractID " +
-                "JOIN ContractDetails cd ON con.ContractID = cd.ContractID " +
-                "JOIN Customers c ON con.CustomerID = c.CustomerID " +
-                "JOIN Users u ON c.UserID = u.UserID " +
-                "JOIN Motorcycles m ON c.CustomerID = m.CustomerID " +
-                "WHERE c.CustomerID = ? ORDER BY a.AccidentDate DESC " +
-                "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, customerID);
-            stmt.setInt(2, offset);
-            stmt.setInt(3, limit);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Users user = new Users();
-                    user.setUserID(rs.getInt("UserID"));
-                    user.setUsername(rs.getString("Username"));
-                    user.setEmail(rs.getString("Email"));
-                    user.setMobile(rs.getString("Mobile"));
-                    user.setFullName(rs.getString("Full_name"));
-                    user.setGender(rs.getString("Gender"));
-                    user.setProvince(rs.getString("Province"));
-                    user.setDistrict(rs.getString("District"));
-                    user.setCountry(rs.getString("Country"));
-                    user.setFirstName(rs.getString("First_name"));
-                    user.setLastName(rs.getString("Last_name"));
-                    user.setBirthDate(rs.getDate("Birth_date"));
-
-                    Motorcycle motorcycle = new Motorcycle();
-                    motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));
-                    motorcycle.setLicensePlate(rs.getString("LicensePlate"));
-                    motorcycle.setBrand(rs.getString("Brand"));
-                    motorcycle.setModel(rs.getString("Model"));
-                    motorcycle.setFrameNumber(rs.getString("FrameNumber"));
-                    motorcycle.setEngineNumber(rs.getString("EngineNumber"));
-                    motorcycle.setYearOfManufacture(rs.getInt("YearOfManufacture"));
-                    motorcycle.setColor(rs.getString("Color"));
-
-                    Customers customer = new Customers();
-                    customer.setCustomerID(rs.getInt("CustomerID"));
-                    customer.setPersonalInfo(rs.getString("PersonalInfo"));
-                    customer.setUser(user);
-
-                    Contract contract = new Contract();
-                    contract.setContractID(rs.getInt("ContractID"));
-                    contract.setContractInfo(rs.getString("ContractInfo"));
-                    contract.setStatus(rs.getString("ContractStatus"));
-                    contract.setStartDate(rs.getDate("StartDate"));
-                    contract.setEndDate(rs.getDate("EndDate"));
-                    contract.setInsuranceType(rs.getString("InsuranceType"));
-                    contract.setCoverage(rs.getString("Coverage"));
-                    contract.setPremium(rs.getDouble("Premium"));
-                    contract.setDetail(rs.getString("Detail"));
-                    contract.setValue(rs.getDouble("Value"));
-                    contract.setCustomer(customer);
-                    contract.setMotorcycle(motorcycle);
-
-                    Accident accident = new Accident();
-                    accident.setAccidentID(rs.getInt("AccidentID"));
-                    accident.setContractID(rs.getInt("ContractID"));
-                    accident.setAccidentType(rs.getString("AccidentType"));
-                    accident.setAccidentDate(rs.getDate("AccidentDate"));
-                    accident.setDescription(rs.getString("Description"));
-                    accident.setCustomerID(rs.getInt("CustomerID"));
-                    accident.setCustomerName(user.getFullName());  // Use the full name from the Users table
-                    accident.setStatus(rs.getString("Status"));
-                    accident.setContract(contract);
-                    accident.setCustomer(customer);
-
-                    accidents.add(accident);
-                }
-            }
-        }
-        return accidents;
-    }
-
-    public int getAccidentCountByCustomerID(int customerID) throws SQLException {
-        String query = "SELECT COUNT(*) AS Total FROM Accidents a " +
-                "JOIN Contracts con ON a.ContractID = con.ContractID " +
-                "JOIN Customers c ON con.CustomerID = c.CustomerID " +
-                "JOIN Users u ON c.UserID = u.UserID " +
-                "WHERE c.CustomerID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, customerID);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("Total");
-                }
-            }
-        }
-        return 0;
-    }
-
     public Accident getAccidentById(int accidentID) throws SQLException {
-        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, a.Status, " +
-                "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
-                "c.CustomerID, c.PersonalInfo, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
-                "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
-                "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
+        String query = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, c.CustomerID, u.Full_name AS CustomerName, a.Status " +
                 "FROM Accidents a " +
-                "JOIN Contracts con ON a.ContractID = con.ContractID " +
-                "JOIN ContractDetails cd ON con.ContractID = cd.ContractID " +
-                "JOIN Customers c ON con.CustomerID = c.CustomerID " +
-                "JOIN Users u ON c.UserID = u.UserID " +
-                "JOIN Motorcycles m ON c.CustomerID = m.CustomerID " +
+                "JOIN Contracts c ON a.ContractID = c.ContractID " +
+                "JOIN Customers cu ON c.CustomerID = cu.CustomerID " +
+                "JOIN Users u ON cu.UserID = u.UserID " +
                 "WHERE a.AccidentID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, accidentID);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Users user = new Users();
-                    user.setUserID(rs.getInt("UserID"));
-                    user.setUsername(rs.getString("Username"));
-                    user.setEmail(rs.getString("Email"));
-                    user.setMobile(rs.getString("Mobile"));
-                    user.setFullName(rs.getString("Full_name"));
-                    user.setGender(rs.getString("Gender"));
-                    user.setProvince(rs.getString("Province"));
-                    user.setDistrict(rs.getString("District"));
-                    user.setCountry(rs.getString("Country"));
-                    user.setFirstName(rs.getString("First_name"));
-                    user.setLastName(rs.getString("Last_name"));
-                    user.setBirthDate(rs.getDate("Birth_date"));
-
-                    Motorcycle motorcycle = new Motorcycle();
-                    motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));
-                    motorcycle.setLicensePlate(rs.getString("LicensePlate"));
-                    motorcycle.setBrand(rs.getString("Brand"));
-                    motorcycle.setModel(rs.getString("Model"));
-                    motorcycle.setFrameNumber(rs.getString("FrameNumber"));
-                    motorcycle.setEngineNumber(rs.getString("EngineNumber"));
-                    motorcycle.setYearOfManufacture(rs.getInt("YearOfManufacture"));
-                    motorcycle.setColor(rs.getString("Color"));
-
-                    Customers customer = new Customers();
-                    customer.setCustomerID(rs.getInt("CustomerID"));
-                    customer.setPersonalInfo(rs.getString("PersonalInfo"));
-                    customer.setUser(user);
-
-                    Contract contract = new Contract();
-                    contract.setContractID(rs.getInt("ContractID"));
-                    contract.setContractInfo(rs.getString("ContractInfo"));
-                    contract.setStatus(rs.getString("ContractStatus"));
-                    contract.setStartDate(rs.getDate("StartDate"));
-                    contract.setEndDate(rs.getDate("EndDate"));
-                    contract.setInsuranceType(rs.getString("InsuranceType"));
-                    contract.setCoverage(rs.getString("Coverage"));
-                    contract.setPremium(rs.getDouble("Premium"));
-                    contract.setDetail(rs.getString("Detail"));
-                    contract.setValue(rs.getDouble("Value"));
-                    contract.setCustomer(customer);
-                    contract.setMotorcycle(motorcycle);
-
                     Accident accident = new Accident();
                     accident.setAccidentID(rs.getInt("AccidentID"));
                     accident.setContractID(rs.getInt("ContractID"));
@@ -258,11 +120,8 @@ public class AccidentHistoryDAO {
                     accident.setAccidentDate(rs.getDate("AccidentDate"));
                     accident.setDescription(rs.getString("Description"));
                     accident.setCustomerID(rs.getInt("CustomerID"));
-                    accident.setCustomerName(user.getFullName());  // Use the full name from the Users table
+                    accident.setCustomerName(rs.getString("CustomerName"));
                     accident.setStatus(rs.getString("Status"));
-                    accident.setContract(contract);
-                    accident.setCustomer(customer);
-
                     return accident;
                 }
             }
@@ -318,31 +177,92 @@ public class AccidentHistoryDAO {
         }
         return false;
     }
+    public List<Accident> getAccidentsByCustomerID(int customerId) throws SQLException {
+        String sql = "SELECT a.AccidentID, a.ContractID, a.AccidentType, a.AccidentDate, a.Description, a.Status, " +
+                "u.UserID, u.Username, u.Email, u.Mobile, u.Full_name, u.Gender, u.Province, u.District, u.Country, u.First_name, u.Last_name, u.Birth_date, " +
+                "c.CustomerID, c.PersonalInfo, con.ContractID, con.ContractInfo, con.Status AS ContractStatus, con.StartDate, con.EndDate, " +
+                "con.InsuranceType, con.Coverage, con.Premium, cd.Detail, cd.Value, " +
+                "m.MotorcycleID, m.LicensePlate, m.Brand, m.Model, m.FrameNumber, m.EngineNumber, m.YearOfManufacture, m.Color " +
+                "FROM Accidents a " +
+                "JOIN Contracts con ON a.ContractID = con.ContractID " +
+                "JOIN ContractDetails cd ON con.ContractID = cd.ContractID " +
+                "JOIN Customers c ON con.CustomerID = c.CustomerID " +
+                "JOIN Users u ON c.UserID = u.UserID " +
+                "JOIN Motorcycles m ON c.CustomerID = m.CustomerID " +
+                "WHERE c.CustomerID = ?";
 
-    public List<Contract> getAllContracts() throws SQLException {
-        List<Contract> contracts = new ArrayList<>();
-        String query = "SELECT ContractID, CustomerID, ContractInfo, Status, StartDate, EndDate, Detail, Value, Coverage, InsuranceType, Premium, CancellationDate, MethodPaymentType FROM Contracts";
-        try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+        List<Accident> accidents = new ArrayList<>();
+        Set<Integer> seenAccidents = new HashSet<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                int accidentID = rs.getInt("AccidentID");
+                if (seenAccidents.contains(accidentID)) {
+                    continue; // Skip duplicate accident
+                }
+                seenAccidents.add(accidentID);
+
+                Users user = new Users();
+                user.setUserID(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
+                user.setEmail(rs.getString("Email"));
+                user.setMobile(rs.getString("Mobile"));
+                user.setFullName(rs.getString("Full_name"));
+                user.setGender(rs.getString("Gender"));
+                user.setProvince(rs.getString("Province"));
+                user.setDistrict(rs.getString("District"));
+                user.setCountry(rs.getString("Country"));
+                user.setFirstName(rs.getString("First_name"));
+                user.setLastName(rs.getString("Last_name"));
+                user.setBirthDate(rs.getDate("Birth_date"));
+
+                Motorcycle motorcycle = new Motorcycle();
+                motorcycle.setMotorcycleID(rs.getInt("MotorcycleID"));
+                motorcycle.setLicensePlate(rs.getString("LicensePlate"));
+                motorcycle.setBrand(rs.getString("Brand"));
+                motorcycle.setModel(rs.getString("Model"));
+                motorcycle.setFrameNumber(rs.getString("FrameNumber"));
+                motorcycle.setEngineNumber(rs.getString("EngineNumber"));
+                motorcycle.setYearOfManufacture(rs.getInt("YearOfManufacture"));
+                motorcycle.setColor(rs.getString("Color"));
+
+                Customers customer = new Customers();
+                customer.setCustomerID(rs.getInt("CustomerID"));
+                customer.setPersonalInfo(rs.getString("PersonalInfo"));
+                customer.setUser(user);
+
                 Contract contract = new Contract();
                 contract.setContractID(rs.getInt("ContractID"));
-                contract.setCustomerID(rs.getInt("CustomerID"));
                 contract.setContractInfo(rs.getString("ContractInfo"));
-                contract.setStatus(rs.getString("Status"));
+                contract.setStatus(rs.getString("ContractStatus"));
                 contract.setStartDate(rs.getDate("StartDate"));
                 contract.setEndDate(rs.getDate("EndDate"));
+                contract.setInsuranceType(rs.getString("InsuranceType"));
+                contract.setCoverage(rs.getString("Coverage"));
+                contract.setPremium(rs.getDouble("Premium"));
                 contract.setDetail(rs.getString("Detail"));
                 contract.setValue(rs.getDouble("Value"));
-                contract.setCoverage(rs.getString("Coverage"));
-                contract.setInsuranceType(rs.getString("InsuranceType"));
-                contract.setPremium(rs.getDouble("Premium"));
-                contract.setCancellationDate(rs.getDate("CancellationDate"));
-                contract.setMethodPaymentType(rs.getString("MethodPaymentType"));
-                contracts.add(contract);
+                contract.setCustomer(customer);
+                contract.setMotorcycle(motorcycle);
+
+                Accident accident = new Accident(
+                        accidentID,
+                        rs.getInt("ContractID"),
+                        rs.getInt("CustomerID"),
+                        rs.getString("AccidentType"),
+                        rs.getDate("AccidentDate"),
+                        rs.getString("Description"),
+                        user.getFullName(),
+                        rs.getString("Status"),
+                        contract,
+                        customer
+                );
+                accidents.add(accident);
             }
         }
-        return contracts;
+        return accidents;
     }
 
     public static void main(String[] args) {

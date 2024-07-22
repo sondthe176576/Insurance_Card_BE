@@ -84,174 +84,182 @@
             Accident Information
         </div>
         <div class="card-body">
-            <div class="info-section">
-                <div class="info-title">Accident Details</div>
-                <div class="info-row">
-                    <div class="info-label">Accident ID:</div>
-                    <div class="info-value">${accident.accidentID}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Customer ID:</div>
-                    <div class="info-value">${accident.customerID}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Customer Name:</div>
-                    <div class="info-value">${accident.customer.user.fullName}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Contract ID:</div>
-                    <div class="info-value">${accident.contractID}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Accident Type:</div>
-                    <div class="info-value">${accident.accidentType}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Accident Date:</div>
-                    <div class="info-value">${accident.accidentDate}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Description:</div>
-                    <div class="info-value">${accident.description}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Status:</div>
-                    <div class="info-value">
-                        <c:choose>
-                            <c:when test="${accident.status == 'Pending'}">
-                                <span class="badge bg-warning text-dark">${accident.status}</span>
-                            </c:when>
-                            <c:when test="${accident.status == 'Rejected'}">
-                                <span class="badge bg-danger">${accident.status}</span>
-                            </c:when>
-                            <c:when test="${accident.status == 'Approved'}">
-                                <span class="badge bg-success">${accident.status}</span>
-                            </c:when>
-                        </c:choose>
+            <c:choose>
+                <c:when test="${accident.status == 'Pending'}">
+                    <div class="alert alert-warning" role="alert">
+                        Data is being processed and cannot be viewed at this time.
                     </div>
-                </div>
-            </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="info-section">
+                        <div class="info-title">Accident Details</div>
+                        <div class="info-row">
+                            <div class="info-label">Accident ID:</div>
+                            <div class="info-value">${accident.accidentID}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Customer ID:</div>
+                            <div class="info-value">${accident.customerID}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Customer Name:</div>
+                            <div class="info-value">${accident.customer.user.fullName}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Contract ID:</div>
+                            <div class="info-value">${accident.contractID}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Accident Type:</div>
+                            <div class="info-value">${accident.accidentType}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Accident Date:</div>
+                            <div class="info-value">${accident.accidentDate}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Description:</div>
+                            <div class="info-value">${accident.description}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Status:</div>
+                            <div class="info-value">
+                                <c:choose>
+                                    <c:when test="${accident.status == 'Pending'}">
+                                        <span class="badge bg-warning text-dark">${accident.status}</span>
+                                    </c:when>
+                                    <c:when test="${accident.status == 'Rejected'}">
+                                        <span class="badge bg-danger">${accident.status}</span>
+                                    </c:when>
+                                    <c:when test="${accident.status == 'Approved'}">
+                                        <span class="badge bg-success">${accident.status}</span>
+                                    </c:when>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="info-section">
-                <div class="info-title">User Details</div>
-                <div class="info-row">
-                    <div class="info-label">User ID:</div>
-                    <div class="info-value">${accident.customer.user.userID}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Username:</div>
-                    <div class="info-value">${accident.customer.user.username}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Email:</div>
-                    <div class="info-value">${accident.customer.user.email}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Mobile:</div>
-                    <div class="info-value">${accident.customer.user.mobile}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Full Name:</div>
-                    <div class="info-value">${accident.customer.user.fullName}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Gender:</div>
-                    <div class="info-value">${accident.customer.user.gender}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Province:</div>
-                    <div class="info-value">${accident.customer.user.province}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">District:</div>
-                    <div class="info-value">${accident.customer.user.district}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Country:</div>
-                    <div class="info-value">${accident.customer.user.country}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Birth Date:</div>
-                    <div class="info-value">${accident.customer.user.birthDate}</div>
-                </div>
-            </div>
+                    <div class="info-section">
+                        <div class="info-title">User Details</div>
+                        <div class="info-row">
+                            <div class="info-label">User ID:</div>
+                            <div class="info-value">${accident.customer.user.userID}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Username:</div>
+                            <div class="info-value">${accident.customer.user.username}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Email:</div>
+                            <div class="info-value">${accident.customer.user.email}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Mobile:</div>
+                            <div class="info-value">${accident.customer.user.mobile}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Full Name:</div>
+                            <div class="info-value">${accident.customer.user.fullName}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Gender:</div>
+                            <div class="info-value">${accident.customer.user.gender}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Province:</div>
+                            <div class="info-value">${accident.customer.user.province}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">District:</div>
+                            <div class="info-value">${accident.customer.user.district}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Country:</div>
+                            <div class="info-value">${accident.customer.user.country}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Birth Date:</div>
+                            <div class="info-value">${accident.customer.user.birthDate}</div>
+                        </div>
+                    </div>
 
-            <div class="info-section">
-                <div class="info-title">Motorcycle Details</div>
-                <div class="info-row">
-                    <div class="info-label">Motorcycle ID:</div>
-                    <div class="info-value">${accident.contract.motorcycle.motorcycleID}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">License Plate:</div>
-                    <div class="info-value">${accident.contract.motorcycle.licensePlate}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Brand:</div>
-                    <div class="info-value">${accident.contract.motorcycle.brand}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Model:</div>
-                    <div class="info-value">${accident.contract.motorcycle.model}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Frame Number:</div>
-                    <div class="info-value">${accident.contract.motorcycle.frameNumber}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Engine Number:</div>
-                    <div class="info-value">${accident.contract.motorcycle.engineNumber}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Year of Manufacture:</div>
-                    <div class="info-value">${accident.contract.motorcycle.yearOfManufacture}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Color:</div>
-                    <div class="info-value">${accident.contract.motorcycle.color}</div>
-                </div>
-            </div>
+                    <div class="info-section">
+                        <div class="info-title">Motorcycle Details</div>
+                        <div class="info-row">
+                            <div class="info-label">Motorcycle ID:</div>
+                            <div class="info-value">${accident.contract.motorcycle.motorcycleID}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">License Plate:</div>
+                            <div class="info-value">${accident.contract.motorcycle.licensePlate}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Brand:</div>
+                            <div class="info-value">${accident.contract.motorcycle.brand}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Model:</div>
+                            <div class="info-value">${accident.contract.motorcycle.model}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Frame Number:</div>
+                            <div class="info-value">${accident.contract.motorcycle.frameNumber}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Engine Number:</div>
+                            <div class="info-value">${accident.contract.motorcycle.engineNumber}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Year of Manufacture:</div>
+                            <div class="info-value">${accident.contract.motorcycle.yearOfManufacture}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Color:</div>
+                            <div class="info-value">${accident.contract.motorcycle.color}</div>
+                        </div>
+                    </div>
 
-            <div class="info-section">
-                <div class="info-title">Contract Details</div>
-                <div class="info-row">
-                    <div class="info-label">Contract Info:</div>
-                    <div class="info-value">${accident.contract.contractInfo}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Contract Status:</div>
-                    <div class="info-value">${accident.contract.status}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Start Date:</div>
-                    <div class="info-value">${accident.contract.startDate}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">End Date:</div>
-                    <div class="info-value">${accident.contract.endDate}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Insurance Type:</div>
-                    <div class="info-value">${accident.contract.insuranceType}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Coverage:</div>
-                    <div class="info-value">${accident.contract.coverage}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Premium:</div>
-                    <div class="info-value">${accident.contract.premium}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Detail:</div>
-                    <div class="info-value">${accident.contract.detail}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Value:</div>
-                    <div class="info-value">${accident.contract.value}</div>
-                </div>
-            </div>
-
+                    <div class="info-section">
+                        <div class="info-title">Contract Details</div>
+                        <div class="info-row">
+                            <div class="info-label">Contract Info:</div>
+                            <div class="info-value">${accident.contract.contractInfo}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Contract Status:</div>
+                            <div class="info-value">${accident.contract.status}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Start Date:</div>
+                            <div class="info-value">${accident.contract.startDate}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">End Date:</div>
+                            <div class="info-value">${accident.contract.endDate}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Insurance Type:</div>
+                            <div class="info-value">${accident.contract.insuranceType}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Coverage:</div>
+                            <div class="info-value">${accident.contract.coverage}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Premium:</div>
+                            <div class="info-value">${accident.contract.premium}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Detail:</div>
+                            <div class="info-value">${accident.contract.detail}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Value:</div>
+                            <div class="info-value">${accident.contract.value}</div>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
             <a href="${pageContext.request.contextPath}/accidentHistory" class="btn btn-primary btn-back">Back to Accident History</a>
         </div>
     </div>

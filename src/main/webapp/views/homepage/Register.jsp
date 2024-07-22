@@ -1,54 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Register</title>
-    <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+    <title>Modern Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #405e8c 0%, #fad0c4 99%, #fad0c4 100%);
         }
-        .error {
-            color: red;
+
+        .register-container {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
+
+        .form {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .form h2 {
+            position: relative;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+        }
+
+        .form h2::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background: #fff;
+            transform: translateX(-50%);
+        }
+
+        .form .inputBox {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form .inputBox input,
+        .form .inputBox select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            outline: none;
+            padding: 10px 20px;
+            border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+            letter-spacing: 1px;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form .inputBox select option {
+            background: #405e8c; /* Solid background color for options */
+            color: #fff;
+        }
+
+        .form .inputBox input::placeholder,
+        .form .inputBox select::placeholder {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form .inputBox input[type="submit"] {
+            background: #fff;
+            color: #666;
+            max-width: 150px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
         .css_select_div {
             display: flex;
             justify-content: space-between;
             width: 100%;
+            margin-top: 20px;
         }
+
         .css_select {
-            width: 30%;
-            padding: 5px;
-            margin: 10px 0;
-            border: solid 1px #686868;
-            border-radius: 5px;
-            font-family: inherit;
+            width: 32%;
+            padding: 10px;
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.3); /* Increased opacity */
+            border: 1px solid rgba(255, 255, 255, 0.7); /* Increased border opacity */
+            color: #fff;
+            font-size: 16px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .css_select option {
+            background: #405e8c; /* Solid background color for options */
+            color: #fff;
+        }
+
+        .error {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-20px); }
+            100% { transform: translatey(0px); }
+        }
+
+        .social-icons {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            color: #fff;
+            font-size: 24px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .page-links {
+            margin-bottom: 20px;
+        }
+
+        .page-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .page-links a.active {
+            border-bottom: 2px solid #fff;
+        }
+
+        .page-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Scrollbar Styles */
+        .form::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .form::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
         }
     </style>
 </head>
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-<div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-    <div class="text-center">
-        <a href="home.jsp">
-            <img class="w-32 mx-auto mb-4" src="${pageContext.request.contextPath}/img/logo.png" alt="Logo">
-        </a>
-        <h3 class="text-2xl font-semibold">Get more things done with Loggin platform.</h3>
-        <p class="mt-2 text-gray-600">Access to the most powerful tool in the entire design and web industry.</p>
-    </div>
-    <div class="flex justify-center mt-4 space-x-4">
-        <a href="${pageContext.request.contextPath}/login" class="text-blue-600 border-b-2 border-blue-600">Login</a>
-        <a href="${pageContext.request.contextPath}/register" class="text-gray-600 hover:text-blue-600">Register</a>
-    </div>
-    <form action="${pageContext.request.contextPath}/register" method="post">
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="text" name="phone" placeholder="Phone" required>
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="email" name="email-address" placeholder="Email" required>
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="email" name="email" placeholder="E-mail Address" required>
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="password" name="password" placeholder="Password" required>
-        <div class="css_select_div mt-4">
+<body>
+<div class="register-container animate__animated animate__fadeIn">
+    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="logo">
+    <form action="${pageContext.request.contextPath}/register" method="post" autocomplete="off" class="form">
+        <h2>Register</h2>
+        <div class="page-links">
+            <a href="${pageContext.request.contextPath}/login">Login</a>
+            <a href="${pageContext.request.contextPath}/register" class="active">Register</a>
+        </div>
+        <div class="inputBox">
+            <input type="text" name="phone" placeholder="Phone" required>
+        </div>
+        <div class="inputBox">
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+        <div class="inputBox">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="css_select_div">
             <select class="css_select" id="tinh" name="tinh" title="Choose Province">
                 <option value="0">Province</option>
             </select>
@@ -59,63 +238,80 @@
                 <option value="0">Country</option>
             </select>
         </div>
-        <input type="hidden" name="tinh" id="hidden_tinh">
-        <input type="hidden" name="quan" id="hidden_quan">
-        <input type="hidden" name="phuong" id="hidden_phuong">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
-                    if (data_tinh.error == 0) {
-                        $.each(data_tinh.data, function (key_tinh, val_tinh) {
-                            $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
-                        });
-                        $("#tinh").change(function (e) {
-                            var idtinh = $(this).val();
-                            $("#hidden_tinh").val($("#tinh option:selected").text());
-                            $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
-                                if (data_quan.error == 0) {
-                                    $("#quan").html('<option value="0">District</option>');
-                                    $("#phuong").html('<option value="0">Country</option>');
-                                    $.each(data_quan.data, function (key_quan, val_quan) {
-                                        $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
-                                    });
-                                    $("#quan").change(function (e) {
-                                        var idquan = $(this).val();
-                                        $("#hidden_quan").val($("#quan option:selected").text());
-                                        $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
-                                            if (data_phuong.error == 0) {
-                                                $("#phuong").html('<option value="0">Country</option>');
-                                                $.each(data_phuong.data, function (key_phuong, val_phuong) {
-                                                    $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
-                                                });
-                                                $("#phuong").change(function (e) {
-                                                    $("#hidden_phuong").val($("#phuong option:selected").text());
-                                                });
-                                            }
-                                        });
-                                    });
-                                }
-                            });
-                        });
-                    }
-                });
-            });
-        </script>
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="text" name="firstname" placeholder="First Name" required>
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="text" name="lastname" placeholder="Last Name" required>
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="text" name="fullname" placeholder="Full Name" required>
-        <input class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" type="date" name="birthdate" placeholder="Birth Date" required>
-        <select class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm" name="gender" required>
-            <option value="" disabled selected>Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-        </select>
-        <div class="form-button mt-4">
-            <button id="submit" type="submit" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Register</button>
+        <div class="inputBox">
+            <input type="text" name="firstname" placeholder="First Name" required>
         </div>
+        <div class="inputBox">
+            <input type="text" name="lastname" placeholder="Last Name" required>
+        </div>
+        <div class="inputBox">
+            <input type="text" name="fullname" placeholder="Full Name" required>
+        </div>
+        <div class="inputBox">
+            <input type="date" name="birthdate" placeholder="Birth Date" required max="2009-12-31">
+        </div>
+        <div class="inputBox">
+            <select name="gender" required>
+                <option value="" disabled selected>Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="inputBox">
+            <input type="submit" value="Register">
+        </div>
+        <p class="error">${requestScope.message}</p>
     </form>
-    <p class="error mt-4 text-center">${requestScope.message}</p>
+    <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-google"></i></a>
+    </div>
 </div>
+
+<script src="https://esgoo.net/scripts/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+        $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+            if (data_tinh.error == 0) {
+                $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                    $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                });
+                $("#tinh").change(function (e) {
+                    var idtinh = $(this).val();
+                    $("#hidden_tinh").val($("#tinh option:selected").text());
+                    $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                        if (data_quan.error == 0) {
+                            $("#quan").html('<option value="0">District</option>');
+                            $("#phuong").html('<option value="0">Country</option>');
+                            $.each(data_quan.data, function (key_quan, val_quan) {
+                                $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
+                            });
+                            $("#quan").change(function (e) {
+                                var idquan = $(this).val();
+                                $("#hidden_quan").val($("#quan option:selected").text());
+                                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                                    if (data_phuong.error == 0) {
+                                        $("#phuong").html('<option value="0">Country</option>');
+                                        $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                                            $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
+                                        });
+                                        $("#phuong").change(function (e) {
+                                            $("#hidden_phuong").val($("#phuong option:selected").text());
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+            }
+        });
+    });
+
+    gsap.from(".register-container", {duration: 1, opacity: 0, y: 50, ease: "power3.out"});
+    gsap.from(".inputBox", {duration: 0.5, opacity: 0, y: 20, stagger: 0.1, ease: "power3.out", delay: 0.5});
+    gsap.from(".social-icons a", {duration: 0.5, opacity: 0, y: 20, stagger: 0.1, ease: "power3.out", delay: 1});
+</script>
 </body>
 </html>

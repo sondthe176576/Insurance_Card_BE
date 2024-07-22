@@ -7,22 +7,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CompensationHistoryService {
-    private CompensationHistoryDAO compensationHistoryDAO;
+    private final CompensationHistoryDAO compensationHistoryDAO;
 
     public CompensationHistoryService() {
-        compensationHistoryDAO = new CompensationHistoryDAO();
+        this.compensationHistoryDAO = new CompensationHistoryDAO();
     }
 
-    public CompensationRequests getCompensationRequestById(int requestId) throws SQLException {
-        return compensationHistoryDAO.getCompensationRequestById(requestId);
-    }
-
-    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerId, int offset, int limit) throws SQLException {
-        return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerId, offset, limit);
-    }
-
-    public int getTotalCompensationRequestsByCustomerID(int customerId) throws SQLException {
-        return compensationHistoryDAO.getTotalCompensationRequestsByCustomerID(customerId);
+    public boolean isContractValidForCustomer(int contractID, int customerID) throws SQLException {
+        return compensationHistoryDAO.isContractValidForCustomer(contractID, customerID);
     }
 
     public void addCompensationRequest(CompensationRequests request) throws SQLException {
@@ -33,11 +25,25 @@ public class CompensationHistoryService {
         compensationHistoryDAO.updateCompensationRequest(request);
     }
 
-    public void deleteCompensationRequest(int requestId) throws SQLException {
-        compensationHistoryDAO.deleteCompensationRequest(requestId);
+    public void deleteCompensationRequest(int requestID) throws SQLException {
+        compensationHistoryDAO.deleteCompensationRequest(requestID);
     }
 
-    public boolean isContractValidForCustomer(int contractID, int customerID) throws SQLException {
-        return compensationHistoryDAO.isContractValidForCustomer(contractID, customerID);
+    public CompensationRequests getCompensationRequestById(int requestID) throws SQLException {
+        return compensationHistoryDAO.getCompensationRequestById(requestID);
     }
+
+    public List<CompensationRequests> getAllCompensationRequests() throws SQLException {
+        return compensationHistoryDAO.getAllCompensationRequests();
+    }
+
+    public List<CompensationRequests> getCompensationRequestsByCustomerID(int customerID, int offset, int limit) throws SQLException {
+        return compensationHistoryDAO.getCompensationRequestsByCustomerID(customerID, offset, limit);
+    }
+
+    public int getTotalCompensationRequestsByCustomerID(int customerID) throws SQLException {
+        return compensationHistoryDAO.getTotalCompensationRequestsByCustomerID(customerID);
+    }
+
+
 }

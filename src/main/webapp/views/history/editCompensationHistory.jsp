@@ -9,7 +9,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Compensation Request</title>
-    <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -22,7 +21,6 @@
         margin-bottom: 20px;
     }
 </style>
-
 
 <!-- Navbar -->
 <nav class="bg-blue-900 border-b-4 border-orange-600">
@@ -56,47 +54,54 @@
         </ul>
     </div>
 </nav>
+
 <div class="container mt-4">
     <h1 class="page-title">Edit Compensation Request</h1>
     <div class="card">
         <div class="card-body">
-    <form action="${pageContext.request.contextPath}/compensationHistory" method="post">
-        <input type="hidden" name="action" value="update">
-        <input type="hidden" name="requestID" value="${compensationRequest.requestID}">
-        <div class="mb-3">
-            <label for="customerID" class="form-label">Customer ID:</label>
-            <input type="text" class="form-control" id="customerID" name="customerID" value="${compensationRequest.customerID}" readonly>
+            <c:if test="${not empty errorMessage}">
+                <div class="alert alert-danger">
+                    <c:out value="${errorMessage}"/>
+                </div>
+            </c:if>
+            <form action="${pageContext.request.contextPath}/compensationHistory" method="post">
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="requestID" value="${compensationRequest.requestID}">
+                <div class="mb-3">
+                    <label for="customerID" class="form-label">Customer ID:</label>
+                    <input type="text" class="form-control" id="customerID" name="customerID" value="${compensationRequest.customerID}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="contractID" class="form-label">Contract ID:</label>
+                    <input type="text" class="form-control" id="contractID" name="contractID" value="${compensationRequest.contractID}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Amount:</label>
+                    <input type="text" class="form-control" id="amount" name="amount" value="${compensationRequest.amount}" <c:if test="${compensationRequest.status != 'Pending'}">readonly</c:if> required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" class="form-control" id="description" name="description" value="${compensationRequest.description}" <c:if test="${compensationRequest.status != 'Pending'}">readonly</c:if> required>
+                </div>
+                <div class="mb-3">
+                    <label for="requestDate" class="form-label">Request Date:</label>
+                    <input type="date" class="form-control" id="requestDate" name="requestDate" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${compensationRequest.requestDate}' />" <c:if test="${compensationRequest.status != 'Pending'}">readonly</c:if> required>
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status:</label>
+                    <input type="text" class="form-control" id="status" name="status" value="${compensationRequest.status}" readonly>
+                </div>
+                <c:if test="${compensationRequest.status == 'Pending'}">
+                    <button type="submit" class="btn btn-primary">Update Request</button>
+                </c:if>
+                <a href="${pageContext.request.contextPath}/compensationHistory" class="btn btn-secondary">Cancel</a>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="contractID" class="form-label">Contract ID:</label>
-            <input type="text" class="form-control" id="contractID" name="contractID" value="${compensationRequest.contractID}" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="amount" class="form-label">Amount:</label>
-            <input type="text" class="form-control" id="amount" name="amount" value="${compensationRequest.amount}" required>
-        </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Description:</label>
-            <input type="text" class="form-control" id="description" name="description" value="${compensationRequest.description}" required>
-        </div>
-        <div class="mb-3">
-            <label for="requestDate" class="form-label">Request Date:</label>
-            <input type="date" class="form-control" id="requestDate" name="requestDate" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${compensationRequest.requestDate}' />" required>
-        </div>
-        <div class="mb-3">
-            <label for="status" class="form-label">Status:</label>
-            <input type="text" class="form-control" id="status" name="status" value="${compensationRequest.status}" readonly>
-        </div>
-        <button type="submit" class="btn btn-primary">Update Request</button>
-        <a href="${pageContext.request.contextPath}/compensationHistory" class="btn btn-secondary">Cancel</a>
-    </form>
-</div>
-</div>
+    </div>
 </div>
 
 <jsp:include page="/views/includes/footer.jsp"/>
 
-<!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

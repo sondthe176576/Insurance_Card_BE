@@ -56,7 +56,7 @@
     </style>
 </head>
 <body class="bg-gray-100">
-<jsp:include page="/views/includes/header.jsp" />
+<jsp:include page="/views/includes/header_logout.jsp" />
 <jsp:include page="/views/includes/navbar.jsp" />
 <div class="main-container" id="main-container">
     <div class="container mx-auto">
