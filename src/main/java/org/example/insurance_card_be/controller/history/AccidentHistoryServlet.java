@@ -181,22 +181,6 @@ public class AccidentHistoryServlet extends HttpServlet {
             newAccident.setStatus(status);
 
             accidentHistoryDAO.addAccident(newAccident);
-
-            AccidentHistoryCus accidentHistoryCus = new AccidentHistoryCus(0, customerID, description, accidentDate);
-            accidentHistoryService.addAccidentHistory(accidentHistoryCus);
-            response.sendRedirect(request.getContextPath() + "/views/history/pendingforCustomer.jsp");
-        } else if ("update".equals(action)) {
-            int accidentID = Integer.parseInt(request.getParameter("accidentID"));
-            int customerID = Integer.parseInt(request.getParameter("customerID"));
-            String description = request.getParameter("description");
-            Date accidentDate = Date.valueOf(request.getParameter("accidentDate"));
-
-            AccidentHistoryCus accidentHistoryCus = new AccidentHistoryCus(accidentID, customerID, description, accidentDate);
-            accidentHistoryService.updateAccidentHistory(accidentHistoryCus);
-            response.sendRedirect("accidentHistory");
-        } else if ("delete".equals(action)) {
-            int accidentID = Integer.parseInt(request.getParameter("accidentID"));
-            accidentHistoryService.deleteAccidentHistory(accidentID);
             response.sendRedirect("accidentHistory");
 
         } catch (NumberFormatException e) {
