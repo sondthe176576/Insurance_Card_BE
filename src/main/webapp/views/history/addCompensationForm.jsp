@@ -17,6 +17,7 @@
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            background-color: #fff;
         }
         .form-title {
             font-size: 2rem;
@@ -70,11 +71,11 @@
         <input type="hidden" name="action" value="add">
         <div class="mb-3">
             <label for="customerID" class="form-label">Customer ID:</label>
-            <input type="text" class="form-control" id="customerID" name="customerID" required>
+            <input type="text" class="form-control" id="customerID" name="customerID" value="${param.customerID}" readonly required>
         </div>
         <div class="mb-3">
             <label for="contractID" class="form-label">Contract ID:</label>
-            <input type="text" class="form-control" id="contractID" name="contractID" required>
+            <input type="text" class="form-control" id="contractID" name="contractID" value="${param.contractID}" readonly required>
         </div>
         <div class="mb-3">
             <label for="amount" class="form-label">Amount:</label>
@@ -85,7 +86,7 @@
             <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
         </div>
         <div class="mb-3">
-            <label for="requestDate" class="form-label">Date:</label>
+            <label for="requestDate" class="form-label">Request Date:</label>
             <input type="date" class="form-control" id="requestDate" name="requestDate" required>
         </div>
         <div class="d-grid gap-2">

@@ -91,9 +91,7 @@
 <body>
 <div class="container mt-4">
     <h1 class="page-title">Compensation History</h1>
-    <div class="d-flex justify-content-center mb-4">
-        <a href="${pageContext.request.contextPath}/compensationHistory?action=addForm" class="btn btn-primary"><i class="fas fa-plus"></i> Request Compensation</a>
-    </div>
+
     <table class="table table-hover table-bordered">
         <thead>
         <tr>
@@ -140,15 +138,13 @@
                     <a href="${pageContext.request.contextPath}/compensationHistory?action=edit&id=${request.requestID}" class="btn btn-warning btn-sm btn-action">
                         <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <c:if test="${request.status == 'Pending'}">
-                        <form action="${pageContext.request.contextPath}/compensationHistory" method="post" style="display:inline;">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="requestID" value="${request.requestID}">
-                            <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to cancel this request?');">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </form>
-                    </c:if>
+                    <form action="${pageContext.request.contextPath}/compensationHistory" method="post" style="display:inline;">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="requestID" value="${request.requestID}">
+                        <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         </c:forEach>
