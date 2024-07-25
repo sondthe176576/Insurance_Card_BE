@@ -107,11 +107,14 @@ public class AccidentHistoryServlet extends HttpServlet {
                 return;
             }
             request.setAttribute("accident", accident);
+            System.out.println("Accident retrieved: " + accident);  // Debugging: Print accident details
+
             request.getRequestDispatcher("/views/history/viewAccidentHistory.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID format.");
         }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
