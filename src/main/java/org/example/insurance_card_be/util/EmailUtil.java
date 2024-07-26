@@ -6,8 +6,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EmailUtil {
-    private static final String USERNAME = "annthe176161@fpt.edu.vn";
-    private static final String PASSWORD = "hxhp laiv kjeb sols";
+    private static final String USERNAME = "insurancecard0@gmail.com";
+    private static final String PASSWORD = "cdht rjrp vdpp qlyi";
 
     public static void sendEmail(String to, String subject, String content) {
         Properties props = new Properties();

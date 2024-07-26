@@ -6,8 +6,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EmailFromCustomer {
-    private static final String COMPANY_EMAIL = "annthe176161@fpt.edu.vn";
-    private static final String COMPANY_EMAIL_PASSWORD = "hxhp laiv kjeb sols";
+    private static final String COMPANY_EMAIL = "insurancecard0@gmail.com";
+    private static final String COMPANY_EMAIL_PASSWORD = "cdht rjrp vdpp qlyi";
     private static final String SMTP_SERVER = "smtp.gmail.com";
     private static final String SMTP_PORT = "587";
 

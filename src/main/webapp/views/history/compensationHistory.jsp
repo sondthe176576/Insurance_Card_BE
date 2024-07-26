@@ -142,7 +142,7 @@
                         <input type="hidden" name="action" value="delete">
                         <input type="hidden" name="requestID" value="${request.requestID}">
                         <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to delete this record?');">
-                            <i class="fas fa-trash"></i>
+                            <i class="fas fa-times"></i>
                         </button>
                     </form>
                 </td>

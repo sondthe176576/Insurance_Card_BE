@@ -36,7 +36,7 @@ public class RequestRenewContractService {
                     + "Engine Number: " + contract.getMotorcycle().getEngineNumber();
 
             // Gửi email từ email của công ty đến email của công ty, nhưng nội dung email có chứa thông tin của khách hàng
-            EmailFromCustomer.sendEmail("annthe176161@fpt.edu.vn", subject, body);
+            EmailFromCustomer.sendEmail("insurancecard0@gmail.com", subject, body);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException("Failed to request renew contract.", e);
