@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 5/21/2024
-  Time: 11:22 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,16 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Custom Navbar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-
         .navbar {
-            background-color: #004080; /* Màu xanh đậm hơn để phân biệt */
-            padding: 10px 20px;
+            background-color: #004080;
+            padding: 15px 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: center;
@@ -41,13 +29,13 @@
         }
 
         .nav-links li {
-            margin: 0 15px;
+            margin: 0 20px;
         }
 
         .nav-links li a {
             color: #fff;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 20px;
             display: flex;
             align-items: center;
             transition: color 0.3s ease;
@@ -58,23 +46,18 @@
         }
 
         .nav-links li a i {
-            margin-right: 8px;
-            font-size: 20px;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
+            margin-right: 10px;
+            font-size: 22px;
         }
 
         .btn-primary {
             background-color: #f39c12;
             color: #fff;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 20px;
             display: flex;
             align-items: center;
             transition: background-color 0.3s ease;
@@ -85,19 +68,19 @@
         }
 
         .btn-primary i {
-            margin-right: 8px;
-            font-size: 20px;
+            margin-right: 10px;
+            font-size: 22px;
         }
     </style>
 </head>
 <body>
 <nav class="navbar">
     <ul class="nav-links">
-        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/homepageforstaff"><i class="fas fa-home"></i> Home</a></li>
         <li><a href="#"><i class="fas fa-concierge-bell"></i> Service</a></li>
         <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
         <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-        <li><a href="${pageContext.request.contextPath}/selectCustomer"><i class="fas fa-file-contract"></i> Create Contract</a></li>
+        <li><a href="${pageContext.request.contextPath}/listWaitingContract"><i class="fas fa-file-contract"></i> Manage Contract</a></li>
     </ul>
 </nav>
 </body>

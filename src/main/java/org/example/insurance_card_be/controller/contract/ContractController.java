@@ -5,9 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.model.*;
 import org.example.insurance_card_be.service.ContractService;
 import org.example.insurance_card_be.service.CustomerService;
+import org.example.insurance_card_be.service.NotificationService;
 import org.example.insurance_card_be.service.PaymentService;
 
 import java.io.IOException;
@@ -21,27 +23,32 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "ContractController", urlPatterns = "/createContract")
 public class ContractController extends HttpServlet {
-    // Khai bao contractService va customerService
     private ContractService contractService;
     private CustomerService customerService;
     private PaymentService paymentService;
+    private NotificationService notificationService;
 
-    // Khoi tao contractService va customerService
     @Override
     public void init() throws ServletException {
         this.contractService = new ContractService();
         this.customerService = new CustomerService();
         this.paymentService = new PaymentService();
+        this.notificationService = new NotificationService();
     }
 
-    // Ham doGet de hien thi trang tao contract
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerIDstr = req.getParameter("customerID"); // Lay customerID tu request
-        int customerID = Integer.parseInt(customerIDstr);
+        HttpSession session = req.getSession();
+        int customerID = (int) session.getAttribute("customerID");
+
+        // Check if customerID is provided in request parameter
+        String customerIDStr = req.getParameter("customerID");
+        if (customerIDStr != null) {
+            customerID = Integer.parseInt(customerIDStr);
+        }
 
         try {
-            Customers customer = customerService.getCustomerByID(customerID); // Lay thong tin customer
-            List<Motorcycle> motorcycles = customerService.getMotorcyclesByCustomerID(customerID); // Lay danh sach xe may
+            Customers customer = customerService.getCustomerByID(customerID);
+            List<Motorcycle> motorcycles = customerService.getMotorcyclesByCustomerID(customerID);
             req.setAttribute("customer", customer);
             req.setAttribute("motorcycles", motorcycles);
             req.getRequestDispatcher("/views/contract/createContract.jsp").forward(req, resp);
@@ -54,52 +61,41 @@ public class ContractController extends HttpServlet {
         }
     }
 
-    // Ham doPost de tao contract
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lay thong tin contract tu request
-        String customerID = req.getParameter("customerID");
-        String contractInfo = req.getParameter("contractInfo");
-        String status = req.getParameter("status");
+        HttpSession session = req.getSession();
+        int customerID = (int) session.getAttribute("customerID");
+
+        String contractYearsStr = req.getParameter("contractYears");
+        String startDateStr = req.getParameter("startDate");
         String endDateStr = req.getParameter("endDate");
-        String detail = req.getParameter("detail");
-        String valueStr = req.getParameter("value");
-        String coverage = req.getParameter("coverage");
         String insuranceType = req.getParameter("insuranceType");
+        String contractInfo = req.getParameter("contractInfo");
+        String valueStr = req.getParameter("value"); // Lấy giá trị value từ biểu mẫu
+        String detail = req.getParameter("detail");
+        String coverage = req.getParameter("coverage");
         String premiumStr = req.getParameter("premium");
         String paymentMethod = req.getParameter("paymentMethod");
-        String paymentMethodIDStr = req.getParameter("paymentMethodID");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Contract contract = new Contract();
 
         try {
-            contract.setCustomerID(Integer.parseInt(customerID));
+            contract.setCustomerID(customerID);
             contract.setContractInfo(contractInfo);
-            contract.setStatus(status);
+            contract.setStatus("Pending");
             contract.setStartDate(new Date());
             contract.setEndDate(sdf.parse(endDateStr));
             contract.setDetail(detail);
-            contract.setValue(Double.parseDouble(valueStr));
+            contract.setValue(Double.parseDouble(valueStr)); // Chuyển đổi giá trị value thành số thực
             contract.setCoverage(coverage);
             contract.setInsuranceType(insuranceType);
             contract.setPremium(Double.parseDouble(premiumStr));
 
-            contractService.createContract(contract);
+            // Tạo contract và cập nhật PaymentMethod, PaymentHistory
+            ContractService contractService = new ContractService();
+            contractService.createContract(contract, paymentMethod);
 
-            PaymentMethod paymentMethodObj = new PaymentMethod();
-            paymentMethodObj.setCustomerID(Integer.parseInt(customerID));
-            paymentMethodObj.setMethodType(paymentMethod);
-            paymentMethodObj.setDetails("Payment method details");
-            int paymentMethodID = paymentService.savePaymentMethod(paymentMethodObj);
-
-            PaymentHistory paymentHistory = new PaymentHistory();
-            paymentHistory.setCustomerID(Integer.parseInt(customerID));
-            paymentHistory.setAmount(new BigDecimal(premiumStr));
-            paymentHistory.setPaymentDate(new Date());
-            paymentHistory.setPaymentMethodID(paymentMethodID);
-            paymentHistory.setContractID(contract.getContractID());
-            paymentService.savePaymentHistory(paymentHistory);
-
+            // Kiểm tra phương thức thanh toán
             if ("cash".equals(paymentMethod)) {
                 resp.sendRedirect(req.getContextPath() + "/viewBill?contractID=" + contract.getContractID());
             } else if ("bankTransfer".equals(paymentMethod)) {

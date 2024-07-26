@@ -30,16 +30,16 @@ public class ResolvePunishmentService {
             if (punishment != null) {
                 resolvePunishmentDAO.updatePunishmentStatus(punishmentID, status);
 
-                // Lưu thông tin vào bảng PunishmentHistory
+                // Save information to PunishmentHistory table
                 PunishmentHistory punishmentHistory = new PunishmentHistory(
-                        0, // PunishmentID sẽ tự động tăng
+                        0, // PunishmentID will auto-increment
                         punishment.getCustomer().getCustomerID(),
                         punishment.getDescription(),
                         new Date()
                 );
                 resolvePunishmentDAO.savePunishmentHistory(punishmentHistory);
 
-                // Tạo nội dung email
+                // Create email content
                 String email = punishment.getContract().getCustomer().getUser().getEmail();
                 String subject = "Punishment Report " + status;
                 String content = "Dear " + punishment.getCustomer().getUser().getFullName() + ",\n\n" +
@@ -47,26 +47,22 @@ public class ResolvePunishmentService {
                         "Details:\n" +
                         "Punishment Type: " + punishment.getPunishmentType() + "\n" +
                         "Punishment Date: " + punishment.getPunishmentDate() + "\n" +
-                        "Description: " + punishment.getDescription() + "\n\n" +
-                        "Best regards,\n" +
-                        "Your Insurance Company";
+                        "Description: " + punishment.getDescription() + "\n\n";
 
-                // Gửi email thông báo
+                if (status.equalsIgnoreCase("Approved")) {
+                    content += "We have received your information and will contact you as soon as possible. Our nearest representative will visit your address to resolve the issue.\n\n";
+                } else if (status.equalsIgnoreCase("Rejected")) {
+                    content += "We have declined your punishment report. We will contact you shortly to handle this request regarding your contract.\n\n";
+                }
+
+                content += "Best regards,\n" +
+                        "Peace Insurance Company";
+
+                // Send email notification
                 EmailUtil.sendEmail(email, subject, content);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    // Ham main de test lay thong tin hinh phat
-    public static void main(String[] args) {
-        ResolvePunishmentService resolvePunishmentService = new ResolvePunishmentService();
-        Punishments punishment = resolvePunishmentService.getPunishmentByID(1);
-        if (punishment != null) {
-            System.out.println(punishment);
-        } else {
-            System.out.println("No punishment found with the given ID.");
         }
     }
 }

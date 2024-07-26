@@ -16,12 +16,12 @@
     <h1 class="mt-4 mb-4">View Payment History</h1>
     <div class="card">
         <div class="card-body">
-            <p><strong>Payment ID:</strong> ${paymentHistoryCus.paymentID}</p>
-            <p><strong>Customer ID:</strong> ${paymentHistoryCus.customerID}</p>
-            <p><strong>Amount:</strong> ${paymentHistoryCus.amount}</p>
-            <p><strong>Payment Date:</strong> ${paymentHistoryCus.paymentDate}</p>
-            <p><strong>Payment Method ID:</strong> ${paymentHistoryCus.paymentMethodID}</p>
-            <p><strong>Contract ID:</strong> ${paymentHistoryCus.contractID}</p>
+            <p><strong>Payment ID:</strong> ${paymentHistory.paymentID}</p>
+            <p><strong>Customer ID:</strong> ${paymentHistory.customerID}</p>
+            <p><strong>Amount:</strong> ${paymentHistory.amount}</p>
+            <p><strong>Payment Date:</strong> ${paymentHistory.paymentDate}</p>
+            <p><strong>Payment Method ID:</strong> ${paymentHistory.paymentMethodID}</p>
+            <p><strong>Contract ID:</strong> ${paymentHistory.contractID}</p>
             <a href="${pageContext.request.contextPath}/paymentHistory" class="btn btn-secondary">Back to List</a>
         </div>
     </div>

@@ -1,5 +1,7 @@
 package org.example.insurance_card_be.controller.auth;
 
+import org.example.insurance_card_be.model.UserVerify;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;

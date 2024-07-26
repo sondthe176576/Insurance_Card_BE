@@ -14,110 +14,400 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Punishments</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pagination.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/listPunishment.css">
-    <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .main-content {
+            margin-left: 16rem;
+            padding: 2rem;
+            transition: margin-left 0.3s;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        .table th, .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            word-wrap: break-word;
+        }
+        .table th {
+            background-color: #4a5568;
+            color: white;
+            font-weight: 700;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #edf2f7;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.25rem;
+            color: white;
+            background-color: #4a5568;
+            border: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn:hover {
+            background-color: #2d3748;
+            transform: scale(1.05);
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+        }
+        .pagination li {
+            margin: 0 0.5rem;
+        }
+        .pagination a {
+            color: #4a5568;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .pagination a:hover {
+            background-color: #edf2f7;
+            transform: scale(1.05);
+        }
+        .pagination .active a {
+            background-color: #4a5568;
+            color: white;
+            border-color: #4a5568;
+        }
+        .header {
+            background-color: #4a5568;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .header .logo {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+        }
+        .header .logo i {
+            margin-right: 0.5rem;
+        }
+        .header .user-profile {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .header .user-profile i {
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        .header .user-profile a {
+            color: white;
+            text-decoration: none;
+            margin-right: 1.5rem;
+            transition: color 0.3s;
+        }
+        .header .user-profile a:hover {
+            color: #ffcc00;
+        }
+        .header .notifications {
+            position: relative;
+        }
+        .header .notifications .badge {
+            position: absolute;
+            top: -0.25rem;
+            right: -0.5rem;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 0.25rem 0.5rem;
+        }
+        .header .notifications-menu {
+            position: absolute;
+            top: 2rem;
+            right: 0;
+            background-color: white;
+            color: black;
+            width: 20rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            display: none;
+        }
+        .header .notifications:hover .notifications-menu {
+            display: block;
+        }
+        .header .notifications-menu a {
+            display: block;
+            padding: 0.75rem;
+            color: black;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+        .header .notifications-menu a:hover {
+            background-color: #f0f0f0;
+        }
+        .header .notifications-menu a:last-child {
+            border-bottom: none;
+        }
+        /* Custom CSS for overdue days */
+        .overdue {
+            color: red;
+        }
+        .form-input, .form-textarea {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 0.375rem;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-input:focus, .form-textarea:focus {
+            border-color: #5a67d8;
+            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.3);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+            text-align: center;
+        }
+        .card-footer {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-bottom-left-radius: 0.75rem;
+            border-bottom-right-radius: 0.75rem;
+            text-align: center;
+        }
+        .table th, .table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 600px;
+            width: 100%;
+        }
+        .notification-success {
+            background-color: #38a169;
+            color: white;
+        }
+        .notification-error {
+            background-color: #e53e3e;
+            color: white;
+        }
+        .notification .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: white;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100">
+
+<!-- Thiết lập biến để nhận diện trang hiện tại -->
+<c:set var="page" value="punishment"/>
+
 <!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_list.jsp"/>
 <!-- End of header -->
-<!-- Include navbar -->
-<jsp:include page="/views/includes/navbar.jsp"/>
-<!-- End of navbar -->
-<!-- Form -->
-<div class="container mt-5 punishment-form-section">
-    <div class="card p-4 shadow-sm">
-        <h2 class="text-center mb-4">Contract Management System</h2>
-        <form method="get" class="row g-3 punishment-form" action="${pageContext.request.contextPath}/listPunishment">
-            <div class="col-md-4">
-                <label for="statusFilter" class="form-label">Filter by Status:</label>
-                <select id="statusFilter" name="status" class="form-select">
-                    <option value="">All</option>
-                    <option value="Paid" ${param.status == 'Paid' ? 'selected' : ''}>Paid</option>
-                    <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
-                    <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
-                </select>
+
+<!-- Include sidebar -->
+<jsp:include page="/views/includes/sidebar.jsp"/>
+<!-- End of sidebar -->
+
+<!-- Main Content -->
+<div class="main-content ml-64 p-6">
+    <div class="container mx-auto mt-5">
+        <div class="card p-8 shadow-lg rounded-lg bg-white animate__animated animate__fadeIn">
+            <h2 class="text-center text-4xl font-semibold text-gray-700 mb-6">Punishment Management System</h2>
+
+            <c:if test="${param.message != null}">
+                <div id="notification" class="notification ${param.status == 'true' ? 'notification-success' : 'notification-error'}">
+                    <c:out value="${param.message}"/>
+                    <button type="button" class="btn-close" onclick="document.getElementById('notification').remove()">&times;</button>
+                </div>
+            </c:if>
+
+            <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" action="${pageContext.request.contextPath}/listPunishment">
+                <div>
+                    <label for="statusFilter" class="block text-gray-600 mb-2">Filter by Status:</label>
+                    <select id="statusFilter" name="status" class="form-select mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="">All</option>
+                        <option value="Pending" ${param.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Approved" ${param.status == 'Approved' ? 'selected' : ''}>Approved</option>
+                        <option value="Rejected" ${param.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="customerNameSearch" class="block text-gray-600 mb-2">Search by Customer Name:</label>
+                    <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}"
+                           class="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter customer name"/>
+                </div>
+                <div class="flex items-end">
+                    <button type="submit" class="btn bg-indigo-600 text-white py-2 px-4 rounded-md shadow-md hover:bg-indigo-700"><i class="fas fa-search"></i> Search</button>
+                </div>
+            </form>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white divide-y divide-gray-200 shadow overflow-hidden sm:rounded-lg">
+                    <thead class="bg-gray-800 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">No</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Customer ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Customer Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Contract ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Punishment Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Punishment Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Cancellation Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">End Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-100 uppercase tracking-wider">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    <c:forEach var="punishment" items="${punishments}" varStatus="status">
+                        <tr class="hover:bg-gray-100 transition duration-150 ease-in-out">
+                            <td class="px-6 py-4 whitespace-nowrap"><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><c:out value="${punishment.customer.customerID}"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><c:out value="${punishment.customerName}"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><c:out value="${punishment.contractID}"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><c:out value="${punishment.punishmentType}"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><c:out value="${punishment.description}"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap ${punishment.status == 'Pending' ? 'text-yellow-600' : punishment.status == 'Approved' ? 'text-green-600' : punishment.status == 'Rejected' ? 'text-red-600' : ''}">
+                                <c:out value="${punishment.status}"/>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap"><fmt:formatDate value="${punishment.contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><fmt:formatDate value="${punishment.contract.endDate}" pattern="dd-MM-yyyy"/></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="${pageContext.request.contextPath}/resolvePunishment?punishmentID=${punishment.punishmentID}"
+                                   class="text-indigo-600 hover:text-indigo-900"><i class="fas fa-eye"></i> View</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
-            <div class="col-md-4">
-                <label for="customerNameSearch" class="form-label">Search by Customer Name:</label>
-                <input type="text" id="customerNameSearch" name="customerName" value="${param.customerName}" class="form-control" placeholder="Enter customer name"/>
-            </div>
-            <div class="col-md-4 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary search-button"><i class="bi bi-search"></i> Search</button>
-            </div>
-        </form>
-        <table class="table table-hover mt-4">
-            <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>Customer ID</th>
-                <th>Customer Name</th>
-                <th>Contract ID</th>
-                <th>Punishment Type</th>
-                <th>Punishment Date</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Cancellation Date</th>
-                <th>End Date</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="punishment" items="${punishments}" varStatus="status">
-                <tr>
-                    <td><c:out value="${(currentPage - 1) * 10 + status.count}"/></td>
-                    <td><c:out value="${punishment.customer.customerID}"/></td>
-                    <td><c:out value="${punishment.customerName}"/></td>
-                    <td><c:out value="${punishment.contractID}"/></td>
-                    <td><c:out value="${punishment.punishmentType}"/></td>
-                    <td><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></td>
-                    <td><c:out value="${punishment.description}"/></td>
-                    <td class="${punishment.status == 'Paid' ? 'text-warning' : punishment.status == 'Approved' ? 'text-success' : punishment.status == 'Rejected' ? 'text-danger' : ''}">
-                        <c:out value="${punishment.status}"/>
-                    </td>
-                    <td><fmt:formatDate value="${punishment.contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>
-                    <td><fmt:formatDate value="${punishment.contract.endDate}" pattern="dd-MM-yyyy"/></td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/resolvePunishment?punishmentID=${punishment.punishmentID}" class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i> View</a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <!-- Include pagination -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                <c:if test="${currentPage > 1}">
-                    <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/listPunishment?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}">
-                            <i class="bi bi-arrow-left"></i>
-                        </a>
-                    </li>
-                </c:if>
-                <c:forEach var="i" begin="1" end="${totalPages}">
-                    <c:if test="${i >= currentPage - 1 && i <= currentPage + 1}">
-                        <li class="page-item ${i == currentPage ? 'active' : ''}">
-                            <a class="page-link" href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation example" class="mt-4">
+                <ul class="inline-flex items-center -space-x-px">
+                    <c:if test="${currentPage > 1}">
+                        <li>
+                            <a class="page-link p-2 border border-gray-300 rounded-l-lg shadow-sm hover:bg-gray-200"
+                               href="${pageContext.request.contextPath}/listPunishment?page=${currentPage - 1}&status=${param.status}&customerName=${param.customerName}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
                         </li>
                     </c:if>
-                </c:forEach>
-                <c:if test="${currentPage < totalPages}">
-                    <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}/listPunishment?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}">
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
+                    <c:forEach var="i" begin="1" end="${totalPages}">
+                        <c:if test="${i >= currentPage - 1 && i <= currentPage + 1}">
+                            <li class="${i == currentPage ? 'active' : ''} mx-1">
+                                <a class="page-link p-2 border border-gray-300 shadow-sm ${i == currentPage ? 'bg-gray-800 text-white' : ''} hover:bg-gray-200"
+                                   href="${pageContext.request.contextPath}/listPunishment?page=${i}&status=${param.status}&customerName=${param.customerName}">${i}</a>
+                            </li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${currentPage < totalPages}">
+                        <li>
+                            <a class="page-link p-2 border border-gray-300 rounded-r-lg shadow-sm hover:bg-gray-200"
+                               href="${pageContext.request.contextPath}/listPunishment?page=${currentPage + 1}&status=${param.status}&customerName=${param.customerName}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
-<!-- End of form -->
-<!-- Include footer -->
-<jsp:include page="/views/includes/footer.jsp"/>
-<!-- End of footer -->
+<!-- End of Main Content -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Hiệu ứng hiển thị thông báo
+        const notification = document.getElementById('notification');
+        if (notification) {
+            notification.classList.add('animate__animated', 'animate__fadeInDown');
+            setTimeout(() => {
+                notification.classList.add('animate__animated', 'animate__fadeOutUp');
+                setTimeout(() => {
+                    notification.remove();
+                }, 1000);
+            }, 3000);
+        }
+
+        // Hiệu ứng chuyển trang
+        const pageLinks = document.querySelectorAll('.pagination a');
+        pageLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                document.body.classList.add('animate__animated', 'animate__fadeOut');
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, 500);
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

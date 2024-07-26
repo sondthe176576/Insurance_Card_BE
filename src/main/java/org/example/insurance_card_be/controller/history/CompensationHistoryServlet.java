@@ -1,7 +1,7 @@
 package org.example.insurance_card_be.controller.history;
 
-import org.example.insurance_card_be.model.CompensationHistoryCus;
 import org.example.insurance_card_be.service.CompensationHistoryService;
+import org.example.insurance_card_be.model.CompensationHistory;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,22 +28,22 @@ public class CompensationHistoryServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null || action.isEmpty()) {
-            List<CompensationHistoryCus> list = compensationHistoryService.getAllCompensationHistories();
+            List<CompensationHistory> list = compensationHistoryService.getAllCompensationHistories();
             request.setAttribute("compensationHistories", list);
             request.getRequestDispatcher("/views/history/compensationHistory.jsp").forward(request, response);
         } else if ("view".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-            CompensationHistoryCus compensationHistoryCus = compensationHistoryService.getCompensationHistoryById(id);
+            CompensationHistory compensationHistoryCus = compensationHistoryService.getCompensationHistoryById(id);
             request.setAttribute("compensationHistoryCus", compensationHistoryCus);
             request.getRequestDispatcher("/views/history/viewCompensationHistory.jsp").forward(request, response);
         } else if ("edit".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-            CompensationHistoryCus compensationHistoryCus = compensationHistoryService.getCompensationHistoryById(id);
+            CompensationHistory compensationHistoryCus = compensationHistoryService.getCompensationHistoryById(id);
             request.setAttribute("compensationHistoryCus", compensationHistoryCus);
             request.getRequestDispatcher("/views/history/editCompensationHistory.jsp").forward(request, response);
         } else if ("listByCustomerID".equals(action)) {
             int customerID = Integer.parseInt(request.getParameter("customerID"));
-            List<CompensationHistoryCus> list = compensationHistoryService.getCompensationHistoriesByCustomerID(customerID);
+            List<CompensationHistory> list = compensationHistoryService.getCompensationHistoriesByCustomerID(customerID);
             request.setAttribute("compensationHistories", list);
             request.getRequestDispatcher("/views/history/compensationHistory.jsp").forward(request, response);
         }
@@ -58,17 +58,17 @@ public class CompensationHistoryServlet extends HttpServlet {
             BigDecimal amount = new BigDecimal(request.getParameter("amount"));
             Date date = new Date();  // Assuming the current date
 
-            CompensationHistoryCus compensationHistoryCus = new CompensationHistoryCus(0, customerID, amount, date);
-            compensationHistoryService.addCompensationHistory(compensationHistoryCus);
-            response.sendRedirect("compensationHistory");
+            CompensationHistory compensationHistory = new CompensationHistory(0, customerID, amount, date);
+            compensationHistoryService.addCompensationHistory(compensationHistory);
+            response.sendRedirect(request.getContextPath() + "/views/history/pendingforCustomer.jsp");
         } else if ("update".equals(action)) {
             int compensationID = Integer.parseInt(request.getParameter("compensationID"));
             int customerID = Integer.parseInt(request.getParameter("customerID"));
             BigDecimal amount = new BigDecimal(request.getParameter("amount"));
             Date date = new Date();  // Assuming the current date
 
-            CompensationHistoryCus compensationHistoryCus = new CompensationHistoryCus(compensationID, customerID, amount, date);
-            compensationHistoryService.updateCompensationHistory(compensationHistoryCus);
+            CompensationHistory compensationHistory = new CompensationHistory(compensationID, customerID, amount, date);
+            compensationHistoryService.updateCompensationHistory(compensationHistory);
             response.sendRedirect("compensationHistory");
         } else if ("delete".equals(action)) {
             int compensationID = Integer.parseInt(request.getParameter("compensationID"));
