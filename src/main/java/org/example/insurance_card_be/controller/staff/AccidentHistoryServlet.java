@@ -9,9 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import org.example.insurance_card_be.dao.implement.AccidentHistoryDAO;
+
 import org.example.insurance_card_be.dao.implement.AccidentHistoryForStaffDAO;
-import org.example.insurance_card_be.model.AccidentHistory;
+
+import org.example.insurance_card_be.model.AccidentHistoryDTO;
 
 @WebServlet(name = "AccidentHistoryServlet", urlPatterns = "/accident-history")
 public class AccidentHistoryServlet extends HttpServlet {
@@ -21,7 +22,7 @@ public class AccidentHistoryServlet extends HttpServlet {
         String sortByDate = req.getParameter("sortByDate");
 
         try {
-            List<AccidentHistory> accidentList;
+            List<AccidentHistoryDTO> accidentList;
             if (customerName != null && !customerName.isEmpty()) {
                 accidentList = dao.filterByCustomerName(customerName);
             } else if (sortByDate != null && (sortByDate.equals("asc") || sortByDate.equals("desc"))) {
