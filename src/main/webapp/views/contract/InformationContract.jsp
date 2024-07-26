@@ -110,6 +110,55 @@
         .text-red-500 {
             color: #f56565;
         }
+        /* Footer Styles */
+        footer {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            padding: 2rem 0;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin: 1rem;
+        }
+        .footer-column h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-column ul li a {
+            color: #e2e8f0;
+            text-decoration: none;
+        }
+        .footer-column ul li a:hover {
+            text-decoration: underline;
+        }
+        .social-icons a {
+            display: inline-block;
+            margin-right: 0.5rem;
+            color: #e2e8f0;
+            font-size: 1.5rem;
+        }
+        .social-icons a:hover {
+            color: #63b3ed;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 1rem;
+            border-top: 1px solid #2d3748;
+            padding-top: 1rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -149,7 +198,7 @@
     </div>
 </nav>
 <!-- End of navbar -->
-
+<div>
 <div class="container mx-auto py-8">
     <h1 class="text-4xl font-bold text-blue-900 mb-6 text-center animate__animated animate__fadeIn">Contract Details</h1>
 
@@ -412,7 +461,6 @@
         </div>
     </div>
 
-    <jsp:include page="/views/includes/footer.jsp"/>
 
     <script>
         function showCancelModal(status) {
@@ -518,3 +566,5 @@
     </script>
 </body>
 </html>
+</div>
+<jsp:include page="/views/includes/footer.jsp"/>
