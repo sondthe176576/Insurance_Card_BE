@@ -80,9 +80,6 @@
 <div class="container">
     <h1 class="page-title">Accident Details</h1>
     <div class="card">
-        <div class="card-header">
-            Accident Information
-        </div>
         <div class="card-body">
             <c:choose>
                 <c:when test="${accident.status == 'Pending'}">
@@ -260,7 +257,7 @@
                     </div>
                 </c:otherwise>
             </c:choose>
-            <a href="${pageContext.request.contextPath}/accidentHistory" class="btn btn-primary btn-back">Back to Accident History</a>
+            <a href="${pageContext.request.contextPath}/accidentHistory" class="btn btn-primary btn-back">Back to List</a>
         </div>
     </div>
 </div>

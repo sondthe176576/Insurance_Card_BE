@@ -138,13 +138,15 @@
                     <a href="${pageContext.request.contextPath}/compensationHistory?action=edit&id=${request.requestID}" class="btn btn-warning btn-sm btn-action">
                         <i class="fas fa-pencil-alt"></i>
                     </a>
-                    <form action="${pageContext.request.contextPath}/compensationHistory" method="post" style="display:inline;">
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="requestID" value="${request.requestID}">
-                        <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to delete this record?');">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </form>
+                    <c:if test="${request.status == 'Pending'}">
+                        <form action="${pageContext.request.contextPath}/compensationHistory" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="requestID" value="${request.requestID}">
+                            <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to cancel this record?');">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
