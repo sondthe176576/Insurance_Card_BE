@@ -1,4 +1,4 @@
-package org.example.insurance_card_be.controller.auth;
+package org.example.insurance_card_be.model;
 
 
 import lombok.AllArgsConstructor;

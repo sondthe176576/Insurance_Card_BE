@@ -3,6 +3,7 @@ package org.example.insurance_card_be.controller.auth;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpSession;
 import org.example.insurance_card_be.dao.implement.UserDAO;
+import org.example.insurance_card_be.model.UserVerify;
 import org.example.insurance_card_be.model.Users;
 
 import jakarta.servlet.ServletException;

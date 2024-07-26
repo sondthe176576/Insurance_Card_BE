@@ -1,5 +1,7 @@
 package org.example.insurance_card_be.controller.auth;
 
+import org.example.insurance_card_be.model.UserVerify;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -18,8 +20,8 @@ public class SendEmailControl {
     {
         boolean test = false;
         String toUserName = user.getEmail();
-        String fromEmail = "son465331@gmail.com";
-        String password = "psintawqruhihrpr";
+        String fromEmail = "insurancecard0@gmail.com";
+        String password = "cdht rjrp vdpp qlyi";
 
         try{
             Properties props = new Properties();

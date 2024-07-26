@@ -26,9 +26,12 @@
         .verification-container {
             position: relative;
             width: 400px;
-            padding: 40px;
+            height: 500px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             backdrop-filter: blur(5px);
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.5);
@@ -36,115 +39,107 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .logo {
+        .form {
             text-align: center;
-            margin-bottom: 20px;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
         }
 
-        .logo img {
-            width: 100px;
-            height: auto;
-        }
-
-        h3 {
+        .form h3 {
+            position: relative;
             color: #fff;
-            text-align: center;
             font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: #fff;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            font-size: 16px;
-        }
-
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .btn-verify {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: #fff;
-            color: #405e8c;
-            font-size: 16px;
             font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+        }
+
+        .form h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background: #fff;
+        }
+
+        .form p {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .form .inputBox {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form .inputBox input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            outline: none;
+            padding: 10px 20px;
+            border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+            letter-spacing: 1px;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form .inputBox input::placeholder {
+            color: #fff;
+        }
+
+        .form .inputBox input[type="submit"] {
+            background: #fff;
+            color: #666;
+            max-width: 150px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
-        .btn-verify:hover {
-            background: #f0f0f0;
-        }
-
-        .form-sent {
-            display: none;
-            text-align: center;
-        }
-
-        .tick-holder {
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
             width: 80px;
             height: 80px;
-            background: #4CAF50;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            animation: float 6s ease-in-out infinite;
         }
 
-        .tick-icon:before {
-            content: '\2714';
-            color: #fff;
-            font-size: 40px;
+        @keyframes float {
+            0% { transform: translatey(0px); }
+            50% { transform: translatey(-20px); }
+            100% { transform: translatey(0px); }
         }
     </style>
 </head>
 <body>
 <div class="verification-container animate__animated animate__fadeIn">
-    <div class="logo">
-        <a href="home.jsp">
-            <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo">
-        </a>
-    </div>
-    <form action="${pageContext.request.contextPath}/verify" method="post">
+    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="logo">
+    <form action="${pageContext.request.contextPath}/verify" method="post" autocomplete="off" class="form">
         <h3>Email Verification</h3>
         <p>To sign in, fill numbers in this blank that we sent to your email</p>
-        <input class="form-control" type="text" name="code" placeholder="Verify Code" required>
-        <button type="submit" class="btn-verify">Send Verification Code</button>
-    </form>
-    <div class="form-sent">
-        <div class="tick-holder">
-            <div class="tick-icon"></div>
+        <div class="inputBox">
+            <input type="text" name="code" placeholder="Verify Code" required>
         </div>
-        <h3>Verification code sent</h3>
-    </div>
+        <div class="inputBox">
+            <input type="submit" value="Send">
+        </div>
+    </form>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
 <script>
     gsap.from(".verification-container", {duration: 1, opacity: 0, y: 50, ease: "power3.out"});
-
-    document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        document.querySelector('form').style.display = 'none';
-        document.querySelector('.form-sent').style.display = 'block';
-        gsap.from(".form-sent", {duration: 0.5, opacity: 0, y: 20, ease: "power3.out"});
-    });
+    gsap.from(".inputBox", {duration: 0.5, opacity: 0, y: 20, stagger: 0.2, ease: "power3.out", delay: 0.5});
 </script>
 </body>
 </html>

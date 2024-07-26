@@ -219,7 +219,7 @@
             <a href="${pageContext.request.contextPath}/register" class="active">Register</a>
         </div>
         <div class="inputBox">
-            <input type="text" name="phone" placeholder="Phone" required>
+            <input type="number" name="phone" placeholder="Phone" required pattern="\d{1,11}" title="Phone number must be between 8 and 11 digits">
         </div>
         <div class="inputBox">
             <input type="email" name="email" placeholder="Email Address" required>
@@ -238,6 +238,9 @@
                 <option value="0">Country</option>
             </select>
         </div>
+        <input type="hidden" name="hidden_tinh" id="hidden_tinh">
+        <input type="hidden" name="hidden_quan" id="hidden_quan">
+        <input type="hidden" name="hidden_phuong" id="hidden_phuong">
         <div class="inputBox">
             <input type="text" name="firstname" placeholder="First Name" required>
         </div>

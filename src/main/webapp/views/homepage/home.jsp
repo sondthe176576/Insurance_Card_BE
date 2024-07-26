@@ -317,38 +317,6 @@
         </div>
     </section>
 
-    <section id="news" class="news">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Latest News</h2>
-            <div class="news-grid">
-                <div class="news-card" data-aos="fade-up">
-                    <img src="${pageContext.request.contextPath}/img/z5492679158839_534a533f48030b12a6e7f92ab158c5c7.jpg" alt="News 1" class="news-image">
-                    <div class="news-content">
-                        <h3 class="news-title">New Policy Updates for 2024</h3>
-                        <p>Learn about our latest policy changes and how they benefit you.</p>
-                        <p class="news-date">Posted on Jan 21, 2024</p>
-                    </div>
-                </div>
-                <div class="news-card" data-aos="fade-up" data-aos-delay="200">
-                    <img src="${pageContext.request.contextPath}/img/z5492679158847_6af0583704368bef81f3b34a4603722c.jpg" alt="News 2" class="news-image">
-                    <div class="news-content">
-                        <h3 class="news-title">Tips for Choosing the Right Insurance</h3>
-                        <p>Expert advice on selecting the best insurance for your needs.</p>
-                        <p class="news-date">Posted on Jan 18, 2024</p>
-                    </div>
-                </div>
-                <div class="news-card" data-aos="fade-up" data-aos-delay="400">
-                    <img src="${pageContext.request.contextPath}/img/z5492679165470_52b14d798485dcfe812daa4ef80f4b1f.jpg" alt="News 3" class="news-image">
-                    <div class="news-content">
-                        <h3 class="news-title">Community Outreach Program Launched</h3>
-                        <p>Peace Insurance gives back to the community with new initiatives.</p>
-                        <p class="news-date">Posted on Jan 15, 2024</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section id="insurance-packages" class="insurance-packages">
         <div class="container">
             <h3 class="section-title" data-aos="fade-up">Insurance Packages</h3>
