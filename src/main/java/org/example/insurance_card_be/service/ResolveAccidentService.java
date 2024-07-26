@@ -47,11 +47,18 @@ public class ResolveAccidentService {
                         "Details:\n" +
                         "Accident Type: " + accident.getAccidentType() + "\n" +
                         "Accident Date: " + accident.getAccidentDate() + "\n" +
-                        "Description: " + accident.getDescription() + "\n\n" +
-                        "Best regards,\n" +
-                        "Your Insurance Company";
+                        "Description: " + accident.getDescription() + "\n\n";
 
-                // Gửi email thông báo
+                if (status.equalsIgnoreCase("Approved")) {
+                    content += "We have received your information and will contact you shortly. Our nearest representative will visit to verify the details related to your vehicle. Based on this verification, we will apply the relevant terms of your registered insurance policy.\n\n";
+                } else if (status.equalsIgnoreCase("Rejected")) {
+                    content += "We have declined your report. We will contact you shortly to clarify the issue.\n\n";
+                }
+
+                content += "Best regards,\n" +
+                        "Peace Insurance Company";
+
+                // Send email notification
                 EmailUtil.sendEmail(email, subject, content);
             }
         } catch (SQLException e) {

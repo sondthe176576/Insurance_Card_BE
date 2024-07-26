@@ -35,7 +35,7 @@ public class RenewContractService {
                 "We would like to inform you that your contract with ID " + contract.getContractID() + " has expired on " + endDate + ".\n\n" +
                 "If you wish to renew your contract, please contact us within the next 14 days. If we do not hear from you within this period, your contract will be officially terminated.\n\n" +
                 "Best regards,\n" +
-                "Your Motorcycle Insurance Company";
+                "Peace Insurance Company";
 
         EmailUtil.sendEmail(email, subject, content);
     }
@@ -58,7 +58,7 @@ public class RenewContractService {
                 "We would like to inform you that your contract with ID " + contract.getContractID() + " has been officially marked as expired.\n\n" +
                 "Thank you for using our services.\n\n" +
                 "Best regards,\n" +
-                "Your Motorcycle Insurance Company";
+                "Peace Insurance Company";
 
         EmailUtil.sendEmail(email, subject, content);
     }
@@ -79,7 +79,7 @@ public class RenewContractService {
                 "Premium: " + contract.getPremium() + "\n" +
                 "Please visit our office within the next 15 days to complete the insurance fee payment.\n\n" +
                 "Best regards,\n" +
-                "Your Motorcycle Insurance Company";
+                "Peace Insurance Company";
 
         EmailUtil.sendEmail(email, subject, content);
     }

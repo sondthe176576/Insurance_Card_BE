@@ -31,16 +31,16 @@ public class ResolveCompensationService {
                 request.setStatus(status);
                 resolveCompensationDAO.updateCompensationRequest(request);
 
-                // Lưu thông tin vào bảng CompensationHistory
+                // Save information to CompensationHistory table
                 CompensationHistory compensationHistory = new CompensationHistory(
-                        0, // CompensationID sẽ tự động tăng
+                        0, // CompensationID will auto-increment
                         request.getCustomerID(),
                         request.getAmount(),
                         new Date()
                 );
                 resolveCompensationDAO.saveCompensationHistory(compensationHistory);
 
-                // Tạo nội dung email
+                // Create email content
                 String email = request.getContract().getCustomer().getUser().getEmail();
                 String subject = "Compensation Request " + status;
                 String content = "Dear " + request.getContract().getCustomer().getUser().getFullName() + ",\n\n" +
@@ -48,11 +48,18 @@ public class ResolveCompensationService {
                         "Details:\n" +
                         "Description: " + request.getDescription() + "\n" +
                         "Amount: $" + request.getAmount() + "\n" +
-                        "Date: " + request.getRequestDate() + "\n\n" +
-                        "Best regards,\n" +
-                        "Your Insurance Company";
+                        "Date: " + request.getRequestDate() + "\n\n";
 
-                // Gửi email thông báo
+                if (status.equalsIgnoreCase("Approved")) {
+                    content += "We have received your compensation request and will contact you as soon as possible. Our nearest representative will visit your address to clarify and resolve the issue you are facing. We will address the matter in a way that is fair and agreeable to both parties.\n\n";
+                } else if (status.equalsIgnoreCase("Rejected")) {
+                    content += "We have declined your compensation request. We will contact you shortly to clarify this matter further.\n\n";
+                }
+
+                content += "Best regards,\n" +
+                        "Peace Insurance Company";
+
+                // Send email notification
                 EmailUtil.sendEmail(email, subject, content);
             }
         } catch (SQLException e) {
