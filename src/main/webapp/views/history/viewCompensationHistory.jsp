@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Compensation History</title>
+    <title>Accident Details</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -25,6 +25,9 @@
             margin: 10px 0;
             font-size: 1rem;
         }
+        .alert-warning {
+            margin: 20px 0;
+        }
         .btn-back {
             display: block;
             margin: 20px auto 0;
@@ -37,25 +40,31 @@
     <h1 class="page-title">View Compensation Request</h1>
     <div class="card mt-4">
         <div class="card-body">
-            <p><strong>Customer ID:</strong> ${compensationRequest.customerID}</p>
-            <p><strong>Customer Name:</strong> ${compensationRequest.customerName}</p>
-            <p><strong>Contract ID:</strong> ${compensationRequest.contractID}</p>
-            <p><strong>Amount:</strong> ${compensationRequest.amount}</p>
-            <p><strong>Description:</strong> ${compensationRequest.description}</p>
-            <p><strong>Date:</strong> ${compensationRequest.requestDate}</p>
-            <p><strong>Status:</strong>
-                <c:choose>
-                    <c:when test="${compensationRequest.status == 'Pending'}">
-                        <span class="badge bg-warning text-dark">${compensationRequest.status}</span>
-                    </c:when>
-                    <c:when test="${compensationRequest.status == 'Rejected'}">
-                        <span class="badge bg-danger">${compensationRequest.status}</span>
-                    </c:when>
-                    <c:when test="${compensationRequest.status == 'Approved'}">
-                        <span class="badge bg-success">${compensationRequest.status}</span>
-                    </c:when>
-                </c:choose>
-            </p>
+            <c:choose>
+                <c:when test="${compensationRequest.status == 'Pending'}">
+                    <div class="alert alert-warning" role="alert">
+                        Data is being processed and cannot be viewed at this time.
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <p><strong>Customer ID:</strong> ${compensationRequest.customerID}</p>
+                    <p><strong>Customer Name:</strong> ${compensationRequest.customerName}</p>
+                    <p><strong>Contract ID:</strong> ${compensationRequest.contractID}</p>
+                    <p><strong>Amount:</strong> ${compensationRequest.amount}</p>
+                    <p><strong>Description:</strong> ${compensationRequest.description}</p>
+                    <p><strong>Date:</strong> ${compensationRequest.requestDate}</p>
+                    <p><strong>Status:</strong>
+                        <c:choose>
+                            <c:when test="${compensationRequest.status == 'Rejected'}">
+                                <span class="badge bg-danger">${compensationRequest.status}</span>
+                            </c:when>
+                            <c:when test="${compensationRequest.status == 'Approved'}">
+                                <span class="badge bg-success">${compensationRequest.status}</span>
+                            </c:when>
+                        </c:choose>
+                    </p>
+                </c:otherwise>
+            </c:choose>
             <a href="${pageContext.request.contextPath}/compensationHistory" class="btn btn-primary btn-back">Back to List</a>
         </div>
     </div>
