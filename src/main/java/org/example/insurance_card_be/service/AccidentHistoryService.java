@@ -1,38 +1,36 @@
 package org.example.insurance_card_be.service;
 
 import org.example.insurance_card_be.dao.implement.AccidentHistoryDAO;
-import org.example.insurance_card_be.model.AccidentHistoryCus;
+import org.example.insurance_card_be.model.Accident;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class AccidentHistoryService {
     private AccidentHistoryDAO accidentHistoryDAO;
 
     public AccidentHistoryService() {
-        accidentHistoryDAO = new AccidentHistoryDAO();
+        this.accidentHistoryDAO = new AccidentHistoryDAO();
     }
 
-    public List<AccidentHistoryCus> getAllAccidentHistories() {
-        return accidentHistoryDAO.getAllAccidentHistories();
+
+
+
+    public boolean isContractValidForCustomer(int contractID, int customerID) throws SQLException {
+        return accidentHistoryDAO.isContractValidForCustomer(contractID, customerID);
     }
 
-    public AccidentHistoryCus getAccidentHistoryById(int accidentID) {
-        return accidentHistoryDAO.getAccidentHistoryById(accidentID);
+    public void addAccident(Accident accident) throws SQLException {
+        accidentHistoryDAO.addAccident(accident);
     }
 
-    public void addAccidentHistory(AccidentHistoryCus accidentHistory) {
-        accidentHistoryDAO.addAccidentHistory(accidentHistory);
+    public void updateAccident(Accident accident) throws SQLException {
+        accidentHistoryDAO.updateAccident(accident);
     }
 
-    public void deleteAccidentHistory(int accidentID) {
+    public void deleteAccidentHistory(int accidentID) throws SQLException {
         accidentHistoryDAO.deleteAccidentHistory(accidentID);
     }
 
-    public void updateAccidentHistory(AccidentHistoryCus accidentHistory) {
-        accidentHistoryDAO.updateAccidentHistory(accidentHistory);
-    }
 
-    public List<AccidentHistoryCus> getAccidentHistoriesByCustomerID(int customerID) {
-        return accidentHistoryDAO.getAccidentHistoriesByCustomerID(customerID);
-    }
 }

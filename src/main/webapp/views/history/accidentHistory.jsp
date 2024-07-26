@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,87 +13,162 @@
     <!-- Include Font Awesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
-        .form-container {
-            margin-top: 20px;
+        .status-pending {
+            color: #ffcc00;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .status-rejected {
+            color: #ed1616;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .status-approved {
+            color: #048304;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .table thead {
+            background-color: #343a40;
+            color: white;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .pagination .page-link {
+            color: black !important;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #343a40;
+            border-color: #343a40;
+            color: white !important;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1 class="mt-4 mb-4">Accident History</h1>
-    <div class="form-container">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
+<!-- Navbar -->
+<nav class="bg-blue-900 border-b-4 border-orange-600">
+    <div class="container mx-auto px-4 py-2 flex justify-center">
+        <ul class="flex space-x-6">
+            <li>
+                <a href="${pageContext.request.contextPath}/homepageforcustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-home mr-2"></i> Home
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/createContract?customerID=${sessionScope.customerID}" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-contract mr-2"></i> Buy Insurance
+                </a>
+            </li>
+            <li>
+                <a href="#" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> About
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/contractForCustomer" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-file-alt mr-2"></i> Contract
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/views/dashboard/customerDashboard.jsp" class="text-white font-bold uppercase hover:text-orange-500 flex items-center">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h1 class="page-title">Accident History</h1>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Customer ID</th>
+            <th>Customer Name</th>
+            <th>Accident ID</th>
+            <th>Contract ID</th>
+            <th>Accident Type</th>
+            <th>Accident Date</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${listAccidents}" var="accident" varStatus="status">
             <tr>
-                <th>Accident ID</th>
-                <th>Customer ID</th>
-                <th>Description</th>
-                <th>Accident Date</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="history" items="${accidentHistories}">
-                <tr>
-                    <td>${history.accidentID}</td>
-                    <td>${history.customerID}</td>
-                    <td>${history.description}</td>
-                    <td>${history.accidentDate}</td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${history.accidentID}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${history.accidentID}" class="btn btn-warning btn-sm">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
+                <td>${(currentPage - 1) * 10 + status.index + 1}</td>
+                <td>${accident.customer.customerID}</td>
+                <td>${accident.customer.user.fullName}</td>
+                <td>${accident.accidentID}</td>
+                <td>${accident.contract.contractID}</td>
+                <td>${accident.accidentType}</td>
+                <td>${accident.accidentDate}</td>
+                <td>${accident.description}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${accident.status == 'Pending'}">
+                            <span class="status-pending">${accident.status}</span>
+                        </c:when>
+                        <c:when test="${accident.status == 'Rejected'}">
+                            <span class="status-rejected">${accident.status}</span>
+                        </c:when>
+                        <c:when test="${accident.status == 'Approved'}">
+                            <span class="status-approved">${accident.status}</span>
+                        </c:when>
+                    </c:choose>
+                </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/accidentHistory?action=view&id=${accident.accidentID}" class="btn btn-primary btn-sm btn-action">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/accidentHistory?action=edit&id=${accident.accidentID}" class="btn btn-warning btn-sm btn-action">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <c:if test="${accident.status == 'Pending'}">
                         <form action="${pageContext.request.contextPath}/accidentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="accidentID" value="${history.accidentID}">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">
-                                <i class="fas fa-trash"></i>
+                            <input type="hidden" name="accidentID" value="${accident.accidentID}">
+                            <button type="submit" class="btn btn-danger btn-sm btn-action" onclick="return confirm('Are you sure you want to cancel this record?');">
+                                <i class="fas fa-times"></i>
                             </button>
                         </form>
-                    </td>
-                </tr>
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <c:if test="${currentPage > 1}">
+                <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+                <li class="page-item"><a class="page-link" href="?page=${currentPage - 1}">Previous</a></li>
+            </c:if>
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <li class="page-item ${currentPage == i ? 'active' : ''}"><a class="page-link" href="?page=${i}">${i}</a></li>
             </c:forEach>
-            </tbody>
-        </table>
+            <c:if test="${currentPage < totalPages}">
+                <li class="page-item"><a class="page-link" href="?page=${currentPage + 1}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page=${totalPages}">Last</a></li>
+            </c:if>
+        </ul>
+    </nav>
 
-        <!-- Pagination -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <c:if test="${page > 1}">
-                    <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
-                    <li class="page-item"><a class="page-link" href="?page=${page - 1}">Previous</a></li>
-                </c:if>
-                <c:forEach var="i" begin="1" end="${totalPages}">
-                    <li class="page-item ${page == i ? 'active' : ''}"><a class="page-link" href="?page=${i}">${i}</a></li>
-                </c:forEach>
-                <c:if test="${page < totalPages}">
-                    <li class="page-item"><a class="page-link" href="?page=${page + 1}">Next</a></li>
-                    <li class="page-item"><a class="page-link" href="?page=${totalPages}">Last</a></li>
-                </c:if>
-            </ul>
-        </nav>
-
-        <h2 class="mt-4 mb-4">Request Accident</h2>
-        <form action="${pageContext.request.contextPath}/accidentHistory" method="post">
-            <input type="hidden" name="action" value="add">
-            <div class="mb-3">
-                <label for="customerID" class="form-label">Customer ID:</label>
-                <input type="text" class="form-control" id="customerID" name="customerID" required>
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Description:</label>
-                <input type="text" class="form-control" id="description" name="description" required>
-            </div>
-            <div class="mb-3">
-                <label for="accidentDate" class="form-label">Accident Date:</label>
-                <input type="date" class="form-control" id="accidentDate" name="accidentDate" required>
-            </div>
-            <button type="submit" class="btn btn-success">Request</button>
-        </form>
-    </div>
 </div>
 
 <jsp:include page="/views/includes/footer.jsp"/>

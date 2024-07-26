@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentHistoryCus {
+public class PaymentHistoryCustomer {
     private int paymentID;
     private int customerID;
     private BigDecimal amount;

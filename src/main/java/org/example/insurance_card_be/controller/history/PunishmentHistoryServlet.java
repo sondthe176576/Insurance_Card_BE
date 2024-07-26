@@ -31,7 +31,9 @@ public class PunishmentHistoryServlet extends HttpServlet {
 
         try {
             if (action == null || action.isEmpty()) {
-                List<PunishmentHistory> list = punishmentHistoryService.getAllPunishmentHistories();
+                // Retrieve the customer ID from the session
+                int customerID = (int) request.getSession().getAttribute("customerID");
+                List<PunishmentHistory> list = punishmentHistoryService.getPunishmentHistoriesByCustomerID(customerID);
                 request.setAttribute("punishmentHistories", list);
                 request.getRequestDispatcher("/views/history/punishmentHistory.jsp").forward(request, response);
             } else if ("view".equals(action)) {
@@ -44,11 +46,6 @@ public class PunishmentHistoryServlet extends HttpServlet {
                 PunishmentHistory punishmentHistoryCus = punishmentHistoryService.getPunishmentHistoryById(id);
                 request.setAttribute("punishmentHistory", punishmentHistoryCus);
                 request.getRequestDispatcher("/views/history/editPunishmentHistory.jsp").forward(request, response);
-            } else if ("listByCustomerID".equals(action)) {
-                int customerID = Integer.parseInt(request.getParameter("customerID"));
-                List<PunishmentHistory> list = punishmentHistoryService.getPunishmentHistoriesByCustomerID(customerID);
-                request.setAttribute("punishmentHistories", list);
-                request.getRequestDispatcher("/views/history/punishmentHistory.jsp").forward(request, response);
             }
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid ID format");
@@ -63,7 +60,7 @@ public class PunishmentHistoryServlet extends HttpServlet {
 
         try {
             if ("add".equals(action)) {
-                int customerID = Integer.parseInt(request.getParameter("customerID"));
+                int customerID = (int) request.getSession().getAttribute("customerID"); // Use session attribute for customerID
                 String description = request.getParameter("description");
                 Date date = parseDate(request.getParameter("date"));
 

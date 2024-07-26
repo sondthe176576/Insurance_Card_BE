@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/views/includes/header_logout.jsp"/>
 
 <!DOCTYPE html>
@@ -6,26 +7,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Punishment History</title>
+    <title>Report Accident</title>
     <!-- Include Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .form-title {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn-submit {
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
-<style>
-    .form-container {
-        max-width: 600px;
-        margin: 50px auto;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-    }
-    .form-title {
-        font-size: 2rem;
-        font-weight: bold;
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-    }
-</style>
 <!-- Navbar -->
 <nav class="bg-blue-900 border-b-4 border-orange-600">
     <div class="container mx-auto px-4 py-2 flex justify-center">
@@ -58,26 +63,38 @@
         </ul>
     </div>
 </nav>
+
 <body>
-<div class="container mt-4">
-    <h1 class="form-title">Edit Punishment History</h1>
-    <form action="punishmentHistory" method="post" class="mt-3">
-        <input type="hidden" name="action" value="update">
-        <input type="hidden" name="punishmentID" value="${punishmentHistory.punishmentID}">
+<div class="container form-container">
+    <h2 class="form-title">Report Accident</h2>
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger">${errorMessage}</div>
+    </c:if>
+    <form action="${pageContext.request.contextPath}/accidentHistory" method="post">
+        <input type="hidden" name="action" value="add">
         <div class="mb-3">
-            <label for="customerID" class="form-label">Customer ID</label>
-            <input type="text" class="form-control" id="customerID" name="customerID" value="${punishmentHistory.customerID}" required>
+            <label for="customerID" class="form-label">Customer ID:</label>
+            <input type="text" class="form-control" id="customerID" name="customerID" value="${param.customerID}" readonly required>
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="description" name="description" value="${punishmentHistory.description}" required>
+            <label for="contractID" class="form-label">Contract ID:</label>
+            <input type="text" class="form-control" id="contractID" name="contractID" value="${param.contractID}" readonly required>
         </div>
         <div class="mb-3">
-            <label for="date" class="form-label">Date</label>
-            <input type="date" class="form-control" id="date" name="date" value="${punishmentHistory.date}" required>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="punishmentHistory" class="btn btn-secondary">Cancel</a>
-            </div>
+            <label for="accidentType" class="form-label">Accident Type:</label>
+            <input type="text" class="form-control" id="accidentType" name="accidentType" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="accidentDate" class="form-label">Accident Date:</label>
+            <input type="date" class="form-control" id="accidentDate" name="accidentDate" required>
+        </div>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-block btn-submit">Submit</button>
+        </div>
     </form>
 </div>
 

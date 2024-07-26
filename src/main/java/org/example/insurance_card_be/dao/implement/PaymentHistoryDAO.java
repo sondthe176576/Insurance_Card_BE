@@ -1,22 +1,29 @@
 package org.example.insurance_card_be.dao.implement;
 
-import org.example.insurance_card_be.model.PaymentHistoryCus;
 import org.example.insurance_card_be.dao.DBContext;
+import org.example.insurance_card_be.model.PaymentHistoryCustomer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.math.BigDecimal;
 
 public class PaymentHistoryDAO {
 
-    public List<PaymentHistoryCus> getAllPaymentHistories() {
-        List<PaymentHistoryCus> list = new ArrayList<>();
-        String query = "SELECT * FROM PaymentHistory";
+    private static final Logger logger = LoggerFactory.getLogger(PaymentHistoryDAO.class);
+
+    public List<PaymentHistoryCustomer> getAllPaymentHistories() {
+        List<PaymentHistoryCustomer> list = new ArrayList<>();
+        String query = "SELECT ph.*, u.Full_name AS CustomerName " +
+                "FROM PaymentHistory ph " +
+                "JOIN Customers c ON ph.customerID = c.customerID " +
+                "JOIN Users u ON c.userID = u.userID";
 
         try (Connection connection = DBContext.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 int paymentID = resultSet.getInt("paymentID");
@@ -25,19 +32,54 @@ public class PaymentHistoryDAO {
                 Date paymentDate = resultSet.getDate("paymentDate");
                 int paymentMethodID = resultSet.getInt("paymentMethodID");
                 int contractID = resultSet.getInt("contractID");
-
-                list.add(new PaymentHistoryCus(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID));
+                PaymentHistoryCustomer paymentHistoryCustomer = new PaymentHistoryCustomer(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID );
+                list.add(paymentHistoryCustomer);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error getting all payment histories", e);
         }
 
         return list;
     }
 
-    public PaymentHistoryCus getPaymentHistoryById(int paymentID) {
-        PaymentHistoryCus paymentHistoryCus = null;
-        String query = "SELECT * FROM PaymentHistory WHERE paymentID = ?";
+    public List<PaymentHistoryCustomer> getPaymentHistoriesByCustomerID(int customerID) {
+        List<PaymentHistoryCustomer> list = new ArrayList<>();
+        String query = "SELECT ph.*, u.Full_name AS CustomerName " +
+                "FROM PaymentHistory ph " +
+                "JOIN Customers c ON ph.customerID = c.customerID " +
+                "JOIN Users u ON c.userID = u.userID " +
+                "WHERE ph.customerID = ?";
+
+        try (Connection connection = DBContext.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, customerID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int paymentID = resultSet.getInt("paymentID");
+                    BigDecimal amount = resultSet.getBigDecimal("amount");
+                    Date paymentDate = resultSet.getDate("paymentDate");
+                    int paymentMethodID = resultSet.getInt("paymentMethodID");
+                    int contractID = resultSet.getInt("contractID");
+                    PaymentHistoryCustomer paymentHistoryCustomer = new PaymentHistoryCustomer(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID );
+                    list.add(paymentHistoryCustomer);
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error getting payment histories by customer ID", e);
+        }
+
+        return list;
+    }
+
+    public PaymentHistoryCustomer getPaymentHistoryById(int paymentID) {
+        PaymentHistoryCustomer paymentHistoryCustomer = null;
+        String query = "SELECT ph.*, u.Full_name AS CustomerName " +
+                "FROM PaymentHistory ph " +
+                "JOIN Customers c ON ph.customerID = c.customerID " +
+                "JOIN Users u ON c.userID = u.userID " +
+                "WHERE ph.paymentID = ?";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -52,50 +94,50 @@ public class PaymentHistoryDAO {
                     int paymentMethodID = resultSet.getInt("paymentMethodID");
                     int contractID = resultSet.getInt("contractID");
 
-                    paymentHistoryCus = new PaymentHistoryCus(paymentID, customerID, amount, paymentDate, paymentMethodID, contractID);
+                    paymentHistoryCustomer = new PaymentHistoryCustomer(paymentID, customerID, amount, paymentDate,paymentMethodID, contractID);
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error getting payment history by ID", e);
         }
 
-        return paymentHistoryCus;
+        return paymentHistoryCustomer;
     }
 
-    public void addPaymentHistory(PaymentHistoryCus paymentHistoryCus) {
+    public void addPaymentHistory(PaymentHistoryCustomer paymentHistoryCustomer) {
         String query = "INSERT INTO PaymentHistory (customerID, amount, paymentDate, paymentMethodID, contractID) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, paymentHistoryCus.getCustomerID());
-            preparedStatement.setBigDecimal(2, paymentHistoryCus.getAmount());
-            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCus.getPaymentDate().getTime()));
-            preparedStatement.setInt(4, paymentHistoryCus.getPaymentMethodID());
-            preparedStatement.setInt(5, paymentHistoryCus.getContractID());
+            preparedStatement.setInt(1, paymentHistoryCustomer.getCustomerID());
+            preparedStatement.setBigDecimal(2, paymentHistoryCustomer.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCustomer.getPaymentDate().getTime()));
+            preparedStatement.setInt(4, paymentHistoryCustomer.getPaymentMethodID());
+            preparedStatement.setInt(5, paymentHistoryCustomer.getContractID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error adding payment history", e);
         }
     }
 
-    public void updatePaymentHistory(PaymentHistoryCus paymentHistoryCus) {
+    public void updatePaymentHistory(PaymentHistoryCustomer paymentHistoryCustomer) {
         String query = "UPDATE PaymentHistory SET customerID = ?, amount = ?, paymentDate = ?, paymentMethodID = ?, contractID = ? WHERE paymentID = ?";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, paymentHistoryCus.getCustomerID());
-            preparedStatement.setBigDecimal(2, paymentHistoryCus.getAmount());
-            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCus.getPaymentDate().getTime()));
-            preparedStatement.setInt(4, paymentHistoryCus.getPaymentMethodID());
-            preparedStatement.setInt(5, paymentHistoryCus.getContractID());
-            preparedStatement.setInt(6, paymentHistoryCus.getPaymentID());
+            preparedStatement.setInt(1, paymentHistoryCustomer.getCustomerID());
+            preparedStatement.setBigDecimal(2, paymentHistoryCustomer.getAmount());
+            preparedStatement.setDate(3, new java.sql.Date(paymentHistoryCustomer.getPaymentDate().getTime()));
+            preparedStatement.setInt(4, paymentHistoryCustomer.getPaymentMethodID());
+            preparedStatement.setInt(5, paymentHistoryCustomer.getContractID());
+            preparedStatement.setInt(6, paymentHistoryCustomer.getPaymentID());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error updating payment history", e);
         }
     }
 
@@ -109,7 +151,15 @@ public class PaymentHistoryDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error deleting payment history", e);
+        }
+    }
+
+    public static void main(String[] args) {
+        PaymentHistoryDAO paymentHistoryDAO = new PaymentHistoryDAO();
+        List<PaymentHistoryCustomer> paymentHistories = paymentHistoryDAO.getAllPaymentHistories();
+        for (PaymentHistoryCustomer paymentHistory : paymentHistories) {
+            System.out.println(paymentHistory);
         }
     }
 }
