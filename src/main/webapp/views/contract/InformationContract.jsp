@@ -372,18 +372,19 @@
                             <i class="fas fa-times mr-2"></i>Cancel Contract
                         </button>
                     </form>
-                    <!-- Add Accident Form Button -->
-                    <a href="${pageContext.request.contextPath}/accidentHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-accident">
-                        <i class="fas fa-plus mr-2"></i>Add Accident
-                    </a>
-                    <!-- Add Compensation Form Button -->
-                    <a href="${pageContext.request.contextPath}/compensationHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-compensation">
-                        <i class="fas fa-plus mr-2"></i>Add Compensation
-                    </a>
+                    <c:if test="${contract.status == 'Accepted' && diffDays > 0}">
+                        <!-- Add Accident Form Button -->
+                        <a href="${pageContext.request.contextPath}/accidentHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-accident">
+                            <i class="fas fa-plus mr-2"></i>Report Accident
+                        </a>
+                        <!-- Add Compensation Form Button -->
+                        <a href="${pageContext.request.contextPath}/compensationHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-compensation">
+                            <i class="fas fa-plus mr-2"></i>Request Compensation
+                        </a>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>
-
 
         <!-- Renew Confirmation Modal -->
         <div class="fixed z-10 inset-0 overflow-y-auto modal" id="renewModal">
