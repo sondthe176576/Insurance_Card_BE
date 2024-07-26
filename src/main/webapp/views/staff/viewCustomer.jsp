@@ -1,218 +1,208 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --light-text-color: #6c757d;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         .main-container {
-            display: flex;
-            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            box-sizing: border-box;
         }
 
         .detail-container {
-            flex: 1;
-            padding: 30px;
             background-color: #fff;
-            border-right: 1px solid #ddd;
-        }
-
-        .motorcycle-container {
-            flex: 1;
-            padding: 30px;
-            background-color: #fff;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        h2, h3 {
-            color: #2c3e50;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            position: relative;
         }
 
         h2 {
-            font-size: 32px;
-            margin-bottom: 30px;
+            color: var(--secondary-color);
+            font-size: clamp(1.5rem, 3vw, 1.75rem);
+            margin-bottom: 1.5rem;
             text-align: center;
+            font-weight: 600;
         }
 
-        h3 {
-            margin-bottom: 15px;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            font-size: 24px;
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
         .detail-item {
-            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
         }
 
         .detail-item label {
-            font-weight: bold;
-            color: #2980b9;
+            font-weight: 500;
+            color: var(--light-text-color);
+            margin-bottom: 0.25rem;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-item label i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
         }
 
         .detail-item span {
-            color: #333;
+            color: var(--text-color);
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            font-weight: 500;
+            margin-left: 1.75rem;
+            word-break: break-word;
         }
 
         .btn-container {
             display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .btn-back, .btn-update {
-            background-color: #3498db;
+        .btn {
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px 15px;
+            padding: 0.5rem 1rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
             text-decoration: none;
-            text-align: center;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
         }
 
-        .btn-back:hover, .btn-update:hover {
-            background-color: #2980b9;
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
-        .motorcycle-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 16px;
+        .btn i {
+            margin-right: 0.5rem;
         }
 
-        .motorcycle-table th, .motorcycle-table td {
-            padding: 12px;
-            text-align: left;
+        .btn-secondary {
+            background-color: var(--light-text-color);
         }
 
-        .motorcycle-table thead {
-            background-color: #3498db;
-            color: white;
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 0 0.5rem;
+            }
+
+            .detail-container {
+                padding: 1.5rem;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-container {
+                justify-content: center;
+            }
+
+            .btn {
+                width: 100%;
+            }
         }
 
-        .motorcycle-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .motorcycle-table tbody tr:hover {
-            background-color: #e0e0e0;
-        }
-
-        .motorcycle-table th {
-            border-bottom: 2px solid #ddd;
-        }
-
-        .motorcycle-table td {
-            border-bottom: 1px solid #ddd;
+        @media (min-width: 1200px) {
+            .details-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
 <body>
-<jsp:include page="/views/includes/header.jsp" />
+<jsp:include page="/views/includes/header_logout.jsp" />
+
 <div class="main-container">
     <div class="detail-container">
-        <h2>View Customer</h2>
+        <h2><i class="fas fa-user-circle"></i> Customer Information</h2>
         <c:if test="${not empty error}">
             <div class="alert alert-danger">${error}</div>
         </c:if>
-        <div class="detail-item">
-            <label>Username:</label>
-            <span>${customer.username}</span>
-        </div>
-        <div class="detail-item">
-            <label>Email:</label>
-            <span>${customer.email}</span>
-        </div>
-        <div class="detail-item">
-            <label>Mobile:</label>
-            <span>${customer.mobile}</span>
-        </div>
-        <div class="detail-item">
-            <label>Province:</label>
-            <span>${customer.province}</span>
-        </div>
-        <div class="detail-item">
-            <label>District:</label>
-            <span>${customer.district}</span>
-        </div>
-        <div class="detail-item">
-            <label>Country:</label>
-            <span>${customer.country}</span>
-        </div>
-        <div class="detail-item">
-            <label>First Name:</label>
-            <span>${customer.firstName}</span>
-        </div>
-        <div class="detail-item">
-            <label>Last Name:</label>
-            <span>${customer.lastName}</span>
-        </div>
-        <div class="detail-item">
-            <label>Full Name:</label>
-            <span>${customer.fullName}</span>
-        </div>
-        <div class="detail-item">
-            <label>Birth Date:</label>
-            <span><fmt:formatDate value="${customer.birthDate}" pattern="yyyy-MM-dd" /></span>
-        </div>
-        <div class="detail-item">
-            <label>Gender:</label>
-            <span>${customer.gender}</span>
+        <div class="details-grid">
+            <div class="detail-item">
+                <label><i class="fas fa-user"></i> Username</label>
+                <span>${customer.username}</span>
+            </div>
+            <div class="detail-item">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <span>${customer.email}</span>
+            </div>
+            <div class="detail-item">
+                <label><i class="fas fa-phone"></i> Mobile</label>
+                <span>${customer.mobile}</span>
+            </div>
+            <div class="detail-item">
+                <label><i class="fas fa-map-marker-alt"></i> Address</label>
+                <span>${customer.district}, ${customer.province}, ${customer.country}</span>
+            </div>
+            <div class="detail-item">
+                <label><i class="fas fa-id-card"></i> Full Name</label>
+                <span>${customer.fullName}</span>
+            </div>
+            <div class="detail-item">
+                <label><i class="fas fa-birthday-cake"></i> Birth Date</label>
+                <span><fmt:formatDate value="${customer.birthDate}" pattern="dd MMMM yyyy" /></span>
+            </div>
+            <div class="detail-item">
+                <label><i class="fas fa-venus-mars"></i> Gender</label>
+                <span>${customer.gender}</span>
+            </div>
         </div>
         <div class="btn-container">
-            <a href="${pageContext.request.contextPath}/customer-manage" class="btn-back">Back</a>
-            <a href="${pageContext.request.contextPath}/customer-edit?userID=${customer.userID}" class="btn-update">Update</a>
+            <a href="${pageContext.request.contextPath}/customer-manage" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <a href="${pageContext.request.contextPath}/customer-edit?userID=${customer.userID}" class="btn">
+                <i class="fas fa-edit"></i> Update
+            </a>
         </div>
     </div>
-    <div class="motorcycle-container">
-        <h3>Motorcycles</h3>
-        <c:if test="${not empty motorcycles}">
-            <table class="motorcycle-table">
-                <thead>
-                <tr>
-                    <th>License Plate</th>
-                    <th>Brand</th>
-                    <th>Model</th>
-                    <th>Year</th>
-                    <th>Color</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="motorcycle" items="${motorcycles}">
-                    <tr>
-                        <td>${motorcycle.licensePlate}</td>
-                        <td>${motorcycle.brand}</td>
-                        <td>${motorcycle.model}</td>
-                        <td>${motorcycle.yearOfManufacture}</td>
-                        <td>${motorcycle.color}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-    </div>
 </div>
+
 <jsp:include page="/views/includes/footer.jsp" />
 </body>
 </html>

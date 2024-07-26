@@ -150,7 +150,7 @@
     <form id="editCustomerForm" method="post" action="${pageContext.request.contextPath}/customer-edit">
         <input type="hidden" name="userID" value="${customer.userID}" />
         <div class="form-group">
-            <label for="username"><i class="fas fa-user"></i> Username:</label>
+            <label for="username" style=""><i class="fas fa-user"></i> Username:</label>
             <input type="text" id="username" name="username" value="${customer.username}" required>
         </div>
         <div class="form-group">

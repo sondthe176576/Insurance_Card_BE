@@ -78,6 +78,34 @@
         .btn:hover {
             background-color: #0056b3;
         }
+        .status-pending {
+            background-color: #FEF3C7;
+            color: #92400E;
+        }
+        .status-approved {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+        .status-rejected {
+            background-color: #FEE2E2;
+            color: #991B1B;
+        }
+        .status-completed {
+            background-color: #DBEAFE;
+            color: #1E40AF;
+        }
+        .status-unknown {
+            background-color: #E5E7EB;
+            color: #374151;
+        }
+        .eye-icon {
+            color: #004080;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+        .eye-icon:hover {
+            color: #0056b3;
+        }
     </style>
     <jsp:include page="/views/includes/header_list.jsp"/>
 </head>
@@ -117,6 +145,7 @@
         <table>
             <thead>
             <tr>
+                <th>No</th>
                 <th>Full Name</th>
                 <th>Accident ID</th>
                 <th>Accident Type</th>
@@ -127,19 +156,29 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="accident" items="${accidentList}">
+            <c:forEach var="accident" items="${accidentList}" varStatus="a">
                 <tr>
+                    <td>${a.index  + 1}</td>
                     <td>${accident.fullName}</td>
                     <td>${accident.accidentID}</td>
                     <td>${accident.accidentType}</td>
-                    <td>${accident.status}</td>
+                    <td>
+                        <span class="px-2 py-1 rounded-full text-sm font-semibold
+                            ${accident.status eq 'Pending' ? 'status-pending' :
+                              accident.status eq 'Approved' ? 'status-approved' :
+                              accident.status eq 'Rejected' ? 'status-rejected' :
+                              accident.status eq 'Completed' ? 'status-completed' :
+                              'status-unknown'}">
+                                ${accident.status}
+                        </span>
+                    </td>
                     <td>${accident.description}</td>
                     <td>${accident.date}</td>
                     <td>
-                        <form method="get" action="${pageContext.request.contextPath}/viewAccidentDetails">
-                            <input type="hidden" name="accidentID" value="${accident.accidentID}">
-                            <button type="submit" class="btn">View</button>
-                        </form>
+                        <a href="${pageContext.request.contextPath}/viewAccidentDetails?accidentID=${accident.accidentID}"
+                           class="eye-icon" title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </a>
                     </td>
                 </tr>
             </c:forEach>

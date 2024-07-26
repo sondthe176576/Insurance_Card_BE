@@ -11,8 +11,8 @@ import java.util.List;
 
 public class AccidentHistoryForStaffDAO {
 
-    public  List<AccidentHistory> getApprovedAccidentHistories() throws SQLException {
-        List<AccidentHistory> list = new ArrayList<>();
+    public  List<AccidentHistoryDTO> getApprovedAccidentHistories() throws SQLException {
+        List<AccidentHistoryDTO> list = new ArrayList<>();
         String query = "SELECT u.Full_name, a.AccidentID, ac.AccidentType, ac.Status, a.Description, a.Date " +
                 "FROM AccidentHistory a " +
                 "JOIN Customers c ON a.CustomerID = c.CustomerID " +
@@ -24,7 +24,7 @@ public class AccidentHistoryForStaffDAO {
         try (PreparedStatement stmt = DBContext.getConnection().prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                AccidentHistory accident = new AccidentHistory();
+                AccidentHistoryDTO accident = new AccidentHistoryDTO();
                 accident.setFullName(rs.getString("Full_name"));
                 accident.setAccidentID(rs.getInt("AccidentID"));
                 accident.setAccidentType(rs.getString("AccidentType"));
@@ -37,8 +37,8 @@ public class AccidentHistoryForStaffDAO {
         return list;
     }
 
-    public  List<AccidentHistory> filterByCustomerName(String customerName) throws SQLException {
-        List<AccidentHistory> list = new ArrayList<>();
+    public  List<AccidentHistoryDTO> filterByCustomerName(String customerName) throws SQLException {
+        List<AccidentHistoryDTO> list = new ArrayList<>();
         String query = "SELECT u.Full_name, a.AccidentID, ac.AccidentType, ac.Status, a.Description, a.Date " +
                 "FROM AccidentHistory a " +
                 "JOIN Customers c ON a.CustomerID = c.CustomerID " +
@@ -51,22 +51,22 @@ public class AccidentHistoryForStaffDAO {
             stmt.setString(1, "%" + customerName + "%");
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    AccidentHistory accident = new AccidentHistory();
-                    accident.setFullName(rs.getString("Full_name"));
-                    accident.setAccidentID(rs.getInt("AccidentID"));
-                    accident.setAccidentType(rs.getString("AccidentType"));
-                    accident.setStatus(rs.getString("Status"));
-                    accident.setDescription(rs.getString("Description"));
-                    accident.setDate(rs.getDate("Date"));
-                    list.add(accident);
+                    AccidentHistoryDTO a = new AccidentHistoryDTO();
+                    a.setFullName(rs.getString("Full_name"));
+                    a.setAccidentID(rs.getInt("AccidentID"));
+                    a.setAccidentType(rs.getString("AccidentType"));
+                    a.setStatus(rs.getString("Status"));
+                    a.setDescription(rs.getString("Description"));
+                    a.setDate(rs.getDate("Date"));
+                    list.add(a);
                 }
             }
         }
         return list;
     }
 
-    public  List<AccidentHistory> sortByDate(String order) throws SQLException {
-        List<AccidentHistory> list = new ArrayList<>();
+    public  List<AccidentHistoryDTO> sortByDate(String order) throws SQLException {
+        List<AccidentHistoryDTO> list = new ArrayList<>();
         String query = "SELECT u.Full_name, a.AccidentID, ac.AccidentType, ac.Status, a.Description, a.Date " +
                 "FROM AccidentHistory a " +
                 "JOIN Customers c ON a.CustomerID = c.CustomerID " +
@@ -78,7 +78,7 @@ public class AccidentHistoryForStaffDAO {
         try (PreparedStatement stmt = DBContext.getConnection().prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                AccidentHistory accident = new AccidentHistory();
+                AccidentHistoryDTO accident = new AccidentHistoryDTO();
                 accident.setFullName(rs.getString("Full_name"));
                 accident.setAccidentID(rs.getInt("AccidentID"));
                 accident.setAccidentType(rs.getString("AccidentType"));
