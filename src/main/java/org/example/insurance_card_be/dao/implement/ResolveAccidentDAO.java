@@ -111,5 +111,4 @@ public class ResolveAccidentDAO {
             ps.executeUpdate();
         }
     }
-
 }

@@ -29,7 +29,7 @@ public class ResolveWaitingContractsService {
             if (contract != null) {
                 resolveWaitingContractsDAO.updateContractStatus(contractID, status);
 
-                // Tạo nội dung email
+                // Create email content
                 String email = contract.getCustomer().getUser().getEmail();
                 String subject = "Contract " + status;
                 String content = "Dear " + contract.getCustomer().getUser().getFullName() + ",\n\n" +
@@ -38,15 +38,21 @@ public class ResolveWaitingContractsService {
                         "Contract Info: " + contract.getContractInfo() + "\n" +
                         "Start Date: " + contract.getStartDate() + "\n" +
                         "End Date: " + contract.getEndDate() + "\n" +
-                        "Value: " + contract.getValue() + "\n\n" +
-                        "Please contact us for more details and schedule a meeting.\n\n" +
-                        "Best regards,\n" +
-                        "Your Insurance Company";
+                        "Value: " + contract.getValue() + "\n\n";
 
-                // Gửi email thông báo
+                if (status.equalsIgnoreCase("Accepted")) {
+                    content += "We have received your contract registration information. We will contact you as soon as possible and arrange for our nearest representative to your address to finalize the contract paperwork.\n\n";
+                } else if (status.equalsIgnoreCase("Rejected")) {
+                    content += "We have declined your request to create a new contract. We will contact you shortly to discuss this matter further.\n\n";
+                }
+
+                content += "Best regards,\n" +
+                        "Peace Insurance Company";
+
+                // Send email notification
                 EmailUtil.sendEmail(email, subject, content);
 
-                // Lưu thông báo thành công vào session
+                // Save success message in session
                 session.setAttribute("successMessage", "Contract ID " + contractID + " has been " + status.toLowerCase() + " successfully.");
             }
         } catch (SQLException e) {

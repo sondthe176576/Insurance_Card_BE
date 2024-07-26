@@ -237,16 +237,23 @@
                 <input type="hidden" id="status" name="status" value=""/>
                 <input type="hidden" name="punishmentID" value="${punishment.punishmentID}"/>
                 <div class="flex justify-center mt-8 space-x-4">
-                    <button type="button" onclick="showModal('Approved')" class="btn-custom bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
+                    <button type="button" onclick="showModal('Approved')" class="btn-custom bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105"
+                            <c:if test="${punishment.status == 'Approved' || punishment.status == 'Rejected'}">disabled</c:if>>
                         <i class="fas fa-check-circle"></i> Approve
                     </button>
-                    <button type="button" onclick="showModal('Rejected')" class="btn-custom bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
+                    <button type="button" onclick="showModal('Rejected')" class="btn-custom bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105"
+                            <c:if test="${punishment.status == 'Approved' || punishment.status == 'Rejected'}">disabled</c:if>>
                         <i class="fas fa-times-circle"></i> Reject
                     </button>
                     <a href="${pageContext.request.contextPath}/listPunishment" class="btn-custom bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
                         <i class="fas fa-arrow-left"></i> Back to List
                     </a>
                 </div>
+                <c:if test="${punishment.status == 'Approved' || punishment.status == 'Rejected'}">
+                    <div class="text-center mt-4 text-red-500">
+                        You have already processed this punishment.
+                    </div>
+                </c:if>
             </form>
         </div>
     </div>

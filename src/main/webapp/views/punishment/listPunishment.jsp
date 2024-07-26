@@ -333,7 +333,7 @@
                             <td class="px-6 py-4 whitespace-nowrap"><c:out value="${punishment.punishmentType}"/></td>
                             <td class="px-6 py-4 whitespace-nowrap"><fmt:formatDate value="${punishment.punishmentDate}" pattern="dd-MM-yyyy"/></td>
                             <td class="px-6 py-4 whitespace-nowrap"><c:out value="${punishment.description}"/></td>
-                            <td class="px-6 py-4 whitespace-nowrap ${punishment.status == 'Paid' ? 'text-yellow-600' : punishment.status == 'Approved' ? 'text-green-600' : punishment.status == 'Rejected' ? 'text-red-600' : ''}">
+                            <td class="px-6 py-4 whitespace-nowrap ${punishment.status == 'Pending' ? 'text-yellow-600' : punishment.status == 'Approved' ? 'text-green-600' : punishment.status == 'Rejected' ? 'text-red-600' : ''}">
                                 <c:out value="${punishment.status}"/>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap"><fmt:formatDate value="${punishment.contract.cancellationDate}" pattern="dd-MM-yyyy"/></td>

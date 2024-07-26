@@ -41,7 +41,7 @@ public class ViewContractService {
                 + "Payment Date: " + new java.text.SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "\n\n"
                 + "Thank you for choosing our insurance services.\n"
                 + "Best regards,\n"
-                + "Motorcycle Insurance Company";
+                + "Peace Insurance Company";
 
         EmailUtil.sendEmail(email, subject, message);
     }

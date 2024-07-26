@@ -46,33 +46,26 @@
             border-radius: 0.5rem;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .btn-renew {
-            background-color: #007bff; /* Blue */
+        .btn-secondary {
+            background-color: #6c757d;
             color: white;
         }
-        .btn-renew:hover {
-            background-color: #0056b3;
-        }
-        .btn-cancel {
-            background-color: #dc3545; /* Red */
-            color: white;
-        }
-        .btn-cancel:hover {
-            background-color: #c82333;
-        }
-        .btn-accident {
-            background-color: #6c757d; /* Gray */
-            color: white;
-        }
-        .btn-accident:hover {
+        .btn-secondary:hover {
             background-color: #5a6268;
         }
-        .btn-compensation {
-            background-color: #28a745; /* Green */
+        .btn-primary {
+            background-color: #007bff;
             color: white;
         }
-        .btn-compensation:hover {
-            background-color: #218838;
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
         }
         .table-header {
             background-color: #004d99; /* Dark Blue */
@@ -109,55 +102,6 @@
         }
         .text-red-500 {
             color: #f56565;
-        }
-        /* Footer Styles */
-        footer {
-            background-color: #1a202c;
-            color: #e2e8f0;
-            padding: 2rem 0;
-        }
-        .footer-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
-            margin: 1rem;
-        }
-        .footer-column h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-        }
-        .footer-column ul li {
-            margin-bottom: 0.5rem;
-        }
-        .footer-column ul li a {
-            color: #e2e8f0;
-            text-decoration: none;
-        }
-        .footer-column ul li a:hover {
-            text-decoration: underline;
-        }
-        .social-icons a {
-            display: inline-block;
-            margin-right: 0.5rem;
-            color: #e2e8f0;
-            font-size: 1.5rem;
-        }
-        .social-icons a:hover {
-            color: #63b3ed;
-        }
-        .footer-bottom {
-            text-align: center;
-            margin-top: 1rem;
-            border-top: 1px solid #2d3748;
-            padding-top: 1rem;
         }
     </style>
 </head>
@@ -198,7 +142,7 @@
     </div>
 </nav>
 <!-- End of navbar -->
-<div>
+
 <div class="container mx-auto py-8">
     <h1 class="text-4xl font-bold text-blue-900 mb-6 text-center animate__animated animate__fadeIn">Contract Details</h1>
 
@@ -361,210 +305,201 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <button type="button" class="btn btn-renew" onclick="requestRenewal('${contract.contractID}', '${contract.customer.user.email}', '${contract.status}')">
+                <button type="button" class="btn btn-primary" onclick="requestRenewal('${contract.contractID}', '${contract.customer.user.email}', '${contract.status}')">
                     <i class="fas fa-sync-alt mr-2"></i>Request Renew Contract
                 </button>
                 <form id="cancelForm" action="${pageContext.request.contextPath}/cancelContract" method="post" class="inline">
                     <input type="hidden" name="contractId" value="${contract.contractID}">
                     <input type="hidden" name="contractValue" value="${contract.value}">
                     <input type="hidden" name="contractStatus" value="${contract.status}">
-                    <button type="button" class="btn btn-cancel" onclick="showCancelModal('${contract.status}')">
+                    <button type="button" class="btn btn-danger" onclick="showCancelModal('${contract.status}')">
                         <i class="fas fa-times mr-2"></i>Cancel Contract
                     </button>
                 </form>
-                <!-- Add Accident Form Button -->
-                <a href="${pageContext.request.contextPath}/accidentHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-accident">
-                    <i class="fas fa-plus mr-2"></i>Add Accident
-                </a>
-                <!-- Add Compensation Form Button -->
-                <a href="${pageContext.request.contextPath}/compensationHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-compensation">
-                    <i class="fas fa-plus mr-2"></i>Add Compensation
-                </a>
             </c:otherwise>
         </c:choose>
     </div>
+</div>
 
-
-    <!-- Renew Confirmation Modal -->
-    <div class="fixed z-10 inset-0 overflow-y-auto modal" id="renewModal">
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="modal-content w-full max-w-md">
-                <div class="modal-header bg-blue-900 text-white">
-                    <h5 class="text-2xl font-bold">Request Renew Contract</h5>
-                </div>
-                <div class="modal-body">
-                    <form id="renewForm" action="${pageContext.request.contextPath}/requestRenewContract" method="post">
-                        <div class="mb-4">
-                            <label for="renewYears" class="input-label">Number of years to renew:</label>
-                            <input type="number" class="input-field mt-1" id="renewYears" name="renewYears" required min="1" value="1" oninput="updateRenewalInfo()">
-                        </div>
-                        <input type="hidden" id="customerEmail" name="customerEmail" value="">
-                        <input type="hidden" id="contractId" name="contractId" value="">
-                        <div class="mb-4">
-                            <label class="input-label">New End Date:</label>
-                            <input type="text" class="input-field mt-1" id="newEndDate" readonly>
-                        </div>
-                        <div class="mb-4">
-                            <label class="input-label">Premium:</label>
-                            <input type="text" class="input-field mt-1" id="newPremium" readonly>
-                        </div>
-                        <div class="mb-4">
-                            <label class="input-label">Total Value:</label>
-                            <input type="text" class="input-field mt-1" id="newValue" readonly>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary mr-2" onclick="hideRenewModal()">No</button>
-                    <button type="button" class="btn btn-renew" onclick="submitRenewForm()">Yes, Renew Contract</button>
-                </div>
+<!-- Renew Confirmation Modal -->
+<div class="fixed z-10 inset-0 overflow-y-auto modal" id="renewModal">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="modal-content w-full max-w-md">
+            <div class="modal-header bg-blue-900 text-white">
+                <h5 class="text-2xl font-bold">Request Renew Contract</h5>
             </div>
-        </div>
-    </div>
-
-    <!-- Cancel Confirmation Modal -->
-    <div class="fixed z-10 inset-0 overflow-y-auto modal" id="cancelModal">
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="modal-content w-full max-w-md">
-                <div class="modal-header bg-red-600 text-white">
-                    <h5 class="text-2xl font-bold">Cancel Contract</h5>
-                </div>
-                <div class="modal-body">
-                    <div id="cancelMessage" class="mb-4">
-                        <!-- The message will be dynamically set by JavaScript -->
+            <div class="modal-body">
+                <form id="renewForm" action="${pageContext.request.contextPath}/requestRenewContract" method="post">
+                    <div class="mb-4">
+                        <label for="renewYears" class="input-label">Number of years to renew:</label>
+                        <input type="number" class="input-field mt-1" id="renewYears" name="renewYears" required min="1" value="1" oninput="updateRenewalInfo()">
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary mr-2" onclick="hideCancelModal()">No</button>
-                    <button type="button" class="btn btn-cancel" onclick="confirmCancel()">Yes, Cancel Contract</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Alert Modal -->
-    <div class="fixed z-10 inset-0 overflow-y-auto modal" id="alertModal">
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="modal-content w-full max-w-md">
-                <div class="modal-header bg-yellow-500 text-white">
-                    <h5 class="text-2xl font-bold">Alert</h5>
-                </div>
-                <div class="modal-body">
-                    <div id="alertMessage" class="mb-4">
-                        <!-- The message will be dynamically set by JavaScript -->
+                    <input type="hidden" id="customerEmail" name="customerEmail" value="">
+                    <input type="hidden" id="contractId" name="contractId" value="">
+                    <div class="mb-4">
+                        <label class="input-label">New End Date:</label>
+                        <input type="text" class="input-field mt-1" id="newEndDate" readonly>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary mr-2" onclick="hideAlertModal()">OK</button>
-                </div>
+                    <div class="mb-4">
+                        <label class="input-label">Premium:</label>
+                        <input type="text" class="input-field mt-1" id="newPremium" readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label class="input-label">Total Value:</label>
+                        <input type="text" class="input-field mt-1" id="newValue" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-2" onclick="hideRenewModal()">No</button>
+                <button type="button" class="btn btn-primary" onclick="submitRenewForm()">Yes, Renew Contract</button>
             </div>
         </div>
     </div>
+</div>
 
+<!-- Cancel Confirmation Modal -->
+<div class="fixed z-10 inset-0 overflow-y-auto modal" id="cancelModal">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="modal-content w-full max-w-md">
+            <div class="modal-header bg-red-600 text-white">
+                <h5 class="text-2xl font-bold">Cancel Contract</h5>
+            </div>
+            <div class="modal-body">
+                <div id="cancelMessage" class="mb-4">
+                    <!-- The message will be dynamically set by JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-2" onclick="hideCancelModal()">No</button>
+                <button type="button" class="btn btn-danger" onclick="confirmCancel()">Yes, Cancel Contract</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>
-        function showCancelModal(status) {
-            const endDate = new Date("${contract.endDate}");
-            const currentDate = new Date();
-            const daysRemaining = ${diffDays}; // Assuming diffDays is passed from the server side
+<!-- Alert Modal -->
+<div class="fixed z-10 inset-0 overflow-y-auto modal" id="alertModal">
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="modal-content w-full max-w-md">
+            <div class="modal-header bg-yellow-500 text-white">
+                <h5 class="text-2xl font-bold">Alert</h5>
+            </div>
+            <div class="modal-body">
+                <div id="alertMessage" class="mb-4">
+                    <!-- The message will be dynamically set by JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mr-2" onclick="hideAlertModal()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            if (status === "Canceled") {
-                showAlertModal("Your contract has already been canceled.");
-                return;
-            }
+<jsp:include page="/views/includes/footer.jsp"/>
 
-            if (status === "Expired") {
-                showAlertModal("Your contract has expired and is no longer valid.");
-                return;
-            }
+<script>
+    function showCancelModal(status) {
+        const endDate = new Date("${contract.endDate}");
+        const currentDate = new Date();
+        const daysRemaining = ${diffDays}; // Assuming diffDays is passed from the server side
 
-            if (status === "Accepted" && daysRemaining <= 0) {
-                showAlertModal("Your contract has expired, and you do not need to cancel it. If you want to renew the contract, please send a request to our motorcycle insurance company.");
-                return;
-            }
-
-            const contractValue = ${contract.value};
-            const penalty = (contractValue * 0.30).toFixed(2);
-            const formattedPenalty = parseFloat(penalty).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-
-            let message = "Are you sure you want to cancel this contract?";
-            if (status === "Accepted" && currentDate < endDate) {
-                message += "<br>You will be penalized 30% of the contract value (Penalty: " + formattedPenalty + ").";
-                message += "<br><span class='text-red-500'>Note: Canceling an accepted contract will incur a penalty.</span>";
-            } else if (status === "Pending") {
-                message += "<br><span class='text-red-500'>Note: Canceling a pending contract will not incur any penalty.</span>";
-            }
-
-            document.getElementById('cancelMessage').innerHTML = message;
-            document.getElementById('cancelModal').classList.add('show');
+        if (status === "Canceled") {
+            showAlertModal("Your contract has already been canceled.");
+            return;
         }
 
-        function hideCancelModal() {
-            document.getElementById('cancelModal').classList.remove('show');
+        if (status === "Expired") {
+            showAlertModal("Your contract has expired and is no longer valid.");
+            return;
         }
 
-        function confirmCancel() {
-            document.getElementById('cancelForm').submit();
+        if (status === "Accepted" && daysRemaining <= 0) {
+            showAlertModal("Your contract has expired, and you do not need to cancel it. If you want to renew the contract, please send a request to our motorcycle insurance company.");
+            return;
         }
 
-        function requestRenewal(contractId, customerEmail, status) {
-            if (status === "Canceled") {
-                showAlertModal("You cannot request a renewal because your contract has been canceled.");
-                return;
-            }
+        const contractValue = ${contract.value};
+        const penalty = (contractValue * 0.30).toFixed(2);
+        const formattedPenalty = parseFloat(penalty).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
-            if (status === "Expired") {
-                showAlertModal("Your contract has expired and is no longer valid.");
-                return;
-            }
-
-            const daysRemainingText = document.querySelector('input[value="${diffDays} days remaining"]').value;
-            const daysRemaining = parseInt(daysRemainingText.split(' ')[0]);
-
-            if (daysRemaining > 0) {
-                showAlertModal("Your contract has not yet expired, so you cannot request a renewal.");
-            } else {
-                showRenewModal(contractId, customerEmail);
-            }
+        let message = "Are you sure you want to cancel this contract?";
+        if (status === "Accepted" && currentDate < endDate) {
+            message += "<br>You will be penalized 30% of the contract value (Penalty: " + formattedPenalty + ").";
+            message += "<br><span class='text-red-500'>Note: Canceling an accepted contract will incur a penalty.</span>";
+        } else if (status === "Pending") {
+            message += "<br><span class='text-red-500'>Note: Canceling a pending contract will not incur any penalty.</span>";
         }
 
-        function showRenewModal(contractId, customerEmail) {
-            document.getElementById('contractId').value = contractId;
-            document.getElementById('customerEmail').value = customerEmail;
-            updateRenewalInfo();
-            document.getElementById('renewModal').classList.add('show');
+        document.getElementById('cancelMessage').innerHTML = message;
+        document.getElementById('cancelModal').classList.add('show');
+    }
+
+    function hideCancelModal() {
+        document.getElementById('cancelModal').classList.remove('show');
+    }
+
+    function confirmCancel() {
+        document.getElementById('cancelForm').submit();
+    }
+
+    function requestRenewal(contractId, customerEmail, status) {
+        if (status === "Canceled") {
+            showAlertModal("You cannot request a renewal because your contract has been canceled.");
+            return;
         }
 
-        function hideRenewModal() {
-            document.getElementById('renewModal').classList.remove('show');
+        if (status === "Expired") {
+            showAlertModal("Your contract has expired and is no longer valid.");
+            return;
         }
 
-        function submitRenewForm() {
-            document.getElementById('renewForm').submit();
-        }
+        const daysRemainingText = document.querySelector('input[value="${diffDays} days remaining"]').value;
+        const daysRemaining = parseInt(daysRemainingText.split(' ')[0]);
 
-        function updateRenewalInfo() {
-            const years = parseInt(document.getElementById('renewYears').value);
-            const premium = ${contract.premium};
-            const currentDate = new Date();
-            const newEndDate = new Date(currentDate.setFullYear(currentDate.getFullYear() + years));
-            const newValue = (premium * years).toFixed(2);
-
-            document.getElementById('newEndDate').value = newEndDate.toLocaleDateString();
-            document.getElementById('newPremium').value = premium.toFixed(2);
-            document.getElementById('newValue').value = newValue;
+        if (daysRemaining > 0) {
+            showAlertModal("Your contract has not yet expired, so you cannot request a renewal.");
+        } else {
+            showRenewModal(contractId, customerEmail);
         }
+    }
 
-        function showAlertModal(message) {
-            document.getElementById('alertMessage').innerHTML = message;
-            document.getElementById('alertModal').classList.add('show');
-        }
+    function showRenewModal(contractId, customerEmail) {
+        document.getElementById('contractId').value = contractId;
+        document.getElementById('customerEmail').value = customerEmail;
+        updateRenewalInfo();
+        document.getElementById('renewModal').classList.add('show');
+    }
 
-        function hideAlertModal() {
-            document.getElementById('alertModal').classList.remove('show');
-        }
-    </script>
+    function hideRenewModal() {
+        document.getElementById('renewModal').classList.remove('show');
+    }
+
+    function submitRenewForm() {
+        document.getElementById('renewForm').submit();
+    }
+
+    function updateRenewalInfo() {
+        const years = parseInt(document.getElementById('renewYears').value);
+        const premium = ${contract.premium};
+        const currentDate = new Date();
+        const newEndDate = new Date(currentDate.setFullYear(currentDate.getFullYear() + years));
+        const newValue = (premium * years).toFixed(2);
+
+        document.getElementById('newEndDate').value = newEndDate.toLocaleDateString();
+        document.getElementById('newPremium').value = premium.toFixed(2);
+        document.getElementById('newValue').value = newValue;
+    }
+
+    function showAlertModal(message) {
+        document.getElementById('alertMessage').innerHTML = message;
+        document.getElementById('alertModal').classList.add('show');
+    }
+
+    function hideAlertModal() {
+        document.getElementById('alertModal').classList.remove('show');
+    }
+</script>
 </body>
 </html>
-</div>
-<jsp:include page="/views/includes/footer.jsp"/>

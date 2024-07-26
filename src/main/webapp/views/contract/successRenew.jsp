@@ -19,7 +19,7 @@
 </head>
 <body class="bg-gray-100 text-gray-900 flex flex-col min-h-screen">
 
-<jsp:include page="/views/includes/header.jsp"/>
+<jsp:include page="/views/includes/header_logout.jsp"/>
 
 <jsp:include page="/views/includes/navbar.jsp"/>
 
