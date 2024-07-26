@@ -5,24 +5,25 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import org.example.insurance_card_be.dao.implement.CustomerDAO;
+import org.example.insurance_card_be.model.NewUserVerify;
 import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerCreateServlet", urlPatterns = "/customer-create")
 public class CustomerCreateServlet extends HttpServlet {
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/views/staff/createCustomer.jsp").forward(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
         CustomerDAO dao = new CustomerDAO();
+
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
@@ -38,30 +39,47 @@ public class CustomerCreateServlet extends HttpServlet {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date birthDate = null;
+
         try {
             birthDate = dateFormat.parse(birthDateStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        Users customer = new Users();
-        customer.setUsername(username);
-        customer.setPassword(password);
-        customer.setEmail(email);
-        customer.setMobile(mobile);
-        customer.setProvince(province);
-        customer.setDistrict(district);
-        customer.setCountry(country);
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setFullName(fullName);
-        customer.setBirthDate(birthDate);
-        customer.setGender(gender);
+        Users users = new Users();
+        users.setUsername(username);
+        users.setPassword(password);
+        users.setEmail(email);
+        users.setMobile(mobile);
+        users.setProvince(province);
+        users.setDistrict(district);
+        users.setCountry(country);
+        users.setFirstName(firstName);
+        users.setLastName(lastName);
+        users.setFullName(fullName);
+        users.setBirthDate(birthDate);
+        users.setGender(gender);
 
-        dao.insert(customer);
-        List<Users> listCustomer = dao.findAll();
-        req.getSession().setAttribute("listCustomer", listCustomer);
-        req.setAttribute("message", "Customer created successfully.");
-        req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
+        // Gửi mã xác thực qua email
+        NewSendEmailControl emailControl = new NewSendEmailControl();
+        String verificationCode = emailControl.getRandom();
+        NewUserVerify user = new NewUserVerify();
+        user.setEmail(email);
+        user.setCode(verificationCode);
+        boolean emailSent = emailControl.sendEmail(user);
+
+        if (emailSent) {
+            // Lưu thông tin vào session và chờ xác thực mã
+            HttpSession session = req.getSession();
+            session.setAttribute("verificationCode", verificationCode);
+            session.setAttribute("users", users); // Lưu với key là "users"
+
+            // Chuyển hướng đến trang nhập mã xác thực
+            resp.sendRedirect(req.getContextPath() + "/views/staff/verify.jsp");
+        } else {
+            // Xử lý trường hợp gửi email không thành công
+            req.setAttribute("errorMessage", "Failed to send verification email. Please try again.");
+            req.getRequestDispatcher("/views/staff/createCustomer.jsp").forward(req, resp);
+        }
     }
 }

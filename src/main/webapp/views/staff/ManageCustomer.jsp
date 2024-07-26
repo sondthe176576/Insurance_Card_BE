@@ -1,319 +1,394 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Manage Customer</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/img/logo_tab.webp">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            margin: 0;
-            padding: 0;
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #004080;
+            padding-top: 20px;
+            transition: width 0.3s;
+            z-index: 1000;
         }
 
-        .form-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+        .sidebar:hover {
+            width: 300px;
         }
 
-        .form-container h2 {
-            text-align: center;
-            color: #2c3e50;
-            font-size: 32px;
-            margin-bottom: 30px;
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #ffffff;
+            display: block;
+            transition: background-color 0.3s, padding-left 0.3s;
         }
 
-        .form-container h3 {
-            margin-bottom: 15px;
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            font-size: 24px;
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #0056b3;
+            padding-left: 30px;
         }
 
-        .filter-form {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .filter-form .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-            width: 100%;
-        }
-
-        .filter-form label {
-            margin-bottom: 5px;
-            color: #2980b9;
+        .sidebar a.active {
+            background-color: #007bff;
             font-weight: bold;
         }
 
-        .filter-form input, .filter-form select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 100%;
+        .sidebar i {
+            margin-right: 10px;
         }
 
-        .filter-form .form-group-lg {
-            flex: 1;
-            margin-right: 15px;
-        }
-
-        .filter-form .form-group-sm {
-            flex: 0.5;
-            margin-right: 15px;
-        }
-
-        .filter-form .form-group-btn {
-            flex: 0.2;
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .filter-form button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        .filter-form button:hover {
-            background-color: #2980b9;
-        }
-
-        .customer-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-        }
-
-        .customer-table th, .customer-table td {
+        .sidebar .sidebar-header {
             padding: 15px;
-            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 1.5rem;
+            color: #ffffff;
+            border-bottom: 1px solid #0056b3;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s;
+            min-height: calc(100vh - 70px);
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 300px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .table th {
+            background-color: #004080;
+            color: white;
+            padding: 15px;
             text-align: left;
         }
 
-        .customer-table th {
-            background-color: #2c3e50;
-            color: white;
-            font-weight: bold;
+        .table td {
+            background-color: #ffffff;
+            padding: 15px;
         }
 
-        .customer-table tr:nth-child(even) {
-            background-color: #f4f7f6;
+        .table-hover tbody tr:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #004080;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .btn-group .btn {
-            padding: 10px 15px;
-            border: none;
+            padding: 5px 10px;
+            margin-right: 5px;
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            margin: 2px;
+            transition: all 0.3s ease;
         }
 
-        .btn-view {
-            background-color: #3498db;
-            color: white;
-        }
-
-        .btn-view:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-edit {
-            background-color: #f39c12;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background-color: #e67e22;
-        }
-
-        .btn-delete {
-            background-color: #e74c3c;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background-color: #c0392b;
+        .form-control:focus, .form-select:focus {
+            border-color: #004080;
+            box-shadow: 0 0 0 2px rgba(0,64,128,0.2);
         }
 
         .pagination {
             display: flex;
             justify-content: center;
-            margin: 20px 0;
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
         }
 
         .pagination a {
-            color: #3498db;
-            padding: 10px 15px;
+            color: #004080;
             text-decoration: none;
+            padding: 10px 15px;
             border: 1px solid #ddd;
             margin: 0 5px;
             border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
-        .pagination a.active {
-            background-color: #3498db;
+        .pagination a:hover, .pagination a.active {
+            background-color: #004080;
             color: white;
-            border: 1px solid #3498db;
         }
 
-        .pagination a:hover {
-            background-color: #ecf0f1;
+        .modal-success .modal-content {
+            background-color: #28a745;
+            color: white;
         }
 
-        .message {
-            background-color: #dff0d8;
-            color: #3c763d;
-            padding: 15px;
-            border: 1px solid #d6e9c6;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: none;
+        .modal-success .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-success .close {
+            color: white;
+        }
+
+        .modal-success .modal-body {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .modal-success i {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-success h4 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .modal-success p {
+            font-size: 1.1rem;
+        }
+
+        .table {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th {
+            background-color: #004080;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f8f9fa;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-group .btn {
+            margin-right: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-group .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #004080;
+            border-color: #004080;
+        }
+
+        .pagination .page-link {
+            color: #004080;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #e9ecef;
         }
     </style>
-    <script src="https://esgoo.net/scripts/jquery.js"></script>
+    <jsp:include page="/views/includes/header_list.jsp"/>
 </head>
-<body>
-<!-- Include header -->
-<jsp:include page="/views/includes/header.jsp"/>
-<!-- End of header -->
-<!-- Include navbar -->
-<jsp:include page="/views/includes/navbar.jsp"/>
-<!-- End of navbar -->
-
-<!-- Form -->
-<div class="form-container container mt-5">
-    <h2>Customer Management</h2>
-    <h3>List of Customers</h3>
-
-    <!-- Display message if exists -->
-    <c:if test="${not empty message}">
-        <div class="alert alert-success" id="message">
-                ${message}
-        </div>
-    </c:if>
-
-    <form method="get" class="filter-form row g-3" action="${pageContext.request.contextPath}/customer-manage" onsubmit="return validateForm()">
-        <div class="col-md-4 form-group form-group-lg">
-            <label for="searchType" class="form-label">Search by:</label>
-            <select id="searchType" name="searchType" class="form-select">
-                <option value="name" ${param.searchType == 'name' ? 'selected' : ''}>Name</option>
-                <option value="email" ${param.searchType == 'email' ? 'selected' : ''}>Email</option>
-                <option value="phone" ${param.searchType == 'phone' ? 'selected' : ''}>Phone</option>
-            </select>
-        </div>
-        <div class="col-md-4 form-group form-group-lg">
-            <label for="searchKeyword" class="form-label">Keyword:</label>
-            <input type="text" id="searchKeyword" name="keyword" value="${param.keyword}" placeholder="Enter search keyword" class="form-control"/>
-        </div>
-        <div class="col-md-4 form-group form-group-sm">
-            <label for="genderFilter" class="form-label">Gender:</label>
-            <select id="genderFilter" name="genderFilter" class="form-select">
-                <option value="" ${param.genderFilter == '' ? 'selected' : ''}>All</option>
-                <option value="Male" ${param.genderFilter == 'Male' ? 'selected' : ''}>Male</option>
-                <option value="Female" ${param.genderFilter == 'Female' ? 'selected' : ''}>Female</option>
-            </select>
-        </div>
-        <div class="col-md-12 form-group form-group-btn">
-            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Filter</button>
-        </div>
-    </form>
-
-    <button class="btn btn-success mt-4" onclick="window.location.href='${pageContext.request.contextPath}/customer-create'"><i class="bi bi-plus-circle"></i> Create Customer</button>
-    <table class="table table-bordered mt-4">
-        <thead class="table-dark">
-        <tr>
-            <th>No</th>
-            <th style="display: none">Username</th>
-            <th style="display: none">Password</th>
-            <th>Full Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Gender</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${sessionScope.listCustomer}" var="c" varStatus="status">
-            <tr data-id="${c.userID}" data-username="${c.username}" data-password="${c.password}"
-                data-fullname="${c.fullName}" data-mobile="${c.mobile}" data-email="${c.email}"
-                data-gender="${c.gender}" data-birthdate="<fmt:formatDate value='${c.birthDate}' pattern='yyyy-MM-dd'/>"
-                data-province="${c.province}" data-district="${c.district}" data-country="${c.country}">
-                <td>${status.index + 1}</td>
-                <td name="username" style="display: none">${c.username}</td>
-                <td name="password" style="display: none">${c.password}</td>
-                <td name="fullName">${c.fullName}</td>
-                <td name="mobile">${c.mobile}</td>
-                <td name="email">${c.email}</td>
-                <td name="address">${c.province}, ${c.district}, ${c.country}</td>
-                <td name="gender">${c.gender}</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a href="${pageContext.request.contextPath}/customer-view?userID=${c.userID}" class="btn btn-view"><i class="bi bi-eye"></i></a>
-                        <a href="${pageContext.request.contextPath}/customer-edit?userID=${c.userID}" class="btn btn-edit"><i class="bi bi-pencil"></i></a>
-                        <form action="${pageContext.request.contextPath}/customer-delete" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="${c.userID}" />
-                            <button type="submit" class="btn btn-delete"><i class="bi bi-trash"></i></button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-
-    <div class="pagination">
-        <c:forEach var="i" begin="1" end="${sessionScope.totalPages}">
-            <c:choose>
-                <c:when test="${i == sessionScope.currentPage}">
-                    <a href="${pageContext.request.contextPath}/customer-manage?page=${i}&searchType=${param.searchType}&keyword=${param.keyword}&genderFilter=${param.genderFilter}" class="active">${i}</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="${pageContext.request.contextPath}/customer-manage?page=${i}&searchType=${param.searchType}&keyword=${param.keyword}&genderFilter=${param.genderFilter}">${i}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+<body class="bg-light">
+<div class="sidebar">
+    <div class="sidebar-header">
+        <i class="fas fa-bars"></i> Menu
     </div>
+    <a href="${pageContext.request.contextPath}/homepageforstaff" class="${page == 'homepageforstaff' ? 'active' : ''}">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <jsp:include page="/views/includes/sidebar.jsp"/>
+</div>
 
-    <div>
-        <p>Total customers found: ${sessionScope.totalCustomersFound}</p>
-        <p>Total customers in database: ${sessionScope.totalCustomers}</p>
+<div class="main-content">
+    <div class="container">
+        <h2 class="text-center my-4">Customer Management</h2>
+
+        <!-- Success Modal -->
+        <div class="modal fade animate__animated animate__fadeInDown" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-success" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Success!</h4>
+                        <p><c:out value="${sessionScope.message}" /></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filter Form -->
+        <div class="bg-white p-4 rounded shadow-sm mb-4">
+            <form method="get" action="${pageContext.request.contextPath}/customer-manage" class="form-inline">
+                <div class="form-group mr-2 mb-2">
+                    <label for="searchType" class="mr-2">Search by:</label>
+                    <select id="searchType" name="searchType" class="form-control">
+                        <option value="name" ${param.searchType == 'name' ? 'selected' : ''}>Name</option>
+                        <option value="email" ${param.searchType == 'email' ? 'selected' : ''}>Email</option>
+                        <option value="phone" ${param.searchType == 'phone' ? 'selected' : ''}>Phone</option>
+                    </select>
+                </div>
+                <div class="form-group mr-2 mb-2">
+                    <label for="searchKeyword" class="mr-2">Keyword:</label>
+                    <input type="text" id="searchKeyword" name="keyword" value="${param.keyword}" placeholder="Enter search keyword" class="form-control"/>
+                </div>
+                <div class="form-group mr-2 mb-2">
+                    <label for="genderFilter" class="mr-2">Gender:</label>
+                    <select id="genderFilter" name="genderFilter" class="form-control">
+                        <option value="" ${param.genderFilter == '' ? 'selected' : ''}>All</option>
+                        <option value="Male" ${param.genderFilter == 'Male' ? 'selected' : ''}>Male</option>
+                        <option value="Female" ${param.genderFilter == 'Female' ? 'selected' : ''}>Female</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search mr-2"></i>Filter</button>
+            </form>
+        </div>
+
+        <!-- Actions and Customer List -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <button class="btn btn-success" onclick="window.location.href='${pageContext.request.contextPath}/customer-create'">
+                <i class="fas fa-plus-circle mr-2"></i>Create Customer
+            </button>
+            <div>
+                <p class="text-muted mb-0">Total customers found: ${sessionScope.totalCustomersFound}</p>
+                <p class="text-muted">Total customers in database: ${sessionScope.totalCustomers}</p>
+            </div>
+        </div>
+
+        <!-- Customer Table -->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>No</th>
+                    <th>Full Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Gender</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${sessionScope.listCustomer}" var="c" varStatus="status">
+                    <tr>
+                        <td>${status.index + 1}</td>
+                        <td>${c.fullName}</td>
+                        <td>${c.mobile}</td>
+                        <td>${c.email}</td>
+                        <td>${c.province}, ${c.district}, ${c.country}</td>
+                        <td>${c.gender}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="${pageContext.request.contextPath}/customer-view?userID=${c.userID}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+
+                            </div>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <c:forEach var="i" begin="1" end="${sessionScope.totalPages}">
+                    <c:choose>
+                        <c:when test="${i == sessionScope.currentPage}">
+                            <li class="page-item active"><a class="page-link" href="#">${i}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/customer-manage?page=${i}&searchType=${param.searchType}&keyword=${param.keyword}&genderFilter=${param.genderFilter}">${i}</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </ul>
+        </nav>
     </div>
 </div>
-<!-- End of form -->
-<!-- Include footer -->
-<jsp:include page="/views/includes/footer.jsp"/>
-<!-- End of footer -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Check if there's a success message to display
+        <c:if test="${not empty sessionScope.message}">
+        $('#successModal').modal('show');
+        // Remove the message from the session after displaying it
+        <c:remove var="message" scope="session"/>
+        </c:if>
+
+        // Auto-hide the modal after 3 seconds
+        $('#successModal').on('shown.bs.modal', function() {
+            setTimeout(function() {
+                $('#successModal').modal('hide');
+            }, 3000);
+        });
+
+        // Add animation when hiding the modal
+        $('#successModal').on('hide.bs.modal', function() {
+            $(this).removeClass('animate__fadeInDown').addClass('animate__fadeOutUp');
+        });
+
+        // Reset animation classes when the modal is hidden
+        $('#successModal').on('hidden.bs.modal', function() {
+            $(this).removeClass('animate__fadeOutUp').addClass('animate__fadeInDown');
+        });
+    });
+
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this customer?");
+    }
+</script>
 </body>
 </html>

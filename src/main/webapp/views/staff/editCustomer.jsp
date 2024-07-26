@@ -1,134 +1,197 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Customer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        .form-container {
-            max-width: 600px;
-            margin: 40px auto;
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        .form-container h2 {
+
+        h2 {
             text-align: center;
-            color: #2c3e50;
-            font-size: 32px;
-            margin-bottom: 30px;
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 1.5rem;
         }
-        .form-group label {
+
+        label {
             display: block;
-            margin-bottom: 5px;
-            color: #2980b9;
-            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+            font-weight: 500;
         }
-        .form-group input, .form-group select {
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="date"],
+        select {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
-        .btn-submit, .btn-reset {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 15px;
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
             border: none;
             border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 10px;
+            transition: all 0.3s ease;
         }
-        .btn-reset {
-            background-color: #e74c3c;
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #fff;
         }
-        .btn-submit:hover {
+
+        .btn-primary:hover {
             background-color: #2980b9;
         }
+
+        .btn-reset {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+
         .btn-reset:hover {
             background-color: #c0392b;
         }
-        .form-group .show-password {
+
+        .show-password {
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 0.5rem;
+            color: var(--primary-color);
             cursor: pointer;
-            color: #2980b9;
         }
-        .css_select_div {
-            text-align: center;
+
+        .address-selects {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
         }
-        .css_select {
-            display: inline-table;
-            width: 30%;
-            padding: 5px;
-            margin: 5px 2%;
-            border: solid 1px #ccc;
-            border-radius: 5px;
+
+        .address-selects select {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .address-selects {
+                flex-direction: column;
+            }
         }
     </style>
-    <script src="https://esgoo.net/scripts/jquery.js"></script>
 </head>
 <body>
-<div class="form-container">
-    <h2>Edit Customer</h2>
+<div class="container">
+    <h2><i class="fas fa-user-edit"></i> Edit Customer</h2>
     <form id="editCustomerForm" method="post" action="${pageContext.request.contextPath}/customer-edit">
         <input type="hidden" name="userID" value="${customer.userID}" />
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="${customer.username}" required />
+            <label for="username" style=""><i class="fas fa-user"></i> Username:</label>
+            <input type="text" id="username" name="username" value="${customer.username}" required>
         </div>
         <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" value="${customer.password}" required />
-            <span class="show-password" onclick="togglePassword()">Show Password</span>
+            <label for="password"><i class="fas fa-lock"></i> Password:</label>
+            <input type="password" id="password" name="password" value="${customer.password}" required>
+            <span class="show-password" onclick="togglePassword()"><i class="fas fa-eye"></i> Show Password</span>
         </div>
         <div class="form-group">
-            <label for="firstName">First Name:</label>
-            <input type="text" id="firstName" name="firstName" value="${customer.firstName}" required />
+            <label for="firstName"><i class="fas fa-user-tag"></i> First Name:</label>
+            <input type="text" id="firstName" name="firstName" value="${customer.firstName}" required>
         </div>
         <div class="form-group">
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" value="${customer.lastName}" required />
+            <label for="lastName"><i class="fas fa-user-tag"></i> Last Name:</label>
+            <input type="text" id="lastName" name="lastName" value="${customer.lastName}" required>
         </div>
         <div class="form-group">
-            <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" value="${customer.fullName}" required />
+            <label for="fullName"><i class="fas fa-user-circle"></i> Full Name:</label>
+            <input type="text" id="fullName" name="fullName" value="${customer.fullName}" required>
         </div>
         <div class="form-group">
-            <label for="birthDate">Birth Date:</label>
-            <input type="date" id="birthDate" name="birthDate" value="<fmt:formatDate value='${customer.birthDate}' pattern='yyyy-MM-dd'/>" required />
+            <label for="birthDate"><i class="fas fa-birthday-cake"></i> Birth Date:</label>
+            <input type="text" id="birthDate" name="birthDate" value="<fmt:formatDate value='${customer.birthDate}' pattern='yyyy-MM-dd'/>" required>
         </div>
         <div class="form-group">
-            <label for="mobile">Mobile:</label>
-            <input type="text" id="mobile" name="mobile" value="${customer.mobile}" required />
+            <label for="mobile"><i class="fas fa-mobile-alt"></i> Mobile:</label>
+            <input type="text" id="mobile" name="mobile" value="${customer.mobile}" required>
         </div>
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="${customer.email}" required />
+            <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+            <input type="email" id="email" name="email" value="${customer.email}" required>
         </div>
         <div class="form-group">
-            <label for="hidden_tinh">Address:</label>
-            <div class="css_select_div">
-                <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
+            <label><i class="fas fa-map-marker-alt"></i> Address:</label>
+            <div class="address-selects">
+                <select id="tinh" name="tinh" title="Chọn Tỉnh Thành">
                     <option value="0">Tỉnh Thành</option>
                 </select>
-                <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
+                <select id="quan" name="quan" title="Chọn Quận Huyện">
                     <option value="0">Quận Huyện</option>
                 </select>
-                <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
+                <select id="phuong" name="phuong" title="Chọn Phường Xã">
                     <option value="0">Phường Xã</option>
                 </select>
             </div>
@@ -137,36 +200,42 @@
             <input type="hidden" name="hidden_phuong" id="hidden_phuong" value="${customer.country}">
         </div>
         <div class="form-group">
-            <label for="gender">Gender:</label>
+            <label for="gender"><i class="fas fa-venus-mars"></i> Gender:</label>
             <select id="gender" name="gender" required>
                 <option value="Male" ${customer.gender == 'Male' ? 'selected' : ''}>Male</option>
                 <option value="Female" ${customer.gender == 'Female' ? 'selected' : ''}>Female</option>
             </select>
         </div>
-        <button type="submit" class="btn-submit">Update</button>
-        <button type="reset" class="btn-reset">Reset</button>
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update</button>
+        <button type="reset" class="btn btn-reset"><i class="fas fa-redo"></i> Reset</button>
     </form>
 </div>
+
 <script>
     function togglePassword() {
         var passwordField = document.getElementById("password");
         var showPasswordText = document.querySelector(".show-password");
         if (passwordField.type === "password") {
             passwordField.type = "text";
-            showPasswordText.textContent = "Hide Password";
+            showPasswordText.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Password';
         } else {
             passwordField.type = "password";
-            showPasswordText.textContent = "Show Password";
+            showPasswordText.innerHTML = '<i class="fas fa-eye"></i> Show Password';
         }
     }
+
+    flatpickr("#birthDate", {
+        dateFormat: "Y-m-d",
+        maxDate: "today"
+    });
 
     $(document).ready(function () {
         $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
             if (data_tinh.error == 0) {
                 $.each(data_tinh.data, function (key_tinh, val_tinh) {
-                    $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                    var selected = val_tinh.full_name === '${customer.province}' ? ' selected' : '';
+                    $("#tinh").append('<option value="' + val_tinh.id + '"' + selected + '>' + val_tinh.full_name + '</option>');
                 });
-                $("#tinh").val('${customer.province}');
                 loadDistricts();
             }
         });
@@ -179,9 +248,9 @@
                         $("#quan").html('<option value="0">Quận Huyện</option>');
                         $("#phuong").html('<option value="0">Phường Xã</option>');
                         $.each(data_quan.data, function (key_quan, val_quan) {
-                            $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
+                            var selected = val_quan.full_name === '${customer.district}' ? ' selected' : '';
+                            $("#quan").append('<option value="' + val_quan.id + '"' + selected + '>' + val_quan.full_name + '</option>');
                         });
-                        $("#quan").val('${customer.district}');
                         loadWards();
                     }
                 });
@@ -195,15 +264,19 @@
                     if (data_phuong.error == 0) {
                         $("#phuong").html('<option value="0">Phường Xã</option>');
                         $.each(data_phuong.data, function (key_phuong, val_phuong) {
-                            $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
+                            var selected = val_phuong.full_name === '${customer.country}' ? ' selected' : '';
+                            $("#phuong").append('<option value="' + val_phuong.id + '"' + selected + '>' + val_phuong.full_name + '</option>');
                         });
-                        $("#phuong").val('${customer.country}');
-                        $("#hidden_tinh").val($("#tinh option:selected").text());
-                        $("#hidden_quan").val($("#quan option:selected").text());
-                        $("#hidden_phuong").val($("#phuong option:selected").text());
+                        updateHiddenFields();
                     }
                 });
             }
+        }
+
+        function updateHiddenFields() {
+            $("#hidden_tinh").val($("#tinh option:selected").text());
+            $("#hidden_quan").val($("#quan option:selected").text());
+            $("#hidden_phuong").val($("#phuong option:selected").text());
         }
 
         $("#tinh").change(function () {
@@ -215,7 +288,7 @@
         });
 
         $("#phuong").change(function () {
-            $("#hidden_phuong").val($("#phuong option:selected").text());
+            updateHiddenFields();
         });
     });
 </script>

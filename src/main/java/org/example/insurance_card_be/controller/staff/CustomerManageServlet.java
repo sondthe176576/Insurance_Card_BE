@@ -13,7 +13,7 @@ import org.example.insurance_card_be.model.Users;
 
 @WebServlet(name = "CustomerManageServlet", urlPatterns = "/customer-manage")
 public class CustomerManageServlet extends HttpServlet {
-    private static final int CUSTOMERS_PER_PAGE = 5;
+    private static final int CUSTOMERS_PER_PAGE = 8;
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int page = 1;
@@ -65,34 +65,25 @@ public class CustomerManageServlet extends HttpServlet {
                 break;
         }
 
-        int totalCustomers = dao.getTotalCustomers("", "", "");
         int totalPages = (int) Math.ceil((double) totalCustomersFound / CUSTOMERS_PER_PAGE);
+        if (totalPages < 1) {
+            totalPages = 1;
+        }
 
         session.setAttribute("listCustomer", listCustomer);
         session.setAttribute("totalPages", totalPages);
         session.setAttribute("currentPage", page);
         session.setAttribute("totalCustomersFound", totalCustomersFound);
-        session.setAttribute("totalCustomers", totalCustomers);
 
         req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
     }
+
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         CustomerDAO dao = new CustomerDAO();
         List<Users> listCustomer = null;
-        switch (action) {
-            case "delete":
-                int id = Integer.parseInt(req.getParameter("id"));
-                Users users = new Users();
-                users.setUserID(id);
-                dao.deleteByID(users);
-                listCustomer = dao.findAll();
-                req.setAttribute("message", "Customer deleted successfully.");
-                break;
-            default:
-                throw new AssertionError("Unknown action: " + action);
-        }
+
         req.getSession().setAttribute("listCustomer", listCustomer);
         req.getRequestDispatcher("/views/staff/ManageCustomer.jsp").forward(req, resp);
     }
