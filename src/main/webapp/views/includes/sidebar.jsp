@@ -154,6 +154,27 @@
             color: white;
             border-color: #004080;
         }
+
+        .dropdown-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-container {
+            display: none;
+            background-color: #005599;
+            padding-left: 20px;
+        }
+
+        .dropdown-container a {
+            font-size: 1rem;
+            padding: 10px 15px;
+        }
+
+        .show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -167,15 +188,38 @@
     <a href="${pageContext.request.contextPath}/listWaitingContract" class="${page == 'newContract' ? 'active' : ''}">
         <i class="fas fa-file-alt"></i> New Contracts
     </a>
-    <a href="${pageContext.request.contextPath}/listAccident" class="${page == 'accidents' ? 'active' : ''}">
-        <i class="fas fa-exclamation-triangle"></i> Accidents
-    </a>
-    <a href="${pageContext.request.contextPath}/listCompensation" class="${page == 'compensation' ? 'active' : ''}">
-        <i class="fas fa-hand-holding-usd"></i> Compensation
-    </a>
-    <a href="${pageContext.request.contextPath}/listPunishment" class="${page == 'punishment' ? 'active' : ''}">
-        <i class="fas fa-ban"></i> Punishments
-    </a>
+    <div>
+        <a href="javascript:void(0)" class="dropdown-btn ${page == 'accidents' ? 'active' : ''}">
+            <span><i class="fas fa-exclamation-triangle"></i> Accidents</span> <i class="fas fa-caret-down"></i>
+        </a>
+        <div class="dropdown-container">
+            <a href="${pageContext.request.contextPath}/listAccident" class="${page == 'newAccidents' ? 'active' : ''}">List Accidents</a>
+            <a href="${pageContext.request.contextPath}/accident-history" class="${page == 'processedAccidents' ? 'active' : ''}">Accidents History</a>
+        </div>
+    </div>
+    <div>
+        <a href="javascript:void(0)" class="dropdown-btn ${page == 'compensation' ? 'active' : ''}">
+            <span><i class="fas fa-hand-holding-usd"></i> Compensation</span> <i class="fas fa-caret-down"></i>
+        </a>
+        <div class="dropdown-container">
+            <a href="${pageContext.request.contextPath}/listCompensation" class="${page == 'pendingCompensations' ? 'active' : ''}">list Compensations</a>
+            <a href="${pageContext.request.contextPath}/listCompensationHistory" class="${page == 'approvedCompensations' ? 'active' : ''}"> Compensations History</a>
+        </div>
+    </div>
+    <div>
+        <a href="javascript:void(0)" class="dropdown-btn ${page == 'punishment' ? 'active' : ''}">
+            <span><i class="fas fa-gavel"></i> Punishment</span> <i class="fas fa-caret-down"></i>
+        </a>
+        <div class="dropdown-container">
+            <a href="${pageContext.request.contextPath}/listPunishment" class="${page == 'listPunishments' ? 'active' : ''}">List Punishments</a>
+            <a href="${pageContext.request.contextPath}/punishment-history" class="${page == 'punishmentHistory' ? 'active' : ''}">Punishment History</a>
+        </div>
+    </div>
+    <div>
+        <a href="${pageContext.request.contextPath}/customer-manage" class="${page == 'listCustomers' ? 'active' : ''}">
+            <span><i class="fas fa-users"></i> Customers</span>
+        </a>
+    </div>
     <a href="${pageContext.request.contextPath}/listRenewContract" class="${page == 'renewContract' ? 'active' : ''}">
         <i class="fas fa-sync-alt"></i> Renew Contracts
     </a>
@@ -186,5 +230,23 @@
         <i class="fas fa-cog"></i> Settings
     </a>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropdownBtns = document.querySelectorAll('.dropdown-btn');
+
+        dropdownBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === 'block') {
+                    dropdownContent.style.display = 'none';
+                } else {
+                    dropdownContent.style.display = 'block';
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

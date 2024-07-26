@@ -272,16 +272,23 @@
                 <input type="hidden" id="status" name="status" value=""/>
                 <input type="hidden" name="accidentID" value="${accident.accidentID}"/>
                 <div class="flex justify-center mt-8">
-                    <button type="button" onclick="showModal('Approved')" class="btn-custom bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105">
+                    <button type="button" onclick="showModal('Approved')" class="btn-custom bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105"
+                            <c:if test="${accident.status == 'Approved' || accident.status == 'Rejected'}">disabled</c:if>>
                         <i class="fas fa-check-circle"></i> Approve
                     </button>
-                    <button type="button" onclick="showModal('Rejected')" class="btn-custom bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4">
+                    <button type="button" onclick="showModal('Rejected')" class="btn-custom bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4"
+                            <c:if test="${accident.status == 'Approved' || accident.status == 'Rejected'}">disabled</c:if>>
                         <i class="fas fa-times-circle"></i> Reject
                     </button>
                     <a href="${pageContext.request.contextPath}/listAccident" class="btn-custom bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded-md shadow-md transition transform hover:scale-105 ml-4">
                         <i class="fas fa-arrow-left"></i> Back to List
                     </a>
                 </div>
+                <c:if test="${accident.status == 'Approved' || accident.status == 'Rejected'}">
+                    <div class="text-center mt-4 text-red-500">
+                        You have already processed this contract.
+                    </div>
+                </c:if>
             </form>
         </div>
     </div>
