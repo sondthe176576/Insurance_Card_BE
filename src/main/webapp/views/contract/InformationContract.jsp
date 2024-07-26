@@ -46,26 +46,33 @@
             border-radius: 0.5rem;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .btn-secondary {
-            background-color: #6c757d;
+        .btn-renew {
+            background-color: #007bff; /* Blue */
             color: white;
         }
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
-        .btn-primary:hover {
+        .btn-renew:hover {
             background-color: #0056b3;
         }
-        .btn-danger {
-            background-color: #dc3545;
+        .btn-cancel {
+            background-color: #dc3545; /* Red */
             color: white;
         }
-        .btn-danger:hover {
+        .btn-cancel:hover {
             background-color: #c82333;
+        }
+        .btn-accident {
+            background-color: #6c757d; /* Gray */
+            color: white;
+        }
+        .btn-accident:hover {
+            background-color: #5a6268;
+        }
+        .btn-compensation {
+            background-color: #28a745; /* Green */
+            color: white;
+        }
+        .btn-compensation:hover {
+            background-color: #218838;
         }
         .table-header {
             background-color: #004d99; /* Dark Blue */
@@ -102,6 +109,55 @@
         }
         .text-red-500 {
             color: #f56565;
+        }
+        /* Footer Styles */
+        footer {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            padding: 2rem 0;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin: 1rem;
+        }
+        .footer-column h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-column ul li a {
+            color: #e2e8f0;
+            text-decoration: none;
+        }
+        .footer-column ul li a:hover {
+            text-decoration: underline;
+        }
+        .social-icons a {
+            display: inline-block;
+            margin-right: 0.5rem;
+            color: #e2e8f0;
+            font-size: 1.5rem;
+        }
+        .social-icons a:hover {
+            color: #63b3ed;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 1rem;
+            border-top: 1px solid #2d3748;
+            padding-top: 1rem;
         }
     </style>
 </head>
@@ -142,364 +198,373 @@
     </div>
 </nav>
 <!-- End of navbar -->
+<div>
+    <div class="container mx-auto py-8">
+        <h1 class="text-4xl font-bold text-blue-900 mb-6 text-center animate__animated animate__fadeIn">Contract Details</h1>
 
-<div class="container mx-auto py-8">
-    <h1 class="text-4xl font-bold text-blue-900 mb-6 text-center animate__animated animate__fadeIn">Contract Details</h1>
-
-    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
-        <div class="alert alert-info">
-            <div class="mb-4">
-                <label class="input-label">Contract ID:</label>
-                <input type="text" class="input-field" value="${contract.contractID}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Customer ID:</label>
-                <input type="text" class="input-field" value="${contract.customer.customerID}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Contract Info:</label>
-                <input type="text" class="input-field" value="${contract.contractInfo}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Status:</label>
-                <input type="text" class="input-field" value="${contract.status}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Start Date:</label>
-                <input type="text" class="input-field" value="<fmt:formatDate value='${contract.startDate}' pattern='yyyy-MM-dd'/>" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">End Date:</label>
-                <input type="text" class="input-field" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Days Remaining:</label>
-                <input type="text" class="input-field" value="${diffDays} days remaining" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Insurance Type:</label>
-                <input type="text" class="input-field" value="${contract.insuranceType}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Coverage:</label>
-                <input type="text" class="input-field" value="${contract.coverage}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Premium:</label>
-                <input type="text" class="input-field" value="<fmt:formatNumber value='${contract.premium}' type='currency' currencySymbol='$'/>" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Cancellation Date:</label>
-                <input type="text" class="input-field" value="<fmt:formatDate value='${contract.cancellationDate}' pattern='yyyy-MM-dd'/>" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Detail:</label>
-                <textarea class="input-field" readonly>${contract.detail}</textarea>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Value:</label>
-                <input type="text" class="input-field" value="<fmt:formatNumber value='${contract.value}' type='currency' currencySymbol='$'/>" readonly>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4 animate__animated animate__fadeIn">Customer Information</h2>
-            <div class="mb-4">
-                <label class="input-label">User ID:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.userID}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Username:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.username}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Email:</label>
-                <input type="email" class="input-field" value="${contract.customer.user.email}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Mobile:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.mobile}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Full Name:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.fullName}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Gender:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.gender}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Province:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.province}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">District:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.district}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Country:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.country}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">First Name:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.firstName}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Last Name:</label>
-                <input type="text" class="input-field" value="${contract.customer.user.lastName}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Birth Date:</label>
-                <input type="text" class="input-field" value="<fmt:formatDate value='${contract.customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Personal Info:</label>
-                <textarea class="input-field" readonly>${contract.customer.personalInfo}</textarea>
-            </div>
-        </div>
-
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <h2 class="text-2xl font-bold text-blue-900 mb-4 animate__animated animate__fadeIn">Motorcycle Information</h2>
-            <div class="mb-4">
-                <label class="input-label">Motorcycle ID:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.motorcycleID}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">License Plate:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.licensePlate}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Brand:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.brand}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Model:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.model}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Frame Number:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.frameNumber}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Engine Number:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.engineNumber}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Year of Manufacture:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.yearOfManufacture}" readonly>
-            </div>
-            <div class="mb-4">
-                <label class="input-label">Color:</label>
-                <input type="text" class="input-field" value="${contract.motorcycle.color}" readonly>
-            </div>
-        </div>
-    </div>
-
-    <div class="flex justify-center space-x-4">
-        <c:choose>
-            <c:when test="${contract.status == 'Rejected'}">
-                <div class="alert alert-warning text-red-500">
-                    Your contract has been rejected.
+        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+            <div class="alert alert-info">
+                <div class="mb-4">
+                    <label class="input-label">Contract ID:</label>
+                    <input type="text" class="input-field" value="${contract.contractID}" readonly>
                 </div>
-            </c:when>
-            <c:otherwise>
-                <button type="button" class="btn btn-primary" onclick="requestRenewal('${contract.contractID}', '${contract.customer.user.email}', '${contract.status}')">
-                    <i class="fas fa-sync-alt mr-2"></i>Request Renew Contract
-                </button>
-                <form id="cancelForm" action="${pageContext.request.contextPath}/cancelContract" method="post" class="inline">
-                    <input type="hidden" name="contractId" value="${contract.contractID}">
-                    <input type="hidden" name="contractValue" value="${contract.value}">
-                    <input type="hidden" name="contractStatus" value="${contract.status}">
-                    <button type="button" class="btn btn-danger" onclick="showCancelModal('${contract.status}')">
-                        <i class="fas fa-times mr-2"></i>Cancel Contract
+                <div class="mb-4">
+                    <label class="input-label">Customer ID:</label>
+                    <input type="text" class="input-field" value="${contract.customer.customerID}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Contract Info:</label>
+                    <input type="text" class="input-field" value="${contract.contractInfo}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Status:</label>
+                    <input type="text" class="input-field" value="${contract.status}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Start Date:</label>
+                    <input type="text" class="input-field" value="<fmt:formatDate value='${contract.startDate}' pattern='yyyy-MM-dd'/>" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">End Date:</label>
+                    <input type="text" class="input-field" value="<fmt:formatDate value='${contract.endDate}' pattern='yyyy-MM-dd'/>" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Days Remaining:</label>
+                    <input type="text" class="input-field" value="${diffDays} days remaining" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Insurance Type:</label>
+                    <input type="text" class="input-field" value="${contract.insuranceType}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Coverage:</label>
+                    <input type="text" class="input-field" value="${contract.coverage}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Premium:</label>
+                    <input type="text" class="input-field" value="<fmt:formatNumber value='${contract.premium}' type='currency' currencySymbol='$'/>" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Cancellation Date:</label>
+                    <input type="text" class="input-field" value="<fmt:formatDate value='${contract.cancellationDate}' pattern='yyyy-MM-dd'/>" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Detail:</label>
+                    <textarea class="input-field" readonly>${contract.detail}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Value:</label>
+                    <input type="text" class="input-field" value="<fmt:formatNumber value='${contract.value}' type='currency' currencySymbol='$'/>" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-2xl font-bold text-blue-900 mb-4 animate__animated animate__fadeIn">Customer Information</h2>
+                <div class="mb-4">
+                    <label class="input-label">User ID:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.userID}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Username:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.username}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Email:</label>
+                    <input type="email" class="input-field" value="${contract.customer.user.email}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Mobile:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.mobile}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Full Name:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.fullName}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Gender:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.gender}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Province:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.province}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">District:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.district}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Country:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.country}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">First Name:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.firstName}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Last Name:</label>
+                    <input type="text" class="input-field" value="${contract.customer.user.lastName}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Birth Date:</label>
+                    <input type="text" class="input-field" value="<fmt:formatDate value='${contract.customer.user.birthDate}' pattern='yyyy-MM-dd'/>" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Personal Info:</label>
+                    <textarea class="input-field" readonly>${contract.customer.personalInfo}</textarea>
+                </div>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-2xl font-bold text-blue-900 mb-4 animate__animated animate__fadeIn">Motorcycle Information</h2>
+                <div class="mb-4">
+                    <label class="input-label">Motorcycle ID:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.motorcycleID}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">License Plate:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.licensePlate}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Brand:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.brand}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Model:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.model}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Frame Number:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.frameNumber}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Engine Number:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.engineNumber}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Year of Manufacture:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.yearOfManufacture}" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="input-label">Color:</label>
+                    <input type="text" class="input-field" value="${contract.motorcycle.color}" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-4">
+            <c:choose>
+                <c:when test="${contract.status == 'Rejected'}">
+                    <div class="alert alert-warning text-red-500">
+                        Your contract has been rejected.
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <button type="button" class="btn btn-renew" onclick="requestRenewal('${contract.contractID}', '${contract.customer.user.email}', '${contract.status}')">
+                        <i class="fas fa-sync-alt mr-2"></i>Request Renew Contract
                     </button>
-                </form>
-            </c:otherwise>
-        </c:choose>
-    </div>
-</div>
-
-<!-- Renew Confirmation Modal -->
-<div class="fixed z-10 inset-0 overflow-y-auto modal" id="renewModal">
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="modal-content w-full max-w-md">
-            <div class="modal-header bg-blue-900 text-white">
-                <h5 class="text-2xl font-bold">Request Renew Contract</h5>
-            </div>
-            <div class="modal-body">
-                <form id="renewForm" action="${pageContext.request.contextPath}/requestRenewContract" method="post">
-                    <div class="mb-4">
-                        <label for="renewYears" class="input-label">Number of years to renew:</label>
-                        <input type="number" class="input-field mt-1" id="renewYears" name="renewYears" required min="1" value="1" oninput="updateRenewalInfo()">
-                    </div>
-                    <input type="hidden" id="customerEmail" name="customerEmail" value="">
-                    <input type="hidden" id="contractId" name="contractId" value="">
-                    <div class="mb-4">
-                        <label class="input-label">New End Date:</label>
-                        <input type="text" class="input-field mt-1" id="newEndDate" readonly>
-                    </div>
-                    <div class="mb-4">
-                        <label class="input-label">Premium:</label>
-                        <input type="text" class="input-field mt-1" id="newPremium" readonly>
-                    </div>
-                    <div class="mb-4">
-                        <label class="input-label">Total Value:</label>
-                        <input type="text" class="input-field mt-1" id="newValue" readonly>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary mr-2" onclick="hideRenewModal()">No</button>
-                <button type="button" class="btn btn-primary" onclick="submitRenewForm()">Yes, Renew Contract</button>
-            </div>
+                    <form id="cancelForm" action="${pageContext.request.contextPath}/cancelContract" method="post" class="inline">
+                        <input type="hidden" name="contractId" value="${contract.contractID}">
+                        <input type="hidden" name="contractValue" value="${contract.value}">
+                        <input type="hidden" name="contractStatus" value="${contract.status}">
+                        <button type="button" class="btn btn-cancel" onclick="showCancelModal('${contract.status}')">
+                            <i class="fas fa-times mr-2"></i>Cancel Contract
+                        </button>
+                    </form>
+                    <!-- Add Accident Form Button -->
+                    <a href="${pageContext.request.contextPath}/accidentHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-accident">
+                        <i class="fas fa-plus mr-2"></i>Add Accident
+                    </a>
+                    <!-- Add Compensation Form Button -->
+                    <a href="${pageContext.request.contextPath}/compensationHistory?action=addForm&customerID=${contract.customer.customerID}&contractID=${contract.contractID}" class="btn btn-compensation">
+                        <i class="fas fa-plus mr-2"></i>Add Compensation
+                    </a>
+                </c:otherwise>
+            </c:choose>
         </div>
-    </div>
-</div>
 
-<!-- Cancel Confirmation Modal -->
-<div class="fixed z-10 inset-0 overflow-y-auto modal" id="cancelModal">
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="modal-content w-full max-w-md">
-            <div class="modal-header bg-red-600 text-white">
-                <h5 class="text-2xl font-bold">Cancel Contract</h5>
-            </div>
-            <div class="modal-body">
-                <div id="cancelMessage" class="mb-4">
-                    <!-- The message will be dynamically set by JavaScript -->
+
+        <!-- Renew Confirmation Modal -->
+        <div class="fixed z-10 inset-0 overflow-y-auto modal" id="renewModal">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="modal-content w-full max-w-md">
+                    <div class="modal-header bg-blue-900 text-white">
+                        <h5 class="text-2xl font-bold">Request Renew Contract</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form id="renewForm" action="${pageContext.request.contextPath}/requestRenewContract" method="post">
+                            <div class="mb-4">
+                                <label for="renewYears" class="input-label">Number of years to renew:</label>
+                                <input type="number" class="input-field mt-1" id="renewYears" name="renewYears" required min="1" value="1" oninput="updateRenewalInfo()">
+                            </div>
+                            <input type="hidden" id="customerEmail" name="customerEmail" value="">
+                            <input type="hidden" id="contractId" name="contractId" value="">
+                            <div class="mb-4">
+                                <label class="input-label">New End Date:</label>
+                                <input type="text" class="input-field mt-1" id="newEndDate" readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label class="input-label">Premium:</label>
+                                <input type="text" class="input-field mt-1" id="newPremium" readonly>
+                            </div>
+                            <div class="mb-4">
+                                <label class="input-label">Total Value:</label>
+                                <input type="text" class="input-field mt-1" id="newValue" readonly>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary mr-2" onclick="hideRenewModal()">No</button>
+                        <button type="button" class="btn btn-renew" onclick="submitRenewForm()">Yes, Renew Contract</button>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary mr-2" onclick="hideCancelModal()">No</button>
-                <button type="button" class="btn btn-danger" onclick="confirmCancel()">Yes, Cancel Contract</button>
-            </div>
         </div>
-    </div>
-</div>
 
-<!-- Alert Modal -->
-<div class="fixed z-10 inset-0 overflow-y-auto modal" id="alertModal">
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="modal-content w-full max-w-md">
-            <div class="modal-header bg-yellow-500 text-white">
-                <h5 class="text-2xl font-bold">Alert</h5>
-            </div>
-            <div class="modal-body">
-                <div id="alertMessage" class="mb-4">
-                    <!-- The message will be dynamically set by JavaScript -->
+        <!-- Cancel Confirmation Modal -->
+        <div class="fixed z-10 inset-0 overflow-y-auto modal" id="cancelModal">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="modal-content w-full max-w-md">
+                    <div class="modal-header bg-red-600 text-white">
+                        <h5 class="text-2xl font-bold">Cancel Contract</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div id="cancelMessage" class="mb-4">
+                            <!-- The message will be dynamically set by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary mr-2" onclick="hideCancelModal()">No</button>
+                        <button type="button" class="btn btn-cancel" onclick="confirmCancel()">Yes, Cancel Contract</button>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary mr-2" onclick="hideAlertModal()">OK</button>
+        </div>
+
+        <!-- Alert Modal -->
+        <div class="fixed z-10 inset-0 overflow-y-auto modal" id="alertModal">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="modal-content w-full max-w-md">
+                    <div class="modal-header bg-yellow-500 text-white">
+                        <h5 class="text-2xl font-bold">Alert</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div id="alertMessage" class="mb-4">
+                            <!-- The message will be dynamically set by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary mr-2" onclick="hideAlertModal()">OK</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<jsp:include page="/views/includes/footer.jsp"/>
 
-<script>
-    function showCancelModal(status) {
-        const endDate = new Date("${contract.endDate}");
-        const currentDate = new Date();
-        const daysRemaining = ${diffDays}; // Assuming diffDays is passed from the server side
+        <script>
+            function showCancelModal(status) {
+                const endDate = new Date("${contract.endDate}");
+                const currentDate = new Date();
+                const daysRemaining = ${diffDays}; // Assuming diffDays is passed from the server side
 
-        if (status === "Canceled") {
-            showAlertModal("Your contract has already been canceled.");
-            return;
-        }
+                if (status === "Canceled") {
+                    showAlertModal("Your contract has already been canceled.");
+                    return;
+                }
 
-        if (status === "Expired") {
-            showAlertModal("Your contract has expired and is no longer valid.");
-            return;
-        }
+                if (status === "Expired") {
+                    showAlertModal("Your contract has expired and is no longer valid.");
+                    return;
+                }
 
-        if (status === "Accepted" && daysRemaining <= 0) {
-            showAlertModal("Your contract has expired, and you do not need to cancel it. If you want to renew the contract, please send a request to our motorcycle insurance company.");
-            return;
-        }
+                if (status === "Accepted" && daysRemaining <= 0) {
+                    showAlertModal("Your contract has expired, and you do not need to cancel it. If you want to renew the contract, please send a request to our motorcycle insurance company.");
+                    return;
+                }
 
-        const contractValue = ${contract.value};
-        const penalty = (contractValue * 0.30).toFixed(2);
-        const formattedPenalty = parseFloat(penalty).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                const contractValue = ${contract.value};
+                const penalty = (contractValue * 0.30).toFixed(2);
+                const formattedPenalty = parseFloat(penalty).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
-        let message = "Are you sure you want to cancel this contract?";
-        if (status === "Accepted" && currentDate < endDate) {
-            message += "<br>You will be penalized 30% of the contract value (Penalty: " + formattedPenalty + ").";
-            message += "<br><span class='text-red-500'>Note: Canceling an accepted contract will incur a penalty.</span>";
-        } else if (status === "Pending") {
-            message += "<br><span class='text-red-500'>Note: Canceling a pending contract will not incur any penalty.</span>";
-        }
+                let message = "Are you sure you want to cancel this contract?";
+                if (status === "Accepted" && currentDate < endDate) {
+                    message += "<br>You will be penalized 30% of the contract value (Penalty: " + formattedPenalty + ").";
+                    message += "<br><span class='text-red-500'>Note: Canceling an accepted contract will incur a penalty.</span>";
+                } else if (status === "Pending") {
+                    message += "<br><span class='text-red-500'>Note: Canceling a pending contract will not incur any penalty.</span>";
+                }
 
-        document.getElementById('cancelMessage').innerHTML = message;
-        document.getElementById('cancelModal').classList.add('show');
-    }
+                document.getElementById('cancelMessage').innerHTML = message;
+                document.getElementById('cancelModal').classList.add('show');
+            }
 
-    function hideCancelModal() {
-        document.getElementById('cancelModal').classList.remove('show');
-    }
+            function hideCancelModal() {
+                document.getElementById('cancelModal').classList.remove('show');
+            }
 
-    function confirmCancel() {
-        document.getElementById('cancelForm').submit();
-    }
+            function confirmCancel() {
+                document.getElementById('cancelForm').submit();
+            }
 
-    function requestRenewal(contractId, customerEmail, status) {
-        if (status === "Canceled") {
-            showAlertModal("You cannot request a renewal because your contract has been canceled.");
-            return;
-        }
+            function requestRenewal(contractId, customerEmail, status) {
+                if (status === "Canceled") {
+                    showAlertModal("You cannot request a renewal because your contract has been canceled.");
+                    return;
+                }
 
-        if (status === "Expired") {
-            showAlertModal("Your contract has expired and is no longer valid.");
-            return;
-        }
+                if (status === "Expired") {
+                    showAlertModal("Your contract has expired and is no longer valid.");
+                    return;
+                }
 
-        const daysRemainingText = document.querySelector('input[value="${diffDays} days remaining"]').value;
-        const daysRemaining = parseInt(daysRemainingText.split(' ')[0]);
+                const daysRemainingText = document.querySelector('input[value="${diffDays} days remaining"]').value;
+                const daysRemaining = parseInt(daysRemainingText.split(' ')[0]);
 
-        if (daysRemaining > 0) {
-            showAlertModal("Your contract has not yet expired, so you cannot request a renewal.");
-        } else {
-            showRenewModal(contractId, customerEmail);
-        }
-    }
+                if (daysRemaining > 0) {
+                    showAlertModal("Your contract has not yet expired, so you cannot request a renewal.");
+                } else {
+                    showRenewModal(contractId, customerEmail);
+                }
+            }
 
-    function showRenewModal(contractId, customerEmail) {
-        document.getElementById('contractId').value = contractId;
-        document.getElementById('customerEmail').value = customerEmail;
-        updateRenewalInfo();
-        document.getElementById('renewModal').classList.add('show');
-    }
+            function showRenewModal(contractId, customerEmail) {
+                document.getElementById('contractId').value = contractId;
+                document.getElementById('customerEmail').value = customerEmail;
+                updateRenewalInfo();
+                document.getElementById('renewModal').classList.add('show');
+            }
 
-    function hideRenewModal() {
-        document.getElementById('renewModal').classList.remove('show');
-    }
+            function hideRenewModal() {
+                document.getElementById('renewModal').classList.remove('show');
+            }
 
-    function submitRenewForm() {
-        document.getElementById('renewForm').submit();
-    }
+            function submitRenewForm() {
+                document.getElementById('renewForm').submit();
+            }
 
-    function updateRenewalInfo() {
-        const years = parseInt(document.getElementById('renewYears').value);
-        const premium = ${contract.premium};
-        const currentDate = new Date();
-        const newEndDate = new Date(currentDate.setFullYear(currentDate.getFullYear() + years));
-        const newValue = (premium * years).toFixed(2);
+            function updateRenewalInfo() {
+                const years = parseInt(document.getElementById('renewYears').value);
+                const premium = ${contract.premium};
+                const currentDate = new Date();
+                const newEndDate = new Date(currentDate.setFullYear(currentDate.getFullYear() + years));
+                const newValue = (premium * years).toFixed(2);
 
-        document.getElementById('newEndDate').value = newEndDate.toLocaleDateString();
-        document.getElementById('newPremium').value = premium.toFixed(2);
-        document.getElementById('newValue').value = newValue;
-    }
+                document.getElementById('newEndDate').value = newEndDate.toLocaleDateString();
+                document.getElementById('newPremium').value = premium.toFixed(2);
+                document.getElementById('newValue').value = newValue;
+            }
 
-    function showAlertModal(message) {
-        document.getElementById('alertMessage').innerHTML = message;
-        document.getElementById('alertModal').classList.add('show');
-    }
+            function showAlertModal(message) {
+                document.getElementById('alertMessage').innerHTML = message;
+                document.getElementById('alertModal').classList.add('show');
+            }
 
-    function hideAlertModal() {
-        document.getElementById('alertModal').classList.remove('show');
-    }
-</script>
+            function hideAlertModal() {
+                document.getElementById('alertModal').classList.remove('show');
+            }
+        </script>
 </body>
 </html>
+</div>
+<jsp:include page="/views/includes/footer.jsp"/>
