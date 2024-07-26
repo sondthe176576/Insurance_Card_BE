@@ -521,6 +521,14 @@
                 } else {
                     document.getElementById('coverage').value = ''; // Xóa nội dung coverage nếu không hợp lệ
                 }
+
+                // Cập nhật Contract Info khi thay đổi số năm hợp đồng
+                var value = parseFloat(document.getElementById('value').value); // Lấy giá trị tổng hợp đồng
+                if (!isNaN(value) && value > 0) { // Kiểm tra giá trị tổng hợp đồng hợp lệ
+                    document.getElementById('contractInfo').value = "If you cancel the contract in the Accepted state, you will be fined 30% * value (" + (0.3 * value).toFixed(2) + " USD).";
+                } else {
+                    document.getElementById('contractInfo').value = ''; // Xóa nội dung Contract Info nếu không hợp lệ
+                }
             },
 
             // Cập nhật chi tiết bảo hiểm dựa trên loại bảo hiểm đã chọn
