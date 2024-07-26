@@ -565,7 +565,7 @@
                 } else {
                     cashPaymentDetails.style.display = "none"; // Ẩn chi tiết thanh toán tiền mặt
                     bankTransferDetails.style.display = "none"; // Ẩn chi tiết chuyển khoản ngân hàng
-                    submitBtn.disabled = false; // Bật nút submit
+                    submitBtn.disabled = true; // Tắt nút submit
                 }
             },
 
