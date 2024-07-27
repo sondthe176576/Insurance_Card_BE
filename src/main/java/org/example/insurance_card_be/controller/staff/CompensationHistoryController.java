@@ -22,27 +22,34 @@ public class CompensationHistoryController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerName = req.getParameter("customerName");
-        String sortOrder = req.getParameter("sortOrder");
         int page = 1;
-        int recordsPerPage = 10;
-        if (req.getParameter("page") != null)
-            page = Integer.parseInt(req.getParameter("page"));
+        int pageSize = 10;
+        String customerName = "";
+        String sortOrder = "ASC";
 
-        List<CompensationHistoryDTO> histories;
-        int noOfRecords;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+        if (req.getParameter("customerName") != null) {
+            customerName = req.getParameter("customerName");
+        }
+        if (req.getParameter("sortOrder") != null) {
+            sortOrder = req.getParameter("sortOrder");
+        }
+
         try {
-            histories = compensationHistoryDAO.getCompensationHistories((page - 1) * recordsPerPage, recordsPerPage);
-            noOfRecords = compensationHistoryDAO.getTotalCompensationHistories();
+            List<CompensationHistoryDTO> histories = compensationHistoryDAO.getAllCompensationHistories(page, pageSize, customerName, sortOrder);
+            int totalHistories = compensationHistoryDAO.getTotalCompensationHistories(customerName);
+            int noOfPages = (int) Math.ceil(totalHistories * 1.0 / pageSize);
+
+            req.setAttribute("histories", histories);
+            req.setAttribute("noOfPages", noOfPages);
+            req.setAttribute("currentPage", page);
+            req.setAttribute("customerName", customerName);
+            req.setAttribute("sortOrder", sortOrder);
         } catch (SQLException e) {
             throw new ServletException("Cannot obtain compensation histories from DB", e);
         }
-
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-
-        req.setAttribute("histories", histories);
-        req.setAttribute("noOfPages", noOfPages);
-        req.setAttribute("currentPage", page);
 
         req.getRequestDispatcher("/views/staff/listCompensationHistory.jsp").forward(req, resp);
     }
