@@ -134,7 +134,7 @@
         @media(min-width: 768px) {
             .grid-container {
                 grid-template-columns: 1fr 1fr;
-            }
+            }<-->
         }
     </style>
 </head>

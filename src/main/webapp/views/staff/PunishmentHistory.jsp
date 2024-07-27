@@ -151,9 +151,10 @@
                 flex-direction: column;
             }
             .form-group {
-                width: 100%;
+                width: 100%;<-->
             }
         }
+
     </style>
     <jsp:include page="/views/includes/header_list.jsp"/>
 </head>

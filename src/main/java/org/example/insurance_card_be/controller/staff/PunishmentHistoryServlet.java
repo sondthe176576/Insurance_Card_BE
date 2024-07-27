@@ -37,4 +37,5 @@ public class PunishmentHistoryServlet extends HttpServlet {
 
         req.getRequestDispatcher("/views/staff/PunishmentHistory.jsp").forward(req, resp);
     }
+    //
 }
