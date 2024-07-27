@@ -15,23 +15,27 @@ public class AccidentHistoryForStaffDAO {
     // Method to get approved accident histories (assuming "approved" means certain status, adjust if needed)
     public List<AccidentHistoryDTO> getAccidentHistories() throws SQLException {
         List<AccidentHistoryDTO> list = new ArrayList<>();
-        String query = "SELECT " +
-                "    u.Full_name, " +
-                "    ah.AccidentID AS accidentHistory, " +
-                "    a.AccidentType, " +
-                "    a.Status, " +
-                "    ah.Description, " +
-                "    ah.Date " +
-                "FROM " +
-                "    AccidentHistory ah " +
-                "JOIN " +
-                "    Customers c ON ah.CustomerID = c.CustomerID " +
-                "JOIN " +
-                "    Users u ON c.UserID = u.UserID " +
-                "LEFT JOIN " +
-                "    Contracts con ON c.CustomerID = con.CustomerID " +
-                "LEFT JOIN " +
-                "    Accidents a ON con.ContractID = a.ContractID " ;
+        String query = "SELECT\n" +
+                "    ah.AccidentID AS accidentHistory,\n" +
+                "    MIN(u.Full_name) AS Full_name,\n" +
+                "    MIN(a.AccidentType) AS AccidentType,\n" +
+                "    MIN(a.Status) AS Status,\n" +
+                "    MIN(ah.Description) AS Description,\n" +
+                "    MIN(ah.Date) AS Date\n" +
+                "FROM\n" +
+                "    AccidentHistory ah\n" +
+                "JOIN\n" +
+                "    Customers c ON ah.CustomerID = c.CustomerID\n" +
+                "JOIN\n" +
+                "    Users u ON c.UserID = u.UserID\n" +
+                "LEFT JOIN\n" +
+                "    Contracts con ON c.CustomerID = con.CustomerID\n" +
+                "LEFT JOIN\n" +
+                "    Accidents a ON con.ContractID = a.ContractID\n" +
+                "WHERE\n" +
+                "    a.Status IN ('Approved', 'Pending', 'Reject')\n" +
+                "GROUP BY\n" +
+                "    ah.AccidentID;";
 
                  // Adjust based on the actual status field criteria
 
@@ -56,12 +60,12 @@ public class AccidentHistoryForStaffDAO {
     public List<AccidentHistoryDTO> filterByCustomerName(String customerName) throws SQLException {
         List<AccidentHistoryDTO> list = new ArrayList<>();
         String query = "SELECT " +
-                "    u.Full_name, " +
+                "    MIN(u.Full_name) AS Full_name, " +
                 "    ah.AccidentID AS accidentHistory, " +
-                "    a.AccidentType, " +
-                "    a.Status, " +
-                "    ah.Description, " +
-                "    ah.Date " +
+                "    MIN(a.AccidentType) AS AccidentType, " +
+                "    MIN(a.Status) AS Status, " +
+                "    MIN(ah.Description) AS Description, " +
+                "    MIN(ah.Date) AS Date " +
                 "FROM " +
                 "    AccidentHistory ah " +
                 "JOIN " +
@@ -72,7 +76,10 @@ public class AccidentHistoryForStaffDAO {
                 "    Contracts con ON c.CustomerID = con.CustomerID " +
                 "LEFT JOIN " +
                 "    Accidents a ON con.ContractID = a.ContractID " +
-                "WHERE u.Full_name LIKE ?";
+                "WHERE " +
+                "    u.Full_name LIKE ? AND " +
+                "    a.Status IN ('Approved', 'Pending', 'Reject') " +
+                "GROUP BY ah.AccidentID";
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -97,12 +104,12 @@ public class AccidentHistoryForStaffDAO {
     public List<AccidentHistoryDTO> sortByDate(String order) throws SQLException {
         List<AccidentHistoryDTO> list = new ArrayList<>();
         String query = "SELECT " +
-                "    u.Full_name, " +
+                "    MIN(u.Full_name) AS Full_name, " +
                 "    ah.AccidentID AS accidentHistory, " +
-                "    a.AccidentType, " +
-                "    a.Status, " +
-                "    ah.Description, " +
-                "    ah.Date " +
+                "    MIN(a.AccidentType) AS AccidentType, " +
+                "    MIN(a.Status) AS Status, " +
+                "    MIN(ah.Description) AS Description, " +
+                "    MIN(ah.Date) AS Date " +
                 "FROM " +
                 "    AccidentHistory ah " +
                 "JOIN " +
@@ -113,7 +120,10 @@ public class AccidentHistoryForStaffDAO {
                 "    Contracts con ON c.CustomerID = con.CustomerID " +
                 "LEFT JOIN " +
                 "    Accidents a ON con.ContractID = a.ContractID " +
-                "ORDER BY ah.Date " + order;
+                "WHERE " +
+                "    a.Status IN ('Approved', 'Pending', 'Reject') " +
+                "GROUP BY ah.AccidentID " +
+                "ORDER BY MIN(ah.Date) " + order;
 
         try (Connection connection = DBContext.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query);
