@@ -12,22 +12,43 @@ import java.util.List;
 public class PunishmentHistoryForStaffDAO {
     public List<PunishmentHistoryDTO> getPunishmentHistories() throws SQLException {
         List<PunishmentHistoryDTO> list = new ArrayList<>();
-        String query = "SELECT p.PunishmentID, u.Full_name, p.Description, pu.PunishmentType, p.Date, pu.Status " +
-                "FROM PunishmentHistory p " +
-                "JOIN Customers c ON p.CustomerID = c.CustomerID " +
-                "JOIN Punishments pu ON p.PunishmentID = pu.PunishmentID " +
-                "JOIN Users u ON c.UserID = u.UserID";
+        String query = "SELECT \n" +
+                "    ph.PunishmentID AS HistoryPunishmentID,\n" +
+                "    ph.Description AS HistoryDescription,\n" +
+                "    ph.Date AS HistoryDate,\n" +
+                "    p.PunishmentID AS PunishmentID,\n" +
+                "    p.PunishmentType,\n" +
+                "    p.PunishmentDate,\n" +
+                "    p.Description AS PunishmentDescription,\n" +
+                "    p.Status,\n" +
+                "    u.Full_name\n" +
+                "FROM \n" +
+                "    PunishmentHistory ph\n" +
+                "JOIN \n" +
+                "    Customers cu ON ph.CustomerID = cu.CustomerID\n" +
+                "JOIN \n" +
+                "    Users u ON cu.UserID = u.UserID\n" +
+                "JOIN \n" +
+                "    Contracts c ON cu.CustomerID = c.CustomerID\n" +
+                "JOIN \n" +
+                "    Punishments p ON c.ContractID = p.ContractID\n" +
+                "LEFT JOIN \n" +
+                "    Motorcycles m ON cu.CustomerID = m.CustomerID";
 
         try (PreparedStatement stmt = DBContext.getConnection().prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 PunishmentHistoryDTO punishment = new PunishmentHistoryDTO();
-                punishment.setPunishmentID(rs.getInt("PunishmentID"));
-                punishment.setFullName(rs.getString("Full_name"));
-                punishment.setDescription(rs.getString("Description"));
+                punishment.setPunishmentID(rs.getInt("HistoryPunishmentID"));
+                punishment.setDescription(rs.getString("HistoryDescription"));
+                punishment.setDate(rs.getDate("HistoryDate"));
                 punishment.setPunishmentType(rs.getString("PunishmentType"));
-                punishment.setDate(rs.getDate("Date"));
+                Punishments p = new Punishments();
+
+                p.setPunishmentDate(rs.getDate("PunishmentDate"));
+                p.setDescription(rs.getString("PunishmentDescription"));
                 punishment.setStatus(rs.getString("Status"));
+                punishment.setFullName(rs.getString("Full_name"));
                 list.add(punishment);
             }
         }
