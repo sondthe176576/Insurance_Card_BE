@@ -167,11 +167,11 @@
     <div class="grid-container">
         <div class="card">
             <h2><i class="fas fa-car-crash section-icon"></i>Accident Information</h2>
-            <div class="info-item"><strong><i class="fas fa-id-badge"></i> Accident ID:</strong> ${accidentHistory.accidentID}</div>
-            <div class="info-item"><strong><i class="fas fa-calendar-alt"></i> Accident Date:</strong> ${accidentHistory.date}</div>
-            <div class="info-item"><strong><i class="fas fa-car-side"></i> Accident Type:</strong> ${accidentHistory.accidentType}</div>
-            <div class="info-item"><strong><i class="fas fa-info-circle"></i> Description:</strong> ${accidentHistory.description}</div>
-            <div class="info-item"><strong><i class="fas fa-flag"></i> Status:</strong> <span class="status-badge ${accidentHistory.status == 'Pending' ? 'status-pending' : 'status-resolved'}">${accidentHistory.status}</span></div>
+            <div class="info-item"><strong>Accident ID:</strong> ${accidentHistories.accidentID}</div>
+            <div class="info-item"><strong>Accident Date:</strong> ${accidentHistories.date}</div>
+            <div class="info-item"><strong>Accident Type:</strong> ${accidentHistories.accidentType}</div>
+            <div class="info-item"><strong>Description:</strong> ${accidentHistories.description}</div>
+            <div class="info-item"><strong>Status:</strong> ${accidentHistories.status}</div>
         </div>
 
         <div class="card">
@@ -179,38 +179,36 @@
             <div class="info-item"><strong><i class="fas fa-id-card"></i> Customer ID:</strong> ${accidentHistory.customerID}</div>
             <div class="info-item"><strong><i class="fas fa-user"></i> Full Name:</strong> ${accidentHistory.fullName}</div>
             <div class="info-item"><strong><i class="fas fa-envelope"></i> Email:</strong> ${accidentHistory.user.email}</div>
-            <div class="info-item"><strong><i class="fas fa-phone"></i> Mobile:</strong> ${accidentHistory.user.mobile}</div>
-            <div class="info-item"><strong><i class="fas fa-venus-mars"></i> Gender:</strong> ${accidentHistory.user.gender}</div>
-            <div class="info-item"><strong><i class="fas fa-map-marker-alt"></i> Address:</strong> ${accidentHistory.user.district}, ${accidentHistory.user.province}, ${accidentHistory.user.country}</div>
-            <div class="info-item"><strong><i class="fas fa-birthday-cake"></i> Birth Date:</strong> ${accidentHistory.user.birthDate}</div>
-        </div>
+           <div class="info-item"><strong><i class="fas fa-phone"></i> Mobile:</strong> ${accidentHistory.user.mobile}</div>
+          <div class="info-item"><strong><i class="fas fa-venus-mars"></i> Gender:</strong> ${accidentHistory.user.gender}</div>
+           <div class="info-item"><strong><i class="fas fa-map-marker-alt"></i> Address:</strong> ${accidentHistory.user.district}, ${accidentHistory.user.province}, ${accidentHistory.user.country}</div>
+           <div class="info-item"><strong><i class="fas fa-birthday-cake"></i> Birth Date:</strong> ${accidentHistory.user.birthDate}</div>
+       </div>
     </div>
 
-    <div class="grid-container">
-        <div class="card">
-            <h2><i class="fas fa-file-contract section-icon"></i>Contract Information</h2>
+   <div class="grid-container">
+        <div class="card">--%>
+          <h2><i class="fas fa-file-contract section-icon"></i>Contract Information</h2>--%>
             <div class="info-item"><strong><i class="fas fa-file-contract"></i> Contract ID:</strong> ${accidentHistory.accident.contract.contractID}</div>
-            <div class="info-item"><strong><i class="fas fa-file-alt"></i> Contract Info:</strong> ${accidentHistory.accident.contract.contractInfo}</div>
-            <div class="info-item"><strong><i class="fas fa-info-circle"></i> Contract Status:</strong> ${accidentHistory.accident.contract.status}</div>
-            <div class="info-item"><strong><i class="fas fa-play"></i> Start Date:</strong> ${accidentHistory.accident.contract.startDate}</div>
-            <div class="info-item"><strong><i class="fas fa-stop"></i> End Date:</strong> ${accidentHistory.accident.contract.endDate}</div>
+          <div class="info-item"><strong><i class="fas fa-file-alt"></i> Contract Info:</strong> ${accidentHistory.accident.contract.contractInfo}</div>
+          <div class="info-item"><strong><i class="fas fa-info-circle"></i> Contract Status:</strong> ${accidentHistory.accident.contract.status}</div>
+           <div class="info-item"><strong><i class="fas fa-play"></i> Start Date:</strong> ${accidentHistory.accident.contract.startDate}</div>
+           <div class="info-item"><strong><i class="fas fa-stop"></i> End Date:</strong> ${accidentHistory.accident.contract.endDate}</div>
             <div class="info-item"><strong><i class="fas fa-shield-alt"></i> Insurance Type:</strong> ${accidentHistory.accident.contract.insuranceType}</div>
-            <div class="info-item"><strong><i class="fas fa-umbrella"></i> Coverage:</strong> ${accidentHistory.accident.contract.coverage}</div>
+           <div class="info-item"><strong><i class="fas fa-umbrella"></i> Coverage:</strong> ${accidentHistory.accident.contract.coverage}</div>
             <div class="info-item"><strong><i class="fas fa-dollar-sign"></i> Premium:</strong> $${accidentHistory.accident.contract.premium}</div>
-            <div class="info-item"><strong><i class="fas fa-info"></i> Detail:</strong> ${accidentHistory.accident.contract.detail}</div>
-            <div class="info-item"><strong><i class="fas fa-money-bill-wave"></i> Value:</strong> $${accidentHistory.accident.contract.value}</div>
+        <div class="info-item"><strong><i class="fas fa-info"></i> Detail:</strong> ${accidentHistory.accident.contract.detail}</div>--%>
+          <div class="info-item"><strong><i class="fas fa-money-bill-wave"></i> Value:</strong> $${accidentHistory.accident.contract.value}</div>
         </div>
 
-        <div class="card">
-            <h2><i class="fas fa-motorcycle section-icon"></i>Motorcycle Information</h2>
-            <div class="info-item"><strong><i class="fas fa-id-card"></i> License Plate:</strong> ${accidentHistory.accident.contract.motorcycle.licensePlate}</div>
-            <div class="info-item"><strong><i class="fas fa-motorcycle"></i> Brand:</strong> ${accidentHistory.accident.contract.motorcycle.brand}</div>
-            <div class="info-item"><strong><i class="fas fa-cogs"></i> Model:</strong> ${accidentHistory.accident.contract.motorcycle.model}</div>
-            <div class="info-item"><strong><i class="fas fa-barcode"></i> Frame Number:</strong> ${accidentHistory.accident.contract.motorcycle.frameNumber}</div>
-            <div class="info-item"><strong><i class="fas fa-engine"></i> Engine Number:</strong> ${accidentHistory.accident.contract.motorcycle.engineNumber}</div>
-            <div class="info-item"><strong><i class="fas fa-calendar-check"></i> Year Of Manufacture:</strong> ${accidentHistory.accident.contract.motorcycle.yearOfManufacture}</div>
-            <div class="info-item"><strong><i class="fas fa-palette"></i> Color:</strong> ${accidentHistory.accident.contract.motorcycle.color}</div>
-        </div>
+      <div class="card">--%>
+            <h2><i class="fas fa-motorcycle section-icon"></i>Motorcycle Information</h2>--%>
+           <div class="info-item"><strong><i class="fas fa-id-card"></i> License Plate:</strong> ${accidentHistory.accident.contract.motorcycle.licensePlate}</div>
+           <div class="info-item"><strong><i class="fas fa-motorcycle"></i> Brand:</strong> ${accidentHistory.accident.contract.motorcycle.brand}</div>
+            <div class="info-item"><strong><i class="fas fa-cogs"></i> Model:</strong> ${accidentHistory.accident.contract.motorcycle.model}</div>--%>
+           <div class="info-item"><strong><i class="fas fa-engine"></i> Engine Number:</strong> ${accidentHistory.accident.contract.motorcycle.engineNumber}</div>
+           <div class="info-item"><strong><i class="fas fa-palette"></i> Color:</strong> ${accidentHistory.accident.contract.motorcycle.color}</div>
+       </div>
     </div>
 
     <div style="text-align: center; margin-top: 40px;">

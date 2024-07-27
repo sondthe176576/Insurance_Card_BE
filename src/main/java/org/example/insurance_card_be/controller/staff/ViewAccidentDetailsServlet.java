@@ -22,9 +22,10 @@ public class ViewAccidentDetailsServlet extends HttpServlet {
             AccidentHistoryForStaffDAO dao = new AccidentHistoryForStaffDAO();
             AccidentHistoryDTO accidentHistory = dao.getAccidentByID(accidentID);
             if (accidentHistory != null) {
-                req.setAttribute("accidentHistory", accidentHistory);
-                req.getRequestDispatcher("/views/staff/accidentHistoryDetails.jsp").forward(req, resp);
+                req.setAttribute("accidentHistories", accidentHistory);
+                req.getRequestDispatcher("/views/staff/accidentHistoryDetail.jsp").forward(req, resp);
             } else {
+                System.out.println("No accident history found for ID: " + accidentID);
                 resp.sendRedirect(req.getContextPath() + "/error.jsp");
             }
         } catch (SQLException e) {

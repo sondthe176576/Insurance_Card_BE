@@ -258,13 +258,11 @@ public class AccidentHistoryForStaffDAO {
 
                     // Extracting accident history details
                     AccidentHistoryDTO accidentHistory = new AccidentHistoryDTO();
-                    accidentHistory.setFullName(rs.getString("Full_name")); // Hoặc từ đối tượng `Users` đã tạo
-                    accidentHistory.setAccidentID(rs.getInt("HistoryAccidentID"));
-                    accidentHistory.setDescription(rs.getString("HistoryDescription"));
-                    accidentHistory.setDate(rs.getDate("HistoryDate"));
+                    accidentHistory.setAccidentID(rs.getInt("accidentHistory"));
+                    accidentHistory.setDate(rs.getDate("Date"));
                     accidentHistory.setAccidentType(rs.getString("AccidentType"));
-
-                    accidentHistory.setCustomerID(rs.getInt("CustomerID"));
+                    accidentHistory.setDescription(rs.getString("Description"));
+                    accidentHistory.setStatus(rs.getString("Status"));
                     return accidentHistory;
                 }
             }

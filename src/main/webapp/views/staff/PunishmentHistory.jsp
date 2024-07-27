@@ -185,7 +185,7 @@
         <table>
             <thead>
             <tr>
-                <th>ID</th>
+                <th>No</th>
                 <th>Full Name</th>
                 <th>Description</th>
                 <th>Punishment Type</th>
@@ -194,9 +194,9 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="punishment" items="${punishmentList}">
+            <c:forEach var="punishment" items="${punishmentList}" varStatus="a">
                 <tr>
-                    <td>${punishment.punishmentID}</td>
+                    <td>${a.index + 1}</td>
                     <td>${punishment.fullName}</td>
                     <td>${punishment.description}</td>
                     <td>${punishment.punishmentType}</td>
