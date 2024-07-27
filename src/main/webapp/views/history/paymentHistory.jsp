@@ -68,9 +68,6 @@
 <body>
 <div class="container">
     <h1 class="page-title">Payment History</h1>
-    <div class="d-flex justify-content-end mb-3">
-        <a href="${pageContext.request.contextPath}/paymentHistory?action=addForm" class="btn btn-success"><i class="fas fa-plus"></i> Add Payment</a>
-    </div>
     <div class="table-container">
         <table class="table table-hover table-bordered">
             <thead class="thead-dark">
@@ -96,12 +93,6 @@
                     <td>Cash</td>
                     <td>${paymentHistory.contractID}</td>
                     <td>
-                        <a href="paymentHistory?action=view&paymentID=${paymentHistory.paymentID}" class="btn btn-primary btn-sm btn-action">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="paymentHistory?action=edit&paymentID=${paymentHistory.paymentID}" class="btn btn-warning btn-sm btn-action">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
                         <form action="paymentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="paymentID" value="${paymentHistory.paymentID}">

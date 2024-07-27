@@ -89,12 +89,6 @@
                     <td>${punishmentHistory.description}</td>
                     <td>${punishmentHistory.date}</td>
                     <td>
-                        <a href="punishmentHistory?action=view&punishmentID=${punishmentHistory.punishmentID}" class="btn btn-primary btn-sm btn-action">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="punishmentHistory?action=edit&punishmentID=${punishmentHistory.punishmentID}" class="btn btn-warning btn-sm btn-action">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
                         <form action="punishmentHistory" method="post" style="display:inline;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="punishmentID" value="${punishmentHistory.punishmentID}">
