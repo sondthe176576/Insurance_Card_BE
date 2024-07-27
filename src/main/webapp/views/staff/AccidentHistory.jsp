@@ -152,7 +152,7 @@
                 <th>Status</th>
                 <th>Description</th>
                 <th>Date</th>
-                <th>Action</th>
+
             </tr>
             </thead>
             <tbody>
@@ -174,12 +174,7 @@
                     </td>
                     <td>${accident.description}</td>
                     <td>${accident.date}</td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/viewAccidentDetails?accidentID=${accident.accidentID}"
-                           class="eye-icon" title="View Details">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                    </td>
+
                 </tr>
             </c:forEach>
             </tbody>
