@@ -1,5 +1,19 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
+<%
+    Users loggedInUser = (Users) session.getAttribute("user");
+    if (loggedInUser == null) {
+        request.getRequestDispatcher("/views/homepage/home.jsp").forward(request, response);
+        return;
+    }
+
+    UserDAO userDAO = new UserDAO();
+    Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    if (userFromDB == null) {
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -151,9 +165,10 @@
                 flex-direction: column;
             }
             .form-group {
-                width: 100%;
+                width: 100%;<-->
             }
         }
+
     </style>
     <jsp:include page="/views/includes/header_list.jsp"/>
 </head>

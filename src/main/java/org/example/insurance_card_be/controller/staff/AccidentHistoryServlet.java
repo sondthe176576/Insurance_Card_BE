@@ -28,13 +28,14 @@ public class AccidentHistoryServlet extends HttpServlet {
             } else if (sortByDate != null && (sortByDate.equals("asc") || sortByDate.equals("desc"))) {
                 accidentList = dao.sortByDate(sortByDate);
             } else {
-                accidentList = dao.getApprovedAccidentHistories();
+                accidentList = dao.getAccidentHistories();
             }
             req.setAttribute("accidentList", accidentList);
         } catch (SQLException e) {
             e.printStackTrace();
             req.setAttribute("error", "Database error: " + e.getMessage());
         }
+        //
 
         req.getRequestDispatcher("/views/staff/AccidentHistory.jsp").forward(req, resp);
     }

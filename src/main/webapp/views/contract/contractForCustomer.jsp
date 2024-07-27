@@ -1,6 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
+<%
+    Users loggedInUser = (Users) session.getAttribute("user");
+    if (loggedInUser == null) {
+        request.getRequestDispatcher("/views/homepage/home.jsp").forward(request, response);
+        return;
+    }
+
+    UserDAO userDAO = new UserDAO();
+    Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    if (userFromDB == null) {
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

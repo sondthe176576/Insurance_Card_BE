@@ -1,6 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.sql.*, org.example.insurance_card_be.dao.implement.UserDAO, org.example.insurance_card_be.model.Users" %>
+<%
+    Users loggedInUser = (Users) session.getAttribute("user");
+    if (loggedInUser == null) {
+        request.getRequestDispatcher("/views/homepage/home.jsp").forward(request, response);
+        return;
+    }
+
+    UserDAO userDAO = new UserDAO();
+    Users userFromDB = userDAO.getUserByID(loggedInUser.getUserID());
+    if (userFromDB == null) {
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +59,7 @@
             <h2 class="text-4xl font-bold"><i class="mdi mdi-file-document-edit"></i> Renew Contract</h2>
         </div>
         <div class="card-body mt-6">
-            <form id="renewContractForm" action="${pageContext.request.contextPath}/renewContract" method="post" class="space-y-6">
+            <form id="renewContractForm" action="${pageContext.request.contextPath}/renewContract" method="post" class="space-y-6" onsubmit="return validateRenewalYears()">
                 <input type="hidden" name="action" value="renew">
 
                 <!-- Thông tin khách hàng -->
@@ -341,9 +355,24 @@
         }
     }
 
-    // Hàm kiểm tra các trường bắt buộc và hiển thị modal xác nhận gia hạn hợp đồng
+    // Hàm kiểm tra giá trị Renewal Years
+    function validateRenewalYears() {
+        const renewalYears = parseInt(document.getElementById('renewalYears').value);
+        if (renewalYears < 1 || isNaN(renewalYears)) {
+            Swal.fire({
+                title: 'Invalid Input',
+                text: 'Renewal Years cannot be less than 1.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
+        return true;
+    }
+
+    // Hàm hiển thị modal xác nhận gia hạn hợp đồng
     function showConfirmationModal() {
-        if (validateForm()) {
+        if (validateRenewalYears()) {
             Swal.fire({
                 title: 'Confirm Renewal',
                 text: 'Are you sure you want to renew this contract?',
@@ -354,29 +383,10 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    confirmRenewal();
+                    document.getElementById('renewContractForm').submit();
                 }
             });
-        } else {
-            Swal.fire({
-                title: 'Incomplete Information',
-                text: 'Please fill in all required fields before proceeding.',
-                icon: 'warning',
-                confirmButtonText: 'OK'
-            });
         }
-    }
-
-    // Hàm kiểm tra các trường bắt buộc đã được điền đủ hay chưa
-    function validateForm() {
-        const renewalYears = document.getElementById('renewalYears').value;
-        const newStartDate = document.getElementById('newStartDate').value;
-        return renewalYears && newStartDate;
-    }
-
-    // Hàm xác nhận gia hạn hợp đồng
-    function confirmRenewal() {
-        document.getElementById('renewContractForm').submit();
     }
 
     // Hàm hiển thị modal thông báo hợp đồng hết hạn sử dụng SweetAlert2

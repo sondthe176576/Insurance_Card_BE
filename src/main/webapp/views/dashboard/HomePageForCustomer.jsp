@@ -47,43 +47,6 @@
             background-color: var(--bg-color);
         }
 
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        nav {
-            background-color: var(--primary-color);
-            padding: 1rem 0;
-            position: relative;
-            z-index: 999;
-        }
-
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin: 0 1.5rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-color);
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -146,9 +109,7 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
+
 
             .btn {
                 padding: 0.75rem 2rem;
@@ -191,6 +152,7 @@
         </ul>
     </div>
 </nav>
+<!-- End of navbar -->
 
 
 <main>

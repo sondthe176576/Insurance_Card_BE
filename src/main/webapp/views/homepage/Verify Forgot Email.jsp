@@ -123,7 +123,6 @@
 </head>
 <body>
 <div class="verification-container animate__animated animate__fadeIn">
-    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="logo">
     <form action="${pageContext.request.contextPath}/verifyforgot" method="post" autocomplete="off" class="form">
         <h3>Email Verification</h3>
         <p>To sign in, fill numbers in this blank that we sent to your email</p>

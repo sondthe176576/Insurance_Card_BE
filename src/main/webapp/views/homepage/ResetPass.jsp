@@ -123,7 +123,6 @@
 </head>
 <body>
 <div class="reset-container animate__animated animate__fadeIn">
-    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="logo">
     <form action="${pageContext.request.contextPath}/reset" method="post" autocomplete="off" class="form">
         <h3>Reset Password</h3>
         <p>Enter your new password below</p>

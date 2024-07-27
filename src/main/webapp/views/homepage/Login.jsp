@@ -56,15 +56,6 @@
          margin-bottom: 40px;
       }
 
-      .form h2::before {
-         content: '';
-         position: absolute;
-         left: 0;
-         bottom: -10px;
-         width: 80px;
-         height: 4px;
-         background: #fff;
-      }
 
       .form .inputBox {
          width: 100%;
@@ -127,15 +118,6 @@
          }
       }
 
-      .logo {
-         position: absolute;
-         top: 20px;
-         left: 20px;
-         width: 80px;
-         height: 80px;
-         animation: float 6s ease-in-out infinite;
-      }
-
       .social-icons {
          position: absolute;
          bottom: 20px;
@@ -154,11 +136,19 @@
       .social-icons a:hover {
          transform: translateY(-5px);
       }
+      .logo {
+         position: absolute;
+         top: 20px;
+         left: 20px;
+         font-size: 24px;
+         font-weight: bold;
+         color: #fff;
+         animation: float 6s ease-in-out infinite;
+      }
    </style>
 </head>
 <body>
 <div class="login-container animate__animated animate__fadeIn">
-   <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="logo">
    <form action="${pageContext.request.contextPath}/login" method="post" autocomplete="off" class="form">
       <h2>Login</h2>
       <div class="inputBox">

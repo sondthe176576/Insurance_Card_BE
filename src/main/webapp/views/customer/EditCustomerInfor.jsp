@@ -233,7 +233,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <label class="labels">Color</label>
-                                        <input type="color" name="color" class="form-control" value="<%= motorcycle != null && motorcycle.getColor() != null ? motorcycle.getColor() : "#000000" %>" required>
+                                        <input type="text" name="color" class="form-control" value="<%= motorcycle != null && motorcycle.getColor() != null ? motorcycle.getColor() : "#000000" %>" required>
                                     </div>
                                 </div>
 

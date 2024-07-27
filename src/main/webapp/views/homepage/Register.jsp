@@ -211,7 +211,6 @@
 </head>
 <body>
 <div class="register-container animate__animated animate__fadeIn">
-    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo" class="logo">
     <form action="${pageContext.request.contextPath}/register" method="post" autocomplete="off" class="form">
         <h2>Register</h2>
         <div class="page-links">

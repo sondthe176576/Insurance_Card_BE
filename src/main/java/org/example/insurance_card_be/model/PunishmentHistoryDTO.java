@@ -20,6 +20,6 @@ public class PunishmentHistoryDTO {
         private String fullName;
         private String punishmentType;
         private String status;
-
+//
 }
 
