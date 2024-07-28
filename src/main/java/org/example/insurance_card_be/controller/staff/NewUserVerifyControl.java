@@ -45,4 +45,5 @@ public class NewUserVerifyControl extends HttpServlet {
             request.getRequestDispatcher("/views/staff/verify.jsp").forward(request, response);
         }
     }
+    //
 }

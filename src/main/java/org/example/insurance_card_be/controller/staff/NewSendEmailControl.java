@@ -52,4 +52,5 @@ public class NewSendEmailControl {
 
         return test;
     }
+    //
 }

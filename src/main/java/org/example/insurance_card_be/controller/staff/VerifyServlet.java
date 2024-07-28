@@ -28,4 +28,5 @@ public class VerifyServlet extends HttpServlet {
             req.getRequestDispatcher("/verify.jsp").forward(req, resp);
         }
     }
+    //
 }
